@@ -66,17 +66,12 @@ class GlobalExceptionHandler {
 
         model.addObject(SUBJECT, "Unexpected error occurred.");
 
-        StringBuilder sb = new StringBuilder();
-        sb.append("Dear HelpDesk,");
-        sb.append("\n\n");
-        sb.append("An unexpected error has occurred during my search.");
-        sb.append("\n\n");
-        sb.append("<< Please add more information >>");
-        sb.append("\n\n");
-        sb.append("Thank you");
-        sb.append("\n\n");
+        String sb = "Dear HelpDesk,\n\n" +
+                    "An unexpected error has occurred during my search.\n\n" +
+                    "<< Please add more information >>\n\n" +
+                    "Thank you\n\n";
 
-        model.addObject(MESSAGE, sb.toString());
+        model.addObject(MESSAGE, sb);
 
         model.addObject(TITLE, "Unexpected error occurred.");
        
