@@ -144,13 +144,3 @@ h5 a:active{
     color:#1F419A;
     font-size: 108%;
 }
-
-.ebi-content span.searchterm{
-    font-style:italic;
-    padding:0.1em 0.3em 0.1em 0.2em;
-    background-color:lightgray;
-    -moz-border-radius:5px;
-    -khtml-border-radius:5px;
-    -webkit-border-radius:5px;
-    border-radius:5px
-}

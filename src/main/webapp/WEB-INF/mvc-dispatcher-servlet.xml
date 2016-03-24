@@ -41,4 +41,37 @@
         </property>
     </bean>
 
+    <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+        <property name="host" value="${mail_host}" />
+        <property name="port" value="${mail_port}" />
+        <property name="username" value="${mail_username}" />
+        <property name="password" value="${mail_password}" />
+
+        <!-- The name of the property, following JavaBean naming conventions -->
+        <property name="javaMailProperties">
+            <props>
+                <prop key="mail.transport.protocol">smtp</prop>
+                <prop key="mail.smtp.auth">${mail_enable_auth}</prop>
+                <prop key="mail.smtp.starttls.enable">true</prop>
+                <prop key="mail.debug">true</prop>
+            </props>
+        </property>
+
+    </bean>
+
+    <!-- Configuration for the Interactors-Core components -->
+    <bean id="interactorsDB" class="org.reactome.server.tools.interactors.database.InteractorsDatabase">
+        <constructor-arg name="fileName" value="${interactors.static.db}"/>
+    </bean>
+
+    <bean id="interactionResourceService" class="org.reactome.server.tools.interactors.service.InteractionResourceService">
+        <constructor-arg name="database" ref="interactorsDB"/>
+    </bean>
+    <bean id="interactorResourceService" class="org.reactome.server.tools.interactors.service.InteractorResourceService">
+        <constructor-arg name="database" ref="interactorsDB"/>
+    </bean>
+    <bean id="interactionService" class="org.reactome.server.tools.interactors.service.InteractionService">
+        <constructor-arg name="database" ref="interactorsDB"/>
+    </bean>
+
 </beans>

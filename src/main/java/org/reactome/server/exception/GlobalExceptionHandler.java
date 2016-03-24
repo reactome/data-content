@@ -1,5 +1,8 @@
 package org.reactome.server.exception;
 
+import org.reactome.server.tools.search.exception.EnricherException;
+import org.reactome.server.tools.search.exception.SearchServiceException;
+import org.reactome.server.tools.search.exception.SolrSearcherException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -32,24 +35,24 @@ class GlobalExceptionHandler {
     private static final String PAGE = "generic_error";
 
 //    @ResponseStatus(value= HttpStatus.INTERNAL_SERVER_ERROR, reason="EnricherException occurred")
-//    @ExceptionHandler(EnricherException.class)
-//    public ModelAndView handleOtherExceptions(HttpServletRequest request, EnricherException e) {
-//        return buildModelView(PAGE, request, e);
-//    }
-//
-////    @ResponseStatus(value= HttpStatus.INTERNAL_SERVER_ERROR, reason="SolrSearcherException occurred")
-//    @ExceptionHandler(SolrSearcherException.class)
-//    public ModelAndView handleSolrSearcherException(HttpServletRequest request, SolrSearcherException e) {
-//        return buildModelView(PAGE, request, e);
-//
-//    }
-//
-////    @ResponseStatus(value= HttpStatus.INTERNAL_SERVER_ERROR, reason="SearchServiceException occurred")
-//    @ExceptionHandler(SearchServiceException.class)
-//    public ModelAndView handleSQLException(HttpServletRequest request, SearchServiceException e) {
-//        return buildModelView(PAGE, request, e);
-//
-//    }
+    @ExceptionHandler(EnricherException.class)
+    public ModelAndView handleOtherExceptions(HttpServletRequest request, EnricherException e) {
+        return buildModelView(PAGE, request, e);
+    }
+
+//    @ResponseStatus(value= HttpStatus.INTERNAL_SERVER_ERROR, reason="SolrSearcherException occurred")
+    @ExceptionHandler(SolrSearcherException.class)
+    public ModelAndView handleSolrSearcherException(HttpServletRequest request, SolrSearcherException e) {
+        return buildModelView(PAGE, request, e);
+
+    }
+
+//    @ResponseStatus(value= HttpStatus.INTERNAL_SERVER_ERROR, reason="SearchServiceException occurred")
+    @ExceptionHandler(SearchServiceException.class)
+    public ModelAndView handleSQLException(HttpServletRequest request, SearchServiceException e) {
+        return buildModelView(PAGE, request, e);
+
+    }
 
     @ResponseStatus(value = HttpStatus.NOT_FOUND, reason = "IOException occurred")
     @ExceptionHandler(IOException.class)
@@ -66,12 +69,17 @@ class GlobalExceptionHandler {
 
         model.addObject(SUBJECT, "Unexpected error occurred.");
 
-        String sb = "Dear HelpDesk,\n\n" +
-                    "An unexpected error has occurred during my search.\n\n" +
-                    "<< Please add more information >>\n\n" +
-                    "Thank you\n\n";
+        StringBuilder sb = new StringBuilder();
+        sb.append("Dear HelpDesk,");
+        sb.append("\n\n");
+        sb.append("An unexpected error has occurred during my search.");
+        sb.append("\n\n");
+        sb.append("<< Please add more information >>");
+        sb.append("\n\n");
+        sb.append("Thank you");
+        sb.append("\n\n");
 
-        model.addObject(MESSAGE, sb);
+        model.addObject(MESSAGE, sb.toString());
 
         model.addObject(TITLE, "Unexpected error occurred.");
        
