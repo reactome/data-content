@@ -9,7 +9,7 @@
 
     <!-- Standard xml based mvc config-->
     <mvc:annotation-driven/>
-    <mvc:resources mapping="/css/**" location="resources/css/" />
+    <mvc:resources mapping="/resources/**" location="resources/" />
 
     <context:component-scan base-package="org.reactome.server,uk.ac.ebi.reactome"/>
     <context:property-placeholder location="classpath:/core.properties" />
