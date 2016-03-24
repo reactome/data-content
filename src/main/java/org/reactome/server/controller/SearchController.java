@@ -81,13 +81,13 @@ class SearchController {
     private static String defaultSubject;
 
     // PAGES REDIRECT
-    private static final String PAGE_DETAIL = "detail";
-    private static final String PAGE_INTERACTOR = "interactor";
+    private static final String PAGE_DETAIL = "search/detail";
+    private static final String PAGE_INTERACTOR = "search/interactor";
 
-    private static final String PAGE_NODETAILSFOUND = "nodetailsfound";
-    private static final String PAGE_NORESULTSFOUND = "noresultsfound";
-    private static final String PAGE_EBIADVANCED = "ebiadvanced";
-    private static final String PAGE_EBISEARCHER = "ebisearcher";
+    private static final String PAGE_NODETAILSFOUND = "search/nodetailsfound";
+    private static final String PAGE_NORESULTSFOUND = "search/noresultsfound";
+    private static final String PAGE_EBIADVANCED = "search/ebiadvanced";
+    private static final String PAGE_EBISEARCHER = "search/ebisearcher";
 
     @Value("${mail_error_dest}")
     private String mailErrorDest; // E
