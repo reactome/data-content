@@ -13,7 +13,7 @@
             </c:otherwise>
         </c:choose>
     <c:set var="node" value="${node}" scope="request"/>
-    <c:import url="/WEB-INF/pages/search/node.jsp"/>
+    <c:import url="node.jsp"/>
     </li>
 </c:forEach>
 </ul>
