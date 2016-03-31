@@ -5,7 +5,7 @@
     <uri>/WEB-INF/customTag</uri>
     <tag>
         <name>today</name>
-        <tag-class>org.reactome.server.tools.search.util.Param</tag-class>
+        <tag-class>org.reactome.server.util.Param</tag-class>
         <body-content>empty</body-content>
         <attribute>
             <name>name</name>
