@@ -37,7 +37,7 @@ class GraphController {
     @RequestMapping(value = "/detail/object/{id:.*}", method = RequestMethod.GET)
     public String getInstance (@PathVariable String id, ModelMap model) {
         model.addAttribute("map", DatabaseObjectUtils.getAllFields(databaseObjectService.findById(id)));
-        return "object-detail";
+        return "graph/object-detail";
     }
 
     @RequestMapping(value = "/details/{className:.*}", method = RequestMethod.GET)
@@ -52,7 +52,7 @@ class GraphController {
         model.addAttribute("page", page);
         model.addAttribute("maxpage", classBrowserCache.findMaxPage(className, OFFSET));
         model.addAttribute("objects", genericService.getObjectsByClassName(className,page,OFFSET));
-        return "schema";
+        return "graph/schema";
     }
 
     @RequestMapping(value = "/schema/{className:.*}", method = RequestMethod.GET)
@@ -63,7 +63,7 @@ class GraphController {
         model.addAttribute("node", classBrowserCache);
         model.addAttribute("properties", DatabaseObjectUtils.getAttributeTable(className));
         model.addAttribute("className", className);
-        return "schema";
+        return "graph/schema";
     }
 
     @RequestMapping(value = "/schema", method = RequestMethod.GET)
