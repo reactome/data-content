@@ -336,7 +336,7 @@
         </div>
     </c:if>
 
-    <c:if test="${not empty entry.referedEntities}">
+    <c:if test="${not empty entry.referredEntities}">
         <div class="grid_23  padding  margin">
             <h5>This entry is a component of:</h5>
             <table class="fixedTable">
@@ -347,7 +347,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <c:forEach var="referrers" items="${entry.referedEntities}">
+                <c:forEach var="referrers" items="${entry.referredEntities}">
                     <tr>
                         <td><strong>${referrers.key}</strong></td>
                         <td>

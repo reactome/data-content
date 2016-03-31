@@ -131,41 +131,41 @@ class SearchController {
         return PAGE_EBIADVANCED;
     }
 
-    /**
-     * Shows detailed information of an entry
-     *
-     * @param id      StId or DbId
-     * @param version Reactome Database version
-     *                //     * @param q,species,types,compartments,keywords parameters to save existing query and facets
-     * @param model   SpringModel
-     * @return Detailed page
-     * @throws EnricherException
-     * @throws SolrSearcherException
-     */
-    @RequestMapping(value = "/detail/v{version}/{id:.*}", method = RequestMethod.GET)
-    public String detailVersion(@PathVariable String id,
-                                @PathVariable Integer version,
-//                                 @RequestParam ( required = false ) String q,
-//                                 @RequestParam ( required = false ) String species,
-//                                 @RequestParam ( required = false ) String types,
-//                                 @RequestParam ( required = false ) String compartments,
-//                                 @RequestParam ( required = false ) String keywords,
-                                ModelMap model) throws EnricherException, SolrSearcherException {
-//        model.addAttribute(Q, checkOutputIntegrity(q));
-//        model.addAttribute(SPECIES, checkOutputIntegrity(species));
-//        model.addAttribute(TYPES, checkOutputIntegrity(types));
-//        model.addAttribute(COMPARTMENTS, checkOutputIntegrity(compartments));
-//        model.addAttribute(KEYWORDS, checkOutputIntegrity(keywords));
-        EnrichedEntry entry = searchService.getEntryById(version, id);
-        if (entry != null) {
-            model.addAttribute(ENTRY, entry);
-            model.addAttribute(TITLE, entry.getName() + " (" + entry.getSpecies() + ")");
-            return PAGE_DETAIL;
-        } else {
-            autoFillDetailsPage(model, id);
-            return PAGE_NODETAILSFOUND;
-        }
-    }
+//    /**
+//     * Shows detailed information of an entry
+//     *
+//     * @param id      StId or DbId
+//     * @param version Reactome Database version
+//     *                //     * @param q,species,types,compartments,keywords parameters to save existing query and facets
+//     * @param model   SpringModel
+//     * @return Detailed page
+//     * @throws EnricherException
+//     * @throws SolrSearcherException
+//     */
+//    @RequestMapping(value = "/detail/v{version}/{id:.*}", method = RequestMethod.GET)
+//    public String detailVersion(@PathVariable String id,
+//                                @PathVariable Integer version,
+////                                 @RequestParam ( required = false ) String q,
+////                                 @RequestParam ( required = false ) String species,
+////                                 @RequestParam ( required = false ) String types,
+////                                 @RequestParam ( required = false ) String compartments,
+////                                 @RequestParam ( required = false ) String keywords,
+//                                ModelMap model) throws EnricherException, SolrSearcherException {
+////        model.addAttribute(Q, checkOutputIntegrity(q));
+////        model.addAttribute(SPECIES, checkOutputIntegrity(species));
+////        model.addAttribute(TYPES, checkOutputIntegrity(types));
+////        model.addAttribute(COMPARTMENTS, checkOutputIntegrity(compartments));
+////        model.addAttribute(KEYWORDS, checkOutputIntegrity(keywords));
+//        EnrichedEntry entry = searchService.getEntryById(version, id);
+//        if (entry != null) {
+//            model.addAttribute(ENTRY, entry);
+//            model.addAttribute(TITLE, entry.getName() + " (" + entry.getSpecies() + ")");
+//            return PAGE_DETAIL;
+//        } else {
+//            autoFillDetailsPage(model, id);
+//            return PAGE_NODETAILSFOUND;
+//        }
+//    }
 
     /**
      * Shows detailed information of an entry
