@@ -30,7 +30,7 @@
         <reactome.search.version>0.0.1-SNAPSHOT</reactome.search.version>
         <spring.version>4.2.4.RELEASE</spring.version>
         <javax.servlet.version>4.0.0-b01</javax.servlet.version>
-        <jackson.version>2.4.1</jackson.version>
+        <jackson.version>2.7.3</jackson.version>
         <swagger.version>2.2.2</swagger.version>
         <maven.compiler.version>3.0</maven.compiler.version>
         <maven.war.version>2.6</maven.war.version>
@@ -45,24 +45,28 @@
             <artifactId>graph-core</artifactId>
             <version>${reactome.data.version}</version>
         </dependency>
+
         <!--Reactome search-->
         <dependency>
             <groupId>org.reactome.server.tools</groupId>
             <artifactId>search-core</artifactId>
             <version>${reactome.search.version}</version>
         </dependency>
+
         <!--Spring-->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-webmvc</artifactId>
             <version>${spring.version}</version>
         </dependency>
+
         <!-- Enable Mailing Features -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context-support</artifactId>
             <version>${spring.version}</version>
         </dependency>
+
         <!--Javax servlet api-->
         <dependency>
             <groupId>javax.servlet</groupId>
@@ -70,6 +74,7 @@
             <version>${javax.servlet.version}</version>
             <scope>provided</scope>
         </dependency>
+
         <!--Jsp Servlets -->
         <dependency>
             <groupId>javax.servlet.jsp</groupId>
@@ -82,6 +87,7 @@
             <artifactId>jstl</artifactId>
             <version>1.2</version>
         </dependency>
+
         <!--Jackson-->
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>

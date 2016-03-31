@@ -80,7 +80,7 @@
                                 <div class="treeContent">
                                     <ul class="tree">
                                         <c:set var="node" value="${topLvl}" scope="request"/>
-                                        <li> <c:import url="/WEB-INF/jsp/node.jsp"/></li>
+                                        <li> <c:import url="node.jsp"/></li>
                                     </ul>
                                 </div>
                             </div>
