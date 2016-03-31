@@ -294,7 +294,7 @@ ul.tree li a:hover {
     text-shadow: 0 1px 0 rgba(255, 255, 255, 1);
 
     background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#f8f8f8), to(#e9e9e9));
-    background: -moz-linear-gradient(0% 0% 270deg, #f8f8f8, #e9e9e9);
+    /*background: -moz-linear-gradient(0% 0% 270deg, #f8f8f8, #e9e9e9);*/
 }
 
 .search-page a:link {
@@ -306,7 +306,7 @@ ul.tree li a:hover {
 .search-page:hover {
     background: #fefefe;
     background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#FEFEFE), to(#f0f0f0));
-    background: -moz-linear-gradient(0% 0% 270deg, #FEFEFE, #f0f0f0);
+    /*background: -moz-linear-gradient(0% 0% 270deg, #FEFEFE, #f0f0f0);*/
 }
 
 .fixedTable {
@@ -329,7 +329,7 @@ select {
 }
 
 .advTable {
-    width: 80% align-content : center;
+    width: 80%; align-content : center;
     table-layout: fixed;
 
     /*margin-left: auto;*/

@@ -26,7 +26,6 @@
 
     <properties>
         <deploymentPath>/</deploymentPath>
-        <reactome.data.version>0.0.2-SNAPSHOT</reactome.data.version>
         <reactome.search.version>0.0.1-SNAPSHOT</reactome.search.version>
         <spring.version>4.2.4.RELEASE</spring.version>
         <javax.servlet.version>4.0.0-b01</javax.servlet.version>
@@ -39,12 +38,6 @@
     </properties>
 
     <dependencies>
-        <!--Reactome data-->
-        <dependency>
-            <groupId>org.reactome.server.tools</groupId>
-            <artifactId>graph-core</artifactId>
-            <version>${reactome.data.version}</version>
-        </dependency>
 
         <!--Reactome search-->
         <dependency>
