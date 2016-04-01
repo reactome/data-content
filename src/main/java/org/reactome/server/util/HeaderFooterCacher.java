@@ -34,7 +34,7 @@ public class HeaderFooterCacher extends Thread {
 
     private static final Integer MINUTES = 15;
 
-    private String server;
+    private final String server;
 
     @Autowired
     public HeaderFooterCacher(@Value("${template_server_host}") String server) {
@@ -71,9 +71,7 @@ public class HeaderFooterCacher extends Thread {
             FileOutputStream out = new FileOutputStream(path + fileName);
             out.write(content.getBytes());
             out.close();
-        } catch (NullPointerException e){
-            e.printStackTrace();
-        } catch (IOException e) {
+        } catch (NullPointerException | IOException e){
             e.printStackTrace();
         }
     }

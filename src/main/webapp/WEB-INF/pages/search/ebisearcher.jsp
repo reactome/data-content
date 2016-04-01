@@ -21,7 +21,7 @@
                             </c:url>
                             <c:choose>
                                 <c:when test="${cluster}">
-                                    <h3><a href="./query${url}<mytag:today name="species" value="${species}"/>&amp;types=${result.typeName}<mytag:today name="compartments" value="${compartments}"/><mytag:today name="keywords" value="${keywords}"/>&amp;cluster=${cluster}" title="show all ${result.typeName}" rel="nofollow">${result.typeName}</a> <span>(${result.rowCount} results from a total of ${result.entriesCount})</span></h3>
+                                    <h3><a href="./query${url}<mytag:linkEscape name="species" value="${species}"/>&amp;types=${result.typeName}<mytag:linkEscape name="compartments" value="${compartments}"/><mytag:linkEscape name="keywords" value="${keywords}"/>&amp;cluster=${cluster}" title="show all ${result.typeName}" rel="nofollow">${result.typeName}</a> <span>(${result.rowCount} results from a total of ${result.entriesCount})</span></h3>
                                 </c:when>
                                 <c:otherwise>
                                     <h3>${result.typeName} <span>(${result.rowCount} results from a total of ${result.entriesCount})</span></h3>
@@ -91,7 +91,7 @@
                                     <c:url var="url" value="">
                                         <c:param name="q" value="${q}"/>
                                     </c:url>
-                                    <a class="search-page" href="./query${url}<mytag:today name="species" value="${species}"/><mytag:today name="types" value="${types}"/><mytag:today name="compartments" value="${compartments}"/><mytag:today name="keywords" value="${keywords}"/>&amp;cluster=${cluster}&amp;page=1">first</a>
+                                    <a class="search-page" href="./query${url}<mytag:linkEscape name="species" value="${species}"/><mytag:linkEscape name="types" value="${types}"/><mytag:linkEscape name="compartments" value="${compartments}"/><mytag:linkEscape name="keywords" value="${keywords}"/>&amp;cluster=${cluster}&amp;page=1">first</a>
                                 </c:otherwise>
                             </c:choose>
                             <c:forEach var="val" begin="2" end="${maxpage - 1}" >
@@ -104,7 +104,7 @@
                                             <c:url var="url" value="">
                                                 <c:param name="q" value="${q}"/>
                                             </c:url>
-                                            <a class="search-page" href="./query${url}<mytag:today name="species" value="${species}"/><mytag:today name="types" value="${types}"/><mytag:today name="compartments" value="${compartments}"/><mytag:today name="keywords" value="${keywords}"/>&amp;cluster=${cluster}&amp;page=${val}">${val}</a>
+                                            <a class="search-page" href="./query${url}<mytag:linkEscape name="species" value="${species}"/><mytag:linkEscape name="types" value="${types}"/><mytag:linkEscape name="compartments" value="${compartments}"/><mytag:linkEscape name="keywords" value="${keywords}"/>&amp;cluster=${cluster}&amp;page=${val}">${val}</a>
                                         </c:otherwise>
                                     </c:choose>
                                 </c:if>
@@ -117,7 +117,7 @@
                                     <c:url var="url" value="">
                                         <c:param name="q" value="${q}"/>
                                     </c:url>
-                                    <a class="search-page" href="./query${url}<mytag:today name="species" value="${species}"/><mytag:today name="types" value="${types}"/><mytag:today name="compartments" value="${compartments}"/><mytag:today name="keywords" value="${keywords}"/>&amp;cluster=${cluster}&amp;page=${maxpage}">last</a>
+                                    <a class="search-page" href="./query${url}<mytag:linkEscape name="species" value="${species}"/><mytag:linkEscape name="types" value="${types}"/><mytag:linkEscape name="compartments" value="${compartments}"/><mytag:linkEscape name="keywords" value="${keywords}"/>&amp;cluster=${cluster}&amp;page=${maxpage}">last</a>
                                 </c:otherwise>
                             </c:choose>
                         </c:when>

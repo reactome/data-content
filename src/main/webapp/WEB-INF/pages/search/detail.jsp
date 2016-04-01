@@ -1,6 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<%@taglib prefix="mytag" uri="/WEB-INF/tags/customTag.tld"%>
 
 <c:import url="header.jsp"/>
 <div class="ebi-content" >

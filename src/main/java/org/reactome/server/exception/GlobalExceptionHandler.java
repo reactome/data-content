@@ -36,22 +36,15 @@ class GlobalExceptionHandler {
 //    @ResponseStatus(value= HttpStatus.INTERNAL_SERVER_ERROR, reason="EnricherException occurred")
     @ExceptionHandler(EnricherException.class)
     public ModelAndView handleOtherExceptions(HttpServletRequest request, EnricherException e) {
-        return buildModelView(PAGE, request, e);
+        return buildModelView(request, e);
     }
 
 //    @ResponseStatus(value= HttpStatus.INTERNAL_SERVER_ERROR, reason="SolrSearcherException occurred")
     @ExceptionHandler(SolrSearcherException.class)
     public ModelAndView handleSolrSearcherException(HttpServletRequest request, SolrSearcherException e) {
-        return buildModelView(PAGE, request, e);
+        return buildModelView(request, e);
 
     }
-
-//    @ResponseStatus(value= HttpStatus.INTERNAL_SERVER_ERROR, reason="SearchServiceException occurred")
-//    @ExceptionHandler(SearchServiceException.class)
-//    public ModelAndView handleSQLException(HttpServletRequest request, SearchServiceException e) {
-//        return buildModelView(PAGE, request, e);
-//
-//    }
 
     @ResponseStatus(value = HttpStatus.NOT_FOUND, reason = "IOException occurred")
     @ExceptionHandler(IOException.class)
@@ -59,15 +52,16 @@ class GlobalExceptionHandler {
         logger.error("IOException handler executed");  //returning 404 error code
     }
 
-    public ModelAndView buildModelView(String modelName, HttpServletRequest request, Exception e) {
+    private ModelAndView buildModelView(HttpServletRequest request, Exception e) {
         logger.info("Exception occurred:: URL=" + request.getRequestURL());
 
-        ModelAndView model = new ModelAndView(modelName);
+        ModelAndView model = new ModelAndView(PAGE);
         model.addObject(EXCEPTION, e);
         model.addObject(URL, request.getRequestURL());
 
         model.addObject(SUBJECT, "Unexpected error occurred.");
 
+        @SuppressWarnings("StringBufferReplaceableByString")
         StringBuilder sb = new StringBuilder();
         sb.append("Dear HelpDesk,");
         sb.append("\n\n");

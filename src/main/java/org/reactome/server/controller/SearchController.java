@@ -44,9 +44,11 @@ class SearchController {
     @Autowired
     private MailService mailService;
 
-    private Logger logger = LoggerFactory.getLogger(SearchController.class);
+    private static final Logger logger = LoggerFactory.getLogger(SearchController.class);
 
+    private static String defaultSubject;
     private static final int rowCount = 30;
+    private Map<Long, InteractorResource> interactorResourceMap = new HashMap<>();
 
     private static final String SPECIES_FACET = "species_facet";
     private static final String TYPES_FACET = "type_facet";
@@ -59,35 +61,29 @@ class SearchController {
     private static final String KEYWORDS = "keywords";
     private static final String COMPARTMENTS = "compartments";
 
+    private static final String TITLE = "title";
     private static final String ENTRY = "entry";
     private static final String GROUPED_RESULT = "groupedResult";
     private static final String SUGGESTIONS = "suggestions";
-
     private static final String PAGE = "page";
     private static final String MAX_PAGE = "maxpage";
     private static final String CLUSTER = "cluster";
 
-    private static final String TITLE = "title";
-
     private static final String MAIL_SUBJECT = "subject";
     private static final String MAIL_SUBJECT_PLACEHOLDER = "[SEARCH] No results found for ";
-
     private static final String MAIL_MESSAGE = "message";
 
     private static final String INTERACTOR_RESOURCES_MAP = "interactorResourceMap";
     private static final String EVIDENCES_URL_MAP = "evidencesUrlMap";
 
-
-    private static String defaultSubject;
-
     // PAGES REDIRECT
     private static final String PAGE_DETAIL = "search/detail";
     private static final String PAGE_INTERACTOR = "search/interactor";
 
-    private static final String PAGE_NODETAILSFOUND = "search/nodetailsfound";
-    private static final String PAGE_NORESULTSFOUND = "search/noresultsfound";
-    private static final String PAGE_EBIADVANCED = "search/ebiadvanced";
-    private static final String PAGE_EBISEARCHER = "search/ebisearcher";
+    private static final String PAGE_NO_DETAILS_FOUND = "search/nodetailsfound";
+    private static final String PAGE_NO_RESULTS_FOUND = "search/noresultsfound";
+    private static final String PAGE_EBI_ADVANCED = "search/ebiadvanced";
+    private static final String PAGE_EBI_SEARCHER = "search/ebisearcher";
 
     @Value("${mail_error_dest}")
     private String mailErrorDest; // E
@@ -97,8 +93,6 @@ class SearchController {
 
     @Autowired
     private InteractorResourceService interactorResourceService;
-
-    private Map<Long, InteractorResource> interactorResourceMap = new HashMap<>();
 
     /**
      * Method for autocompletion
@@ -128,7 +122,7 @@ class SearchController {
         model.addAttribute(KEYWORDS_FACET, facetMapping.getKeywordFacet());
         model.addAttribute(COMPARTMENTS_FACET, facetMapping.getCompartmentFacet());
         model.addAttribute(TITLE, "advanced Search");
-        return PAGE_EBIADVANCED;
+        return PAGE_EBI_ADVANCED;
     }
 
     /**
@@ -142,22 +136,19 @@ class SearchController {
      * @throws SolrSearcherException
      */
     @RequestMapping(value = "/detail/{id:.*}", method = RequestMethod.GET)
-    public String detail(@PathVariable String id,
-                         ModelMap model) throws EnricherException, SolrSearcherException {
-        cacheInteractorResources();
+    public String detail(@PathVariable String id, ModelMap model) throws EnricherException, SolrSearcherException {
 
+        cacheInteractorResources();
         EnrichedEntry entry = searchService.getEntryById(id);
         if (entry != null) {
             model.addAttribute(ENTRY, entry);
             model.addAttribute(TITLE, entry.getName());
             model.addAttribute(INTERACTOR_RESOURCES_MAP, interactorResourceMap); // interactor URL
             model.addAttribute(EVIDENCES_URL_MAP, prepareEvidencesURLs(entry.getInteractionList())); // evidencesURL
-
             return PAGE_DETAIL;
         } else {
             autoFillDetailsPage(model, id);
-
-            return PAGE_NODETAILSFOUND;
+            return PAGE_NO_DETAILS_FOUND;
         }
     }
 
@@ -171,20 +162,16 @@ class SearchController {
      * @throws SolrSearcherException
      */
     @RequestMapping(value = "/detail/interactor/{id:.*}", method = RequestMethod.GET)
-    public String interactorDetail(@PathVariable String id,
-                                   ModelMap model) throws EnricherException, SolrSearcherException {
+    public String interactorDetail(@PathVariable String id, ModelMap model) throws EnricherException, SolrSearcherException {
 
         InteractorEntry entry = searchService.getInteractionDetail(id);
         if (entry != null) {
             model.addAttribute(ENTRY, entry);
             model.addAttribute(TITLE, entry.getName());
-
             return PAGE_INTERACTOR;
         } else {
-
             autoFillDetailsPage(model, id);
-
-            return PAGE_NODETAILSFOUND;
+            return PAGE_NO_DETAILS_FOUND;
         }
     }
 
@@ -198,7 +185,7 @@ class SearchController {
      * @throws SolrSearcherException
      */
     @RequestMapping(value = "/query", method = RequestMethod.GET)
-    public String search(@RequestParam(required = true) String q,
+    public String search(@RequestParam String q,
                          @RequestParam(required = false) List<String> species,
                          @RequestParam(required = false) List<String> types,
                          @RequestParam(required = false) List<String> keywords,
@@ -206,13 +193,10 @@ class SearchController {
                          @RequestParam(required = false) Boolean cluster,
                          @RequestParam(required = false) Integer page,
                          ModelMap model) throws SolrSearcherException {
+
         if (q != null && !q.isEmpty()) {
-            if (cluster == null) {
-                cluster = false;
-            }
-            if (page == null || page == 0) {
-                page = 1;
-            }
+            if (cluster == null) cluster = false;
+            if (page == null || page == 0) page = 1;
 
             q = cleanReceivedParameter(q);
             species = cleanReceivedParameters(species);
@@ -227,68 +211,33 @@ class SearchController {
             model.addAttribute(COMPARTMENTS, compartments);
             model.addAttribute(KEYWORDS, keywords);
             model.addAttribute(CLUSTER, cluster);
-            Query queryObject = new Query(q, species, types, compartments, keywords);
+            model.addAttribute(CLUSTER, cluster);
             model.addAttribute(PAGE, page);
-            FacetMapping facetMapping = searchService.getFacetingInformation(queryObject);
-            // Faceting information is used to determine if the query with the currently selected filters
-            // will return any results. If nothing is found, all the selected filters will be removed and
-            // another query will be sent to Solr
-            if (facetMapping != null && facetMapping.getTotalNumFount() > 0) {
-                model.addAttribute(SPECIES_FACET, facetMapping.getSpeciesFacet());
-                model.addAttribute(TYPES_FACET, facetMapping.getTypeFacet());
-                model.addAttribute(KEYWORDS_FACET, facetMapping.getKeywordFacet());
-                model.addAttribute(COMPARTMENTS_FACET, facetMapping.getCompartmentFacet());
-                Integer typeCount = getTypeCount(types, facetMapping);
-                if (typeCount != 0) {
-                    Integer rows = rowCount;
-                    if (cluster) {
-                        rows = rowCount / typeCount;
-                    }
-                    queryObject.setStart(rows * (page - 1));
-                    queryObject.setRows(rows);
-                    GroupedResult groupedResult = searchService.getEntries(queryObject, cluster);
-                    double resultCount = getHighestResultCount(groupedResult);
-                    model.addAttribute(MAX_PAGE, (int) Math.ceil(resultCount / rows));
-                    model.addAttribute(GROUPED_RESULT, groupedResult);
-                }
-                return PAGE_EBISEARCHER;
+
+            Query queryObject = new Query(q, species, types, compartments, keywords);
+            SearchResult searchResult = searchService.getSearchResult(queryObject, rowCount, page, cluster);
+
+            if (searchResult != null) {
+                model.addAttribute(SPECIES_FACET, searchResult.getFacetMapping().getSpeciesFacet());
+                model.addAttribute(TYPES_FACET, searchResult.getFacetMapping().getTypeFacet());
+                model.addAttribute(KEYWORDS_FACET, searchResult.getFacetMapping().getKeywordFacet());
+                model.addAttribute(COMPARTMENTS_FACET, searchResult.getFacetMapping().getCompartmentFacet());
+                model.addAttribute(MAX_PAGE, (int) Math.ceil(searchResult.getResultCount() / searchResult.getRows()));
+                model.addAttribute(GROUPED_RESULT, searchResult.getGroupedResult());
+                return PAGE_EBI_SEARCHER;
             } else {
-                facetMapping = searchService.getFacetingInformation(new Query(q, null, null, null, null));
-                if (facetMapping != null && facetMapping.getTotalNumFount() > 0) {
-                    model.addAttribute(SPECIES_FACET, facetMapping.getSpeciesFacet());
-                    model.addAttribute(TYPES_FACET, facetMapping.getTypeFacet());
-                    model.addAttribute(KEYWORDS_FACET, facetMapping.getKeywordFacet());
-                    model.addAttribute(COMPARTMENTS_FACET, facetMapping.getCompartmentFacet());
-                    Integer typeCount = getTypeCount(types, facetMapping);
-                    if (typeCount != 0) {
-                        Integer rows = rowCount;
-                        if (cluster) {
-                            rows = rowCount / typeCount;
-                        }
-                        queryObject.setStart(rows * (page - 1));
-                        queryObject.setRows(rows);
-                        GroupedResult groupedResult = searchService.getEntries(queryObject, cluster);
-                        double resultCount = getHighestResultCount(groupedResult);
-                        model.addAttribute(MAX_PAGE, (int) Math.ceil(resultCount / rows));
-                        model.addAttribute(GROUPED_RESULT, groupedResult);
-                    }
-                    return PAGE_EBISEARCHER;
-                } else {
-                    // Generating spell check suggestions if no faceting information was found, while using no filters
-                    model.addAttribute(SUGGESTIONS, searchService.getSpellcheckSuggestions(q));
-                }
+                // Generating spellcheck suggestions if no faceting informatioon was found, while using no filters
+                model.addAttribute(SUGGESTIONS, searchService.getSpellcheckSuggestions(q));
             }
         }
-
         autoFillContactForm(model, q);
-
-        return PAGE_NORESULTSFOUND;
+        return PAGE_NO_RESULTS_FOUND;
     }
 
     @RequestMapping(value = "/contact", method = RequestMethod.POST)
     @ResponseBody
-    public String contact(@RequestParam(required = true) String contactName,
-                          @RequestParam(required = true) String mailAddress,
+    public String contact(@RequestParam String contactName,
+                          @RequestParam String mailAddress,
                           @RequestParam(required = false, defaultValue = "false") Boolean sendEmailCopy,
                           @RequestParam String message,
                           @RequestParam String exception,
@@ -298,52 +247,14 @@ class SearchController {
         String to = mailSupportDest;
         if (source.equals("E")) {
             to = mailErrorDest;
-
             message = message.concat("\n\n URL: " + url);
             message = message.concat("\n\n Exception: " + exception);
-
             defaultSubject = "Unexpected error occurred.";
         }
-
-
         message = message.concat("--\n").concat(contactName);
-
         // Call email service.
         mailService.send(to, mailAddress, defaultSubject, message, sendEmailCopy);
-
         return "success";
-
-    }
-
-    /**
-     * Returns the highest result number for the different groups
-     *
-     * @param groupedResult result set
-     * @return double highest result number
-     */
-    private double getHighestResultCount(GroupedResult groupedResult) {
-        double max = 0;
-        for (Result result : groupedResult.getResults()) {
-            if (max < result.getEntriesCount()) {
-                max = result.getEntriesCount();
-            }
-        }
-        return max;
-    }
-
-    /**
-     * Returns either selected types size or available types size
-     *
-     * @param types        selected types
-     * @param facetMapping available types
-     * @return integer
-     */
-    private int getTypeCount(List<String> types, FacetMapping facetMapping) {
-        if (types != null) {
-            return types.size();
-        } else {
-            return facetMapping.getTypeFacet().getAvailable().size();
-        }
     }
 
     private String cleanReceivedParameter(String param) {
@@ -364,29 +275,23 @@ class SearchController {
         return null;
     }
 
-    public void autoFillContactForm(ModelMap model, String search) {
+    private void autoFillContactForm(ModelMap model, String search) {
+
         final String MAIL_MESSAGE_PLACEHOLDER = "Dear Helpdesk,\n\nI've searched for \"%s\" and couldn't find it.\n\nThank you.\n\n";
-
         model.addAttribute(Q, search);
-
         try {
             List<String> suggestions = searchService.getSpellcheckSuggestions(search);
             model.addAttribute(SUGGESTIONS, suggestions);
-
         } catch (SolrSearcherException e) {
             logger.error("Error building suggestions on autoFillContactForm.");
         }
-
         defaultSubject = MAIL_SUBJECT_PLACEHOLDER + search;
         model.addAttribute(MAIL_SUBJECT, defaultSubject);
-
         model.addAttribute(MAIL_MESSAGE, String.format(MAIL_MESSAGE_PLACEHOLDER, search));
-
         model.addAttribute(TITLE, "No results found for " + search);
-
     }
 
-    public void autoFillDetailsPage(ModelMap model, String search) {
+    private void autoFillDetailsPage(ModelMap model, String search) {
         model.addAttribute("search", search);
         model.addAttribute(TITLE, "No details found for " + search);
     }

@@ -2,8 +2,12 @@
 *.iml
 .idea
 
+header.jsp
+footer.jsp
+
 *target*
 *.jar
 *.war
 *.ear
 *.class
+
