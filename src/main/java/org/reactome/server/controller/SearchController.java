@@ -131,42 +131,6 @@ class SearchController {
         return PAGE_EBIADVANCED;
     }
 
-//    /**
-//     * Shows detailed information of an entry
-//     *
-//     * @param id      StId or DbId
-//     * @param version Reactome Database version
-//     *                //     * @param q,species,types,compartments,keywords parameters to save existing query and facets
-//     * @param model   SpringModel
-//     * @return Detailed page
-//     * @throws EnricherException
-//     * @throws SolrSearcherException
-//     */
-//    @RequestMapping(value = "/detail/v{version}/{id:.*}", method = RequestMethod.GET)
-//    public String detailVersion(@PathVariable String id,
-//                                @PathVariable Integer version,
-////                                 @RequestParam ( required = false ) String q,
-////                                 @RequestParam ( required = false ) String species,
-////                                 @RequestParam ( required = false ) String types,
-////                                 @RequestParam ( required = false ) String compartments,
-////                                 @RequestParam ( required = false ) String keywords,
-//                                ModelMap model) throws EnricherException, SolrSearcherException {
-////        model.addAttribute(Q, checkOutputIntegrity(q));
-////        model.addAttribute(SPECIES, checkOutputIntegrity(species));
-////        model.addAttribute(TYPES, checkOutputIntegrity(types));
-////        model.addAttribute(COMPARTMENTS, checkOutputIntegrity(compartments));
-////        model.addAttribute(KEYWORDS, checkOutputIntegrity(keywords));
-//        EnrichedEntry entry = searchService.getEntryById(version, id);
-//        if (entry != null) {
-//            model.addAttribute(ENTRY, entry);
-//            model.addAttribute(TITLE, entry.getName() + " (" + entry.getSpecies() + ")");
-//            return PAGE_DETAIL;
-//        } else {
-//            autoFillDetailsPage(model, id);
-//            return PAGE_NODETAILSFOUND;
-//        }
-//    }
-
     /**
      * Shows detailed information of an entry
      *
@@ -179,17 +143,7 @@ class SearchController {
      */
     @RequestMapping(value = "/detail/{id:.*}", method = RequestMethod.GET)
     public String detail(@PathVariable String id,
-//                         @RequestParam ( required = false ) String q,
-//                         @RequestParam ( required = false ) String species,
-//                         @RequestParam ( required = false ) String types,
-//                         @RequestParam ( required = false ) String compartments,
-//                         @RequestParam ( required = false ) String keywords,
                          ModelMap model) throws EnricherException, SolrSearcherException {
-//        model.addAttribute(Q, checkOutputIntegrity(q));
-//        model.addAttribute(SPECIES, checkOutputIntegrity(species));
-//        model.addAttribute(TYPES, checkOutputIntegrity(types));
-//        model.addAttribute(COMPARTMENTS, checkOutputIntegrity(compartments));
-//        model.addAttribute(KEYWORDS, checkOutputIntegrity(keywords));
         cacheInteractorResources();
 
         EnrichedEntry entry = searchService.getEntryById(id);
@@ -206,7 +160,6 @@ class SearchController {
             return PAGE_NODETAILSFOUND;
         }
     }
-
 
     /**
      * Shows detailed information of an entry
@@ -235,14 +188,6 @@ class SearchController {
         }
     }
 
-
-//    //    quick and ugly fix
-//    @ResponseStatus(value= HttpStatus.NOT_FOUND, reason="IOException occurred")
-//    @RequestMapping(value = "/query/", method = RequestMethod.GET)
-//    public void error () {
-////        return "../../resources/404.jas";
-//    }
-
     /**
      * spellcheck has to be applied after faceting search because dictionary can not contain 100% all index info
      *
@@ -269,12 +214,18 @@ class SearchController {
                 page = 1;
             }
 
-            model.addAttribute(Q, checkOutputIntegrity(q));
+            q = cleanReceivedParameter(q);
+            species = cleanReceivedParameters(species);
+            types = cleanReceivedParameters(types);
+            keywords = cleanReceivedParameters(keywords);
+            compartments = cleanReceivedParameters(compartments);
+
+            model.addAttribute(Q, q);
             model.addAttribute(TITLE, "Search results for " + q);
-            model.addAttribute(SPECIES, checkOutputListIntegrity(species));
-            model.addAttribute(TYPES, checkOutputListIntegrity(types));
-            model.addAttribute(COMPARTMENTS, checkOutputListIntegrity(compartments));
-            model.addAttribute(KEYWORDS, checkOutputListIntegrity(keywords));
+            model.addAttribute(SPECIES, species);
+            model.addAttribute(TYPES, types);
+            model.addAttribute(COMPARTMENTS, compartments);
+            model.addAttribute(KEYWORDS, keywords);
             model.addAttribute(CLUSTER, cluster);
             Query queryObject = new Query(q, species, types, compartments, keywords);
             model.addAttribute(PAGE, page);
@@ -323,7 +274,7 @@ class SearchController {
                     }
                     return PAGE_EBISEARCHER;
                 } else {
-                    // Generating spellcheck suggestions if no faceting informatioon was found, while using no filters
+                    // Generating spell check suggestions if no faceting information was found, while using no filters
                     model.addAttribute(SUGGESTIONS, searchService.getSpellcheckSuggestions(q));
                 }
             }
@@ -395,30 +346,22 @@ class SearchController {
         }
     }
 
-    private String checkOutputIntegrity(String output) {
-        if (output != null && !output.isEmpty()) {
-            output = output.replaceAll("<", "<").replaceAll(">", ">");
-            output = output.replaceAll("eval\\((.*)\\)", "");
-            output = output.replaceAll("[\\\"\\\'][\\s]*((?i)javascript):(.*)[\\\"\\\']", "\"\"");
-            output = output.replaceAll("((?i)script)", "");
-            return Jsoup.clean(output, Whitelist.basic());
+    private String cleanReceivedParameter(String param) {
+        if (param != null && !param.isEmpty()) {
+            return Jsoup.clean(param, Whitelist.basic());
         }
         return null;
     }
 
-    private List<String> checkOutputListIntegrity(List<String> list) {
+    private List<String> cleanReceivedParameters(List<String> list) {
         if (list != null && !list.isEmpty()) {
             List<String> checkedList = new ArrayList<>();
             for (String output : list) {
-                checkedList.add(checkOutputIntegrity(output));
+                checkedList.add(cleanReceivedParameter(output));
             }
             return checkedList;
         }
         return null;
-    }
-
-    public void setSearchService(SearchService searchService) {
-        this.searchService = searchService;
     }
 
     public void autoFillContactForm(ModelMap model, String search) {
