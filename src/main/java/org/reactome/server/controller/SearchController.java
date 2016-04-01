@@ -1,13 +1,7 @@
 package org.reactome.server.controller;
 
-import org.jsoup.Jsoup;
-import org.jsoup.safety.Whitelist;
-import org.reactome.server.tools.interactors.model.Interaction;
-import org.reactome.server.tools.interactors.model.InteractionDetails;
 import org.reactome.server.tools.interactors.model.InteractorResource;
 import org.reactome.server.tools.interactors.service.InteractorResourceService;
-import org.reactome.server.tools.interactors.util.InteractorConstant;
-import org.reactome.server.tools.interactors.util.Toolbox;
 import org.reactome.server.tools.search.domain.*;
 import org.reactome.server.tools.search.exception.EnricherException;
 import org.reactome.server.tools.search.exception.SolrSearcherException;
@@ -22,10 +16,11 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static org.reactome.server.util.WebUtils.*;
 
 /**
  * Spring WEB Controller
@@ -38,13 +33,16 @@ import java.util.Map;
 @RequestMapping("")
 class SearchController {
 
+    private static final Logger logger = LoggerFactory.getLogger(SearchController.class);
+
     @Autowired
     private SearchService searchService;
 
     @Autowired
     private MailService mailService;
 
-    private static final Logger logger = LoggerFactory.getLogger(SearchController.class);
+    @Autowired
+    private InteractorResourceService interactorResourceService;
 
     private static String defaultSubject;
     private static final int rowCount = 30;
@@ -91,8 +89,18 @@ class SearchController {
     @Value("${mail_support_dest}")
     private String mailSupportDest; // W
 
-    @Autowired
-    private InteractorResourceService interactorResourceService;
+    public SearchController() {
+        try {
+            /**
+             * These resources are the same all the time.
+             * In order to speed up the query result and less memory usage, I decided to keep the resource out of the query
+             * and keep a cache with them. Thus we avoid having the same information for all results.
+             */
+            interactorResourceMap = interactorResourceService.getAllMappedById();
+        } catch (SQLException e) {
+            logger.error("An error has occurred while querying InteractorResource: " + e.getMessage(), e);
+        }
+    }
 
     /**
      * Method for autocompletion
@@ -138,7 +146,6 @@ class SearchController {
     @RequestMapping(value = "/detail/{id:.*}", method = RequestMethod.GET)
     public String detail(@PathVariable String id, ModelMap model) throws EnricherException, SolrSearcherException {
 
-        cacheInteractorResources();
         EnrichedEntry entry = searchService.getEntryById(id);
         if (entry != null) {
             model.addAttribute(ENTRY, entry);
@@ -257,24 +264,6 @@ class SearchController {
         return "success";
     }
 
-    private String cleanReceivedParameter(String param) {
-        if (param != null && !param.isEmpty()) {
-            return Jsoup.clean(param, Whitelist.basic());
-        }
-        return null;
-    }
-
-    private List<String> cleanReceivedParameters(List<String> list) {
-        if (list != null && !list.isEmpty()) {
-            List<String> checkedList = new ArrayList<>();
-            for (String output : list) {
-                checkedList.add(cleanReceivedParameter(output));
-            }
-            return checkedList;
-        }
-        return null;
-    }
-
     private void autoFillContactForm(ModelMap model, String search) {
 
         final String MAIL_MESSAGE_PLACEHOLDER = "Dear help desk,\n\nI've searched for \"%s\" and couldn't find it.\n\nThank you.\n\n";
@@ -294,45 +283,5 @@ class SearchController {
     private void autoFillDetailsPage(ModelMap model, String search) {
         model.addAttribute("search", search);
         model.addAttribute(TITLE, "No details found for " + search);
-    }
-
-    /**
-     * These resources are the same all the time.
-     * In order to speed up the query result and less memory usage, I decided to keep the resource out of the query
-     * and keep a cache with them. Thus we avoid having the same information for all result.
-     * <p>
-     * This method set the map class attribute.
-     */
-    private void cacheInteractorResources() {
-        try {
-            interactorResourceMap = interactorResourceService.getAllMappedById();
-        } catch (SQLException e) {
-            logger.error("An error has occurred while querying InteractorResource: " + e.getMessage(), e);
-        }
-    }
-
-    /**
-     * Prepare interaction evidences links.
-     * Gets all interaction evidences of a given interactor and build the URL
-     * Having all this logic in JSTL wouldn't be clear.
-     *
-     * @return map as accession and the URL
-     */
-    private Map<String, String> prepareEvidencesURLs(List<Interaction> interactions) {
-        Map<String, String> evidencesUrlMap = new HashMap<>();
-        List<String> evidenceIds = new ArrayList<>();
-        if (interactions != null) {
-            for (Interaction interaction : interactions) {
-                List<InteractionDetails> evidences = interaction.getInteractionDetailsList();
-                for (InteractionDetails evidence : evidences) {
-                    evidenceIds.add(evidence.getInteractionAc());
-                }
-
-                evidencesUrlMap.put(interaction.getInteractorB().getAcc(), Toolbox.getEvidencesURL(evidenceIds, InteractorConstant.STATIC));
-                evidenceIds.clear();
-            }
-        }
-
-        return evidencesUrlMap;
     }
 }
