@@ -89,7 +89,8 @@ class SearchController {
     @Value("${mail_support_dest}")
     private String mailSupportDest; // W
 
-    public SearchController() {
+    @Autowired
+    public SearchController(InteractorResourceService interactorResourceService) {
         try {
             /**
              * These resources are the same all the time.
