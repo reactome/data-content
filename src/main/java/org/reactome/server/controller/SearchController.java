@@ -226,7 +226,7 @@ class SearchController {
                 model.addAttribute(GROUPED_RESULT, searchResult.getGroupedResult());
                 return PAGE_EBI_SEARCHER;
             } else {
-                // Generating spellcheck suggestions if no faceting informatioon was found, while using no filters
+                // Generating spell check suggestions if no faceting information was found, while using no filters
                 model.addAttribute(SUGGESTIONS, searchService.getSpellcheckSuggestions(q));
             }
         }
@@ -277,7 +277,7 @@ class SearchController {
 
     private void autoFillContactForm(ModelMap model, String search) {
 
-        final String MAIL_MESSAGE_PLACEHOLDER = "Dear Helpdesk,\n\nI've searched for \"%s\" and couldn't find it.\n\nThank you.\n\n";
+        final String MAIL_MESSAGE_PLACEHOLDER = "Dear help desk,\n\nI've searched for \"%s\" and couldn't find it.\n\nThank you.\n\n";
         model.addAttribute(Q, search);
         try {
             List<String> suggestions = searchService.getSpellcheckSuggestions(search);
