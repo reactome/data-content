@@ -1,4 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="mytag" uri="/WEB-INF/tags/customTag.tld"%>
 
 <c:import url="header.jsp"/>
 <div class="ebi-content">
@@ -24,7 +25,7 @@
                                 <c:url var="url" value="">
                                     <c:param name="q" value="${suggestion}"/>
                                 </c:url>
-                                <li><a href="./query${url}<mytag:today name="species" value="${species}"/><mytag:today name="types" value="${types}"/><mytag:today name="compartments" value="${compartments}"/><mytag:today name="keywords" value="${keywords}"/>&amp;cluster=${cluster}" title="search for ${suggestion}" rel="nofollow">${suggestion}</a></li>
+                                <li><a href="./query${url}<mytag:linkEscape name="species" value="${species}"/><mytag:linkEscape name="types" value="${types}"/><mytag:linkEscape name="compartments" value="${compartments}"/><mytag:linkEscape name="keywords" value="${keywords}"/>&amp;cluster=${cluster}" title="search for ${suggestion}" rel="nofollow">${suggestion}</a></li>
                             </c:forEach>
                         </ul>
                     </div>
