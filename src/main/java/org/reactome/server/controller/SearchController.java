@@ -41,8 +41,8 @@ class SearchController {
     @Autowired
     private MailService mailService;
 
-    @Autowired
-    private InteractorResourceService interactorResourceService;
+    //@Autowired
+    //private InteractorResourceService interactorResourceService;
 
     private static String defaultSubject;
     private static final int rowCount = 30;
@@ -76,12 +76,12 @@ class SearchController {
 
     // PAGES REDIRECT
     private static final String PAGE_DETAIL = "search/detail";
-    private static final String PAGE_INTERACTOR = "search/interactor";
+    private static final String PAGE_INTERACTOR = "search/interactors";
 
-    private static final String PAGE_NO_DETAILS_FOUND = "search/nodetailsfound";
-    private static final String PAGE_NO_RESULTS_FOUND = "search/noresultsfound";
-    private static final String PAGE_EBI_ADVANCED = "search/ebiadvanced";
-    private static final String PAGE_EBI_SEARCHER = "search/ebisearcher";
+    private static final String PAGE_NO_DETAILS_FOUND = "search/noDetailsFound";
+    private static final String PAGE_NO_RESULTS_FOUND = "search/noResultsFound";
+    private static final String PAGE_EBI_ADVANCED = "search/advanced";
+    private static final String PAGE_EBI_SEARCHER = "search/results";
 
     @Value("${mail_error_dest}")
     private String mailErrorDest; // E

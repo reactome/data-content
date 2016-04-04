@@ -30,7 +30,7 @@ public class HeaderFooterCacher extends Thread {
 
     private static final String SEARCH_OPEN = "<!--SearchForm-->";
     private static final String SEARCH_CLOSE = "<!--/SearchForm-->";
-    private static final String SEARCH_REPLACE = "<jsp:include page=\"searchform.jsp\"/>";
+    private static final String SEARCH_REPLACE = "<jsp:include page=\"searchForm.jsp\"/>";
 
     private static final Integer MINUTES = 15;
 

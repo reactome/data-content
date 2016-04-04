@@ -22,7 +22,7 @@
                 <label for="querySearchBox"></label><textarea name="q" rows="10" id="querySearchBox" class="searchBox">(raf AND map) OR (name:"PTEN S170N") OR (apoptosis) OR stID:"REACT_12858.1" OR stID:"R-HSA-198344.1"</textarea>
             </div>
             <br>
-            <div>
+            <div class="advancedFilteringParam">
                 <h4>Filtering Parameters</h4>
                 <table class="advTable">
                     <thead>
@@ -77,9 +77,11 @@
                     </tr>
                     </tbody>
                 </table>
+
+                <input type="hidden" name="cluster" value="true"/>
+                <input type="submit" name="submitSearch" value="Search" class="submit" />
             </div>
-            <input type="hidden" name="cluster" value="true"/>
-            <input type="submit" name="submitSearch" value="Search" class="submit" />
+
         </form>
     </div>
 </div>

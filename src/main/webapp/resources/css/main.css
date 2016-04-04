@@ -171,7 +171,7 @@ div#search-results h4 a:active {
 }
 
 .list li a:hover {
-    font-size: 110%;
+    /*font-size: 110%;*/
     background: #f6f6f6;
 }
 
@@ -261,7 +261,7 @@ ul.tree li a {
 }
 
 ul.tree li a:hover {
-    font-size: 110%;
+    /*font-size: 110%;*/
     background: #f6f6f6;
 }
 
@@ -532,4 +532,8 @@ div#two {
     color: #05194C;
     border: 0px;
     padding: 0px;
+}
+
+.advancedFilteringParam {
+    padding-bottom: 20px;
 }

@@ -34,7 +34,7 @@
     </error-page>
     <error-page>
         <error-code>500</error-code>
-        <location>/WEB-INF/jsp/generic_error.jsp</location>
+        <location>/WEB-INF/pages/search/errorPage.jsp</location>
     </error-page>
     <error-page>
         <exception-type>org.springframework.web.bind.MissingServletRequestParameterException</exception-type>

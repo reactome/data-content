@@ -31,7 +31,7 @@
                 </c:otherwise>
             </c:choose>
         </div>
-        <c:import url="contact_form.jsp">
+        <c:import url="contactForm.jsp">
             <c:param name="source" value="W"/>
         </c:import>
 

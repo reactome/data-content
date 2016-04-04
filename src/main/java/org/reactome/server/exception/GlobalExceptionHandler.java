@@ -31,19 +31,16 @@ class GlobalExceptionHandler {
     private static final String MESSAGE = "message";
     private static final String TITLE = "title";
 
-    private static final String PAGE = "generic_error";
+    private static final String PAGE = "search/errorPage";
 
-//    @ResponseStatus(value= HttpStatus.INTERNAL_SERVER_ERROR, reason="EnricherException occurred")
     @ExceptionHandler(EnricherException.class)
     public ModelAndView handleOtherExceptions(HttpServletRequest request, EnricherException e) {
         return buildModelView(request, e);
     }
 
-//    @ResponseStatus(value= HttpStatus.INTERNAL_SERVER_ERROR, reason="SolrSearcherException occurred")
     @ExceptionHandler(SolrSearcherException.class)
     public ModelAndView handleSolrSearcherException(HttpServletRequest request, SolrSearcherException e) {
         return buildModelView(request, e);
-
     }
 
     @ResponseStatus(value = HttpStatus.NOT_FOUND, reason = "IOException occurred")
@@ -63,7 +60,7 @@ class GlobalExceptionHandler {
 
         @SuppressWarnings("StringBufferReplaceableByString")
         StringBuilder sb = new StringBuilder();
-        sb.append("Dear HelpDesk,");
+        sb.append("Dear help desk,");
         sb.append("\n\n");
         sb.append("An unexpected error has occurred during my search.");
         sb.append("\n\n");

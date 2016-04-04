@@ -12,7 +12,7 @@
       <!-- INTERACTORS TABLE -->
       <c:if test="${not empty entry.interactions}">
         <div class="grid_23  padding">
-          <h5>Interactions for <a href="${entry.url}" class="" title="Show ${entry.accession}" rel="nofollow">${entry.accession}</a></h5>
+          <h5>Interactions for <a href="${entry.url}" style="color: #009;" title="Show ${entry.accession}" rel="nofollow">${entry.accession}</a></h5>
           <div class="wrap">
             <table class="fixedTable">
               <thead>

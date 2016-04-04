@@ -3,7 +3,7 @@
 <c:import url="header.jsp"/>
 <div class="ebi-content">
     <div class="grid_23 padding">
-        <c:import url="contact_form.jsp">
+        <c:import url="contactForm.jsp">
             <c:param name="source" value="E"/>
         </c:import>
     </div>
