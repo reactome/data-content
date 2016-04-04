@@ -134,31 +134,31 @@ class SearchController {
         return PAGE_EBI_ADVANCED;
     }
 
-    /**
-     * Shows detailed information of an entry
-     *
-     * @param id    StId or DbId
-     *              //     * @param q,species,types,compartments,keywords parameters to save existing query and facets
-     * @param model SpringModel
-     * @return Detailed page
-     * @throws EnricherException
-     * @throws SolrSearcherException
-     */
-    @RequestMapping(value = "/detail/{id:.*}", method = RequestMethod.GET)
-    public String detail(@PathVariable String id, ModelMap model) throws EnricherException, SolrSearcherException {
-
-        EnrichedEntry entry = searchService.getEntryById(id);
-        if (entry != null) {
-            model.addAttribute(ENTRY, entry);
-            model.addAttribute(TITLE, entry.getName());
-            model.addAttribute(INTERACTOR_RESOURCES_MAP, interactorResourceMap); // interactor URL
-            model.addAttribute(EVIDENCES_URL_MAP, prepareEvidencesURLs(entry.getInteractionList())); // evidencesURL
-            return PAGE_DETAIL;
-        } else {
-            autoFillDetailsPage(model, id);
-            return PAGE_NO_DETAILS_FOUND;
-        }
-    }
+//    /**
+//     * Shows detailed information of an entry
+//     *
+//     * @param id    StId or DbId
+//     *              //     * @param q,species,types,compartments,keywords parameters to save existing query and facets
+//     * @param model SpringModel
+//     * @return Detailed page
+//     * @throws EnricherException
+//     * @throws SolrSearcherException
+//     */
+//    @RequestMapping(value = "/detail/{id:.*}", method = RequestMethod.GET)
+//    public String detail(@PathVariable String id, ModelMap model) throws EnricherException, SolrSearcherException {
+//
+//        EnrichedEntry entry = searchService.getEntryById(id);
+//        if (entry != null) {
+//            model.addAttribute(ENTRY, entry);
+//            model.addAttribute(TITLE, entry.getName());
+//            model.addAttribute(INTERACTOR_RESOURCES_MAP, interactorResourceMap); // interactor URL
+//            model.addAttribute(EVIDENCES_URL_MAP, prepareEvidencesURLs(entry.getInteractionList())); // evidencesURL
+//            return PAGE_DETAIL;
+//        } else {
+//            autoFillDetailsPage(model, id);
+//            return PAGE_NO_DETAILS_FOUND;
+//        }
+//    }
 
     /**
      * Shows detailed information of an entry

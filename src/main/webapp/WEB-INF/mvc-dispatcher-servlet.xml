@@ -52,4 +52,27 @@
         <constructor-arg name="database" ref="interactorsDB"/>
     </bean>
 
+    <bean class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+        <property name="targetClass" value="java.lang.System"/>
+        <property name="targetMethod" value="setProperty"/>
+        <property name="arguments">
+            <list>
+                <value>neo4j.user</value>
+                <value>${neo4j.user}</value>
+            </list>
+        </property>
+    </bean>
+
+    <bean class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+        <property name="targetClass" value="java.lang.System"/>
+        <property name="targetMethod" value="setProperty"/>
+        <property name="arguments">
+            <list>
+                <value>neo4j.password</value>
+                <value>${neo4j.password}</value>
+            </list>
+        </property>
+    </bean>
+
+
 </beans>

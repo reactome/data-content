@@ -316,10 +316,10 @@ ul.tree li a:hover {
 }
 
 /*select {*/
-    /*width: 22em;*/
-    /*height: 13em;*/
-    /*white-space: nowrap;*/
-    /*overflow: scroll;*/
+/*width: 22em;*/
+/*height: 13em;*/
+/*white-space: nowrap;*/
+/*overflow: scroll;*/
 /*}*/
 
 .advTable {
@@ -358,17 +358,17 @@ ul.tree li a:hover {
 }
 
 /*#double {*/
-    /*-webkit-column-count: 3;*/
-    /*-moz-column-count: 3;*/
-    /*-ms-column-count: 3;*/
-    /*-o-column-count: 3;*/
-    /*column-count: 3;*/
-    /*-webkit-column-gap: 15px;*/
-    /*-moz-column-gap: 15px;*/
-    /*-ms-column-gap: 15px;*/
-    /*-o-column-gap: 15px;*/
-    /*column-gap: 15px;*/
-    /*columns: 3;*/
+/*-webkit-column-count: 3;*/
+/*-moz-column-count: 3;*/
+/*-ms-column-count: 3;*/
+/*-o-column-count: 3;*/
+/*column-count: 3;*/
+/*-webkit-column-gap: 15px;*/
+/*-moz-column-gap: 15px;*/
+/*-ms-column-gap: 15px;*/
+/*-o-column-gap: 15px;*/
+/*column-gap: 15px;*/
+/*columns: 3;*/
 /*}*/
 
 .contact-form {
@@ -530,4 +530,55 @@ div#two {
 
 .advancedFilteringParam {
     padding-bottom: 20px;
+}
+
+
+.dataschema-tree {
+
+    border-collapse:collapse;
+    width:99%;
+    background-color:white;
+    margin:9px auto;
+    border:5px solid #f1f1f1;
+}
+
+.scrollable {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: auto;
+}
+
+.div-header {
+    color:#1F419A;
+    font-size: 108%;
+
+    padding: 9px 5px 5px 5px;
+
+    /*height: 35px;*/
+    background-color: #eeeeee;
+    background-image: -moz-linear-gradient(top, #eeeeee, #d8d8d8);
+    background-image: -webkit-gradient(linear,left top,left bottom,color-stop(0, #eeeeee),color-stop(1, #d8d8d8));
+    background-image: -webkit-linear-gradient(#eeeeee, #d8d8d8);
+    background-image: linear-gradient(top, #eeeeee, #d8d8d8);
+}
+
+ul.tree li.schema-item {
+    /*font-size: 12px;*/
+}
+
+/*.dataschema-tree ul {*/
+    /*padding-right: 0px;*/
+    /*margin-right: 0px;*/
+/*}*/
+
+.dataschema-tree ul.tree li {
+
+    margin-right: 0;
+    padding-right: 0;
+}
+
+.dataschema-tree ul.tree li.schema-item {
+    font-size: 12px;
 }
