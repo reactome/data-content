@@ -7,10 +7,6 @@
     padding-left: 5px;
 }
 
-b, strong {
-    font-weight: bold;
-}
-
 .term-list {
     list-style-type: none;
     padding-left: 0;
@@ -162,7 +158,6 @@ div#search-results h4 a:active {
 }
 
 .list li a {
-
     -webkit-transition: font-size 0.9s ease, background-color 0.9s ease;
     -moz-transition: font-size 0.9s ease, background-color 0.9s ease;
     -o-transition: font-size 0.9s ease, background-color 0.9s ease;
@@ -171,7 +166,6 @@ div#search-results h4 a:active {
 }
 
 .list li a:hover {
-    /*font-size: 110%;*/
     background: #f6f6f6;
 }
 
@@ -281,7 +275,7 @@ ul.tree li a:hover {
 
 .search-page {
     text-decoration: none;
-    link-style: none;
+    /*link-style: none;*/
     display: inline-block;
     padding: 0 9px;
     margin-right: 4px;
@@ -299,7 +293,7 @@ ul.tree li a:hover {
 
 .search-page a:link {
     text-decoration: none;
-    link-style: none;
+    /*link-style: none;*/
 
 }
 
@@ -321,12 +315,12 @@ ul.tree li a:hover {
     width: auto;
 }
 
-select {
-    width: 22em;
-    height: 13em;
-    white-space: nowrap;
-    overflow: scroll;
-}
+/*select {*/
+    /*width: 22em;*/
+    /*height: 13em;*/
+    /*white-space: nowrap;*/
+    /*overflow: scroll;*/
+/*}*/
 
 .advTable {
     width: 80%; align-content : center;
@@ -363,19 +357,19 @@ select {
     height: 10%;
 }
 
-#double {
-    -webkit-column-count: 3;
-    -moz-column-count: 3;
-    -ms-column-count: 3;
-    -o-column-count: 3;
-    column-count: 3;
-    -webkit-column-gap: 15px;
-    -moz-column-gap: 15px;
-    -ms-column-gap: 15px;
-    -o-column-gap: 15px;
-    column-gap: 15px;
-    columns: 3;
-}
+/*#double {*/
+    /*-webkit-column-count: 3;*/
+    /*-moz-column-count: 3;*/
+    /*-ms-column-count: 3;*/
+    /*-o-column-count: 3;*/
+    /*column-count: 3;*/
+    /*-webkit-column-gap: 15px;*/
+    /*-moz-column-gap: 15px;*/
+    /*-ms-column-gap: 15px;*/
+    /*-o-column-gap: 15px;*/
+    /*column-gap: 15px;*/
+    /*columns: 3;*/
+/*}*/
 
 .contact-form {
     padding: 1px;
@@ -469,8 +463,8 @@ select {
 }
 
 .wrap .fixedTable {
-    margin-bottom: 0px;
-    border-bottom: 0px;
+    margin-bottom: 0;
+    border-bottom: 0;
 }
 
 .wrap .fixedTable td {
@@ -481,13 +475,13 @@ select {
     /*border: 0px solid !important;*/
     height: 200px;
     overflow-y: auto;
-    border-top: 0px solid;
-    margin-top: 0px;
+    border-top: 0 solid;
+    margin-top: 0;
 }
 
 .wrap .inner_table_div table {
-    border-top: 0px solid;
-    margin-top: 0px;
+    border-top: 0 solid;
+    margin-top: 0;
 }
 
 .wrap .inner_table_div table td{
@@ -519,8 +513,8 @@ div#two {
     white-space: nowrap;
     text-overflow: ellipsis;
     color: #05194C;
-    border: 0px;
-    padding: 0px;
+    border: 0;
+    padding: 0;
 }
 
 .overme_5c {
@@ -530,8 +524,8 @@ div#two {
     white-space: nowrap;
     text-overflow: ellipsis;
     color: #05194C;
-    border: 0px;
-    padding: 0px;
+    border: 0;
+    padding: 0;
 }
 
 .advancedFilteringParam {
