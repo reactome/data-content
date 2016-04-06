@@ -1,8 +1,12 @@
 package org.reactome.server.controller;
 
-import org.reactome.server.tools.search.domain.EnrichedEntry;
+import org.reactome.server.tools.domain.model.DatabaseObject;
 import org.reactome.server.tools.search.exception.EnricherException;
 import org.reactome.server.tools.search.exception.SolrSearcherException;
+import org.reactome.server.tools.service.DatabaseObjectService;
+import org.reactome.server.tools.service.GenericService;
+import org.reactome.server.tools.service.helper.SchemaNode;
+import org.reactome.server.tools.service.util.DatabaseObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -10,13 +14,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.reactome.server.tools.domain.model.DatabaseObject;
-import org.reactome.server.tools.service.DatabaseObjectService;
-import org.reactome.server.tools.service.GenericService;
-import org.reactome.server.tools.service.helper.Node;
-import org.reactome.server.tools.service.util.DatabaseObjectUtils;
-
-import static org.reactome.server.util.WebUtils.prepareEvidencesURLs;
 
 /**
  * Created by:
@@ -39,7 +36,7 @@ class GraphController {
     @Autowired
     private GenericService genericService;
 
-    private Node classBrowserCache;
+    private SchemaNode classBrowserCache;
 
 
     @RequestMapping(value = "/detail/object/{id:.*}", method = RequestMethod.GET)
