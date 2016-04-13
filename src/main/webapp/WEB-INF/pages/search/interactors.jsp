@@ -20,7 +20,7 @@
                 <td style="width: 6%">Confidence Score</td>
                 <td style="width: 6%">Interactor Accession</td>
                 <td>Reactome Entry</td>
-                <td style="width: 6%">Evidences</td>
+                <td style="width: 6%">Evidence</td>
               </tr>
               </thead>
             </table>
@@ -40,7 +40,7 @@
                       </c:forEach>
                     </td>
                     <td style="width: 6%">
-                      <a href="${interaction.evidencesURL}" title="Open evidences" rel="nofollow" target="_blank">${fn:length(interaction.interactionEvidences)}</a>
+                      <a href="${interaction.evidencesURL}" title="Open evidence" rel="nofollow" target="_blank">${fn:length(interaction.interactionEvidences)}</a>
                     </td>
                   </tr>
                 </c:forEach>
