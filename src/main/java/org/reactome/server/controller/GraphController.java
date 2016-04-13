@@ -80,7 +80,7 @@ class GraphController {
     }
 
 
-    @RequestMapping(value = "/detail/object/{id:.*}", method = RequestMethod.GET)
+    @RequestMapping(value = "/object/detail/{id:.*}", method = RequestMethod.GET)
     public String getInstance (@PathVariable String id, ModelMap model) {
         model.addAttribute("map", DatabaseObjectUtils.getAllFields(databaseObjectService.findById(id)));
         return "graph/schemaDetail";
@@ -146,13 +146,13 @@ class GraphController {
 //            model.addAttribute("", SchemaClass.getSchemaClass(databaseObject.getSchemaClass()));
 //
 //            databaseObject.getReferencetype
-        if (databaseObject instanceof EntityWithAccessionedSequence) {
-            EntityWithAccessionedSequence ewas = (EntityWithAccessionedSequence) databaseObject;
-            List<Interaction> interactions = interactionService.getInteractions(ewas.getReferenceEntity().getIdentifier(),InteractorConstant.STATIC);
-            model.addAttribute("interactors", interactions);
-            model.addAttribute(INTERACTOR_RESOURCES_MAP, interactorResourceMap); // interactor URL
-            model.addAttribute(EVIDENCES_URL_MAP, WebUtils.prepareEvidencesURLs(interactions)); // evidencesURL
-        }
+            if (databaseObject instanceof EntityWithAccessionedSequence) {
+                EntityWithAccessionedSequence ewas = (EntityWithAccessionedSequence) databaseObject;
+                List<Interaction> interactions = interactionService.getInteractions(ewas.getReferenceEntity().getIdentifier(),InteractorConstant.STATIC);
+                model.addAttribute("interactions", interactions);
+                model.addAttribute(INTERACTOR_RESOURCES_MAP, interactorResourceMap); // interactor URL
+                model.addAttribute(EVIDENCES_URL_MAP, WebUtils.prepareEvidencesURLs(interactions)); // evidencesURL
+            }
 
             return "graph/detail";
         }
@@ -169,6 +169,7 @@ class GraphController {
         } else {
             //todo change exception
             throw new Exception();
+            //todo redirect object/detail
         }
         return clazz;
     }
