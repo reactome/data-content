@@ -1,5 +1,6 @@
 package org.reactome.server.controller;
 
+import org.apache.commons.lang.StringUtils;
 import org.reactome.server.tools.interactors.model.InteractorResource;
 import org.reactome.server.tools.interactors.service.InteractorResourceService;
 import org.reactome.server.tools.search.domain.FacetMapping;
@@ -273,9 +274,12 @@ class SearchController {
             message = message.concat("\n\n Exception: " + exception);
             defaultSubject = "Unexpected error occurred.";
         }
-        message = message.concat("--\n").concat(contactName);
+        if(StringUtils.isNotBlank(contactName)) {
+            contactName = contactName.trim();
+            message = message.concat("--\n").concat(contactName.trim());
+        }
         // Call email service.
-        mailService.send(to, mailAddress, defaultSubject, message, sendEmailCopy);
+        mailService.send(to, mailAddress, defaultSubject, message, sendEmailCopy, contactName);
         return "success";
     }
 

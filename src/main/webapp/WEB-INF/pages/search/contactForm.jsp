@@ -9,7 +9,7 @@
         <input type="hidden" name="url" id="url" value="${url}"/>
 
         <div class="field">
-            <label for="contactName"><p>Name*:</p></label>
+            <label for="contactName"><p>Name:</p></label>
             <input type="text" id="contactName" name="contactName" size="80" class="search" placeholder="your name"/>
             <span id="contact-name-req"></span>
         </div>
@@ -66,6 +66,7 @@
         $('#send').click(function () {
             var email = $('#mailAddress').val();
             var ok = true;
+            <%--
             if($('#contactName').val() == "" ) {
                 $("#contact-name-req").replaceWith("<span id='contact-name-req'>Your name is required</span>");
                 $("#contact-name-req").addClass("contact-msg-error");
@@ -73,6 +74,7 @@
             }else {
                 $("#contact-name-req").replaceWith("<span id='contact-name-req'></span>");
             }
+            --%>
             if(email == "" ) {
                 $("#mail-req").replaceWith("<span id='mail-req'>Email Address is required</span>");
                 $("#mail-req").addClass("contact-msg-error");
@@ -93,7 +95,7 @@
             }
 
             if(ok){
-                $("#contact-name-req").replaceWith("<span id='contact-name-req'></span>");
+                <%--$("#contact-name-req").replaceWith("<span id='contact-name-req'></span>");--%>
                 $("#mail-req").replaceWith("<span id='mail-req'></span>");
                 $("#message-req").replaceWith("<span id='message-req'></span>");
 

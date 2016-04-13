@@ -1,12 +1,17 @@
 package org.reactome.server.util;
 
 
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.MailSender;
-import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.stereotype.Service;
+
+import javax.mail.Message;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 
 /**
  * Mail Service
@@ -18,24 +23,31 @@ public class MailService {
     private static final Logger logger = LoggerFactory.getLogger(MailService.class);
 
     @Autowired
-    private MailSender mailSender; // MailSender interface defines a strategy
-    // for sending simple mails
+    private JavaMailSender mailSender;
 
-    public void send(String toAddress, String fromAddress, String subject, String msgBody, Boolean sendEmailCopy) throws Exception {
+    public void send(final String toAddress, final String fromAddress, final String subject, final String msgBody, final Boolean sendEmailCopy, final String fromName) throws Exception {
         try {
-            SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
-            simpleMailMessage.setFrom(fromAddress);
-            simpleMailMessage.setTo(toAddress);
+            MimeMessagePreparator preparator = new MimeMessagePreparator() {
 
-            if (sendEmailCopy){
-                simpleMailMessage.setBcc(fromAddress);
-            }
+                public void prepare(MimeMessage mimeMessage) throws Exception {
 
-            simpleMailMessage.setSubject(subject);
-            simpleMailMessage.setText(msgBody);
+                    mimeMessage.setRecipient(Message.RecipientType.TO, new InternetAddress(toAddress));
+                    InternetAddress from = new InternetAddress(fromAddress);
+                    if (StringUtils.isNotBlank(fromName)) {
+                        from = new InternetAddress(fromAddress, fromName);
+                    }
 
-            mailSender.send(simpleMailMessage);
-        }catch (Exception e){
+                    if (sendEmailCopy) {
+                        mimeMessage.setRecipient(Message.RecipientType.BCC, new InternetAddress(fromAddress));
+                    }
+                    mimeMessage.setFrom(from);
+                    mimeMessage.setSubject(subject);
+                    mimeMessage.setText(msgBody);
+                }
+            };
+
+            mailSender.send(preparator);
+        } catch (Exception e) {
             logger.error("[MAILSRVErr] The email could not be sent [To: " + toAddress + " From: " + fromAddress + " Subject: " + subject);
             throw new Exception("Mail has not been sent");
         }

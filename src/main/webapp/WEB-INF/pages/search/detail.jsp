@@ -513,7 +513,7 @@
                             <td>Confidence Score</td>
                             <td>Interactor Accession</td>
                             <td>Interactor Name</td>
-                            <td>Evidences</td>
+                            <td>Evidence</td>
                         </tr>
                     </thead>
                 </table>
@@ -544,7 +544,7 @@
                                             ${fn:length(interaction.interactionDetailsList)}
                                         </c:when>
                                         <c:otherwise>
-                                            <a href="${evidencesUrlMap[interaction.interactorB.acc]}" title="Open evidences" rel="nofollow" target="_blank">${fn:length(interaction.interactionDetailsList)}</a>
+                                            <a href="${evidencesUrlMap[interaction.interactorB.acc]}" title="Open evidence" rel="nofollow" target="_blank">${fn:length(interaction.interactionDetailsList)}</a>
                                         </c:otherwise>
                                     </c:choose>
                                 </td>
