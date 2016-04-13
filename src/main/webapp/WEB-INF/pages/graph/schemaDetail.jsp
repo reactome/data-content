@@ -54,7 +54,7 @@
                             </c:when>
                             <c:otherwise>
                                 <c:catch>
-                                    <c:if test="${!empty entry.value.getDbId()}">
+                                    <c:if test="${!empty entry.value.dbIdd}">
                                         <a href="/detail/object//${entry.value.getDbId()}">${entry.value.getDisplayName()}</a>
                                     </c:if>
                                 </c:catch>

@@ -129,7 +129,7 @@
                         <li class="schema-item">
                             <a href="/classbrowser/${node.clazz.simpleName}" title="Show Class attributes">${node.clazz.simpleName}</a>
                             [<a href="/classbrowser/${node.clazz.simpleName}?page=1" title="Show Entries">${node.count}</a>]
-                            <c:import url="schema-node.jsp"/>
+                            <c:import url="schemaNode.jsp"/>
                         </li>
                     </ul>
                 </div>

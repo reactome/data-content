@@ -63,10 +63,10 @@ public class HeaderFooterCacher extends Thread {
             //HACK!
             if(path.contains("WEB-INF")) {
                 //When executing in a deployed war file in tomcat, the WEB-INF folder is just one bellow the classes
-                path += "../pages/search/";
+                path += "../pages/";
             }else{
                 //When executing in local we need to write the files in the actual resources
-                path += "../../src/main/webapp/WEB-INF/pages/search/";
+                path += "../../src/main/webapp/WEB-INF/pages/";
             }
             FileOutputStream out = new FileOutputStream(path + fileName);
             out.write(content.getBytes());

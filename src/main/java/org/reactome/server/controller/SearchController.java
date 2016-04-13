@@ -2,11 +2,16 @@ package org.reactome.server.controller;
 
 import org.reactome.server.tools.interactors.model.InteractorResource;
 import org.reactome.server.tools.interactors.service.InteractorResourceService;
-import org.reactome.server.tools.search.domain.*;
+import org.reactome.server.tools.search.domain.FacetMapping;
+import org.reactome.server.tools.search.domain.InteractorEntry;
+import org.reactome.server.tools.search.domain.Query;
+import org.reactome.server.tools.search.domain.SearchResult;
 import org.reactome.server.tools.search.exception.EnricherException;
 import org.reactome.server.tools.search.exception.SolrSearcherException;
 import org.reactome.server.tools.search.service.SearchService;
+import org.reactome.server.tools.service.GenericService;
 import org.reactome.server.util.MailService;
+import org.reactome.server.util.WebUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +25,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static org.reactome.server.util.WebUtils.*;
+import static org.reactome.server.util.WebUtils.cleanReceivedParameter;
+import static org.reactome.server.util.WebUtils.cleanReceivedParameters;
 
 /**
  * Spring WEB Controller
@@ -37,6 +43,9 @@ class SearchController {
 
     @Autowired
     private SearchService searchService;
+
+    @Autowired
+    private GenericService genericService;
 
     @Autowired
     private MailService mailService;
@@ -134,25 +143,30 @@ class SearchController {
         return PAGE_EBI_ADVANCED;
     }
 
-//    /**
-//     * Shows detailed information of an entry
-//     *
-//     * @param id    StId or DbId
-//     *              //     * @param q,species,types,compartments,keywords parameters to save existing query and facets
-//     * @param model SpringModel
-//     * @return Detailed page
-//     * @throws EnricherException
-//     * @throws SolrSearcherException
-//     */
+    /**
+     * Shows detailed information of an entry
+     *
+     * @param id    StId or DbId
+     *              //     * @param q,species,types,compartments,keywords parameters to save existing query and facets
+     * @param model SpringModel
+     * @return Detailed page
+     * @throws EnricherException
+     * @throws SolrSearcherException
+     */
 //    @RequestMapping(value = "/detail/{id:.*}", method = RequestMethod.GET)
 //    public String detail(@PathVariable String id, ModelMap model) throws EnricherException, SolrSearcherException {
 //
 //        EnrichedEntry entry = searchService.getEntryById(id);
+//        DatabaseObject databaseObject = new Pathway();
+//        databaseObject.setStableIdentifier(entry.getStId());
+//        databaseObject.setDisplayName(entry.getName());
+//        databaseObject.setSpeciesName(entry.getSpecies());
+//        entry.setLocationsPathwayBrowser(genericService.getLocationsInPathwayBrowser(databaseObject));
 //        if (entry != null) {
 //            model.addAttribute(ENTRY, entry);
 //            model.addAttribute(TITLE, entry.getName());
 //            model.addAttribute(INTERACTOR_RESOURCES_MAP, interactorResourceMap); // interactor URL
-//            model.addAttribute(EVIDENCES_URL_MAP, prepareEvidencesURLs(entry.getInteractionList())); // evidencesURL
+//            model.addAttribute(EVIDENCES_URL_MAP, WebUtils.prepareEvidencesURLs()prepareEvidencesURLs(entry.getInteractionList())); // evidencesURL
 //            return PAGE_DETAIL;
 //        } else {
 //            autoFillDetailsPage(model, id);

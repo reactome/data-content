@@ -6,7 +6,7 @@
             <a href="/schema/${node.clazz.simpleName}" title="Show Class attributes">${node.clazz.simpleName}</a>
             [<a href="/details/${node.clazz.simpleName}?page=1" title="Show Entries">${node.count}</a>]
             <c:set var="node" value="${node}" scope="request"/>
-            <c:import url="schema-node.jsp"/>
+            <c:import url="schemaNode.jsp"/>
         </li>
     </c:forEach>
 </ul>
