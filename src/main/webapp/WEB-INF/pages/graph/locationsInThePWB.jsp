@@ -18,7 +18,7 @@
         <c:forEach var="topLvl" items="${topLevelNodes}">
             <c:choose>
                 <c:when test="${empty topLvl.children}">
-                    <span><img src="../resources/images/${topLvl.type}.png" title="${topLvl.type}" width="12" height="11" /> <a href="${topLvl.url}" class=""   title="goto Reactome Pathway Browser" rel="nofollow">${topLvl.name} (${topLvl.species})</a></span>
+                    <span><img src="../resources/images/Pathway.png" title="${topLvl.type}" width="12" height="11" /> <a href="${topLvl.url}" class=""   title="goto Reactome Pathway Browser" rel="nofollow">${topLvl.name} (${topLvl.species})</a></span>
                 </c:when>
                 <c:otherwise>
                     <%--
@@ -30,7 +30,7 @@
                             <span class="plus" title="click here to expand or collapse the tree">
                                 <img class="image" src="../resources/images/plus.png" title="${entry.exactType}" width="14" height="13" alt=""/>
                             </span>
-                        <span style="font-size:14px"><img src="../resources/images/${topLvl.type}.png" title="${topLvl.type}" width="12" height="11" /> <a href="${topLvl.url}" class=""   title="goto Reactome Pathway Browser" rel="nofollow">${topLvl.name} (${topLvl.species})</a></span>
+                        <span style="font-size:14px"><img src="../resources/images/Pathway.png" title="${topLvl.type}" width="12" height="11" /> <a href="${topLvl.url}" class=""   title="goto Reactome Pathway Browser" rel="nofollow">${topLvl.name} (${topLvl.species})</a></span>
                         <div class="treeContent">
                             <ul class="tree">
                                 <c:set var="node" value="${topLvl}" scope="request"/>

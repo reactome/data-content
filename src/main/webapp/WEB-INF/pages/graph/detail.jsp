@@ -2,21 +2,22 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <c:import url="http://www.reactome.org/common/header.php"/>
-<div class="ebi-content" >
+<div class="ebi-content">
 
     <div class="grid_23 padding">
         <h3>
 
-            <c:set var="test" value="${databaseObject}" scope="request"/>
+            <%--<c:set var="test" value="${databaseObject}" scope="request"/>--%>
 
-            <c:if test="${not empty databaseObject.getSchemaClass()}">
-                <img src="../resources/images/${databaseObject.getSchemaClass()}.png" title="${databaseObject.getSchemaClass()}" height="20" />
+            <c:if test="${not empty databaseObject.schemaClass}">
+                <img src="../resources/images/${databaseObject.schemaClass}.png" title="${databaseObject.schemaClass}" height="20" />
             </c:if>
             <c:if test="${clazz == 'Event'}">
                 <c:if test="${databaseObject.isInDisease}">
                     <img src="../resources/images/isDisease.png" title="Disease related entry" height="20" />
                 </c:if>
             </c:if>
+            <c:out value="${databaseObject.getDisplayName()}" />
             <c:if test="${not empty databaseObject.stableIdentifier}">
                 <span> (${databaseObject.stableIdentifier})</span>
             </c:if>
@@ -24,7 +25,7 @@
                 <span>[${databaseObject.speciesName}]</span>
             </c:if>
         </h3>
-        <c:if test="${not empty databaseObject.getSchemaClass()}">
+        <c:if test="${not empty databaseObject.schemaClass}">
             <span style="color: #1F419A; padding-left: 6px; font-size: 20px" title="${explanation}">${type}</span>
         </c:if>
     </div>
@@ -45,21 +46,22 @@
         <c:import url="locationsInThePWB.jsp"/>
     </c:if>
 
-    <c:import url="generalAttributes.jsp"/>
+    <%--<c:import url="generalAttributes.jsp"/>--%>
 
     <c:if test="${clazz == 'PhysicalEntity'}">
         <c:import url="physicalEntityDetails.jsp"/>
     </c:if>
+
     <c:if test="${clazz == 'Event'}">
         <c:import url="eventDetails.jsp"/>
     </c:if>
 
-    <%--<c:if test="${not empty interactions}">--%>
-        <%--<c:import url="interactionDetails.jsp"/>--%>
-    <%--</c:if>--%>
+    <c:if test="${not empty interactions}">
+        <c:import url="interactionDetails.jsp"/>
+    </c:if>
 
 </div>
-</div>
+
 
 <div class="clear"></div>
 

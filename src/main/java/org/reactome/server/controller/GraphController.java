@@ -12,11 +12,12 @@ import org.reactome.server.tools.interactors.util.InteractorConstant;
 import org.reactome.server.tools.search.exception.EnricherException;
 import org.reactome.server.tools.search.exception.SolrSearcherException;
 import org.reactome.server.tools.service.DatabaseObjectService;
+import org.reactome.server.tools.service.DetailsService;
 import org.reactome.server.tools.service.GenericService;
+import org.reactome.server.tools.service.helper.ContentDetails;
 import org.reactome.server.tools.service.helper.PBNode;
 import org.reactome.server.tools.service.helper.SchemaNode;
 import org.reactome.server.tools.service.util.DatabaseObjectUtils;
-import org.reactome.server.tools.service.util.PathwayBrowserLocationsUtils;
 import org.reactome.server.util.WebUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,7 +25,6 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -59,6 +59,9 @@ class GraphController {
     @Autowired
     private InteractionService interactionService;
 
+    @Autowired
+    private DetailsService detailsService;
+
     private SchemaNode classBrowserCache;
 
     private Map<Long, InteractorResource> interactorResourceMap = new HashMap<>();
@@ -90,20 +93,20 @@ class GraphController {
         return "graph/schemaDetail";
     }
 
-    @RequestMapping(value = "/details/{className:.*}", method = RequestMethod.GET)
-    public String getClassBrowserInstances(@PathVariable String className,
-                                           @RequestParam Integer page,
-                                           ModelMap model) throws ClassNotFoundException {
-        if (classBrowserCache == null) {
-            classBrowserCache = DatabaseObjectUtils.getGraphModelTree(databaseObjectService.getLabelsCount());
-        }
-        model.addAttribute("node", classBrowserCache);
-        model.addAttribute("className", className);
-        model.addAttribute("page", page);
-        model.addAttribute("maxpage", classBrowserCache.findMaxPage(className, OFFSET));
-        model.addAttribute("objects", genericService.getObjectsByClassName(className,page,OFFSET));
-        return "graph/schema";
-    }
+//    @RequestMapping(value = "/details/{className:.*}", method = RequestMethod.GET)
+//    public String getClassBrowserInstances(@PathVariable String className,
+//                                           @RequestParam Integer page,
+//                                           ModelMap model) throws ClassNotFoundException {
+//        if (classBrowserCache == null) {
+//            classBrowserCache = DatabaseObjectUtils.getGraphModelTree(databaseObjectService.getLabelsCount());
+//        }
+//        model.addAttribute("node", classBrowserCache);
+//        model.addAttribute("className", className);
+//        model.addAttribute("page", page);
+//        model.addAttribute("maxpage", classBrowserCache.findMaxPage(className, OFFSET));
+//        model.addAttribute("objects", genericService.getObjectsByClassName(className,page,OFFSET));
+//        return "graph/schema";
+//    }
 
     @RequestMapping(value = "/schema/{className:.*}", method = RequestMethod.GET)
     public String getClassBrowserDetails(@PathVariable String className, ModelMap model) throws ClassNotFoundException {
@@ -135,7 +138,11 @@ class GraphController {
     @RequestMapping(value = "/detail/{id:.*}", method = RequestMethod.GET)
     public String detail(@PathVariable String id, ModelMap model) throws Exception {
 
-        DatabaseObject databaseObject = databaseObjectService.findById(id);
+//        DatabaseObject databaseObject = databaseObjectService.findById(id);
+
+        ContentDetails contentDetails = detailsService.contentDetails(id);
+//        DatabaseObject databaseObject = genericService.findById(id, RelationshipDirection.OUTGOING);
+        DatabaseObject databaseObject = contentDetails.getDatabaseObject();
         String clazz = getClazz(databaseObject);
         if (clazz == null) {
             return objectDetail(id,databaseObject,model);
@@ -146,10 +153,12 @@ class GraphController {
                 model.addAttribute(TITLE, databaseObject.getDisplayName());
                 model.addAttribute("databaseObject", databaseObject);
                 model.addAttribute("type", databaseObject.getClassName());
-                model.addAttribute("explaination", databaseObject.getExplanation());
+                model.addAttribute("explanation", databaseObject.getExplanation());
                 model.addAttribute("clazz", clazz);
-                Set<PBNode> topLevelNodes = genericService.getLocationsInPathwayBrowserHierarchy(databaseObject);
-                model.addAttribute("topLevelNodes", PathwayBrowserLocationsUtils.buildTreesFromLeaves(topLevelNodes));
+//                Set<PBNode> topLevelNodes = genericService.getLocationsInPathwayBrowserHierarchy(databaseObject);
+                Set<PBNode> topLevelNodes = contentDetails.getLeafs();
+                model.addAttribute("topLevelNodes",topLevelNodes);
+//                        model.addAttribute("topLevelNodes", PathwayBrowserLocationsUtils.buildTreesFromLeaves(topLevelNodes));
                 model.addAttribute("availableSpecies", DatabaseObjectUtils.getAvailableSpecies(topLevelNodes));
 
                 if (databaseObject instanceof EntityWithAccessionedSequence) {
