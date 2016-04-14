@@ -28,10 +28,10 @@
                         <c:forEach var="object" items="${objects}">
                             <tr>
                                 <td style="width: 10%">
-                                    <a href="/detail/object//${object.dbId}">${object.dbId}</a>
+                                    <a href="/object/detail/${object.dbId}">${object.dbId}</a>
                                 </td>
                                 <td style="width: 18%">
-                                    <a href="/detail/object//${object.stableIdentifier}">${object.stableIdentifier}</a>
+                                    <a href="/object/detail/${object.stableIdentifier}">${object.stableIdentifier}</a>
                                 <td style="width: 72%">
                                     <div class=scrollable>
                                             ${object.displayName}

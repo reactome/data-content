@@ -16,6 +16,7 @@ import org.reactome.server.tools.service.GenericService;
 import org.reactome.server.tools.service.helper.PBNode;
 import org.reactome.server.tools.service.helper.SchemaNode;
 import org.reactome.server.tools.service.util.DatabaseObjectUtils;
+import org.reactome.server.tools.service.util.PathwayBrowserLocationsUtils;
 import org.reactome.server.util.WebUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -81,8 +82,11 @@ class GraphController {
 
 
     @RequestMapping(value = "/object/detail/{id:.*}", method = RequestMethod.GET)
-    public String getInstance (@PathVariable String id, ModelMap model) {
-        model.addAttribute("map", DatabaseObjectUtils.getAllFields(databaseObjectService.findById(id)));
+    public String objectDetail (@PathVariable String id, DatabaseObject databaseObject, ModelMap model) {
+        if (databaseObject == null) {
+            databaseObject = databaseObjectService.findById(id);
+        }
+        model.addAttribute("map", DatabaseObjectUtils.getAllFields(databaseObject));
         return "graph/schemaDetail";
     }
 
@@ -132,46 +136,46 @@ class GraphController {
     public String detail(@PathVariable String id, ModelMap model) throws Exception {
 
         DatabaseObject databaseObject = databaseObjectService.findById(id);
-        if (databaseObject!=null) {
-            model.addAttribute(TITLE, databaseObject.getDisplayName());
-            model.addAttribute("databaseObject", databaseObject);
-            model.addAttribute("clazz", getClazz(databaseObject));
-
-            Set<PBNode> topLevelNodes = genericService.getLocationsInPathwayBrowser(databaseObject);
+        String clazz = getClazz(databaseObject);
+        if (clazz == null) {
+            return objectDetail(id,databaseObject,model);
+        } else {
 
 
-            model.addAttribute("topLevelNodes", topLevelNodes);
-            model.addAttribute("availableSpecies", DatabaseObjectUtils.getAvailableSpecies(topLevelNodes));
-//            model.addAttribute("", InstanceTypeExplanation.getExplanation());
-//            model.addAttribute("", SchemaClass.getSchemaClass(databaseObject.getSchemaClass()));
-//
-//            databaseObject.getReferencetype
-            if (databaseObject instanceof EntityWithAccessionedSequence) {
-                EntityWithAccessionedSequence ewas = (EntityWithAccessionedSequence) databaseObject;
-                List<Interaction> interactions = interactionService.getInteractions(ewas.getReferenceEntity().getIdentifier(),InteractorConstant.STATIC);
-                model.addAttribute("interactions", interactions);
-                model.addAttribute(INTERACTOR_RESOURCES_MAP, interactorResourceMap); // interactor URL
-                model.addAttribute(EVIDENCES_URL_MAP, WebUtils.prepareEvidencesURLs(interactions)); // evidencesURL
+            if (databaseObject != null) {
+                model.addAttribute(TITLE, databaseObject.getDisplayName());
+                model.addAttribute("databaseObject", databaseObject);
+                model.addAttribute("type", databaseObject.getClassName());
+                model.addAttribute("explaination", databaseObject.getExplanation());
+                model.addAttribute("clazz", clazz);
+                Set<PBNode> topLevelNodes = genericService.getLocationsInPathwayBrowserHierarchy(databaseObject);
+                model.addAttribute("topLevelNodes", PathwayBrowserLocationsUtils.buildTreesFromLeaves(topLevelNodes));
+                model.addAttribute("availableSpecies", DatabaseObjectUtils.getAvailableSpecies(topLevelNodes));
+
+                if (databaseObject instanceof EntityWithAccessionedSequence) {
+                    EntityWithAccessionedSequence ewas = (EntityWithAccessionedSequence) databaseObject;
+                    List<Interaction> interactions = interactionService.getInteractions(ewas.getReferenceEntity().getIdentifier(), InteractorConstant.STATIC);
+                    model.addAttribute("interactions", interactions);
+                    model.addAttribute(INTERACTOR_RESOURCES_MAP, interactorResourceMap); // interactor URL
+                    model.addAttribute(EVIDENCES_URL_MAP, WebUtils.prepareEvidencesURLs(interactions)); // evidencesURL
+                }
+
+                return "graph/detail";
             }
-
-            return "graph/detail";
         }
         return "noResultsFound";
+
     }
 
 
     private String getClazz(DatabaseObject databaseObject) throws Exception {
-        String clazz;
         if (databaseObject instanceof Event) {
-            clazz = Event.class.getSimpleName();
+            return Event.class.getSimpleName();
         } else if (databaseObject instanceof PhysicalEntity) {
-            clazz = PhysicalEntity.class.getSimpleName();
+            return PhysicalEntity.class.getSimpleName();
         } else {
-            //todo change exception
-            throw new Exception();
-            //todo redirect object/detail
+            return null;
         }
-        return clazz;
     }
 
     /**

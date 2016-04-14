@@ -24,6 +24,7 @@
                         <c:choose>
                             <c:when test="${entry.value.getClass().getSimpleName() == 'String' ||
                                                 entry.value.getClass().getSimpleName() == 'Long'   ||
+                                                entry.value.getClass().getSimpleName() == 'Integer'   ||
                                                 entry.value.getClass().getSimpleName() == 'Date'   ||
                                                 entry.value.getClass().getSimpleName() == 'Boolean'}">
                                 ${entry.value}
@@ -35,6 +36,7 @@
                                             <c:choose>
                                                 <c:when test="${list.getClass().getSimpleName() == 'String' ||
                                                                     list.getClass().getSimpleName() == 'Long'   ||
+                                                                    list.getClass().getSimpleName() == 'Integer'   ||
                                                                     list.getClass().getSimpleName() == 'Date'   ||
                                                                     list.getClass().getSimpleName() == 'Boolean'}">
                                                     ${list}
@@ -42,7 +44,7 @@
                                                 <c:otherwise>
                                                     <c:catch>
                                                         <c:if test="${!empty list.getDbId()}">
-                                                            <a href="/detail/object//${list.getDbId()}">[${list.getDbId()}]</a>
+                                                            <a href="/object/detail/${list.getDbId()}">[${list.getDbId()}]</a>
                                                             ${list.getDisplayName()}
                                                         </c:if>
                                                     </c:catch>
@@ -54,8 +56,8 @@
                             </c:when>
                             <c:otherwise>
                                 <c:catch>
-                                    <c:if test="${!empty entry.value.dbIdd}">
-                                        <a href="/detail/object//${entry.value.getDbId()}">${entry.value.getDisplayName()}</a>
+                                    <c:if test="${!empty entry.value.dbId}">
+                                        <a href="/object/detail/${entry.value.getDbId()}">${entry.value.getDisplayName()}</a>
                                     </c:if>
                                 </c:catch>
                             </c:otherwise>

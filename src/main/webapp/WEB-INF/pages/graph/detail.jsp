@@ -25,7 +25,7 @@
             </c:if>
         </h3>
         <c:if test="${not empty databaseObject.getSchemaClass()}">
-            <%--<span style="color: #1F419A; padding-left: 6px; font-size: 20px" title="${entry.instanceTypeExplanation}">${databaseObject..getSchemaClass()}</span>--%>
+            <span style="color: #1F419A; padding-left: 6px; font-size: 20px" title="${explanation}">${type}</span>
         </c:if>
     </div>
 
@@ -54,9 +54,9 @@
         <c:import url="eventDetails.jsp"/>
     </c:if>
 
-    <c:if test="${not empty interactions}">
-        <c:import url="interactionDetails.jsp"/>
-    </c:if>
+    <%--<c:if test="${not empty interactions}">--%>
+        <%--<c:import url="interactionDetails.jsp"/>--%>
+    <%--</c:if>--%>
 
 </div>
 </div>
