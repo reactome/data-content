@@ -321,3 +321,28 @@
     </table>
   </div>
 </c:if>
+
+<c:if test="${not empty databaseObject.disease}">
+
+  <div class="grid_23  padding  margin">
+    <h5>Diseases</h5>
+    <table>
+      <thead>
+      <tr class="tableHead">
+        <td>Name</td>
+        <td>Identifier</td>
+        <td>Synonyms</td>
+      </tr>
+      </thead>
+      <tbody>
+      <c:forEach var="disease" items="${databaseObject.disease}">
+          <tr>
+            <td><a href="${diseases.database.url}" class=""  title="Show Details" rel="nofollow">${disease.displayName} </a></td>
+            <td><c:if test="${not empty disease.identifier}">${disease.identifier}</c:if></td>
+            <td><c:if test="${not empty disease.synonym}">${disease.synonym}</c:if></td>
+          </tr>
+      </c:forEach>
+      </tbody>
+    </table>
+  </div>
+</c:if>

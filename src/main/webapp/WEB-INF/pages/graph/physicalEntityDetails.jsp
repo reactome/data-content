@@ -126,7 +126,25 @@
                         </tr>
                     </c:if>
                 </c:if>
+
+                <c:if test="${not empty databaseObject.referenceEntity.crossReference}">
+                    <tr>
+                        <td><strong>CrossReferences</strong></td>
+                        <td>
+                            <ul class="list overflowList">
+                                <c:forEach var="crossReference" items="${databaseObject.referenceEntity.crossReference}">
+
+
+                                    <li><a href="${crossReference.url}" title="show ${crossReference.databaseName}" rel="nofollow">${crossReference.databaseName}: ${crossReference.identifier}</a><c:if test="${!loop.last}">, </c:if></li>
+                                </c:forEach>
+                            </ul>
+                        </td>
+                    </tr>
+
+                </c:if>
+
             </c:if>
+
         </c:if>
         <c:if test="${not empty databaseObject.goCellularComponent}">
             <tr>
@@ -165,12 +183,12 @@
                     <tr>
                         <td><strong>${referenceGene.databaseName}</strong></td>
                         <td>
-                            <%--<c:forEach var="value" items="${referenceGenes.value}" varStatus="loop">--%>
+                                <%--<c:forEach var="value" items="${referenceGenes.value}" varStatus="loop">--%>
                                 <%--<a href="${value.database.url}" title="show ${value.database.name}"--%>
-                                   <%--rel="nofollow">${value.identifier}</a><c:if test="${!loop.last}">, </c:if>--%>
-                            <%--</c:forEach>--%>
+                                <%--rel="nofollow">${value.identifier}</a><c:if test="${!loop.last}">, </c:if>--%>
+                                <%--</c:forEach>--%>
                             <a href="${referenceGene.url}" title="show ${referenceGene.displayName}"
-                                   rel="nofollow">${referenceGene.identifier}</a>
+                               rel="nofollow">${referenceGene.identifier}</a>
                         </td>
                     </tr>
                 </c:forEach>
@@ -196,14 +214,14 @@
                     <tr>
                         <td><strong>${referenceTranscript.databaseName}</strong></td>
                         <td>
-                            <%--<c:forEach var="value" items="${referenceTranscript.value}" varStatus="loop">--%>
+                                <%--<c:forEach var="value" items="${referenceTranscript.value}" varStatus="loop">--%>
                                 <%--<a href="${value.database.url}" title="show ${value.database.name}"--%>
-                                   <%--rel="nofollow">${value.identifier}</a><c:if test="${!loop.last}">, </c:if>--%>
-                            <%--</c:forEach>--%>
-                            <%--<c:forEach var="value" items="${referenceTranscript.value}" varStatus="loop">--%>
-                                <a href="${referenceTranscript.url}" title="show ${referenceTranscript.displayName}"
-                                   rel="nofollow">${referenceTranscript.identifier}</a>
-                            <%--</c:forEach>--%>
+                                <%--rel="nofollow">${value.identifier}</a><c:if test="${!loop.last}">, </c:if>--%>
+                                <%--</c:forEach>--%>
+                                <%--<c:forEach var="value" items="${referenceTranscript.value}" varStatus="loop">--%>
+                            <a href="${referenceTranscript.url}" title="show ${referenceTranscript.displayName}"
+                               rel="nofollow">${referenceTranscript.identifier}</a>
+                                <%--</c:forEach>--%>
                         </td>
                     </tr>
                 </c:forEach>
@@ -214,120 +232,120 @@
 </c:if>
 
 <%--<c:if test="${databaseObject.schemaClass == 'Complex'}">--%>
-    <%--<c:if test="${not empty databaseObject.hasComponent}">--%>
-        <%--<div class="grid_23  padding  margin">--%>
-            <%--<h5>Components of this databaseObject</h5>--%>
-            <%--<table class="fixedTable">--%>
-                <%--<thead>--%>
-                <%--<tr class="tableHead">--%>
-                    <%--<td></td>--%>
-                    <%--<td></td>--%>
-                <%--</tr>--%>
-                <%--</thead>--%>
-                <%--<tbody>--%>
-                <%--<tr>--%>
-                    <%--<td><strong>Components entries</strong></td>--%>
-                    <%--<td>--%>
-                        <%--<ul class="list overflowList">--%>
-                            <%--<c:forEach var="component" items="${databaseObject.hasComponent}">--%>
-                                <%--<li><a href="../detail/${component.stableIdentifier}" class="" title="show Reactome"--%>
-                                       <%--rel="nofollow">${component.name} <c:if--%>
-                                        <%--test="${not empty component.species}">(${component.species})</c:if></a></li>--%>
-                            <%--</c:forEach>--%>
-                        <%--</ul>--%>
-                    <%--</td>--%>
-                <%--</tr>--%>
-            <%--</table>--%>
-        <%--</div>--%>
-    <%--</c:if>--%>
+<%--<c:if test="${not empty databaseObject.hasComponent}">--%>
+<%--<div class="grid_23  padding  margin">--%>
+<%--<h5>Components of this databaseObject</h5>--%>
+<%--<table class="fixedTable">--%>
+<%--<thead>--%>
+<%--<tr class="tableHead">--%>
+<%--<td></td>--%>
+<%--<td></td>--%>
+<%--</tr>--%>
+<%--</thead>--%>
+<%--<tbody>--%>
+<%--<tr>--%>
+<%--<td><strong>Components entries</strong></td>--%>
+<%--<td>--%>
+<%--<ul class="list overflowList">--%>
+<%--<c:forEach var="component" items="${databaseObject.hasComponent}">--%>
+<%--<li><a href="../detail/${component.stableIdentifier}" class="" title="show Reactome"--%>
+<%--rel="nofollow">${component.name} <c:if--%>
+<%--test="${not empty component.species}">(${component.species})</c:if></a></li>--%>
+<%--</c:forEach>--%>
+<%--</ul>--%>
+<%--</td>--%>
+<%--</tr>--%>
+<%--</table>--%>
+<%--</div>--%>
+<%--</c:if>--%>
 <%--</c:if>--%>
 
 <%--<c:if test="${databaseObject.schemaClass == 'CandidateSet'}">--%>
-    <%--<c:if test="${not empty databaseObject.hasCandidate}">--%>
-        <%--<div class="grid_23  padding  margin">--%>
-            <%--<h5>Components of this databaseObject</h5>--%>
-            <%--<table class="fixedTable">--%>
-                <%--<thead>--%>
-                <%--<tr class="tableHead">--%>
-                    <%--<td></td>--%>
-                    <%--<td></td>--%>
-                <%--</tr>--%>
-                <%--</thead>--%>
-                <%--<tbody>--%>
-                <%--<tr>--%>
-                    <%--<td><strong>CandidateSet entries</strong></td>--%>
-                    <%--<td>--%>
-                        <%--<ul class="list overflowList">--%>
-                            <%--<c:forEach var="candidates" items="${databaseObject.hasCandidate}">--%>
-                                <%--<li><a href="../detail/${candidates.stableIdentifier}" class=""--%>
-                                       <%--title="show Reactome ${candidates.stableIdentifier}"--%>
-                                       <%--rel="nofollow">${candidates.name} <c:if--%>
-                                        <%--test="${not empty candidates.species}">(${candidates.species})</c:if></a></li>--%>
-                            <%--</c:forEach>--%>
-                        <%--</ul>--%>
-                    <%--</td>--%>
-                <%--</tr>--%>
-            <%--</table>--%>
-        <%--</div>--%>
-    <%--</c:if>--%>
+<%--<c:if test="${not empty databaseObject.hasCandidate}">--%>
+<%--<div class="grid_23  padding  margin">--%>
+<%--<h5>Components of this databaseObject</h5>--%>
+<%--<table class="fixedTable">--%>
+<%--<thead>--%>
+<%--<tr class="tableHead">--%>
+<%--<td></td>--%>
+<%--<td></td>--%>
+<%--</tr>--%>
+<%--</thead>--%>
+<%--<tbody>--%>
+<%--<tr>--%>
+<%--<td><strong>CandidateSet entries</strong></td>--%>
+<%--<td>--%>
+<%--<ul class="list overflowList">--%>
+<%--<c:forEach var="candidates" items="${databaseObject.hasCandidate}">--%>
+<%--<li><a href="../detail/${candidates.stableIdentifier}" class=""--%>
+<%--title="show Reactome ${candidates.stableIdentifier}"--%>
+<%--rel="nofollow">${candidates.name} <c:if--%>
+<%--test="${not empty candidates.species}">(${candidates.species})</c:if></a></li>--%>
+<%--</c:forEach>--%>
+<%--</ul>--%>
+<%--</td>--%>
+<%--</tr>--%>
+<%--</table>--%>
+<%--</div>--%>
+<%--</c:if>--%>
 <%--</c:if>--%>
 
 
 <%--<c:if test="${databaseObject.schemaClass == 'CandidateSet'  || databaseObject.schemaClass == 'DefinedSet' || databaseObject.schemaClass == 'OpenSet'}">--%>
-    <%--<c:if test="${not empty databaseObject.hasMember}">--%>
-        <%--<div class="grid_23  padding  margin">--%>
-            <%--<h5>Components of this databaseObject</h5>--%>
-            <%--<table class="fixedTable">--%>
-                <%--<thead>--%>
-                <%--<tr class="tableHead">--%>
-                    <%--<td></td>--%>
-                    <%--<td></td>--%>
-                <%--</tr>--%>
-                <%--</thead>--%>
-                <%--<tbody>--%>
-                <%--<tr>--%>
-                    <%--<td><strong>Member</strong></td>--%>
-                    <%--<td>--%>
-                        <%--<ul class="list overflowList">--%>
-                            <%--<c:forEach var="member" items="${databaseObject.hasMember}">--%>
-                                <%--<li><a href="../detail/${member.stableIdentifier}" class=""--%>
-                                       <%--title="show Reactome ${member.stableIdentifier}" rel="nofollow">${member.name}--%>
-                                    <%--<c:if test="${not empty member.species}">(${member.species})</c:if></a></li>--%>
-                            <%--</c:forEach>--%>
-                        <%--</ul>--%>
-                    <%--</td>--%>
-                <%--</tr>--%>
-            <%--</table>--%>
-        <%--</div>--%>
-    <%--</c:if>--%>
+<%--<c:if test="${not empty databaseObject.hasMember}">--%>
+<%--<div class="grid_23  padding  margin">--%>
+<%--<h5>Components of this databaseObject</h5>--%>
+<%--<table class="fixedTable">--%>
+<%--<thead>--%>
+<%--<tr class="tableHead">--%>
+<%--<td></td>--%>
+<%--<td></td>--%>
+<%--</tr>--%>
+<%--</thead>--%>
+<%--<tbody>--%>
+<%--<tr>--%>
+<%--<td><strong>Member</strong></td>--%>
+<%--<td>--%>
+<%--<ul class="list overflowList">--%>
+<%--<c:forEach var="member" items="${databaseObject.hasMember}">--%>
+<%--<li><a href="../detail/${member.stableIdentifier}" class=""--%>
+<%--title="show Reactome ${member.stableIdentifier}" rel="nofollow">${member.name}--%>
+<%--<c:if test="${not empty member.species}">(${member.species})</c:if></a></li>--%>
+<%--</c:forEach>--%>
+<%--</ul>--%>
+<%--</td>--%>
+<%--</tr>--%>
+<%--</table>--%>
+<%--</div>--%>
+<%--</c:if>--%>
 <%--</c:if>--%>
 
 
 <%--<c:if test="${databaseObject.schemaClass == 'RepeatedUnit'}">--%>
-    <%--<c:if test="${not empty databaseObject.repeatedUnit}">--%>
-        <%--<div class="grid_23  padding  margin">--%>
-            <%--<h5>Components of this databaseObject</h5>--%>
-            <%--<table class="fixedTable">--%>
-                <%--<thead>--%>
-                <%--<tr class="tableHead">--%>
-                    <%--<td></td>--%>
-                    <%--<td></td>--%>
-                <%--</tr>--%>
-                <%--</thead>--%>
-                <%--<tbody>--%>
-                <%--<tr>--%>
-                    <%--<td><strong>repeatedUnits</strong></td>--%>
-                    <%--<td>--%>
-                        <%--<ul class="list overflowList">--%>
-                            <%--<c:forEach var="repeatedUnit" items="${databaseObject.repeatedUnit}">--%>
-                                <%--<li><a href="../detail/${repeatedUnit.stableIdentifier}" class=""--%>
-                                       <%--title="show Reactome ${repeatedUnit.stableIdentifier}"--%>
-                                       <%--rel="nofollow">${repeatedUnit.name}</a></li>--%>
-                            <%--</c:forEach>--%>
-                        <%--</ul>--%>
-                    <%--</td>--%>
-                <%--</tr>--%>
-            <%--</table>--%>
-        <%--</div>--%>
-    <%--</c:if>--%>
+<%--<c:if test="${not empty databaseObject.repeatedUnit}">--%>
+<%--<div class="grid_23  padding  margin">--%>
+<%--<h5>Components of this databaseObject</h5>--%>
+<%--<table class="fixedTable">--%>
+<%--<thead>--%>
+<%--<tr class="tableHead">--%>
+<%--<td></td>--%>
+<%--<td></td>--%>
+<%--</tr>--%>
+<%--</thead>--%>
+<%--<tbody>--%>
+<%--<tr>--%>
+<%--<td><strong>repeatedUnits</strong></td>--%>
+<%--<td>--%>
+<%--<ul class="list overflowList">--%>
+<%--<c:forEach var="repeatedUnit" items="${databaseObject.repeatedUnit}">--%>
+<%--<li><a href="../detail/${repeatedUnit.stableIdentifier}" class=""--%>
+<%--title="show Reactome ${repeatedUnit.stableIdentifier}"--%>
+<%--rel="nofollow">${repeatedUnit.name}</a></li>--%>
+<%--</c:forEach>--%>
+<%--</ul>--%>
+<%--</td>--%>
+<%--</tr>--%>
+<%--</table>--%>
+<%--</div>--%>
+<%--</c:if>--%>
 <%--</c:if>--%>

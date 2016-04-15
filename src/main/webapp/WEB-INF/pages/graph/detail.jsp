@@ -6,9 +6,6 @@
 
     <div class="grid_23 padding">
         <h3>
-
-            <%--<c:set var="test" value="${databaseObject}" scope="request"/>--%>
-
             <c:if test="${not empty databaseObject.schemaClass}">
                 <img src="../resources/images/${databaseObject.schemaClass}.png" title="${databaseObject.schemaClass}" height="20" />
             </c:if>
