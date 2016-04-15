@@ -269,6 +269,33 @@
     <%--</table>--%>
   <%--</div>--%>
 <%--</c:if>--%>
+
+
+
+<c:if test="${not empty databaseObject.crossReference}">
+  <div class="grid_23  padding  margin">
+    <h5>Cross References</h5>
+    <table class="fixedTable">
+      <thead>
+      <tr class="tableHead">
+        <td>Database</td>
+        <td>Identifier</td>
+      </tr>
+      </thead>
+      <tbody>
+      <c:forEach var="crossReference" items="${databaseObject.crossReference}">
+        <tr>
+          <td><strong>${crossReference.databaseName}</strong></td>
+          <td>
+              <a href="${crossReference.url}" title="show ${crossReference.databaseName}" rel="nofollow">${crossReference.identifier}</a><c:if test="${!loop.last}">, </c:if>
+          </td>
+        </tr>
+      </c:forEach>
+      </tbody>
+    </table>
+  </div>
+</c:if>
+
 <c:if test="${not empty databaseObject.literatureReference}">
   <div class="grid_23  padding  margin">
     <h5>Literature References</h5>
