@@ -2,50 +2,28 @@
 
 
 
-<%--<c:if test="${not empty entry.referenceEntity || not empty entry.compartments || not empty entry.synonyms || not empty entry.reverseReaction || not empty entry.goBiologicalProcess || not empty entry.goMolecularComponent}">--%>
-<%--<div class="grid_23  padding  margin">--%>
-<%--<h5>Additional Information</h5>--%>
-<%--<table class="fixedTable">--%>
-<%--<thead>--%>
-<%--<tr class="tableHead">--%>
-<%--<td></td>--%>
-<%--<td></td>--%>
-<%--</tr>--%>
-<%--</thead>--%>
-<%--<tbody>--%>
+<c:if test="${not empty databaseObject.goBiologicalProcess}">
+    <div class="grid_23  padding  margin">
+        <h5>Additional Information</h5>
+        <table class="fixedTable">
+            <thead>
+            <tr class="tableHead">
+                <td></td>
+                <td></td>
+            </tr>
+            </thead>
+            <tbody>
 
-<%--<c:if test="${not empty entry.reverseReaction}">--%>
-<%--<tr>--%>
-<%--<td><strong>Reverse Reaction</strong></td>--%>
-<%--<td>--%>
-<%--<a href="../detail/${entry.reverseReaction.stId}" class="" title="show Reactome ${entry.reverseReaction.stId}" rel="nofollow">${entry.reverseReaction.name}</a>--%>
-<%--</td>--%>
-<%--</tr>--%>
-<%--</c:if>--%>
-
-
-<%--<c:if test="${not empty entry.goMolecularComponent}">--%>
-<%--<tr>--%>
-<%--<td><strong>GO Molecular Component</strong></td>--%>
-<%--<td>--%>
-<%--<ul class="list overflowList">--%>
-<%--<c:forEach var="goMolecularComponent" items="${entry.goMolecularComponent}">--%>
-<%--<li><a href="${goMolecularComponent.database.url}" class=""  title="show ${goMolecularComponent.database.name}" rel="nofollow">${goMolecularComponent.name}</a>( ${goMolecularComponent.accession})</li>--%>
-<%--</c:forEach>--%>
-<%--</ul>--%>
-<%--</td>--%>
-<%--</tr>--%>
-<%--</c:if>--%>
-<%--<c:if test="${not empty entry.goBiologicalProcess}">--%>
-<%--<tr>--%>
-<%--<td><strong>GO Biological Process</strong></td>--%>
-<%--<td><a href="${entry.goBiologicalProcess.database.url}" class=""  title="go to ${entry.goBiologicalProcess.database.name}" rel="nofollow">${entry.goBiologicalProcess.name} (${entry.goBiologicalProcess.accession})</a></td>--%>
-<%--</tr>--%>
-<%--</c:if>--%>
-<%--</tbody>--%>
-<%--</table>--%>
-<%--</div>--%>
-<%--</c:if>--%>
+            <c:if test="${not empty databaseObject.goBiologicalProcess}">
+                <tr>
+                    <td><strong>GO Biological Process</strong></td>
+                    <td><a href="${databaseObject.goBiologicalProcess.url}" class=""  title="go to ${databaseObject.goBiologicalProcess.databaseName}" rel="nofollow">${databaseObject.goBiologicalProcess.displayName} (${databaseObject.goBiologicalProcess.accession})</a></td>
+                </tr>
+            </c:if>
+            </tbody>
+        </table>
+    </div>
+</c:if>
 
 
 
@@ -115,4 +93,44 @@
             </table>
         </div>
     </c:if>
+</c:if>
+
+<c:if test="${not empty databaseObject.inferredFrom || not empty databaseObject.orthologousEvent}">
+    <div class="grid_23  padding  margin">
+        <h5>Inferred Entries</h5>
+        <table  class="fixedTable">
+            <thead>
+            <tr class="tableHead">
+                <td></td>
+                <td></td>
+            </tr>
+            </thead>
+            <tbody>
+            <c:if test="${not empty databaseObject.inferredFrom}">
+                <tr>
+                    <td><strong>Inferred From</strong></td>
+                    <td>
+                        <ul class="list overflowList">
+                            <c:forEach var="inferredFrom" items="${databaseObject.inferredFrom}">
+                                <li><a href="../detail/${inferredFrom.stableIdentifier}" class="" title="Show Details" rel="nofollow">${inferredFrom.displayName} (${inferredFrom.speciesName})</a></li>
+                            </c:forEach>
+                        </ul>
+                    </td>
+                </tr>
+            </c:if>
+            <c:if test="${not empty databaseObject.orthologousEvent}">
+                <tr>
+                    <td><strong>Orthologous events</strong></td>
+                    <td>
+                        <ul class="list overflowList">
+                            <c:forEach var="orthologousEvent" items="${databaseObject.orthologousEvent}">
+                                <li><a href="../detail/${orthologousEvent.stableIdentifier}" class="" title="Show Details" rel="nofollow">${orthologousEvent.displayName} (${orthologousEvent.speciesName})</a></li>
+                            </c:forEach>
+                        </ul>
+                    </td>
+                </tr>
+            </c:if>
+            </tbody>
+        </table>
+    </div>
 </c:if>
