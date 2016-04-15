@@ -56,9 +56,11 @@ $(".plus").click(function () {
     $treeContent = $plus.nextAll().eq(1);
     $treeContent.slideToggle(500, function () {
         if ($treeContent.is(":visible") ){
-            return $plus.find(".image").attr("src", "../resources/images/minus.png");
+            //return $plus.find(".image").attr("src", "../resources/images/minus.png");
+            return $plus.find(".sprite").attr("class", "sprite sprite-minus");
         } else {
-            return $plus.find(".image").attr("src", "../resources/images/plus.png");
+            return $plus.find(".sprite").attr("class", "sprite sprite-plus");
+            //return $plus.find(".image").attr("src", "../resources/images/plus.png");
         }
     });
 });

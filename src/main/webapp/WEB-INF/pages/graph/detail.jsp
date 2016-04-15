@@ -7,11 +7,14 @@
     <div class="grid_23 padding">
         <h3>
             <c:if test="${not empty databaseObject.schemaClass}">
-                <img src="../resources/images/${databaseObject.schemaClass}.png" title="${databaseObject.schemaClass}" height="20" />
+                <%--<img src="../resources/images/${databaseObject.schemaClass}.png" title="${databaseObject.schemaClass}" height="20" />--%>
+                <span class="sprite sprite-${databaseObject.schemaClass}" title="${type}"></span>
             </c:if>
+
             <c:if test="${clazz == 'Event'}">
                 <c:if test="${databaseObject.isInDisease}">
-                    <img src="../resources/images/isDisease.png" title="Disease related entry" height="20" />
+                    <%--<img src="../resources/images/isDisease.png" title="Disease related entry" height="20" />--%>
+                    <i class="sprite sprite-isDisease" title="Disease related entry"></i>
                 </c:if>
             </c:if>
             <c:out value="${databaseObject.getDisplayName()}" />
