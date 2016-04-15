@@ -1,6 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
-<c:import url="header.jsp"/>
+<c:import url="../header.jsp"/>
 <div class="ebi-content">
     <div class="grid_23 padding">
         <h2>Advanced search</h2>

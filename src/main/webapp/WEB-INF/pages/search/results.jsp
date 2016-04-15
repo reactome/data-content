@@ -1,7 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="mytag" uri="/WEB-INF/tags/customTag.tld"%>
 
-<c:import url="header.jsp"/>
+<c:import url="../header.jsp"/>
 
 <div class="ebi-content">
 
@@ -243,4 +243,4 @@
 <div class="clear"></div>
 
 </div>            <%--A weird thing to avoid problems--%>
-<c:import url="footer.jsp"/>
+<c:import url="../footer.jsp"/>
