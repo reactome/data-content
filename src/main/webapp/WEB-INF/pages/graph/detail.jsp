@@ -46,7 +46,7 @@
         <c:import url="locationsInThePWB.jsp"/>
     </c:if>
 
-    <%--<c:import url="generalAttributes.jsp"/>--%>
+
 
     <c:if test="${clazz == 'PhysicalEntity'}">
         <c:import url="physicalEntityDetails.jsp"/>
@@ -55,6 +55,8 @@
     <c:if test="${clazz == 'Event'}">
         <c:import url="eventDetails.jsp"/>
     </c:if>
+
+    <c:import url="generalAttributes.jsp"/>
 
     <c:if test="${not empty interactions}">
         <c:import url="interactionDetails.jsp"/>
