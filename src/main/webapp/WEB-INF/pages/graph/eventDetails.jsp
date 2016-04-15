@@ -46,3 +46,53 @@
     </table>
   </div>
 </c:if>
+
+
+
+
+<c:if test="${not empty entry.input || not empty entry.output not empty entry.entityOnOtherCell}">
+  <div class="grid_23  padding  margin">
+    <h5>Components of this entry</h5>
+    <table class="fixedTable">
+      <thead>
+      <tr class="tableHead">
+        <td></td>
+        <td></td>
+      </tr>
+      </thead>
+      <tbody>
+      <c:if test="${not empty entry.input}">
+      <tr>
+        <td><strong>Input entries</strong></td>
+        <td>
+          <ul class="list overflowAuto">
+            <c:forEach var="input" items="${entry.input}">
+              <li><a href="../detail/${input.stId}" class="" title="Show Details" rel="nofollow">${input.name} <c:if test="${not empty input.species}">(${input.species})</c:if></a></li>
+            </c:forEach>
+          </ul>
+        </td>
+      </tr>
+      </c:if>
+      <c:if test="${not empty entry.output}">
+      <tr>
+        <td><strong>Output entries</strong></td>
+        <td><ul class="list overflowList">
+          <c:forEach var="output" items="${entry.output}">
+            <li><a href="../detail/${output.stId}" class="" title="Show Details" rel="nofollow">${output.name}<c:if test="${not empty output.species}">(${output.species})</c:if></a></li>
+          </c:forEach>
+        </ul></td>
+      </tr>
+      </c:if>
+      <c:if test="${not empty entry.entityOnOtherCell}">
+      <tr>
+        <td><strong>EntityOnOtherCell</strong></td>
+        <td><ul class="list overflowList">
+          <c:forEach var="entityOnOtherCell" items="${entry.entityOnOtherCell}">
+            <li><a href="../detail/${entityOnOtherCell.stId}" class="" title="show Reactome ${entityOnOtherCell.stId}" rel="nofollow">${entityOnOtherCell.name}</a></li>
+          </c:forEach>
+        </ul></td>
+      </tr>
+      </c:if>
+    </table>
+  </div>
+</c:if>
