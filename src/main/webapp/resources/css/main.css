@@ -586,7 +586,7 @@ ul.tree li.schema-item {
 
 /* TESTING SPRITE IMAGES */
 .sprite {
-    background-image: url(../images/spritesheet_2.png);
+    background-image: url(../images/spritesheet.png);
     background-repeat: no-repeat;
     display: inline-block;
 }

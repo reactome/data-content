@@ -74,3 +74,37 @@
     </table>
   </div>
 </c:if>
+
+
+<c:if test="${not empty componentOf}">
+  <div class="grid_23  padding  margin">
+    <h5>This entry is a component of:</h5>
+    <table class="fixedTable">
+      <thead>
+      <tr class="tableHead">
+        <td></td>
+        <td></td>
+      </tr>
+      </thead>
+      <tbody>
+      <c:forEach var="component" items="${componentOf}">
+        <tr>
+
+
+
+          <td><strong>${referrers.key}</strong></td>
+          <td>
+            <ul class="list overflowList">
+              <c:forEach var="entityReferenceList" items="${referrers.value}">
+                <li><c:if test="${not empty entityReferenceList.name}"><a href="../detail/${entityReferenceList.stId}" class="" title="Show Details" rel="nofollow">${entityReferenceList.name}</a></c:if></li>
+              </c:forEach>
+            </ul>
+          </td>
+        </tr>
+      </c:forEach>
+      </tbody>
+    </table>
+  </div>
+
+
+</c:if>

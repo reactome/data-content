@@ -161,10 +161,15 @@ class GraphController {
 //                        model.addAttribute("topLevelNodes", PathwayBrowserLocationsUtils.buildTreesFromLeaves(topLevelNodes));
                 model.addAttribute("availableSpecies", DatabaseObjectUtils.getAvailableSpecies(topLevelNodes));
 
+                model.addAttribute("componentOf", contentDetails.getComponentOf());
+
                 model.addAttribute("otherFormsOfThisMolecule", contentDetails.getOtherFormsOfThisMolecule());
 
                 if (databaseObject instanceof EntityWithAccessionedSequence) {
                     EntityWithAccessionedSequence ewas = (EntityWithAccessionedSequence) databaseObject;
+
+//                    if (ewas.getHasModifiedResidue() != null && ewas.getHasModifiedResidue())
+
                     List<Interaction> interactions = interactionService.getInteractions(ewas.getReferenceEntity().getIdentifier(), InteractorConstant.STATIC);
                     model.addAttribute("interactions", interactions);
                     model.addAttribute(INTERACTOR_RESOURCES_MAP, interactorResourceMap); // interactor URL
