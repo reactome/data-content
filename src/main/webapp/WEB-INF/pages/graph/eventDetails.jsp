@@ -90,6 +90,18 @@
                     </td>
                 </tr>
                 </c:if>
+                <c:if test="${not empty databaseObject.entityOnOtherCell}">
+                <tr>
+                    <td><strong>output entries</strong></td>
+                    <td>
+                        <ul class="list overflowAuto">
+                            <c:forEach var="entityOnOtherCell" items="${databaseObject.entityOnOtherCell}">
+                                <li><a href="../detail/${entityOnOtherCell.stableIdentifier}" class="" title="Show Details" rel="nofollow">${entityOnOtherCell.displayName} <c:if test="${not empty entityOnOtherCell.speciesName}">(${entityOnOtherCell.speciesName})</c:if></a></li>
+                            </c:forEach>
+                        </ul>
+                    </td>
+                </tr>
+                </c:if>
             </table>
         </div>
     </c:if>
