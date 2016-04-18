@@ -67,8 +67,6 @@ class GraphController {
     private Map<Long, InteractorResource> interactorResourceMap = new HashMap<>();
 
 
-
-
     @Autowired
     public GraphController(InteractorResourceService interactorResourceService) {
         try {
@@ -85,7 +83,7 @@ class GraphController {
 
 
     @RequestMapping(value = "/object/detail/{id:.*}", method = RequestMethod.GET)
-    public String objectDetail (@PathVariable String id, DatabaseObject databaseObject, ModelMap model) {
+    public String objectDetail(@PathVariable String id, DatabaseObject databaseObject, ModelMap model) {
         if (databaseObject == null) {
             databaseObject = databaseObjectService.findById(id);
         }
@@ -145,7 +143,7 @@ class GraphController {
         DatabaseObject databaseObject = contentDetails.getDatabaseObject();
         String clazz = getClazz(databaseObject);
         if (clazz == null) {
-            return objectDetail(id,databaseObject,model);
+            return objectDetail(id, databaseObject, model);
         } else {
 
 
@@ -156,8 +154,8 @@ class GraphController {
                 model.addAttribute("explanation", databaseObject.getExplanation());
                 model.addAttribute("clazz", clazz);
 //                Set<PBNode> topLevelNodes = genericService.getLocationsInPathwayBrowserHierarchy(databaseObject);
-                Set<PBNode> topLevelNodes = contentDetails.getLeafs();
-                model.addAttribute("topLevelNodes",topLevelNodes);
+                Set<PBNode> topLevelNodes = contentDetails.getLeaves();
+                model.addAttribute("topLevelNodes", topLevelNodes);
 //                        model.addAttribute("topLevelNodes", PathwayBrowserLocationsUtils.buildTreesFromLeaves(topLevelNodes));
                 model.addAttribute("availableSpecies", DatabaseObjectUtils.getAvailableSpecies(topLevelNodes));
 
