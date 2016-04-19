@@ -13,9 +13,9 @@ import org.reactome.server.tools.search.exception.EnricherException;
 import org.reactome.server.tools.search.exception.SolrSearcherException;
 import org.reactome.server.tools.service.DatabaseObjectService;
 import org.reactome.server.tools.service.DetailsService;
-import org.reactome.server.tools.service.GenericService;
+import org.reactome.server.tools.service.GeneralService;
 import org.reactome.server.tools.service.helper.ContentDetails;
-import org.reactome.server.tools.service.helper.PBNode;
+import org.reactome.server.tools.service.helper.PathwayBrowserNode;
 import org.reactome.server.tools.service.helper.SchemaNode;
 import org.reactome.server.tools.service.util.DatabaseObjectUtils;
 import org.reactome.server.util.WebUtils;
@@ -54,7 +54,7 @@ class GraphController {
     private DatabaseObjectService databaseObjectService;
 
     @Autowired
-    private GenericService genericService;
+    private GeneralService generalService;
 
     @Autowired
     private InteractionService interactionService;
@@ -109,7 +109,7 @@ class GraphController {
     @RequestMapping(value = "/schema/{className:.*}", method = RequestMethod.GET)
     public String getClassBrowserDetails(@PathVariable String className, ModelMap model) throws ClassNotFoundException {
         if (classBrowserCache == null) {
-            classBrowserCache = DatabaseObjectUtils.getGraphModelTree(databaseObjectService.getLabelsCount());
+            classBrowserCache = DatabaseObjectUtils.getGraphModelTree(generalService.getSchemaClassCounts());
         }
         model.addAttribute("node", classBrowserCache);
         model.addAttribute("properties", DatabaseObjectUtils.getAttributeTable(className));
@@ -145,28 +145,21 @@ class GraphController {
         if (clazz == null) {
             return objectDetail(id, databaseObject, model);
         } else {
-
-
             if (databaseObject != null) {
+                Set<PathwayBrowserNode> topLevelNodes = contentDetails.getLeaves();
+
                 model.addAttribute(TITLE, databaseObject.getDisplayName());
                 model.addAttribute("databaseObject", databaseObject);
                 model.addAttribute("type", databaseObject.getClassName());
                 model.addAttribute("explanation", databaseObject.getExplanation());
                 model.addAttribute("clazz", clazz);
-//                Set<PBNode> topLevelNodes = genericService.getLocationsInPathwayBrowserHierarchy(databaseObject);
-                Set<PBNode> topLevelNodes = contentDetails.getLeaves();
                 model.addAttribute("topLevelNodes", topLevelNodes);
-//                        model.addAttribute("topLevelNodes", PathwayBrowserLocationsUtils.buildTreesFromLeaves(topLevelNodes));
                 model.addAttribute("availableSpecies", DatabaseObjectUtils.getAvailableSpecies(topLevelNodes));
-
                 model.addAttribute("componentOf", contentDetails.getComponentOf());
-
                 model.addAttribute("otherFormsOfThisMolecule", contentDetails.getOtherFormsOfThisMolecule());
 
                 if (databaseObject instanceof EntityWithAccessionedSequence) {
                     EntityWithAccessionedSequence ewas = (EntityWithAccessionedSequence) databaseObject;
-
-//                    if (ewas.getHasModifiedResidue() != null && ewas.getHasModifiedResidue())
 
                     List<Interaction> interactions = interactionService.getInteractions(ewas.getReferenceEntity().getIdentifier(), InteractorConstant.STATIC);
                     model.addAttribute("interactions", interactions);
@@ -180,7 +173,6 @@ class GraphController {
         return "noResultsFound";
 
     }
-
 
     private String getClazz(DatabaseObject databaseObject) throws Exception {
         if (databaseObject instanceof Event) {

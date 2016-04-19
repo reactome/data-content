@@ -10,9 +10,7 @@ import org.reactome.server.tools.search.domain.SearchResult;
 import org.reactome.server.tools.search.exception.EnricherException;
 import org.reactome.server.tools.search.exception.SolrSearcherException;
 import org.reactome.server.tools.search.service.SearchService;
-import org.reactome.server.tools.service.GenericService;
 import org.reactome.server.util.MailService;
-import org.reactome.server.util.WebUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +26,8 @@ import java.util.Map;
 
 import static org.reactome.server.util.WebUtils.cleanReceivedParameter;
 import static org.reactome.server.util.WebUtils.cleanReceivedParameters;
+
+//import org.reactome.server.tools.service.GeneralService;
 
 /**
  * Spring WEB Controller
@@ -45,8 +45,8 @@ class SearchController {
     @Autowired
     private SearchService searchService;
 
-    @Autowired
-    private GenericService genericService;
+//    @Autowired
+//    private GeneralService generalService;
 
     @Autowired
     private MailService mailService;
@@ -162,7 +162,7 @@ class SearchController {
 //        databaseObject.setStableIdentifier(entry.getStId());
 //        databaseObject.setDisplayName(entry.getName());
 //        databaseObject.setSpeciesName(entry.getSpecies());
-//        entry.setLocationsPathwayBrowser(genericService.getLocationsInPathwayBrowser(databaseObject));
+//        entry.setLocationsPathwayBrowser(generalService.getLocationsInPathwayBrowser(databaseObject));
 //        if (entry != null) {
 //            model.addAttribute(ENTRY, entry);
 //            model.addAttribute(TITLE, entry.getName());
