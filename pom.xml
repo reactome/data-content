@@ -26,9 +26,9 @@
 
     <properties>
         <deploymentPath>/</deploymentPath>
-        <reactome.data.version>0.0.2-SNAPSHOT</reactome.data.version>
-        <reactome.search.version>0.0.1-SNAPSHOT</reactome.search.version>
-        <interactors.version>0.0.9-SNAPSHOT</interactors.version>
+        <reactome.data.version>0.0.4-SNAPSHOT</reactome.data.version>
+        <reactome.search.version>0.0.4-SNAPSHOT</reactome.search.version>
+        <interactors.version>1.0.0-SNAPSHOT</interactors.version>
         <spring.version>4.2.4.RELEASE</spring.version>
         <javax.servlet.version>4.0.0-b01</javax.servlet.version>
         <jackson.version>2.7.3</jackson.version>
@@ -50,19 +50,19 @@
     <dependencies>
         <!--Reactome data-->
         <dependency>
-            <groupId>org.reactome.server.tools</groupId>
+            <groupId>org.reactome.server.graph</groupId>
             <artifactId>graph-core</artifactId>
             <version>${reactome.data.version}</version>
         </dependency>
         <!--Reactome search-->
         <dependency>
-            <groupId>org.reactome.server.tools</groupId>
+            <groupId>org.reactome.server.search</groupId>
             <artifactId>search-core</artifactId>
             <version>${reactome.search.version}</version>
         </dependency>
         <!-- Reactome Interactor-core -->
         <dependency>
-            <groupId>org.reactome.server.tools</groupId>
+            <groupId>org.reactome.server.interactors</groupId>
             <artifactId>interactor-core</artifactId>
             <version>${interactors.version}</version>
             <exclusions>

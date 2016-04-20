@@ -146,3 +146,28 @@
         </table>
     </div>
 </c:if>
+
+
+
+<c:if test="${databaseObject.schemaClass == 'Reaction'}">
+    <c:if test="${not empty databaseObject.reverseReaction}">
+        <div class="grid_23  padding  margin">
+            <h5>ReverseReaction</h5>
+            <table class="fixedTable">
+                <thead>
+                <tr class="tableHead">
+                    <td></td>
+                    <td></td>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td><strong>entries</strong></td>
+                    <td>
+                        <a href="../detail/${databaseObject.reverseReaction.stableIdentifier}" class="" title="Show Details" rel="nofollow">${databaseObject.reverseReaction.displayName} <c:if test="${not empty databaseObject.reverseReaction.speciesName}">(${databaseObject.reverseReaction.speciesName})</c:if></a></li>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </c:if>
+</c:if>

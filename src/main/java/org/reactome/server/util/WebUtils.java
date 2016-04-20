@@ -2,10 +2,10 @@ package org.reactome.server.util;
 
 import org.jsoup.Jsoup;
 import org.jsoup.safety.Whitelist;
-import org.reactome.server.tools.interactors.model.Interaction;
-import org.reactome.server.tools.interactors.model.InteractionDetails;
-import org.reactome.server.tools.interactors.util.InteractorConstant;
-import org.reactome.server.tools.interactors.util.Toolbox;
+import org.reactome.server.interactors.model.Interaction;
+import org.reactome.server.interactors.model.InteractionDetails;
+import org.reactome.server.interactors.util.InteractorConstant;
+import org.reactome.server.interactors.util.Toolbox;
 
 import java.util.ArrayList;
 import java.util.HashMap;

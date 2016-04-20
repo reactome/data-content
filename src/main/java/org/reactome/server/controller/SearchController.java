@@ -1,18 +1,16 @@
 package org.reactome.server.controller;
 
 import org.apache.commons.lang.StringUtils;
-import org.reactome.server.tools.interactors.model.InteractorResource;
-import org.reactome.server.tools.interactors.service.InteractorResourceService;
-import org.reactome.server.tools.search.domain.FacetMapping;
-import org.reactome.server.tools.search.domain.InteractorEntry;
-import org.reactome.server.tools.search.domain.Query;
-import org.reactome.server.tools.search.domain.SearchResult;
-import org.reactome.server.tools.search.exception.EnricherException;
-import org.reactome.server.tools.search.exception.SolrSearcherException;
-import org.reactome.server.tools.search.service.SearchService;
-import org.reactome.server.tools.service.GenericService;
+import org.reactome.server.interactors.model.InteractorResource;
+import org.reactome.server.interactors.service.InteractorResourceService;
+import org.reactome.server.search.domain.FacetMapping;
+import org.reactome.server.search.domain.InteractorEntry;
+import org.reactome.server.search.domain.Query;
+import org.reactome.server.search.domain.SearchResult;
+import org.reactome.server.search.exception.EnricherException;
+import org.reactome.server.search.exception.SolrSearcherException;
+import org.reactome.server.search.service.SearchService;
 import org.reactome.server.util.MailService;
-import org.reactome.server.util.WebUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,9 +42,6 @@ class SearchController {
 
     @Autowired
     private SearchService searchService;
-
-    @Autowired
-    private GenericService genericService;
 
     @Autowired
     private MailService mailService;

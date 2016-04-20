@@ -1,23 +1,23 @@
 package org.reactome.server.controller;
 
-import org.reactome.server.tools.domain.model.DatabaseObject;
-import org.reactome.server.tools.domain.model.EntityWithAccessionedSequence;
-import org.reactome.server.tools.domain.model.Event;
-import org.reactome.server.tools.domain.model.PhysicalEntity;
-import org.reactome.server.tools.interactors.model.Interaction;
-import org.reactome.server.tools.interactors.model.InteractorResource;
-import org.reactome.server.tools.interactors.service.InteractionService;
-import org.reactome.server.tools.interactors.service.InteractorResourceService;
-import org.reactome.server.tools.interactors.util.InteractorConstant;
-import org.reactome.server.tools.search.exception.EnricherException;
-import org.reactome.server.tools.search.exception.SolrSearcherException;
-import org.reactome.server.tools.service.DatabaseObjectService;
-import org.reactome.server.tools.service.DetailsService;
-import org.reactome.server.tools.service.GenericService;
-import org.reactome.server.tools.service.helper.ContentDetails;
-import org.reactome.server.tools.service.helper.PBNode;
-import org.reactome.server.tools.service.helper.SchemaNode;
-import org.reactome.server.tools.service.util.DatabaseObjectUtils;
+import org.reactome.server.graph.domain.model.DatabaseObject;
+import org.reactome.server.graph.domain.model.EntityWithAccessionedSequence;
+import org.reactome.server.graph.domain.model.Event;
+import org.reactome.server.graph.domain.model.PhysicalEntity;
+import org.reactome.server.graph.service.DatabaseObjectService;
+import org.reactome.server.graph.service.DetailsService;
+import org.reactome.server.graph.service.GeneralService;
+import org.reactome.server.graph.service.helper.ContentDetails;
+import org.reactome.server.graph.service.helper.PathwayBrowserNode;
+import org.reactome.server.graph.service.helper.SchemaNode;
+import org.reactome.server.graph.service.util.DatabaseObjectUtils;
+import org.reactome.server.interactors.model.Interaction;
+import org.reactome.server.interactors.model.InteractorResource;
+import org.reactome.server.interactors.service.InteractionService;
+import org.reactome.server.interactors.service.InteractorResourceService;
+import org.reactome.server.interactors.util.InteractorConstant;
+import org.reactome.server.search.exception.EnricherException;
+import org.reactome.server.search.exception.SolrSearcherException;
 import org.reactome.server.util.WebUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -54,7 +54,7 @@ class GraphController {
     private DatabaseObjectService databaseObjectService;
 
     @Autowired
-    private GenericService genericService;
+    private GeneralService generalService;
 
     @Autowired
     private InteractionService interactionService;
@@ -109,7 +109,7 @@ class GraphController {
     @RequestMapping(value = "/schema/{className:.*}", method = RequestMethod.GET)
     public String getClassBrowserDetails(@PathVariable String className, ModelMap model) throws ClassNotFoundException {
         if (classBrowserCache == null) {
-            classBrowserCache = DatabaseObjectUtils.getGraphModelTree(databaseObjectService.getLabelsCount());
+            classBrowserCache = DatabaseObjectUtils.getGraphModelTree(generalService.getSchemaClassCounts());
         }
         model.addAttribute("node", classBrowserCache);
         model.addAttribute("properties", DatabaseObjectUtils.getAttributeTable(className));
@@ -138,7 +138,7 @@ class GraphController {
 
 //        DatabaseObject databaseObject = databaseObjectService.findById(id);
 
-        ContentDetails contentDetails = detailsService.contentDetails(id);
+        ContentDetails contentDetails = detailsService.getContentDetails(id);
 //        DatabaseObject databaseObject = genericService.findById(id, RelationshipDirection.OUTGOING);
         DatabaseObject databaseObject = contentDetails.getDatabaseObject();
         String clazz = getClazz(databaseObject);
@@ -154,7 +154,7 @@ class GraphController {
                 model.addAttribute("explanation", databaseObject.getExplanation());
                 model.addAttribute("clazz", clazz);
 //                Set<PBNode> topLevelNodes = genericService.getLocationsInPathwayBrowserHierarchy(databaseObject);
-                Set<PBNode> topLevelNodes = contentDetails.getLeaves();
+                Set<PathwayBrowserNode> topLevelNodes = contentDetails.getLeaves();
                 model.addAttribute("topLevelNodes", topLevelNodes);
 //                        model.addAttribute("topLevelNodes", PathwayBrowserLocationsUtils.buildTreesFromLeaves(topLevelNodes));
                 model.addAttribute("availableSpecies", DatabaseObjectUtils.getAvailableSpecies(topLevelNodes));
@@ -173,7 +173,7 @@ class GraphController {
                     model.addAttribute(INTERACTOR_RESOURCES_MAP, interactorResourceMap); // interactor URL
                     model.addAttribute(EVIDENCES_URL_MAP, WebUtils.prepareEvidencesURLs(interactions)); // evidencesURL
                 }
-
+                String type = databaseObject.getSchemaClass();
                 return "graph/detail";
             }
         }
