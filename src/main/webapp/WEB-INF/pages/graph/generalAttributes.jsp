@@ -89,14 +89,11 @@
       <tbody>
       <c:forEach var="component" items="${componentOf}">
         <tr>
-
-
-
-          <td><strong>${referrers.key}</strong></td>
+          <td><strong>${component.type}</strong></td>
           <td>
             <ul class="list overflowList">
-              <c:forEach var="entityReferenceList" items="${referrers.value}">
-                <li><c:if test="${not empty entityReferenceList.name}"><a href="../detail/${entityReferenceList.stId}" class="" title="Show Details" rel="nofollow">${entityReferenceList.name}</a></c:if></li>
+              <c:forEach var="names" items="${component.names}" varStatus="loop">
+                <li><c:if test="${not empty component.stIds}"><a href="../detail/${component.stIds.get(loop.index)}" class="" title="Show Details" rel="nofollow">${names}</a></c:if></li>
               </c:forEach>
             </ul>
           </td>
@@ -105,6 +102,28 @@
       </tbody>
     </table>
   </div>
+</c:if>
 
-
+<c:if test="${not empty databaseObject.compartment}">
+  <div class="grid_23  padding  margin">
+    <h5>Compartment</h5>
+    <table class="fixedTable">
+      <thead>
+      <tr class="tableHead">
+        <td>Database</td>
+        <td>Identifier</td>
+        <td>Definition</td>
+      </tr>
+      </thead>
+      <tbody>
+      <c:forEach var="compartment" items="${databaseObject.compartment}">
+        <tr>
+          <td><strong>${compartment.databaseName}</strong></td>
+          <td><a href="${compartment.url}" class="" title="Show Details" rel="nofollow">${compartment.name}</a></td>
+          <td>${compartment.definition}</td>
+        </tr>
+      </c:forEach>
+      </tbody>
+    </table>
+  </div>
 </c:if>
