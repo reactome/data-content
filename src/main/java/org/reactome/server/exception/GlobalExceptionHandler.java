@@ -1,7 +1,7 @@
 package org.reactome.server.exception;
 
-import org.reactome.server.tools.search.exception.EnricherException;
-import org.reactome.server.tools.search.exception.SolrSearcherException;
+import org.reactome.server.search.exception.EnricherException;
+import org.reactome.server.search.exception.SolrSearcherException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
