@@ -1,9 +1,6 @@
 package org.reactome.server.controller;
 
-import org.reactome.server.graph.domain.model.DatabaseObject;
-import org.reactome.server.graph.domain.model.EntityWithAccessionedSequence;
-import org.reactome.server.graph.domain.model.Event;
-import org.reactome.server.graph.domain.model.PhysicalEntity;
+import org.reactome.server.graph.domain.model.*;
 import org.reactome.server.graph.service.DatabaseObjectService;
 import org.reactome.server.graph.service.DetailsService;
 import org.reactome.server.graph.service.GeneralService;
@@ -166,8 +163,6 @@ class GraphController {
                 if (databaseObject instanceof EntityWithAccessionedSequence) {
                     EntityWithAccessionedSequence ewas = (EntityWithAccessionedSequence) databaseObject;
 
-//                    if (ewas.getHasModifiedResidue() != null && ewas.getHasModifiedResidue())
-
                     List<Interaction> interactions = interactionService.getInteractions(ewas.getReferenceEntity().getIdentifier(), InteractorConstant.STATIC);
                     model.addAttribute("interactions", interactions);
                     model.addAttribute(INTERACTOR_RESOURCES_MAP, interactorResourceMap); // interactor URL
@@ -187,6 +182,8 @@ class GraphController {
             return Event.class.getSimpleName();
         } else if (databaseObject instanceof PhysicalEntity) {
             return PhysicalEntity.class.getSimpleName();
+        } else if (databaseObject instanceof Regulation) {
+            return Regulation.class.getSimpleName();
         } else {
             return null;
         }
