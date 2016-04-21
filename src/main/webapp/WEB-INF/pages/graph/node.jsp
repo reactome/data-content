@@ -6,7 +6,7 @@
         <c:choose>
             <c:when test="${not empty node.url}">
                 <%--<img src="../resources/images/${node.type}.png" title="${node.type}" width="12" height="11" />--%>
-                <span style="font-size:14px"><i class="sprite sprite-${node.type}" style="zoom: .75;"></i></span>
+                <span style="font-size:14px"><i class="sprite-resize sprite sprite-${node.type}"></i></span>
                 <a href="${node.url}" class=""  title="Show Details" rel="nofollow">${node.name} <c:if test="${not empty node.species}">(${node.species})</c:if></a>
             </c:when>
             <c:otherwise>

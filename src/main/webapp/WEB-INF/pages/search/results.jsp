@@ -31,9 +31,12 @@
                                 <div class="result">
                                     <div class="result-title">
                                         <h4 class="title">
-                                            <img src="./resources/images/${entry.exactType}.png" title="${entry.exactType}" width="14" height="13" alt=""/>
+                                            <i class="sprite-resize sprite sprite-${entry.exactType}" title="${entry.exactType}"></i>
+
+                                            <%--<img src="./resources/images/${entry.exactType}.png" title="${entry.exactType}" width="14" height="13" alt=""/>--%>
                                             <c:if test="${entry.isDisease}">
-                                                <img src="./resources/images/isDisease.png" title="Disease related entry" width="13" height="14" alt=""/>
+                                                <i class="sprite-resize sprite sprite-isDisease" title="Disease related entry"></i>
+                                                <%--<img src="./resources/images/isDisease.png" title="Disease related entry" width="13" height="14" alt=""/>--%>
                                             </c:if>
                                             <c:choose>
 
