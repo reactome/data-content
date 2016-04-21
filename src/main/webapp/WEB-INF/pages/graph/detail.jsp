@@ -50,7 +50,11 @@
     <c:if test="${not empty databaseObject.name}">
     <div class="grid_23  padding">
         <h5>Synonyms</h5>
-        <c:forEach var="synonym" items="${databaseObject.name}" varStatus="loop">${synonym}<c:if test="${!loop.last}">, </c:if></c:forEach>
+        <div class="paddingleft">
+            <c:forEach var="synonym" items="${databaseObject.name}" varStatus="loop">
+                ${synonym}<c:if test="${!loop.last}">, </c:if>
+            </c:forEach>
+        </div>
     </div>
     </c:if>
 
