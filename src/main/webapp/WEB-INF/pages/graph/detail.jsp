@@ -7,7 +7,7 @@
     <div class="grid_23 padding">
         <h3>
             <c:if test="${not empty databaseObject.schemaClass}">
-                <span class="sprite sprite-${databaseObject.schemaClass}" title="${type}"></span>
+                <i class="sprite sprite-${databaseObject.schemaClass}" title="${type}"></i>
             </c:if>
 
             <c:if test="${clazz == 'Event'}">

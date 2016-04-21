@@ -31,9 +31,9 @@
                     <div class="tplSpe_${fn:replace(topLvl.species, ' ', '_')}" style="display: none">
                             <span class="plus" title="click here to expand or collapse the tree">
                                 <%--<img class="image" src="../resources/images/plus.png" title="${entry.exactType}" width="14" height="13" alt=""/>--%>
-                                <i class="sprite sprite-plus" style="zoom: .6;" title="click here to expand or collapse the tree"></i>
+                                <i class="sprite-resize-small sprite sprite-plus" title="click here to expand or collapse the tree"></i>
                             </span>
-                        <span style="font-size:14px"><i class="sprite sprite-Pathway" style="zoom: .75"></i> <a href="${topLvl.url}" class=""   title="goto Reactome Pathway Browser" rel="nofollow">${topLvl.name} (${topLvl.species})</a></span>
+                        <span style="font-size:14px"><i class="sprite-resize prite sprite-Pathway"></i> <a href="${topLvl.url}" class=""   title="goto Reactome Pathway Browser" rel="nofollow">${topLvl.name} (${topLvl.species})</a></span>
                         <%--<span style="font-size:14px"><img src="../resources/images/Pathway.png" title="${topLvl.type}" width="12" height="11" /> <a href="${topLvl.url}" class=""   title="goto Reactome Pathway Browser" rel="nofollow">${topLvl.name} (${topLvl.species})</a></span>--%>
                         <div class="treeContent">
                             <ul class="tree">

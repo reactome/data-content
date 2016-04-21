@@ -591,6 +591,16 @@ ul.tree li.schema-item {
     display: inline-block;
 }
 
+.sprite-resize {
+    zoom: .75;
+    -moz-transform: scale(.75);
+}
+
+.sprite-resize-small {
+    zoom: .6;
+    -moz-transform: scale(.6);
+}   
+
 .sprite-BlackBoxEvent {
     width: 16px;
     height: 16px;
