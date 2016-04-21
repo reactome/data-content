@@ -1,6 +1,9 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
+<%--@elvariable id="databaseObject" type="org.reactome.server.graph.domain.model.Pathway"--%>
+<%--@elvariable id="literature" type="org.reactome.server.graph.domain.model.LiteratureReference"--%>
+
 <c:import url="../header.jsp"/>
 <div class="ebi-content">
 
