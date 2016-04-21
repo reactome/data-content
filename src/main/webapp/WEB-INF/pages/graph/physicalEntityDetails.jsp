@@ -279,38 +279,48 @@
     <c:if test="${not empty databaseObject.hasModifiedResidue}">
         <div class="grid_23  padding  margin">
             <h5>ModifiedResidues</h5>
-            <div class="paddingleft">
-                <table>
-                    <thead>
+            <table>
+                <thead>
                     <tr class="tableHead">
                         <td>Name</td>
                         <td>Coordinate</td>
                         <td>Modification</td>
-                        <td>PsiMod Name</td>
-                        <td>PsiMod Identifier</td>
-                        <td>PsiMod Definition</td>
+                        <td>PsiMod</td>
                     </tr>
-                    </thead>
-                    <tbody>
+                </thead>
+                <tbody>
                     <c:forEach var="modifiedResidue" items="${databaseObject.hasModifiedResidue}">
-                    <tr>
-                        <td>${modifiedResidue.displayName}</td>
-                        <td>${modifiedResidue.coordinate}</td>
-                        <c:choose>
-                            <c:when test="${modifiedResidue.schemaClass == 'InterChainCrosslinkedResidue' || modifiedResidue.schemaClass == 'IntraChainCrosslinkedResidue' || modifiedResidue.schemaClass == 'GroupModifiedResidue'}">
-                                <td><c:if test="${not empty modifiedResidue.modification.displayName}"><a href="../detail/${modifiedResidue.modification.stableIdentifier}" class="" title="Show Details" rel="nofollow">${modifiedResidue.modification.displayName}</a></c:if></td>
-                            </c:when>
-                            <c:otherwise>
-                                <td></td>
-                            </c:otherwise>
-                        </c:choose>
-                        <td><c:if test="${not empty modifiedResidue.psiMod.displayName}"><a href="${modifiedResidue.psiMod.url}" class=""  title="Show Details" rel="nofollow">${modifiedResidue.psiMod.displayName} </a></c:if></td>
-                        <td><c:if test="${not empty modifiedResidue.psiMod.identifier}">${modifiedResidue.psiMod.identifier}</c:if></td>
-                        <td><c:if test="${not empty modifiedResidue.psiMod.definition}">${modifiedResidue.psiMod.definition}</c:if></td>
-                    </tr>
+                        <tr>
+                            <td style="vertical-align: middle; width: 170px;">${modifiedResidue.displayName}</td>
+                            <td style="vertical-align: middle;">${modifiedResidue.coordinate}</td>
+                            <c:choose>
+                                <c:when test="${modifiedResidue.schemaClass == 'InterChainCrosslinkedResidue' || modifiedResidue.schemaClass == 'IntraChainCrosslinkedResidue' || modifiedResidue.schemaClass == 'GroupModifiedResidue'}">
+                                    <td style="vertical-align: middle;"><c:if test="${not empty modifiedResidue.modification.displayName}"><a href="../detail/${modifiedResidue.modification.stableIdentifier}" class="" title="Show Details" rel="nofollow">${modifiedResidue.modification.displayName}</a></c:if></td>
+                                </c:when>
+                                <c:otherwise>
+                                    <td></td>
+                                </c:otherwise>
+                            </c:choose>
+                            <td style="padding: 0px;">
+                                <table border="0" class="psiModTable">
+                                    <tbody>
+                                        <c:forEach var="psiMod" items="${modifiedResidue.psiMod}" varStatus="loop">
+                                            <tr>
+                                                <td <c:if test="${loop.index % 2 == 0}">class="specialborder"</c:if>>
+                                                    <c:if test="${not empty psiMod.displayName}"><a href="${psiMod.url}" class="" title="Show Details" rel="nofollow">${psiMod.displayName}</a></c:if>
+                                                </td>
+                                                <td <c:if test="${loop.index % 2 == 0}">class="specialborder"</c:if>>
+                                                    <c:if test="${not empty psiMod.definition}">${psiMod.definition}</c:if>
+                                                </td>
+                                            </tr>
+                                        </c:forEach>
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
                     </c:forEach>
-                </table>
-            </div>
+                </tbody>
+            </table>
         </div>
     </c:if>
 </c:if>
@@ -433,6 +443,37 @@
             </table>
         </div>
     </c:if>
+</c:if>
+
+
+<c:if test="${not empty entry.regulatingEntities}">
+    <div class="grid_23  padding  margin">
+        <h5>This entity regulates</h5>
+        <table class="fixedTable">
+            <thead>
+            <tr class="tableHead">
+                <td>Regulation type</td>
+                <td>Name</td>
+
+            </tr>
+            </thead>
+            <tbody>
+            <c:forEach var="regulation" items="${entry.regulatingEntities}">
+                <tr>
+                    <td><strong>${regulation.key}</strong></td>
+                    <td>
+                        <ul class="list overflowList">
+                            <c:forEach var="value" items="${regulation.value}" varStatus="loop">
+                                <li><c:if test="${not empty value.regulatedEntity.stId}"><a href="../detail/${value.regulatedEntity.stId}" class="" title="Show Details" rel="nofollow">${value.regulatedEntity.name}<c:if test="${not empty value.regulatedEntity.species}"> (${value.regulatedEntity  .species})</c:if></a></c:if></li>
+                            </c:forEach>
+                        </ul>
+                    </td>
+                </tr>
+            </c:forEach>
+            </tbody>
+
+        </table>
+    </div>
 </c:if>
 
 

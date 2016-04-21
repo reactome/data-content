@@ -171,3 +171,45 @@
         </div>
     </c:if>
 </c:if>
+
+
+<%--<c:if test="${not empty entry.regulatedEvents}">--%>
+<c:if test="${not empty databaseObject.negativelyRegulatedBy || not empty databaseObject.positivelyRegulatedBy}">
+    <div class="grid_23  padding  margin">
+        <h5>This entry is regulated by</h5>
+        <table class="fixedTable">
+            <thead>
+            <tr class="tableHead">
+                <td>Regulation type</td>
+                <td>Name</td>
+            </tr>
+            </thead>
+            <tbody>
+            <c:forEach var="negativelyRegulatedBy" items="${databaseObject.negativelyRegulatedBy}">
+                <tr>
+                    <td><strong>${negativelyRegulatedBy.schemaClass}</strong></td>
+                    <td>
+                        <ul class="list overflowList">
+                            <%--<c:forEach var="value" items="${negativelyRegulatedBy}" varStatus="loop">--%>
+                                <li><c:if test="${not empty negativelyRegulatedBy.regulator.stableIdentifier}"><a href="../detail/${negativelyRegulatedBy.regulator.stableIdentifier}" class="" title="Show Details" rel="nofollow">${negativelyRegulatedBy.regulator.displayName}<c:if test="${not empty negativelyRegulatedBy.regulator.speciesName}"> (${negativelyRegulatedBy.regulator.speciesName})</c:if></a></c:if></li>
+                            <%--</c:forEach>--%>
+                        </ul>
+                    </td>
+                </tr>
+            </c:forEach>
+            <c:forEach var="positivelyRegulatedBy" items="${databaseObject.positivelyRegulatedBy}">
+                <tr>
+                    <td><strong>${positivelyRegulatedBy.schemaClass}</strong></td>
+                    <td>
+                        <ul class="list overflowList">
+                            <%--<c:forEach var="value" items="${positivelyRegulatedBy}" varStatus="loop">--%>
+                                <li><c:if test="${not empty positivelyRegulatedBy.regulator.stableIdentifier}"><a href="../detail/${positivelyRegulatedBy.regulator.stableIdentifier}" class="" title="Show Details" rel="nofollow">${positivelyRegulatedBy.regulator.displayName}<c:if test="${not empty positivelyRegulatedBy.regulator.speciesName}"> (${positivelyRegulatedBy.regulator.speciesName})</c:if></a></c:if></li>
+                            <%--</c:forEach>--%>
+                        </ul>
+                    </td>
+                </tr>
+            </c:forEach>
+            </tbody>
+        </table>
+    </div>
+</c:if>

@@ -154,3 +154,24 @@ h5 a:active{
     -webkit-border-radius:5px;
     border-radius:5px
 }
+
+/** if we add this in the main.css **/
+table.psiModTable {
+    border: 0;
+    margin: initial;
+    width: 100%;
+}
+
+table.psiModTable tbody tr td {
+    /*padding: 0px;*/
+    min-width: 100px;
+    /*vertical-align: middle;*/
+    /*margin: 0px;*/
+    border: 0px;
+    border-right: 1px solid #f1f1f1;
+
+}
+
+table.psiModTable .specialborder {
+    border-bottom: 1px solid #f1f1f1;
+}
