@@ -1,6 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <c:import url="../header.jsp"/>
+
 <div class="ebi-content">
     <div class="grid_23 padding">
         <h2>Advanced search</h2>
@@ -89,4 +90,4 @@
 <div class="clear"></div>
 
 </div>            <%--A weird thing to avoid problems--%>
-<c:import url="footer.jsp"/>
+<c:import url="../footer.jsp"/>

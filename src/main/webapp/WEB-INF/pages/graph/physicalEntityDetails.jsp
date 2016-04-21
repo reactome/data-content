@@ -29,7 +29,7 @@
 
 <%--<c:if test="${not empty databaseObject.referenceEntity || not empty databaseObject.goMolecularComponent}">--%>
 <div class="grid_23  padding  margin">
-    <h5>Additional Information</h5>
+    <h5>ReferenceEntity Information</h5>
     <table class="fixedTable">
         <thead>
         <tr class="tableHead">
@@ -57,11 +57,11 @@
                         </td>
                     </tr>
                 </c:if>
-                <c:if test="${not empty databaseObject.name}">
+                <c:if test="${not empty databaseObject.referenceEntity.name}">
                     <tr>
                         <td><strong>Synonyms</strong></td>
                         <td class="block">
-                            <c:forEach var="synonym" items="${databaseObject.name}" varStatus="loop">${synonym}<c:if test="${!loop.last}">, </c:if></c:forEach>
+                            <c:forEach var="synonym" items="${databaseObject.referenceEntity.name}" varStatus="loop">${synonym}<c:if test="${!loop.last}">, </c:if></c:forEach>
                         </td>
                     </tr>
                 </c:if>
@@ -146,6 +146,24 @@
             </c:if>
 
         </c:if>
+
+
+
+        </tbody>
+    </table>
+</div>
+
+
+<div class="grid_23  padding  margin">
+    <h5>Go Molecular Component</h5>
+    <table class="fixedTable">
+        <thead>
+        <tr class="tableHead">
+            <td></td>
+            <td></td>
+        </tr>
+        </thead>
+        <tbody>
         <c:if test="${not empty databaseObject.goCellularComponent}">
             <tr>
                 <td><strong>GO Molecular Component</strong></td>
@@ -160,11 +178,10 @@
                 </td>
             </tr>
         </c:if>
-
-
         </tbody>
     </table>
 </div>
+
 <%--</c:if>--%>
 <c:if test="${databaseObject.schemaClass == 'EntityWithAccessionedSequence' || databaseObject.schemaClass == 'SimpleEntity' || databaseObject.schemaClass == 'OpenSet'}">
     <c:if test="${databaseObject.referenceType == 'ReferenceGeneProduct'}">
@@ -281,44 +298,44 @@
             <h5>ModifiedResidues</h5>
             <table>
                 <thead>
-                    <tr class="tableHead">
-                        <td>Name</td>
-                        <td>Coordinate</td>
-                        <td>Modification</td>
-                        <td>PsiMod</td>
-                    </tr>
+                <tr class="tableHead">
+                    <td>Name</td>
+                    <td>Coordinate</td>
+                    <td>Modification</td>
+                    <td>PsiMod</td>
+                </tr>
                 </thead>
                 <tbody>
-                    <c:forEach var="modifiedResidue" items="${databaseObject.hasModifiedResidue}">
-                        <tr>
-                            <td style="vertical-align: middle; width: 170px;">${modifiedResidue.displayName}</td>
-                            <td style="vertical-align: middle;">${modifiedResidue.coordinate}</td>
-                            <c:choose>
-                                <c:when test="${modifiedResidue.schemaClass == 'InterChainCrosslinkedResidue' || modifiedResidue.schemaClass == 'IntraChainCrosslinkedResidue' || modifiedResidue.schemaClass == 'GroupModifiedResidue'}">
-                                    <td style="vertical-align: middle;"><c:if test="${not empty modifiedResidue.modification.displayName}"><a href="../detail/${modifiedResidue.modification.stableIdentifier}" class="" title="Show Details" rel="nofollow">${modifiedResidue.modification.displayName}</a></c:if></td>
-                                </c:when>
-                                <c:otherwise>
-                                    <td></td>
-                                </c:otherwise>
-                            </c:choose>
-                            <td style="padding: 0px;">
-                                <table border="0" class="psiModTable">
-                                    <tbody>
-                                        <c:forEach var="psiMod" items="${modifiedResidue.psiMod}" varStatus="loop">
-                                            <tr>
-                                                <td <c:if test="${loop.index % 2 == 0}">class="specialborder"</c:if>>
-                                                    <c:if test="${not empty psiMod.displayName}"><a href="${psiMod.url}" class="" title="Show Details" rel="nofollow">${psiMod.displayName}</a></c:if>
-                                                </td>
-                                                <td <c:if test="${loop.index % 2 == 0}">class="specialborder"</c:if>>
-                                                    <c:if test="${not empty psiMod.definition}">${psiMod.definition}</c:if>
-                                                </td>
-                                            </tr>
-                                        </c:forEach>
-                                    </tbody>
-                                </table>
-                            </td>
-                        </tr>
-                    </c:forEach>
+                <c:forEach var="modifiedResidue" items="${databaseObject.hasModifiedResidue}">
+                    <tr>
+                        <td style="vertical-align: middle; width: 170px;">${modifiedResidue.displayName}</td>
+                        <td style="vertical-align: middle;">${modifiedResidue.coordinate}</td>
+                        <c:choose>
+                            <c:when test="${modifiedResidue.schemaClass == 'InterChainCrosslinkedResidue' || modifiedResidue.schemaClass == 'IntraChainCrosslinkedResidue' || modifiedResidue.schemaClass == 'GroupModifiedResidue'}">
+                                <td style="vertical-align: middle;"><c:if test="${not empty modifiedResidue.modification.displayName}"><a href="../detail/${modifiedResidue.modification.stableIdentifier}" class="" title="Show Details" rel="nofollow">${modifiedResidue.modification.displayName}</a></c:if></td>
+                            </c:when>
+                            <c:otherwise>
+                                <td></td>
+                            </c:otherwise>
+                        </c:choose>
+                        <td style="padding: 0px;">
+                            <table border="0" class="psiModTable">
+                                <tbody>
+                                <c:forEach var="psiMod" items="${modifiedResidue.psiMod}" varStatus="loop">
+                                    <tr>
+                                        <td <c:if test="${loop.index % 2 == 0}">class="specialborder"</c:if>>
+                                            <c:if test="${not empty psiMod.displayName}"><a href="${psiMod.url}" class="" title="Show Details" rel="nofollow">${psiMod.displayName}</a></c:if>
+                                        </td>
+                                        <td <c:if test="${loop.index % 2 == 0}">class="specialborder"</c:if>>
+                                            <c:if test="${not empty psiMod.definition}">${psiMod.definition}</c:if>
+                                        </td>
+                                    </tr>
+                                </c:forEach>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                </c:forEach>
                 </tbody>
             </table>
         </div>

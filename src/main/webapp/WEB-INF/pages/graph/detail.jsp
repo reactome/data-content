@@ -46,6 +46,15 @@
         </c:if>
     </div>
 
+
+    <c:if test="${not empty databaseObject.name}">
+    <div class="grid_23  padding">
+        <h5>Synonyms</h5>
+
+        <c:forEach var="synonym" items="${databaseObject.name}" varStatus="loop">${synonym}<c:if test="${!loop.last}">, </c:if></c:forEach>
+          </div>
+    </c:if>
+
     <%--Both physicalEntities and event can have a summation--%>
     <c:if test="${not empty databaseObject.summation}">
         <div class="grid_23  padding">

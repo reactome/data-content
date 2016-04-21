@@ -54,6 +54,55 @@
     </c:if>
 </c:if>
 
+
+
+
+<c:if test="${databaseObject.schemaClass == 'Reaction' || databaseObject.schemaClass == 'BlackBoxEvent' || databaseObject.schemaClass == 'FailedReaction' || databaseObject.schemaClass == 'Polymerisation'|| databaseObject.schemaClass == 'Depolymerisation'}">
+
+<c:if test="${not empty databaseObject.catalystActivity}">
+    <div class="grid_23  padding  margin">
+        <h5>Catalyst Activity</h5>
+        <table>
+            <thead>
+            <tr class="tableHead">
+                <td>PhysicalEntity</td>
+                <td>Activity</td>
+                <td>Active Units</td>
+            </tr>
+            </thead>
+            <tbody>
+            <c:forEach var="catalystActivity" items="${databaseObject.catalystActivity}">
+                <tr>
+                    <c:if test="${not empty catalystActivity.physicalEntity}">
+                        <td><a href="../detail/${catalystActivity.physicalEntity.stableIdentifier}" class="" title="show Reactome ${catalystActivity.physicalEntity.stableIdentifier}" rel="nofollow">${catalystActivity.physicalEntity.displayName}</a></td>
+                    </c:if>
+                    <c:if test="${not empty catalystActivity.activity}">
+                        <td><a href="${catalystActivity.activity.url}" class=""  title="show ${catalystActivity.activity.databaseName}" rel="nofollow">${catalystActivity.activity.displayName} (${catalystActivity.activity.accession})</a></td>
+                    </c:if>
+
+                    <c:choose>
+                        <c:when test="${not empty catalystActivity.activeUnit}">
+                            <td>
+                                <ul class="list overflowList">
+                                    <c:forEach var="activeUnit" items="${catalystActivity.activeUnit}">
+                                        <li><a href="../detail/${activeUnit.stableIdentifier}" class="" title="show Reactome ${activeUnit.stableIdentifier}" rel="nofollow">${activeUnit.displayName}</a></li>
+                                    </c:forEach>
+                                </ul>
+                            </td>
+                        </c:when>
+                        <c:otherwise>
+                            <td>&nbsp;</td>
+                        </c:otherwise>
+                    </c:choose>
+                </tr>
+            </c:forEach>
+            </tbody>
+        </table>
+    </div>
+</c:if>
+
+</c:if>
+
 <c:if test="${databaseObject.schemaClass == 'Reaction' || databaseObject.schemaClass == 'BlackBoxEvent' || databaseObject.schemaClass == 'FailedReaction' || databaseObject.schemaClass == 'Polymerisation'|| databaseObject.schemaClass == 'Depolymerisation'}">
     <c:if test="${not empty databaseObject.input || not empty databaseObject.output}">
         <div class="grid_23  padding  margin">
