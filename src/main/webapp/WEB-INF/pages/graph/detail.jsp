@@ -7,22 +7,38 @@
     <div class="grid_23 padding">
         <h3>
             <c:if test="${not empty databaseObject.schemaClass}">
-                <%--<img src="../resources/images/${databaseObject.schemaClass}.png" title="${databaseObject.schemaClass}" height="20" />--%>
                 <span class="sprite sprite-${databaseObject.schemaClass}" title="${type}"></span>
             </c:if>
 
             <c:if test="${clazz == 'Event'}">
                 <c:if test="${databaseObject.isInDisease}">
-                    <%--<img src="../resources/images/isDisease.png" title="Disease related entry" height="20" />--%>
                     <i class="sprite sprite-isDisease" title="Disease related entry"></i>
                 </c:if>
             </c:if>
-            <c:out value="${databaseObject.getDisplayName()}" />
+
+            <c:choose>
+                <c:when test="${clazz == 'Regulation'}">
+                    <c:choose>
+                        <c:when test="${not empty databaseObject.name}">
+                            <c:out value="${databaseObject.name[0]}" />
+                        </c:when>
+                        <c:otherwise>
+                            <c:out value="${databaseObject.displayName}" />
+                        </c:otherwise>
+                    </c:choose>
+                </c:when>
+                <c:otherwise>
+                    <c:out value="${databaseObject.displayName}" />
+                </c:otherwise>
+            </c:choose>
+
             <c:if test="${not empty databaseObject.stableIdentifier}">
                 <span> (${databaseObject.stableIdentifier})</span>
             </c:if>
-            <c:if test="${not empty databaseObject.speciesName}">
-                <span>[${databaseObject.speciesName}]</span>
+            <c:if test="${clazz != 'Regulation'}">
+                <c:if test="${not empty databaseObject.speciesName}">
+                    <span>[${databaseObject.speciesName}]</span>
+                </c:if>
             </c:if>
         </h3>
         <c:if test="${not empty databaseObject.schemaClass}">
@@ -46,8 +62,6 @@
         <c:import url="locationsInThePWB.jsp"/>
     </c:if>
 
-
-
     <c:if test="${clazz == 'PhysicalEntity'}">
         <c:import url="physicalEntityDetails.jsp"/>
     </c:if>
@@ -56,10 +70,43 @@
         <c:import url="eventDetails.jsp"/>
     </c:if>
 
-    <c:import url="generalAttributes.jsp"/>
+    <c:if test="${clazz == 'Regulation'}">
+        <c:import url="regulationDetails.jsp"/>
+    </c:if>
+
+    <c:if test="${clazz != 'Regulation'}">
+        <c:import url="generalAttributes.jsp"/>
+    </c:if>
 
     <c:if test="${not empty interactions}">
         <c:import url="interactionDetails.jsp"/>
+    </c:if>
+
+
+    <c:if test="${not empty databaseObject.literatureReference}">
+        <div class="grid_23  padding  margin">
+            <h5>Literature References</h5>
+            <table>
+                <thead>
+                <tr class="tableHead">
+                    <td>pubMedId</td>
+                    <td>Title</td>
+                    <td>Journal</td>
+                    <td>Year</td>
+                </tr>
+                </thead>
+                <tbody class="tableBody">
+                <c:forEach var="literature" items="${databaseObject.literatureReference}">
+                    <tr>
+                        <td><c:if test="${not empty literature.pubMedIdentifier}">${literature.pubMedIdentifier}</c:if></td>
+                        <td><c:if test="${not empty literature.title}"><a href="${literature.url}" class=""  title="show Pubmed" rel="nofollow"> ${literature.title}</a></c:if></td>
+                        <td><c:if test="${not empty literature.journal}">${literature.journal}</c:if></td>
+                        <td><c:if test="${not empty literature.year}">${literature.year}</c:if></td>
+                    </tr>
+                </c:forEach>
+                </tbody>
+            </table>
+        </div>
     </c:if>
 
 </div>

@@ -25,31 +25,6 @@
   </div>
 </c:if>
 
-<c:if test="${not empty databaseObject.literatureReference}">
-  <div class="grid_23  padding  margin">
-    <h5>Literature References</h5>
-    <table>
-      <thead>
-      <tr class="tableHead">
-        <td>pubMedId</td>
-        <td>Title</td>
-        <td>Journal</td>
-        <td>Year</td>
-      </tr>
-      </thead>
-      <tbody class="tableBody">
-      <c:forEach var="literature" items="${databaseObject.literatureReference}">
-        <tr>
-          <td><c:if test="${not empty literature.pubMedIdentifier}">${literature.pubMedIdentifier}</c:if></td>
-          <td><c:if test="${not empty literature.title}"><a href="${literature.url}" class=""  title="show Pubmed" rel="nofollow"> ${literature.title}</a></c:if></td>
-          <td><c:if test="${not empty literature.journal}">${literature.journal}</c:if></td>
-          <td><c:if test="${not empty literature.year}">${literature.year}</c:if></td>
-        </tr>
-      </c:forEach>
-      </tbody>
-    </table>
-  </div>
-</c:if>
 
 <c:if test="${not empty databaseObject.disease}">
   <div class="grid_23  padding  margin">
