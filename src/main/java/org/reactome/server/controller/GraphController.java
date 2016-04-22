@@ -145,10 +145,46 @@ class GraphController {
 
 
             if (databaseObject != null) {
+
+
+                if (databaseObject instanceof ReactionLikeEvent) {
+                    model.addAttribute("reactionLikeEvent", true);
+                }
+                if (databaseObject instanceof ReferenceSequence) {
+                    model.addAttribute("referenceSequence", true);
+                }
+                if (databaseObject instanceof EntitySet) {
+                    model.addAttribute("entitySet", true);
+                }
+//                if (databaseObject.getClass().getField("referenceEntity") != null) {
+//                    model.addAttribute("referenceEntity", true);
+//                }
+                if(databaseObject instanceof OpenSet ||databaseObject instanceof EntityWithAccessionedSequence || databaseObject instanceof SimpleEntity) {
+                    model.addAttribute("referenceEntity", true);
+                }
+
+
+
+                if (databaseObject instanceof EntityWithAccessionedSequence) {
+                    List<AbstractModifiedResidue> residue = ((EntityWithAccessionedSequence) databaseObject).getHasModifiedResidue();
+
+
+
+//                   if (residue instanceof TranslationalModification) {
+//                       model.addAttribute("hasPsiMod", true)
+//                   }
+//                    if (residue instanceof ReplacedResidue) {
+//
+//                        model.addAttribute("hasPsiMods", true);
+//                    }
+                }
+
+
+
                 model.addAttribute(TITLE, databaseObject.getDisplayName());
                 model.addAttribute("databaseObject", databaseObject);
                 model.addAttribute("type", databaseObject.getClassName());
-                model.addAttribute("explanation", databaseObject.getExplanation());
+//                model.addAttribute("explanation", databaseObject.getExplanation());
                 model.addAttribute("clazz", clazz);
 //                Set<PBNode> topLevelNodes = genericService.getLocationsInPathwayBrowserHierarchy(databaseObject);
                 Set<PathwayBrowserNode> topLevelNodes = contentDetails.getLeaves();
@@ -168,7 +204,7 @@ class GraphController {
                     model.addAttribute(INTERACTOR_RESOURCES_MAP, interactorResourceMap); // interactor URL
                     model.addAttribute(EVIDENCES_URL_MAP, WebUtils.prepareEvidencesURLs(interactions)); // evidencesURL
                 }
-                String type = databaseObject.getSchemaClass();
+
                 return "graph/detail";
             }
         }

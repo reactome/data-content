@@ -7,17 +7,17 @@
         <div style="height: auto; max-height: 120px; overflow:auto;" class="paddingleft">
             <table border="0" width="100%" style="border: 0px;">
                 <tbody>
-                    <tr>
-                        <c:forEach var="derivedEwas" items="${otherFormsOfThisMolecule}" varStatus="loop">
-                            <c:if test="${not loop.first and loop.index % 3 == 0}">
-                            </tr><tr>
-                            </c:if>
+                <tr>
+                    <c:forEach var="derivedEwas" items="${otherFormsOfThisMolecule}" varStatus="loop">
+                    <c:if test="${not loop.first and loop.index % 3 == 0}">
+                </tr><tr>
+                    </c:if>
 
-                            <td class="overme_3c"> <%--(${derivedEwas.compartment}) --%>
-                                <a href="../detail/${derivedEwas.stableIdentifier}" title="Open ${derivedEwas.displayName}" rel="nofollow">${derivedEwas.displayName}</a>
-                            </td>
-                        </c:forEach>
-                    </tr>
+                    <td class="overme_3c"> <%--(${derivedEwas.compartment}) --%>
+                        <a href="../detail/${derivedEwas.stableIdentifier}" title="Open ${derivedEwas.displayName}" rel="nofollow">${derivedEwas.displayName}</a>
+                    </td>
+                    </c:forEach>
+                </tr>
                 </tbody>
             </table>
         </div>
@@ -38,106 +38,106 @@
                 </tr>
                 </thead>
                 <tbody>
-                    <c:if test="${not empty databaseObject.referenceEntity.name}">
-                        <tr>
-                            <td><strong>External reference names</strong></td>
-                            <td class="block">
-                                <c:forEach var="name" items="${databaseObject.referenceEntity.name}"
-                                           varStatus="loop">${name}<c:if test="${!loop.last}">, </c:if></c:forEach>
-                            </td>
-                        </tr>
-                    </c:if>
-                    <c:if test="${not empty databaseObject.referenceEntity.identifier}">
-                        <tr>
-                            <td><strong>External reference id</strong></td>
-                            <td><a href="${databaseObject.referenceEntity.url}" class="" title="Show Details"
-                                   rel="show ${databaseObject.referenceEntity.identifier}"> ${databaseObject.referenceEntity.identifier}</a>
-                            </td>
-                        </tr>
-                    </c:if>
-                    <c:if test="${not empty databaseObject.referenceEntity.name}">
-                        <tr>
-                            <td><strong>Synonyms</strong></td>
-                            <td class="block">
-                                <c:forEach var="synonym" items="${databaseObject.referenceEntity.name}" varStatus="loop">${synonym}<c:if test="${!loop.last}">, </c:if></c:forEach>
-                            </td>
-                        </tr>
-                    </c:if>
-                    <c:if test="${not empty databaseObject.referenceEntity.otherIdentifier}">
-                        <tr>
-                            <td><strong>Other Identifiers</strong></td>
-                            <td style="padding: 0px;">
-                                <div style="height: auto; max-height: 120px; overflow: auto; padding-top: 1px; padding-left: 2px;">
-                                    <table border="0" width="100%" style="border: 0px;">
-                                        <tr>
-                                            <c:forEach var="otherIdentifier"
-                                                       items="${databaseObject.referenceEntity.otherIdentifier}"
-                                                       varStatus="loop">
-                                            <c:if test="${not loop.first and loop.index % 5 == 0}">
-                                        </tr>
-                                        <tr>
-                                            </c:if>
-                                            <td class="overme_5c">
-                                                <span title="${otherIdentifier}">&nbsp;${otherIdentifier}</span>
-                                            </td>
-                                            </c:forEach>
-                                    </table>
-                                </div>
-                            </td>
-                        </tr>
-                    </c:if>
-                    <c:if test="${databaseObject.referenceType == 'ReferenceDNASequence' ||
+                <c:if test="${not empty databaseObject.referenceEntity.name}">
+                    <tr>
+                        <td><strong>External reference names</strong></td>
+                        <td class="block">
+                            <c:forEach var="name" items="${databaseObject.referenceEntity.name}"
+                                       varStatus="loop">${name}<c:if test="${!loop.last}">, </c:if></c:forEach>
+                        </td>
+                    </tr>
+                </c:if>
+                <c:if test="${not empty databaseObject.referenceEntity.identifier}">
+                    <tr>
+                        <td><strong>External reference id</strong></td>
+                        <td><a href="${databaseObject.referenceEntity.url}" class="" title="Show Details"
+                               rel="show ${databaseObject.referenceEntity.identifier}"> ${databaseObject.referenceEntity.identifier}</a>
+                        </td>
+                    </tr>
+                </c:if>
+                    <%--<c:if test="${not empty databaseObject.referenceEntity.name}">--%>
+                    <%--<tr>--%>
+                    <%--<td><strong>Synonyms</strong></td>--%>
+                    <%--<td class="block">--%>
+                    <%--<c:forEach var="synonym" items="${databaseObject.referenceEntity.name}" varStatus="loop">${synonym}<c:if test="${!loop.last}">, </c:if></c:forEach>--%>
+                    <%--</td>--%>
+                    <%--</tr>--%>
+                    <%--</c:if>--%>
+                <c:if test="${not empty databaseObject.referenceEntity.otherIdentifier}">
+                    <tr>
+                        <td><strong>Other Identifiers</strong></td>
+                        <td style="padding: 0px;">
+                            <div style="height: auto; max-height: 120px; overflow: auto; padding-top: 1px; padding-left: 2px;">
+                                <table border="0" width="100%" style="border: 0px;">
+                                    <tr>
+                                        <c:forEach var="otherIdentifier"
+                                                   items="${databaseObject.referenceEntity.otherIdentifier}"
+                                                   varStatus="loop">
+                                        <c:if test="${not loop.first and loop.index % 5 == 0}">
+                                    </tr>
+                                    <tr>
+                                        </c:if>
+                                        <td class="overme_5c">
+                                            <span title="${otherIdentifier}">&nbsp;${otherIdentifier}</span>
+                                        </td>
+                                        </c:forEach>
+                                </table>
+                            </div>
+                        </td>
+                    </tr>
+                </c:if>
+                <c:if test="${databaseObject.referenceType == 'ReferenceDNASequence' ||
                                   databaseObject.referenceType == 'ReferenceGeneProduct' ||
                                   databaseObject.referenceType == 'ReferenceIsoform'  ||
                                   databaseObject.referenceType == 'ReferenceRNASequence'}">
-                        <c:if test="${not empty databaseObject.referenceEntity.secondaryIdentifier}">
-                            <tr>
-                                <td><strong>Secondary Identifiers</strong></td>
-                                <td>
-                                    <c:forEach var="secondaryIdentifier"
-                                               items="${databaseObject.referenceEntity.secondaryIdentifier}"
-                                               varStatus="loop">
-                                        ${secondaryIdentifier}
-                                        <c:if test="${!loop.last}">, </c:if>
-                                    </c:forEach>
-                                </td>
-                            </tr>
-                        </c:if>
-                        <c:if test="${not empty databaseObject.referenceEntity.geneName}">
-                            <tr>
-                                <td><strong>Gene Names</strong></td>
-                                <td>
-                                    <c:forEach var="geneName" items="${databaseObject.referenceEntity.geneName}"
-                                               varStatus="loop">${geneName}<c:if test="${!loop.last}">, </c:if>
-                                    </c:forEach>
-                                </td>
-                            </tr>
-                        </c:if>
-                    </c:if>
-                    <c:if test="${databaseObject.referenceType == 'ReferenceGeneProduct'}">
-                        <c:if test="${not empty databaseObject.referenceEntity.chain}">
-                            <tr>
-                                <td><strong>Chain</strong></td>
-                                <td>
-                                    <c:forEach var="chain" items="${databaseObject.referenceEntity.chain}"
-                                               varStatus="loop">${chain}<c:if test="${!loop.last}">, </c:if>
-                                    </c:forEach>
-                                </td>
-                            </tr>
-                        </c:if>
-                    </c:if>
-                    <c:if test="${not empty databaseObject.referenceEntity.crossReference}">
+                    <c:if test="${not empty databaseObject.referenceEntity.secondaryIdentifier}">
                         <tr>
-                            <td><strong>CrossReferences</strong></td>
+                            <td><strong>Secondary Identifiers</strong></td>
                             <td>
-                                <ul class="list overflowList">
-                                    <c:forEach var="crossReference" items="${databaseObject.referenceEntity.crossReference}">
-                                        <li><a href="${crossReference.url}" title="show ${crossReference.databaseName}" rel="nofollow">${crossReference.databaseName}: ${crossReference.identifier}</a><c:if test="${!loop.last}">, </c:if></li>
-                                    </c:forEach>
-                                </ul>
+                                <c:forEach var="secondaryIdentifier"
+                                           items="${databaseObject.referenceEntity.secondaryIdentifier}"
+                                           varStatus="loop">
+                                    ${secondaryIdentifier}
+                                    <c:if test="${!loop.last}">, </c:if>
+                                </c:forEach>
                             </td>
                         </tr>
                     </c:if>
+                    <c:if test="${not empty databaseObject.referenceEntity.geneName}">
+                        <tr>
+                            <td><strong>Gene Names</strong></td>
+                            <td>
+                                <c:forEach var="geneName" items="${databaseObject.referenceEntity.geneName}"
+                                           varStatus="loop">${geneName}<c:if test="${!loop.last}">, </c:if>
+                                </c:forEach>
+                            </td>
+                        </tr>
+                    </c:if>
+                </c:if>
+                <c:if test="${databaseObject.referenceType == 'ReferenceGeneProduct'}">
+                    <c:if test="${not empty databaseObject.referenceEntity.chain}">
+                        <tr>
+                            <td><strong>Chain</strong></td>
+                            <td>
+                                <c:forEach var="chain" items="${databaseObject.referenceEntity.chain}"
+                                           varStatus="loop">${chain}<c:if test="${!loop.last}">, </c:if>
+                                </c:forEach>
+                            </td>
+                        </tr>
+                    </c:if>
+                </c:if>
+                <c:if test="${not empty databaseObject.referenceEntity.crossReference}">
+                    <tr>
+                        <td><strong>CrossReferences</strong></td>
+                        <td>
+                            <ul class="list overflowList">
+                                <c:forEach var="crossReference" items="${databaseObject.referenceEntity.crossReference}">
+                                    <li><a href="${crossReference.url}" title="show ${crossReference.databaseName}" rel="nofollow">${crossReference.databaseName}: ${crossReference.identifier}</a><c:if test="${!loop.last}">, </c:if></li>
+                                </c:forEach>
+                            </ul>
+                        </td>
+                    </tr>
+                </c:if>
                 </tbody>
             </table>
         </div>
@@ -155,12 +155,12 @@
             </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td><a href="${databaseObject.goCellularComponent.url}" class="" title="show ${databaseObject.goCellularComponent.name}"
-                                   rel="nofollow">${databaseObject.goCellularComponent.name}</a> (${databaseObject.goCellularComponent.accession})
-                    </td>
-                    <td>${databaseObject.definition}</td> <%-- Gui added it --%>
-                </tr>
+            <tr>
+                <td><a href="${databaseObject.goCellularComponent.url}" class="" title="show ${databaseObject.goCellularComponent.name}"
+                       rel="nofollow">${databaseObject.goCellularComponent.name}</a> (${databaseObject.goCellularComponent.accession})
+                </td>
+                <td>${databaseObject.definition}</td> <%-- Gui added it --%>
+            </tr>
             </tbody>
         </table>
     </div>
@@ -322,16 +322,33 @@
                         <td style="padding: 0px;">
                             <table border="0" class="psiModTable">
                                 <tbody>
-                                <c:forEach var="psiMod" items="${modifiedResidue.psiMod}" varStatus="loop">
-                                    <tr>
-                                        <td <c:if test="${loop.index % 2 == 0}">class="specialborder"</c:if>>
-                                            <c:if test="${not empty psiMod.displayName}"><a href="${psiMod.url}" class="" title="Show Details" rel="nofollow">${psiMod.displayName}</a></c:if>
-                                        </td>
-                                        <td <c:if test="${loop.index % 2 == 0}">class="specialborder"</c:if>>
-                                            <c:if test="${not empty psiMod.definition}">${psiMod.definition}</c:if>
-                                        </td>
-                                    </tr>
-                                </c:forEach>
+                                <%--todo improve--%>
+                                <c:choose>
+                                    <c:when test="${modifiedResidue.psiMod.getClass().getSimpleName() == 'ArrayList'}">
+                                        <c:forEach var="psiMod" items="${modifiedResidue.psiMod}" varStatus="loop">
+                                            <tr>
+                                                <td <c:if test="${loop.index % 2 == 0}">class="specialborder"</c:if>>
+                                                    <c:if test="${not empty psiMod.displayName}"><a href="${psiMod.url}" class="" title="Show Details" rel="nofollow">${psiMod.displayName}</a></c:if>
+                                                </td>
+                                                <td <c:if test="${loop.index % 2 == 0}">class="specialborder"</c:if>>
+                                                    <c:if test="${not empty psiMod.definition}">${psiMod.definition}</c:if>
+                                                </td>
+                                            </tr>
+                                        </c:forEach>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <tr>
+                                            <td>
+                                                <c:if test="${not empty modifiedResidue.psiMod.displayName}"><a href="${modifiedResidue.psiMod.url}" class="" title="Show Details" rel="nofollow">${modifiedResidue.psiMod.displayName}</a></c:if>
+                                            </td>
+                                            <td>
+                                                <c:if test="${not empty modifiedResidue.psiMod.definition}">${modifiedResidue.psiMod.definition}</c:if>
+                                            </td>
+                                        </tr>
+                                    </c:otherwise>
+                                </c:choose>
+
+
                                 </tbody>
                             </table>
                         </td>
@@ -349,23 +366,23 @@
             <h5>Components of this complex</h5>
             <table class="fixedTable">
                 <thead>
-                    <tr class="tableHead">
-                        <td></td>
-                        <td></td>
-                    </tr>
+                <tr class="tableHead">
+                    <td></td>
+                    <td></td>
+                </tr>
                 </thead>
                 <tbody>
                 <c:if test="${not empty databaseObject.hasComponent}">
-                    <tr>
-                        <td><strong>output entries</strong></td>
-                        <td>
-                            <ul class="list overflowAuto">
-                                <c:forEach var="hasComponent" items="${databaseObject.hasComponent}">
-                                    <li><a href="../detail/${hasComponent.stableIdentifier}" class="" title="Show Details" rel="nofollow">${hasComponent.displayName} <c:if test="${not empty hasComponent.speciesName}">(${hasComponent.speciesName})</c:if></a></li>
-                                </c:forEach>
-                            </ul>
-                        </td>
-                    </tr>
+                <tr>
+                    <td><strong>output entries</strong></td>
+                    <td>
+                        <ul class="list overflowAuto">
+                            <c:forEach var="hasComponent" items="${databaseObject.hasComponent}">
+                                <li><a href="../detail/${hasComponent.stableIdentifier}" class="" title="Show Details" rel="nofollow">${hasComponent.displayName} <c:if test="${not empty hasComponent.speciesName}">(${hasComponent.speciesName})</c:if></a></li>
+                            </c:forEach>
+                        </ul>
+                    </td>
+                </tr>
                 </c:if>
             </table>
         </div>
@@ -378,23 +395,23 @@
             <h5>Repeated Units of this Polymer</h5>
             <table class="fixedTable">
                 <thead>
-                    <tr class="tableHead">
-                        <td></td>
-                        <td></td>
-                    </tr>
+                <tr class="tableHead">
+                    <td></td>
+                    <td></td>
+                </tr>
                 </thead>
                 <tbody>
                 <c:if test="${not empty databaseObject.repeatedUnit}">
-                    <tr>
-                        <td><strong>output entries</strong></td>
-                        <td>
-                            <ul class="list overflowAuto">
-                                <c:forEach var="repeatedUnit" items="${databaseObject.repeatedUnit}">
-                                    <li><a href="../detail/${repeatedUnit.stableIdentifier}" class="" title="Show Details" rel="nofollow">${repeatedUnit.displayName} <c:if test="${not empty repeatedUnit.speciesName}">(${repeatedUnit.speciesName})</c:if></a></li>
-                                </c:forEach>
-                            </ul>
-                        </td>
-                    </tr>
+                <tr>
+                    <td><strong>output entries</strong></td>
+                    <td>
+                        <ul class="list overflowAuto">
+                            <c:forEach var="repeatedUnit" items="${databaseObject.repeatedUnit}">
+                                <li><a href="../detail/${repeatedUnit.stableIdentifier}" class="" title="Show Details" rel="nofollow">${repeatedUnit.displayName} <c:if test="${not empty repeatedUnit.speciesName}">(${repeatedUnit.speciesName})</c:if></a></li>
+                            </c:forEach>
+                        </ul>
+                    </td>
+                </tr>
                 </c:if>
             </table>
         </div>
@@ -407,10 +424,10 @@
             <h5>Members of this Set</h5>
             <table class="fixedTable">
                 <thead>
-                    <tr class="tableHead">
-                        <td></td>
-                        <td></td>
-                    </tr>
+                <tr class="tableHead">
+                    <td></td>
+                    <td></td>
+                </tr>
                 </thead>
                 <tbody>
                 <c:if test="${not empty databaseObject.hasMember}">
@@ -436,10 +453,10 @@
             <h5>Candidates of this Set</h5>
             <table class="fixedTable">
                 <thead>
-                    <tr class="tableHead">
-                        <td></td>
-                        <td></td>
-                    </tr>
+                <tr class="tableHead">
+                    <td></td>
+                    <td></td>
+                </tr>
                 </thead>
                 <tbody>
                 <c:if test="${not empty databaseObject.hasCandidate}">
@@ -464,10 +481,10 @@
         <h5>This entity regulates</h5>
         <table class="fixedTable">
             <thead>
-                <tr class="tableHead">
-                    <td>Regulation type</td>
-                    <td>Name</td>
-                </tr>
+            <tr class="tableHead">
+                <td>Regulation type</td>
+                <td>Name</td>
+            </tr>
             </thead>
             <tbody>
             <c:forEach var="negativeRegulation" items="${databaseObject.negativelyRegulates}">
