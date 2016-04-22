@@ -6,6 +6,7 @@ import org.reactome.server.graph.service.DetailsService;
 import org.reactome.server.graph.service.GeneralService;
 import org.reactome.server.graph.service.helper.ContentDetails;
 import org.reactome.server.graph.service.helper.PathwayBrowserNode;
+import org.reactome.server.graph.service.helper.RelationshipDirection;
 import org.reactome.server.graph.service.helper.SchemaNode;
 import org.reactome.server.graph.service.util.DatabaseObjectUtils;
 import org.reactome.server.interactors.model.Interaction;
@@ -22,6 +23,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -80,28 +82,27 @@ class GraphController {
 
 
     @RequestMapping(value = "/object/detail/{id:.*}", method = RequestMethod.GET)
-    public String objectDetail(@PathVariable String id, DatabaseObject databaseObject, ModelMap model) {
-        if (databaseObject == null) {
-            databaseObject = databaseObjectService.findById(id);
-        }
+    public String objectDetail(@PathVariable String id, ModelMap model) {
+
+        DatabaseObject databaseObject = databaseObjectService.findById(id);
         model.addAttribute("map", DatabaseObjectUtils.getAllFields(databaseObject));
         return "graph/schemaDetail";
     }
 
-//    @RequestMapping(value = "/details/{className:.*}", method = RequestMethod.GET)
-//    public String getClassBrowserInstances(@PathVariable String className,
-//                                           @RequestParam Integer page,
-//                                           ModelMap model) throws ClassNotFoundException {
-//        if (classBrowserCache == null) {
-//            classBrowserCache = DatabaseObjectUtils.getGraphModelTree(databaseObjectService.getLabelsCount());
-//        }
-//        model.addAttribute("node", classBrowserCache);
-//        model.addAttribute("className", className);
-//        model.addAttribute("page", page);
-//        model.addAttribute("maxpage", classBrowserCache.findMaxPage(className, OFFSET));
-//        model.addAttribute("objects", genericService.getObjectsByClassName(className,page,OFFSET));
-//        return "graph/schema";
-//    }
+    @RequestMapping(value = "/details/{className:.*}", method = RequestMethod.GET)
+    public String getClassBrowserInstances(@PathVariable String className,
+                                           @RequestParam Integer page,
+                                           ModelMap model) throws ClassNotFoundException {
+        if (classBrowserCache == null) {
+            classBrowserCache = DatabaseObjectUtils.getGraphModelTree(generalService.getSchemaClassCounts());
+        }
+        model.addAttribute("node", classBrowserCache);
+        model.addAttribute("className", className);
+        model.addAttribute("page", page);
+        model.addAttribute("maxpage", classBrowserCache.findMaxPage(className, OFFSET));
+        model.addAttribute("objects", generalService.findObjectsByClassName(className,page,OFFSET));
+        return "graph/schema";
+    }
 
     @RequestMapping(value = "/schema/{className:.*}", method = RequestMethod.GET)
     public String getClassBrowserDetails(@PathVariable String className, ModelMap model) throws ClassNotFoundException {
@@ -133,96 +134,67 @@ class GraphController {
     @RequestMapping(value = "/detail/{id:.*}", method = RequestMethod.GET)
     public String detail(@PathVariable String id, ModelMap model) throws Exception {
 
-//        DatabaseObject databaseObject = databaseObjectService.findById(id);
-
         ContentDetails contentDetails = detailsService.getContentDetails(id);
-//        DatabaseObject databaseObject = genericService.findById(id, RelationshipDirection.OUTGOING);
-        DatabaseObject databaseObject = contentDetails.getDatabaseObject();
-        String clazz = getClazz(databaseObject);
-        if (clazz == null) {
-            return objectDetail(id, databaseObject, model);
-        } else {
-
-
-            if (databaseObject != null) {
-
-
-                if (databaseObject instanceof ReactionLikeEvent) {
-                    model.addAttribute("reactionLikeEvent", true);
-                }
-                if (databaseObject instanceof ReferenceSequence) {
-                    model.addAttribute("referenceSequence", true);
-                }
-                if (databaseObject instanceof EntitySet) {
-                    model.addAttribute("entitySet", true);
-                }
-//                if (databaseObject.getClass().getField("referenceEntity") != null) {
-//                    model.addAttribute("referenceEntity", true);
-//                }
-                if(databaseObject instanceof OpenSet ||databaseObject instanceof EntityWithAccessionedSequence || databaseObject instanceof SimpleEntity) {
-                    model.addAttribute("referenceEntity", true);
-                }
-
-
-
-                if (databaseObject instanceof EntityWithAccessionedSequence) {
-                    List<AbstractModifiedResidue> residue = ((EntityWithAccessionedSequence) databaseObject).getHasModifiedResidue();
-
-
-
-//                   if (residue instanceof TranslationalModification) {
-//                       model.addAttribute("hasPsiMod", true)
-//                   }
-//                    if (residue instanceof ReplacedResidue) {
-//
-//                        model.addAttribute("hasPsiMods", true);
-//                    }
-                }
-
-
+        if (contentDetails != null && contentDetails.getDatabaseObject() != null) {
+            DatabaseObject databaseObject = contentDetails.getDatabaseObject();
+            String superClass = getClazz(databaseObject);
+            if (superClass == null) {
+                /**
+                 * The database object contains already all outgoing relationships.
+                 * To complete the object for the object/details view all incoming relationships have to be loaded.
+                 * The Mapping will be done automatically by Spring.
+                 */
+                generalService.findByDbId(databaseObject.getDbId(), RelationshipDirection.INCOMING);
+                model.addAttribute("map", DatabaseObjectUtils.getAllFields(databaseObject));
+                return "redirect:/object/detail/" + id;
+            } else {
+                Set<PathwayBrowserNode> topLevelNodes = contentDetails.getLeaves();
 
                 model.addAttribute(TITLE, databaseObject.getDisplayName());
                 model.addAttribute("databaseObject", databaseObject);
-                model.addAttribute("type", databaseObject.getClassName());
-//                model.addAttribute("explanation", databaseObject.getExplanation());
-                model.addAttribute("clazz", clazz);
-//                Set<PBNode> topLevelNodes = genericService.getLocationsInPathwayBrowserHierarchy(databaseObject);
-                Set<PathwayBrowserNode> topLevelNodes = contentDetails.getLeaves();
+                model.addAttribute("clazz", superClass);
                 model.addAttribute("topLevelNodes", topLevelNodes);
-//                        model.addAttribute("topLevelNodes", PathwayBrowserLocationsUtils.buildTreesFromLeaves(topLevelNodes));
                 model.addAttribute("availableSpecies", DatabaseObjectUtils.getAvailableSpecies(topLevelNodes));
-
                 model.addAttribute("componentOf", contentDetails.getComponentOf());
-
                 model.addAttribute("otherFormsOfThisMolecule", contentDetails.getOtherFormsOfThisMolecule());
 
+                if (databaseObject instanceof ReactionLikeEvent) {
+                    model.addAttribute("isReactionLikeEvent", true);
+                }
+                if (databaseObject instanceof ReferenceSequence) {
+                    model.addAttribute("isReferenceSequence", true);
+                }
+                if (databaseObject instanceof EntitySet) {
+                    model.addAttribute("isEntitySet", true);
+                }
+                if(databaseObject instanceof OpenSet ||databaseObject instanceof EntityWithAccessionedSequence || databaseObject instanceof SimpleEntity) {
+                    model.addAttribute("hasReferenceEntity", true);
+                }
                 if (databaseObject instanceof EntityWithAccessionedSequence) {
                     EntityWithAccessionedSequence ewas = (EntityWithAccessionedSequence) databaseObject;
-
                     List<Interaction> interactions = interactionService.getInteractions(ewas.getReferenceEntity().getIdentifier(), InteractorConstant.STATIC);
                     model.addAttribute("interactions", interactions);
                     model.addAttribute(INTERACTOR_RESOURCES_MAP, interactorResourceMap); // interactor URL
                     model.addAttribute(EVIDENCES_URL_MAP, WebUtils.prepareEvidencesURLs(interactions)); // evidencesURL
                 }
-
                 return "graph/detail";
             }
         }
-        return "noResultsFound";
-
+        return "search/noDetailsFound";
     }
 
 
     private String getClazz(DatabaseObject databaseObject) throws Exception {
-        if (databaseObject instanceof Event) {
-            return Event.class.getSimpleName();
-        } else if (databaseObject instanceof PhysicalEntity) {
-            return PhysicalEntity.class.getSimpleName();
-        } else if (databaseObject instanceof Regulation) {
-            return Regulation.class.getSimpleName();
-        } else {
-            return null;
+        if (databaseObject != null) {
+            if (databaseObject instanceof Event) {
+                return Event.class.getSimpleName();
+            } else if (databaseObject instanceof PhysicalEntity) {
+                return PhysicalEntity.class.getSimpleName();
+            } else if (databaseObject instanceof Regulation) {
+                return Regulation.class.getSimpleName();
+            }
         }
+        return null;
     }
 
     /**

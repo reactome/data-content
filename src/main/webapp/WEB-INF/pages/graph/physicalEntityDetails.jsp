@@ -25,7 +25,7 @@
 </c:if>
 
 <%--<c:if test="${not empty databaseObject.referenceEntity || not empty databaseObject.goMolecularComponent}">--%>
-<c:if test="${databaseObject.schemaClass == 'EntityWithAccessionedSequence' || databaseObject.schemaClass == 'SimpleEntity' || databaseObject.schemaClass == 'OpenSet'}">
+<c:if test="${hasReferenceEntity}">
     <c:if test="${not empty databaseObject.referenceEntity}">
 
         <div class="grid_23  padding  margin">
@@ -86,10 +86,7 @@
                         </td>
                     </tr>
                 </c:if>
-                <c:if test="${databaseObject.referenceType == 'ReferenceDNASequence' ||
-                                  databaseObject.referenceType == 'ReferenceGeneProduct' ||
-                                  databaseObject.referenceType == 'ReferenceIsoform'  ||
-                                  databaseObject.referenceType == 'ReferenceRNASequence'}">
+                <c:if test="${isReferenceSequence}">
                     <c:if test="${not empty databaseObject.referenceEntity.secondaryIdentifier}">
                         <tr>
                             <td><strong>Secondary Identifiers</strong></td>
@@ -142,6 +139,65 @@
             </table>
         </div>
     </c:if>
+
+
+
+
+        <c:if test="${databaseObject.referenceType == 'ReferenceGeneProduct'}">
+            <c:if test="${not empty databaseObject.referenceEntity.referenceGene}">
+                <div class="grid_23  padding  margin">
+                    <h5>Reference Genes</h5>
+                    <table class="fixedTable">
+                        <thead>
+                        <tr class="tableHead">
+                            <td>Database</td>
+                            <td>Identifier</td>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <c:forEach var="referenceGene" items="${databaseObject.referenceEntity.referenceGene}">
+                            <tr>
+                                <td><strong>${referenceGene.databaseName}</strong></td>
+                                <td>
+                                        <%--<c:forEach var="value" items="${referenceGenes.value}" varStatus="loop">--%>
+                                        <%--<a href="${value.database.url}" title="show ${value.database.name}"--%>
+                                        <%--rel="nofollow">${value.identifier}</a><c:if test="${!loop.last}">, </c:if>--%>
+                                        <%--</c:forEach>--%>
+                                    <a href="${referenceGene.url}" title="show ${referenceGene.displayName}"
+                                       rel="nofollow">${referenceGene.identifier}</a>
+                                </td>
+                            </tr>
+                        </c:forEach>
+                        </tbody>
+                    </table>
+                </div>
+            </c:if>
+
+            <c:if test="${not empty databaseObject.referenceEntity.referenceTranscript}">
+                <div class="grid_23  padding  margin">
+                    <h5>Reference Transcripts</h5>
+                    <table class="fixedTable">
+                        <thead>
+                        <tr class="tableHead">
+                            <td>Database</td>
+                            <td>Identifier</td>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <c:forEach var="referenceTranscript" items="${databaseObject.referenceEntity.referenceTranscript}">
+                            <tr>
+                                <td><strong>${referenceTranscript.databaseName}</strong></td>
+                                <td>
+                                    <a href="${referenceTranscript.url}" title="show ${referenceTranscript.displayName}" rel="nofollow">${referenceTranscript.identifier}</a>
+                                </td>
+                            </tr>
+                        </c:forEach>
+                        </tbody>
+                    </table>
+                </div>
+            </c:if>
+        </c:if>
+
 </c:if>
 
 <c:if test="${not empty databaseObject.goCellularComponent}">
@@ -196,62 +252,6 @@
 </c:if>
 --%>
 
-<c:if test="${databaseObject.schemaClass == 'EntityWithAccessionedSequence' || databaseObject.schemaClass == 'SimpleEntity' || databaseObject.schemaClass == 'OpenSet'}">
-    <c:if test="${databaseObject.referenceType == 'ReferenceGeneProduct'}">
-        <c:if test="${not empty databaseObject.referenceEntity.referenceGene}">
-            <div class="grid_23  padding  margin">
-                <h5>Reference Genes</h5>
-                <table class="fixedTable">
-                    <thead>
-                    <tr class="tableHead">
-                        <td>Database</td>
-                        <td>Identifier</td>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <c:forEach var="referenceGene" items="${databaseObject.referenceEntity.referenceGene}">
-                        <tr>
-                            <td><strong>${referenceGene.databaseName}</strong></td>
-                            <td>
-                                    <%--<c:forEach var="value" items="${referenceGenes.value}" varStatus="loop">--%>
-                                    <%--<a href="${value.database.url}" title="show ${value.database.name}"--%>
-                                    <%--rel="nofollow">${value.identifier}</a><c:if test="${!loop.last}">, </c:if>--%>
-                                    <%--</c:forEach>--%>
-                                <a href="${referenceGene.url}" title="show ${referenceGene.displayName}"
-                                   rel="nofollow">${referenceGene.identifier}</a>
-                            </td>
-                        </tr>
-                    </c:forEach>
-                    </tbody>
-                </table>
-            </div>
-        </c:if>
-
-        <c:if test="${not empty databaseObject.referenceEntity.referenceTranscript}">
-            <div class="grid_23  padding  margin">
-                <h5>Reference Transcripts</h5>
-                <table class="fixedTable">
-                    <thead>
-                    <tr class="tableHead">
-                        <td>Database</td>
-                        <td>Identifier</td>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <c:forEach var="referenceTranscript" items="${databaseObject.referenceEntity.referenceTranscript}">
-                        <tr>
-                            <td><strong>${referenceTranscript.databaseName}</strong></td>
-                            <td>
-                                <a href="${referenceTranscript.url}" title="show ${referenceTranscript.displayName}" rel="nofollow">${referenceTranscript.identifier}</a>
-                            </td>
-                        </tr>
-                    </c:forEach>
-                    </tbody>
-                </table>
-            </div>
-        </c:if>
-    </c:if>
-</c:if>
 
 <c:if test="${not empty databaseObject.inferredFrom || not empty databaseObject.inferredTo}">
     <div class="grid_23  padding  margin">
@@ -418,7 +418,7 @@
     </c:if>
 </c:if>
 
-<c:if test="${databaseObject.schemaClass == 'CandidateSet' || databaseObject.schemaClass == 'DefinedSet' || databaseObject.schemaClass == 'OpenSet'}">
+<c:if test="${isEntitySet}">
     <c:if test="${not empty databaseObject.hasMember}">
         <div class="grid_23  padding  margin">
             <h5>Members of this Set</h5>
@@ -475,6 +475,8 @@
         </div>
     </c:if>
 </c:if>
+
+<c:import url="componentOf.jsp"/>
 
 <c:if test="${not empty databaseObject.negativelyRegulates || not empty databaseObject.positivelyRegulates}">
     <div class="grid_23  padding  margin">

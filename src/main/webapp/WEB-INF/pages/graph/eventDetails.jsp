@@ -57,7 +57,7 @@
 
 
 
-<c:if test="${databaseObject.schemaClass == 'Reaction' || databaseObject.schemaClass == 'BlackBoxEvent' || databaseObject.schemaClass == 'FailedReaction' || databaseObject.schemaClass == 'Polymerisation'|| databaseObject.schemaClass == 'Depolymerisation'}">
+<c:if test="${isReactionLikeEvent}">
 
 <c:if test="${not empty databaseObject.catalystActivity}">
     <div class="grid_23  padding  margin">
@@ -103,10 +103,10 @@
 
 </c:if>
 
-<c:if test="${databaseObject.schemaClass == 'Reaction' || databaseObject.schemaClass == 'BlackBoxEvent' || databaseObject.schemaClass == 'FailedReaction' || databaseObject.schemaClass == 'Polymerisation'|| databaseObject.schemaClass == 'Depolymerisation'}">
+<c:if test="${isReactionLikeEvent}">
     <c:if test="${not empty databaseObject.input || not empty databaseObject.output}">
         <div class="grid_23  padding  margin">
-            <h5>Sub events of this entry</h5>
+            <h5>Components</h5>
             <table class="fixedTable">
                 <thead>
                 <tr class="tableHead">
@@ -155,6 +155,9 @@
         </div>
     </c:if>
 </c:if>
+
+
+<c:import url="componentOf.jsp"/>
 
 <c:if test="${not empty databaseObject.inferredFrom || not empty databaseObject.orthologousEvent}">
     <div class="grid_23  padding  margin">
