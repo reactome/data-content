@@ -1,7 +1,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <div class="grid_23 padding">
-    <h3>
+
+    <h3 class="details-title">
         <c:if test="${not empty databaseObject.schemaClass}">
             <i class="sprite sprite-${databaseObject.schemaClass}" title="${type}"></i>
         </c:if>
@@ -11,64 +12,62 @@
                 <i class="sprite sprite-isDisease" title="Disease related entry"></i>
             </c:if>
         </c:if>
-
         <c:choose>
-            <c:when test="${clazz == 'Regulation'}">
-                <c:choose>
-                    <c:when test="${not empty databaseObject.name}">
-                        <c:out value="${databaseObject.name[0]}" />
-                    </c:when>
-                    <c:otherwise>
-                        <c:out value="${databaseObject.displayName}" />
-                    </c:otherwise>
-                </c:choose>
+            <%-- Always take the first name. If not present then take the displayName --%>
+            <c:when test="${not empty databaseObject.name}">
+                <c:out value="${databaseObject.name[0]}" />
             </c:when>
             <c:otherwise>
                 <c:out value="${databaseObject.displayName}" />
             </c:otherwise>
         </c:choose>
+    </h3>
 
+    <div class="extended-header">
         <c:if test="${not empty databaseObject.stableIdentifier}">
-            <span> (${databaseObject.stableIdentifier})</span>
+            <div class="label">
+                <span>Stable Identifier</span>
+            </div>
+            <div class="field">
+                <span>${databaseObject.stableIdentifier}</span>
+            </div>
+            <div class="clear"></div>
         </c:if>
+
+        <c:if test="${not empty databaseObject.schemaClass}">
+            <div class="label">
+                <span>Type</span>
+            </div>
+            <div class="field">
+                <span title="${databaseObject.explanation}">${databaseObject.className}</span>
+            </div>
+            <div class="clear"></div>
+        </c:if>
+
         <c:if test="${clazz != 'Regulation'}">
             <c:if test="${not empty databaseObject.speciesName}">
-                <span>[${databaseObject.speciesName}]</span>
+                <div class="label">
+                    <span>Species</span>
+                </div>
+                <div class="field">
+                    <span>${databaseObject.speciesName}</span>
+                </div>
+                <div class="clear"></div>
+            </c:if>
+            <c:if test="${not empty databaseObject.compartment}">
+                <div class="label">
+                    <span>Compartment</span>
+                </div>
+                <div class="field">
+                    <c:forEach var="compartment" items="${databaseObject.compartment}" varStatus="loop">
+                        <span><a href="${compartment.url}" class="" rel="nofollow" title="Show ${compartment.name}">${compartment.name}</a><c:if test="${not loop.last}">, </c:if></span>
+                    </c:forEach>
+                </div>
+                <div class="clear"></div>
             </c:if>
         </c:if>
-    </h3>
-    <c:if test="${not empty databaseObject.schemaClass}">
-        <span style="color: #1F419A; padding-left: 6px; font-size: 20px" title="${databaseObject.explanation}">${type}</span>
-    </c:if>
-</div>
-
-
-<c:if test="${not empty databaseObject.compartment}">
-    <div class="grid_23  padding  margin">
-        <h5>Compartment</h5>
-        <table class="fixedTable">
-            <thead>
-            <tr class="tableHead">
-                <td>Database</td>
-                <td>Identifier</td>
-                <td>Definition</td>
-            </tr>
-            </thead>
-            <tbody>
-            <c:forEach var="compartment" items="${databaseObject.compartment}">
-                <tr>
-                    <td><strong>${compartment.databaseName}</strong></td>
-                    <td><a href="${compartment.url}" class="" title="Show Details" rel="nofollow">${compartment.name}</a></td>
-                    <td>${compartment.definition}</td>
-                </tr>
-            </c:forEach>
-            </tbody>
-        </table>
     </div>
-
-
-</c:if>
-
+</div>
 
 <%--Both physicalEntities and event can have a summation--%>
 <c:if test="${not empty databaseObject.summation}">
@@ -81,5 +80,3 @@
         </div>
     </div>
 </c:if>
-
-

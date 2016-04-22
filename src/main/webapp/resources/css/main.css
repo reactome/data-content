@@ -583,6 +583,39 @@ ul.tree li.schema-item {
     font-size: 12px;
 }
 
+/* DETAILS HEADER */
+.details-title {
+    border-bottom: 3px solid #05194C;
+    margin-top: 30px;
+    padding-bottom: 3px;
+    padding-left: 3px;
+}
+
+div.extended-header {
+    margin-bottom: 20px;
+}
+
+div.extended-header .label {
+    width: 150px;
+    text-align: right;
+    float: left;
+    padding-right: 10px;
+    padding-bottom: 1px;
+    color: #1F419A;
+    font-weight: bold;
+}
+
+div.extended-header .field {
+    float: left;
+    padding-left: 20px;
+    /*padding-bottom: 1px;*/
+    border-left: 2px solid orange;
+
+}
+
+div.extended-header .clear {
+    clear:both;
+}
 
 /* TESTING SPRITE IMAGES */
 .sprite {
