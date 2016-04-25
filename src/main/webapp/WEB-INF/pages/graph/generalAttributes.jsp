@@ -6,14 +6,7 @@
     <fieldset class="fieldset-details">
         <legend>Additional Information</legend>
 
-        <c:if test="${not empty databaseObject.name}">
-            <h5>Synonyms</h5>
-            <div class="paddingleft">
-                <c:forEach var="synonym" items="${databaseObject.name}" varStatus="loop">
-                    ${synonym}<c:if test="${!loop.last}">, </c:if>
-                </c:forEach>
-            </div>
-        </c:if>
+
 
         <c:if test="${clazz != 'Regulation'}">
             <c:if test="${not empty databaseObject.crossReference}">

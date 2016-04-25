@@ -1,4 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <div class="grid_23 padding">
 
@@ -65,6 +66,19 @@
                 </div>
                 <div class="clear"></div>
             </c:if>
+
+            <c:if test="${not empty databaseObject.name && fn:length(companies) gt 1}">
+                <div class="label">
+                    <span>Synonyms</span>
+                </div>
+                <div class="paddingleft">
+                    <c:forEach var="synonym" items="${databaseObject.name}" varStatus="loop">
+                        <c:if test="${!loop.first}">${synonym}</c:if>
+                        <c:if test="${loop.first != loop.last && !loop.last}">, </c:if>
+                    </c:forEach>
+                </div>
+            </c:if>
+
         </c:if>
     </div>
 </div>
@@ -75,7 +89,7 @@
         <h5>Summation</h5>
         <div class="paddingleft">
             <c:forEach var="summation" items="${databaseObject.summation}">
-                <p>${summation.text}</p>
+                <p style="text-align: justify;">${summation.text}</p>
             </c:forEach>
         </div>
     </div>
