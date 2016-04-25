@@ -4,7 +4,7 @@
 <div class="grid_24">
 
     <fieldset class="fieldset-details">
-        <legend>Additional Information</legend>
+        <legend>Additional Information GUI</legend>
 
         <c:if test="${not empty databaseObject.name}">
             <h5>Synonyms</h5>

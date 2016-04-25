@@ -512,18 +512,18 @@ div#two {
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
-    color: #05194C;
+    color: #1F419A;
     border: 0;
     padding: 0;
 }
 
 .overme_5c {
-    width: 120px;
-    max-width: 120px;
+    width: 144px;
+    max-width: 144px;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
-    color: #05194C;
+    color: #1F419A;
     border: 0;
     padding: 0;
 }
@@ -591,11 +591,15 @@ ul.tree li.schema-item {
     padding-left: 3px;
 }
 
-div.extended-header {
+div.extended-header, div.fieldset-pair-container {
     margin-bottom: 20px;
 }
 
-div.extended-header .label {
+div.fieldset-pair-container div {
+    margin: 0 0 2px 0;
+}
+
+div.extended-header .label, div.fieldset-pair-container .label {
     width: 150px;
     text-align: right;
     float: left;
@@ -605,7 +609,7 @@ div.extended-header .label {
     font-weight: bold;
 }
 
-div.extended-header .field {
+div.extended-header .field, div.fieldset-pair-container .field {
     float: left;
     padding-left: 20px;
     /*padding-bottom: 1px;*/
@@ -613,7 +617,7 @@ div.extended-header .field {
 
 }
 
-div.extended-header .clear {
+div.extended-header .clear, div.fieldset-pair-container .clear {
     clear:both;
 }
 
@@ -826,9 +830,19 @@ div.extended-header .clear {
     background-position: -35px -135px;
 }
 
+/* FIELDSET DETAILS PAGE STYLING */
 .fieldset-details {
     margin: 20px;
-    padding: 20px;
+    padding-top: 20px;
+    border: 1px solid #d3d3d3;
+    /*padding-top: 20px;*/
+    border-radius: 3px;
+}
 
-    border: 2px groove threedface;
+.fieldset-details legend {
+    color: #e68a00;
+    padding-left: 10px;
+    padding-right: 10px;
+    font-size: 16px;
+    margin-left: 20px;
 }
