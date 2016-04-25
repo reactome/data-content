@@ -24,12 +24,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import psidev.psi.mi.tab.model.CrossReference;
 
 import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created by:
@@ -158,6 +156,13 @@ class GraphController {
                 model.addAttribute("componentOf", contentDetails.getComponentOf());
                 model.addAttribute("otherFormsOfThisMolecule", contentDetails.getOtherFormsOfThisMolecule());
 
+
+
+
+                model.addAttribute("crossReference", groupCrossReferences(getCrossReference(databaseObject)));
+
+
+
                 if (databaseObject instanceof ReactionLikeEvent) {
                     model.addAttribute("isReactionLikeEvent", true);
                 }
@@ -177,8 +182,7 @@ class GraphController {
                     if (ewas.getReferenceEntity() instanceof ReferenceSequence) {
                         model.addAttribute("isReferenceSequence", true);
                     }
-
-
+                        model.addAttribute("referenceCrossReference", groupCrossReferences(ewas.getReferenceEntity().getCrossReference()));
                 }
                 return "graph/detail";
             }
@@ -186,6 +190,26 @@ class GraphController {
         return "search/noDetailsFound";
     }
 
+
+    private Map<String, List<DatabaseIdentifier>> groupCrossReferences(List<DatabaseIdentifier> databaseIdentifiers) {
+        if (databaseIdentifiers == null) return null;
+        Map<String, List<DatabaseIdentifier>> groupedCrossReferences = new HashMap<>();
+        for (DatabaseIdentifier databaseIdentifier : databaseIdentifiers) {
+            groupedCrossReferences.computeIfAbsent(databaseIdentifier.getDatabaseName(), crossRef -> new ArrayList<>()).add(databaseIdentifier);
+        }
+        return groupedCrossReferences;
+    }
+
+    private List<DatabaseIdentifier> getCrossReference(DatabaseObject databaseObject) {
+        if (databaseObject instanceof PhysicalEntity) {
+            PhysicalEntity physicalEntity = (PhysicalEntity) databaseObject;
+            return physicalEntity.getCrossReference();
+        } else if (databaseObject instanceof Event) {
+            Event event = (Event) databaseObject;
+            return event.getCrossReference();
+        }
+        return Collections.EMPTY_LIST;
+    }
 
     private String getClazz(DatabaseObject databaseObject) throws Exception {
         if (databaseObject != null) {

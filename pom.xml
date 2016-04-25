@@ -35,7 +35,7 @@
         <swagger.version>2.2.2</swagger.version>
         <maven.compiler.version>3.0</maven.compiler.version>
         <maven.war.version>2.6</maven.war.version>
-        <jdk.version>1.7</jdk.version>
+        <jdk.version>1.8</jdk.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
 
@@ -218,6 +218,14 @@
                         <version>${jackrabbit.version}</version>
                     </dependency>
                 </dependencies>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
             </plugin>
         </plugins>
     </build>
