@@ -792,3 +792,10 @@ ul.tree li.schema-item {
     height: 20px;
     background-position: -35px -135px;
 }
+
+.fieldset-details {
+    margin: 20px;
+    padding: 20px;
+
+    border: 2px groove threedface;
+}

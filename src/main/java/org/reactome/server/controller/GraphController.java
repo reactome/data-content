@@ -161,9 +161,6 @@ class GraphController {
                 if (databaseObject instanceof ReactionLikeEvent) {
                     model.addAttribute("isReactionLikeEvent", true);
                 }
-                if (databaseObject instanceof ReferenceSequence) {
-                    model.addAttribute("isReferenceSequence", true);
-                }
                 if (databaseObject instanceof EntitySet) {
                     model.addAttribute("isEntitySet", true);
                 }
@@ -176,6 +173,12 @@ class GraphController {
                     model.addAttribute("interactions", interactions);
                     model.addAttribute(INTERACTOR_RESOURCES_MAP, interactorResourceMap); // interactor URL
                     model.addAttribute(EVIDENCES_URL_MAP, WebUtils.prepareEvidencesURLs(interactions)); // evidencesURL
+
+                    if (ewas.getReferenceEntity() instanceof ReferenceSequence) {
+                        model.addAttribute("isReferenceSequence", true);
+                    }
+
+
                 }
                 return "graph/detail";
             }
