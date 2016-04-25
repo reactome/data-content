@@ -840,9 +840,20 @@ div.extended-header .clear, div.fieldset-pair-container .clear {
 }
 
 .fieldset-details legend {
+    /* new style */
     color: #e68a00;
     padding-left: 10px;
     padding-right: 10px;
     font-size: 16px;
     margin-left: 20px;
+
+    /* style compatible with results page */
+    /*color: #1F419A;*/
+    /*font-size: 15px;*/
+    /*margin-left: 20px;*/
+    /*background-color: #eeeeee;*/
+    /*border-top-right-radius: 8px;*/
+    /*border-top-left-radius: 8px;*/
+    /*padding: 4px 10px 4px 10px;*/
+    /*background: -webkit-linear-gradient(top, #eeeeee, #d8d8d8);*/
 }

@@ -45,71 +45,57 @@
                     <div class="clear"></div>
 
                     <c:if test="${not empty databaseObject.referenceEntity.geneName}">
-                    <div class="label">
-                        <span>Gene Names</span>
-                    </div>
-                    <div class="field">
-                        <c:forEach var="geneName" items="${databaseObject.referenceEntity.geneName}" varStatus="loop">${geneName}
-                            <c:if test="${!loop.last}">, </c:if>
-                        </c:forEach>
-                    </div>
-                    <div class="clear"></div>
+                        <div class="label">
+                            <span>Gene Names</span>
+                        </div>
+                        <div class="field">
+                            <c:forEach var="geneName" items="${databaseObject.referenceEntity.geneName}" varStatus="loop">${geneName}
+                                <c:if test="${!loop.last}">, </c:if>
+                            </c:forEach>
+                        </div>
+                        <div class="clear"></div>
                     </c:if>
 
-        <c:if test="${databaseObject.referenceType == 'ReferenceGeneProduct'}">
-            <c:if test="${not empty databaseObject.referenceEntity.chain}">
-                    <div class="label">
-                        <span>Chain</span>
-                    </div>
-                    <div class="field">
-                        <c:forEach var="chain" items="${databaseObject.referenceEntity.chain}" varStatus="loop">${chain}
-                            <c:if test="${!loop.last}">, </c:if>
-                        </c:forEach>
-                    </div>
-                    <div class="clear"></div>
-                </c:if></c:if>
+                    <c:if test="${databaseObject.referenceType == 'ReferenceGeneProduct'}">
+                        <c:if test="${not empty databaseObject.referenceEntity.chain}">
+                            <div class="label">
+                                <span>Chain</span>
+                            </div>
+                            <div class="field">
+                                <c:forEach var="chain" items="${databaseObject.referenceEntity.chain}"
+                                           varStatus="loop">${chain}
+                                    <c:if test="${!loop.last}">, </c:if>
+                                </c:forEach>
+                            </div>
+                            <div class="clear"></div>
+                        </c:if>
+                    </c:if>
 
-        <c:if test="${not empty databaseObject.referenceEntity.otherIdentifier}">
-                    <div class="label">
-                        <span>Other Identifiers</span>
-                    </div>
-                    <div class="field">
-                        <div style="height: auto; max-height: 120px; overflow: auto; padding-top: 1px; padding-left: 2px;">
-                            <table border="0" width="100%" style="border: 0px;">
-                                <tr>
-                                    <c:forEach var="otherIdentifier"
-                                               items="${databaseObject.referenceEntity.otherIdentifier}"
-                                               varStatus="loop">
-                                    <c:if test="${not loop.first and loop.index % 5 == 0}">
-                                </tr>
-                                <tr>
-                                    </c:if>
-                                    <td class="overme_5c">
-                                        <span title="${otherIdentifier}">&nbsp;${otherIdentifier}</span>
-                                    </td>
-                                    </c:forEach>
-                            </table>
+                    <c:if test="${not empty databaseObject.referenceEntity.otherIdentifier}">
+                        <div class="label">
+                            <span>Other Identifiers</span>
                         </div>
-                    </div>
-                    <div class="clear"></div>
+                        <div class="field">
+                            <div style="height: auto; max-height: 120px; overflow: auto; padding-top: 1px; padding-left: 2px;">
+                                <table border="0" width="100%" style="border: 0px;">
+                                    <tr>
+                                        <c:forEach var="otherIdentifier"
+                                                   items="${databaseObject.referenceEntity.otherIdentifier}"
+                                                   varStatus="loop">
+                                        <c:if test="${not loop.first and loop.index % 5 == 0}">
+                                    </tr>
+                                    <tr>
+                                        </c:if>
+                                        <td class="overme_5c">
+                                            <span title="${otherIdentifier}">&nbsp;${otherIdentifier}</span>
+                                        </td>
+                                        </c:forEach>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="clear"></div>
+                    </c:if>
                 </div>
-            </c:if>
-
-
-                <%-- END NEW FORMAT --%>
-
-
-
-
-                <%--<p>--%>
-                    <%--<a href="${databaseObject.referenceEntity.url}" class="" title="Show Details" rel="show ${databaseObject.referenceEntity.identifier}">--%>
-                            <%--${databaseObject.referenceEntity.displayName}--%>
-                    <%--</a>--%>
-                <%--</p>--%>
-
-
-
-
 
                     <%--<c:if test="${not empty databaseObject.referenceEntity.identifier}">--%>
                     <%--${databaseObject.referenceEntity.identifier}--%>
@@ -124,58 +110,6 @@
 
 
 
-
-
-
-                <%--<c:if test="${not empty databaseObject.referenceEntity.geneName}">--%>
-                    <%--<p><strong>Gene Names</strong>--%>
-                        <%--<c:forEach var="geneName" items="${databaseObject.referenceEntity.geneName}" varStatus="loop">${geneName}--%>
-                            <%--<c:if test="${!loop.last}">, </c:if>--%>
-                        <%--</c:forEach>--%>
-                    <%--</p>--%>
-                <%--</c:if>--%>
-
-                <%--<c:if test="${isReferenceSequence}">--%>
-                    <%--<c:if test="${not empty databaseObject.referenceEntity.secondaryIdentifier}">--%>
-                        <%--<p><strong>Secondary Identifiers</strong>--%>
-                            <%--<c:forEach var="secondaryIdentifier" items="${databaseObject.referenceEntity.secondaryIdentifier}" varStatus="loop">${secondaryIdentifier}--%>
-                                <%--<c:if test="${!loop.last}">, </c:if>--%>
-                            <%--</c:forEach>--%>
-                        <%--</p>--%>
-                    <%--</c:if>--%>
-                <%--</c:if>--%>
-
-                <%--<c:if test="${databaseObject.referenceType == 'ReferenceGeneProduct'}">--%>
-                    <%--<c:if test="${not empty databaseObject.referenceEntity.chain}">--%>
-                        <%--<p><strong>Chain</strong>--%>
-                            <%--<c:forEach var="chain" items="${databaseObject.referenceEntity.chain}" varStatus="loop">${chain}--%>
-                                <%--<c:if test="${!loop.last}">, </c:if>--%>
-                            <%--</c:forEach>--%>
-                        <%--</p>--%>
-                    <%--</c:if>--%>
-                <%--</c:if>--%>
-
-                <%--<c:if test="${not empty databaseObject.referenceEntity.otherIdentifier}">--%>
-                    <%--<p><strong>Other Identifiers</strong>--%>
-
-                    <%--<div style="height: auto; max-height: 120px; overflow: auto; padding-top: 1px; padding-left: 2px;">--%>
-                        <%--<table border="0" width="100%" style="border: 0px;">--%>
-                            <%--<tr>--%>
-                                <%--<c:forEach var="otherIdentifier"--%>
-                                           <%--items="${databaseObject.referenceEntity.otherIdentifier}"--%>
-                                           <%--varStatus="loop">--%>
-                                <%--<c:if test="${not loop.first and loop.index % 5 == 0}">--%>
-                            <%--</tr>--%>
-                            <%--<tr>--%>
-                                <%--</c:if>--%>
-                                <%--<td class="overme_5c">--%>
-                                    <%--<span title="${otherIdentifier}">&nbsp;${otherIdentifier}</span>--%>
-                                <%--</td>--%>
-                                <%--</c:forEach>--%>
-                        <%--</table>--%>
-                    <%--</div>--%>
-                    <%--</p>--%>
-                <%--</c:if>--%>
 
                     <%--<c:if test="${not empty databaseObject.referenceEntity.crossReference}">--%>
                     <%--<tr>--%>
