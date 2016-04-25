@@ -523,7 +523,7 @@ div#two {
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
-    color: #1F419A;
+    color: #000;
     border: 0;
     padding: 0;
 }
@@ -835,25 +835,41 @@ div.extended-header .clear, div.fieldset-pair-container .clear {
     margin: 20px;
     padding-top: 20px;
     border: 1px solid #d3d3d3;
-    /*padding-top: 20px;*/
+    padding-bottom: 40px;
     border-radius: 3px;
 }
 
 .fieldset-details legend {
     /* new style */
-    color: #e68a00;
-    padding-left: 10px;
-    padding-right: 10px;
-    font-size: 16px;
-    margin-left: 20px;
+    /*color: #e68a00;*/
+    /*padding-left: 10px;*/
+    /*padding-right: 10px;*/
+    /*font-size: 16px;*/
+    /*margin-left: 20px;*/
 
     /* style compatible with results page */
-    /*color: #1F419A;*/
-    /*font-size: 15px;*/
-    /*margin-left: 20px;*/
-    /*background-color: #eeeeee;*/
-    /*border-top-right-radius: 8px;*/
-    /*border-top-left-radius: 8px;*/
-    /*padding: 4px 10px 4px 10px;*/
-    /*background: -webkit-linear-gradient(top, #eeeeee, #d8d8d8);*/
+    color: #1F419A;
+    font-size: 15px;
+    margin-left: 20px;
+    background-color: #EEE;
+    border-top-right-radius: 8px;
+    border-top-left-radius: 8px;
+    padding: 4px 10px 4px 10px;
+    background: -webkit-linear-gradient(top, #eeeeee, #d8d8d8);
+}
+
+.fieldset-details > .padding {
+    padding-left: 25px;
+    padding-right: 25px;
+}
+
+.overflow-content-div {
+    height: auto;
+    max-height: 120px;
+    overflow: auto;
+    padding-top: 1px;
+    padding-left: 2px;
+    border: 1px solid #f1f1f1;
+    margin-left: 5px;
+    margin-right: 5px;
 }

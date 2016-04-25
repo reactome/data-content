@@ -121,15 +121,21 @@ h5 a:active{
     width:99%;
     background-color:white;
     margin:9px auto;
-    border:5px solid #f1f1f1
+    /*border:5px solid #f1f1f1*/
 }
+
 .ebi-content th,td{
     padding:8px 5px 5px 5px;
     border:1px solid #f1f1f1;
     border-collapse:collapse;
-    vertical-align:top
+    vertical-align:top;
+    font-size:93%
 }
-.ebi-content th,td{
+
+.ebi-content tbody {
+    padding:8px 5px 5px 5px;
+    border-collapse:collapse;
+    vertical-align:top;
     font-size:93%
 }
 
@@ -140,7 +146,7 @@ h5 a:active{
     background-image: -webkit-linear-gradient(#eeeeee, #d8d8d8);
     background-image: linear-gradient(top, #eeeeee, #d8d8d8);
 }
-.tableHead td {
+.tableHead th, td {
     color:#1F419A;
     font-size: 108%;
 }

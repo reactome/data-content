@@ -49,8 +49,7 @@
                             <span>Gene Names</span>
                         </div>
                         <div class="field">
-                            <c:forEach var="geneName" items="${databaseObject.referenceEntity.geneName}" varStatus="loop">${geneName}
-                                <c:if test="${!loop.last}">, </c:if>
+                            <c:forEach var="geneName" items="${databaseObject.referenceEntity.geneName}" varStatus="loop">${geneName}<c:if test="${!loop.last}">, </c:if>
                             </c:forEach>
                         </div>
                         <div class="clear"></div>
@@ -63,8 +62,7 @@
                             </div>
                             <div class="field">
                                 <c:forEach var="chain" items="${databaseObject.referenceEntity.chain}"
-                                           varStatus="loop">${chain}
-                                    <c:if test="${!loop.last}">, </c:if>
+                                           varStatus="loop">${chain}<c:if test="${!loop.last}">, </c:if>
                                 </c:forEach>
                             </div>
                             <div class="clear"></div>
@@ -103,16 +101,18 @@
                 <c:if test="${not empty referenceCrossReference}">
                     <div class="padding">
                         <h5>Cross References</h5>
-                        <table>
-                            <thead></thead>
-                            <tbody>
+                        <table border="0" width="100%" class="fixedTable">
+                            <thead class="tableHead">
+                                <th>Database</th>
+                                <th>Identifier</th>
+                            </thead>
+                            <tbody class="tableBody">
                             <c:forEach var="crossReference" items="${referenceCrossReference}">
                                 <tr>
-                                    <td>${crossReference.key}</td>
+                                    <td><strong>${crossReference.key}</strong></td>
                                     <td>
                                         <c:forEach var="value" items="${crossReference.value}" varStatus="loop">
-                                            <a href="${value.url}" title="show ${value.displayName}" rel="nofollow">${value.displayName}</a>
-                                            <c:if test="${!loop.last}">, </c:if>
+                                            <a href="${value.url}" title="show ${value.displayName}" rel="nofollow">${value.identifier}</a><c:if test="${!loop.last}">, </c:if>
                                         </c:forEach>
                                     </td>
                                 </tr>
@@ -122,12 +122,14 @@
                     </div>
                 </c:if>
 
+                <br/>
                 <c:if test="${not empty databaseObject.referenceEntity.otherIdentifier}">
                     <div class="padding">
-                        <h5>Other Identifier</h5>
+                        <h5>Other Identifiers</h5>
 
-                        <div style="height: auto; max-height: 120px; overflow: auto; padding-top: 1px; padding-left: 2px;">
-                            <table border="0" width="100%" style="border: 0px;">
+                        <div class="overflow-content-div">
+                            <table border="0" width="100%" style="border: none">
+                                <tbody>
                                 <tr>
                                     <c:forEach var="otherIdentifier" items="${databaseObject.referenceEntity.otherIdentifier}" varStatus="loop">
                                     <c:if test="${not loop.first and loop.index % 5 == 0}">
@@ -139,6 +141,7 @@
                                     </td>
                                     </c:forEach>
                                 </tr>
+                                </tbody>
                             </table>
                         </div>
                     </div>
