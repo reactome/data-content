@@ -1,7 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
-<div class="grid_23 padding">
+<div class="grid_24">
 
     <h3 class="details-title">
         <c:if test="${not empty databaseObject.schemaClass}">
