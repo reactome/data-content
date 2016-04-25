@@ -101,66 +101,51 @@
                 </div>
 
                 <c:if test="${not empty referenceCrossReference}">
-                <div>
-                    <h5>Cross References</h5>
-                    <table>
-                        <thead></thead>
-                        <tbody>
-                        <c:forEach var="crossReference" items="${referenceCrossReference}">
-                            <tr>
-                                <td>${crossReference.key}</td>
-                                <td>
-                                    <c:forEach var="value" items="${crossReference.value}" varStatus="loop">
-                                        <a href="${value.url}" title="show ${value.displayName}" rel="nofollow">${value.displayName}</a>
-                                        <c:if test="${!loop.last}">, </c:if>
-                                    </c:forEach>
-                                </td>
-                            </tr>
-                        </c:forEach>
-                        </tbody>
-                    </table>
-
-                </div>
+                    <div class="padding">
+                        <h5>Cross References</h5>
+                        <table>
+                            <thead></thead>
+                            <tbody>
+                            <c:forEach var="crossReference" items="${referenceCrossReference}">
+                                <tr>
+                                    <td>${crossReference.key}</td>
+                                    <td>
+                                        <c:forEach var="value" items="${crossReference.value}" varStatus="loop">
+                                            <a href="${value.url}" title="show ${value.displayName}" rel="nofollow">${value.displayName}</a>
+                                            <c:if test="${!loop.last}">, </c:if>
+                                        </c:forEach>
+                                    </td>
+                                </tr>
+                            </c:forEach>
+                            </tbody>
+                        </table>
+                    </div>
                 </c:if>
 
                 <c:if test="${not empty databaseObject.referenceEntity.otherIdentifier}">
-                <h5>otherIdentifier</h5>
+                    <div class="padding">
+                        <h5>Other Identifier</h5>
 
-                <div style="height: auto; max-height: 120px; overflow: auto; padding-top: 1px; padding-left: 2px;">
-                    <table border="0" width="100%" style="border: 0px;">
-                        <tr>
-                            <c:forEach var="otherIdentifier" items="${databaseObject.referenceEntity.otherIdentifier}" varStatus="loop">
-                            <c:if test="${not loop.first and loop.index % 5 == 0}">
-                        </tr>
-                        <tr>
-                            </c:if>
-                            <td class="overme_5c">
-                                <span title="${otherIdentifier}">&nbsp;${otherIdentifier}</span>
-                            </td>
-                            </c:forEach>
-                        </tr>
-                    </table>
-                </div>
-
+                        <div style="height: auto; max-height: 120px; overflow: auto; padding-top: 1px; padding-left: 2px;">
+                            <table border="0" width="100%" style="border: 0px;">
+                                <tr>
+                                    <c:forEach var="otherIdentifier" items="${databaseObject.referenceEntity.otherIdentifier}" varStatus="loop">
+                                    <c:if test="${not loop.first and loop.index % 5 == 0}">
+                                </tr>
+                                <tr>
+                                    </c:if>
+                                    <td class="overme_5c">
+                                        <span title="${otherIdentifier}">&nbsp;${otherIdentifier}</span>
+                                    </td>
+                                    </c:forEach>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
                 </c:if>
-
-
-        </div>
-        </div>
-
-
-
-
-
-
-
-
-
-
-        </fieldset>
+            </fieldset>
         </div>
     </c:if>
-
 </c:if>
 
 
