@@ -2,7 +2,7 @@
 
 <c:if test="${not empty componentOf}">
     <c:forEach var="component" items="${componentOf}">
-        <div class="extended-header">
+        <div class="fieldset-pair-container">
         <div class="label">
             <span>component of: ${component.type}</span>
         </div>

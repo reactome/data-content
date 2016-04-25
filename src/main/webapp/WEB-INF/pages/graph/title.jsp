@@ -67,7 +67,7 @@
                 <div class="clear"></div>
             </c:if>
 
-            <c:if test="${not empty databaseObject.name && fn:length(companies) gt 1}">
+            <c:if test="${not empty databaseObject.name && fn:length(databaseObject.name) gt 1}">
                 <div class="label">
                     <span>Synonyms</span>
                 </div>

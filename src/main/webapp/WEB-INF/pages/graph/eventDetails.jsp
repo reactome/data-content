@@ -73,13 +73,13 @@
 <%--</c:if>--%>
 <%--</c:if>--%>
 
-
+<div class="grid_24">
 <fieldset class="fieldset-details">
     <legend>Components/Components of </legend>
 
     <c:if test="${databaseObject.schemaClass == 'Pathway' || databaseObject.schemaClass == 'BlackBoxEvent'}">
         <c:if test="${not empty databaseObject.hasEvent}">
-            <div class="extended-header">
+            <div class="fieldset-pair-container">
                 <div class="label">
                     <span>contained events:</span>
                 </div>
@@ -96,7 +96,7 @@
     </c:if>
     <c:if test="${isReactionLikeEvent}">
         <c:if test="${not empty databaseObject.input}">
-            <div class="extended-header">
+            <div class="fieldset-pair-container">
                 <div class="label">
                     <span>contained inputs:</span>
                 </div>
@@ -111,7 +111,7 @@
             </div>
         </c:if>
         <c:if test="${not empty databaseObject.output}">
-            <div class="extended-header">
+            <div class="fieldset-pair-container">
                 <div class="label">
                     <span>contained output:</span>
                 </div>
@@ -126,7 +126,7 @@
             </div>
         </c:if>
         <c:if test="${not empty databaseObject.entityOnOtherCell}">
-            <div class="extended-header">
+            <div class="fieldset-pair-container">
                 <div class="label">
                     <span>entityOnotherCell</span>
                 </div>
