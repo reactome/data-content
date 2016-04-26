@@ -364,8 +364,8 @@
                         <td><strong>output entries</strong></td>
                         <td>
                             <ul class="list overflowAuto">
-                                <c:forEach var="hasComponent" items="${databaseObject.hasComponent}">
-                                    <li><a href="../detail/${hasComponent.stableIdentifier}" class="" title="Show Details" rel="nofollow">${hasComponent.displayName} <c:if test="${not empty hasComponent.speciesName}">(${hasComponent.speciesName})</c:if></a></li>
+                                <c:forEach var="hasMember" items="${databaseObject.hasMember}">
+                                    <li><a href="../detail/${hasMember.stableIdentifier}" class="" title="Show Details" rel="nofollow">${hasMember.displayName} <c:if test="${not empty hasMember.speciesName}">(${hasMember.speciesName})</c:if></a></li>
                                 </c:forEach>
                             </ul>
                         </td>
@@ -419,26 +419,29 @@
             </tr>
             </thead>
             <tbody>
-            <c:forEach var="negativeRegulation" items="${databaseObject.negativelyRegulates}">
+
                 <tr>
-                    <td><strong>${negativeRegulation.schemaClass}</strong></td>
+                    <td><strong>NegativeRegulation</strong></td>
                     <td>
-                        <ul class="list overflowList">
-                            <li><c:if test="${not empty negativeRegulation.regulatedEntity.stableIdentifier}"><a href="../detail/${negativeRegulation.regulatedEntity.stableIdentifier}" class="" title="Show Details" rel="nofollow">${negativeRegulation.regulatedEntity.displayName}<c:if test="${not empty negativeRegulation.regulatedEntity.speciesName}"> (${negativeRegulation.regulatedEntity.speciesName})</c:if></a></c:if></li>
-                        </ul>
+                        <c:forEach var="negativeRegulation" items="${databaseObject.negativelyRegulates}">
+                            <ul class="list overflowList">
+                                <li><c:if test="${not empty negativeRegulation.regulatedEntity.stableIdentifier}"><a href="../detail/${negativeRegulation.regulatedEntity.stableIdentifier}" class="" title="Show Details" rel="nofollow">${negativeRegulation.regulatedEntity.displayName}<c:if test="${not empty negativeRegulation.regulatedEntity.speciesName}"> (${negativeRegulation.regulatedEntity.speciesName})</c:if></a></c:if></li>
+                            </ul>
+                        </c:forEach>
                     </td>
                 </tr>
-            </c:forEach>
-            <c:forEach var="positiveRegulation" items="${databaseObject.positivelyRegulates}">
+
                 <tr>
-                    <td><strong>${positiveRegulation.schemaClass}</strong></td>
+                    <td><strong>PositiveRegulation</strong></td>
                     <td>
-                        <ul class="list overflowList">
-                            <li><c:if test="${not empty positiveRegulation.regulatedEntity.stableIdentifier}"><a href="../detail/${positiveRegulation.regulatedEntity.stableIdentifier}" class="" title="Show Details" rel="nofollow">${positiveRegulation.regulatedEntity.displayName}<c:if test="${not empty positiveRegulation.regulatedEntity.speciesName}"> (${positiveRegulation.regulatedEntity.speciesName})</c:if></a></c:if></li>
-                        </ul>
+                        <c:forEach var="positiveRegulation" items="${databaseObject.positivelyRegulates}">
+                            <ul class="list overflowList">
+                                <li><c:if test="${not empty positiveRegulation.regulatedEntity.stableIdentifier}"><a href="../detail/${positiveRegulation.regulatedEntity.stableIdentifier}" class="" title="Show Details" rel="nofollow">${positiveRegulation.regulatedEntity.displayName}<c:if test="${not empty positiveRegulation.regulatedEntity.speciesName}"> (${positiveRegulation.regulatedEntity.speciesName})</c:if></a></c:if></li>
+                            </ul>
+                        </c:forEach>
                     </td>
                 </tr>
-            </c:forEach>
+
             </tbody>
         </table>
     </div>
