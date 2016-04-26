@@ -1,82 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
-<div class="grid_24">
-    <fieldset class="fieldset-details">
-        <legend>Event Information</legend>
-        <div class="extended-header">
-            <c:if test="${not empty databaseObject.goBiologicalProcess}">
-                <div class="label">
-                    <span>Go Biological Process</span>
-                </div>
-                <div class="field">
-                    <span><a href="${databaseObject.goBiologicalProcess.url}" class=""  title="go to ${databaseObject.goBiologicalProcess.databaseName}" rel="nofollow">${databaseObject.goBiologicalProcess.displayName} (${databaseObject.goBiologicalProcess.accession})</a></span>
-                </div>
-                <div class="clear"></div>
-            </c:if>
-            <c:if test="${databaseObject.schemaClass == 'Reaction'}">
-                <c:if test="${not empty databaseObject.reverseReaction}">
-                    <div class="label">
-                        <span>ReverseReaction</span>
-                    </div>
-                    <div class="field">
-                        <span><a href="../detail/${databaseObject.reverseReaction.stableIdentifier}" class="" title="Show Details" rel="nofollow">${databaseObject.reverseReaction.displayName} <c:if test="${not empty databaseObject.reverseReaction.speciesName}">(${databaseObject.reverseReaction.speciesName})</c:if></a></span>
-                    </div>
-                    <div class="clear"></div>
-                </c:if>
-            </c:if>
-        </div>
-    </fieldset>
-</div>
-
-<%--<c:if test="${not empty databaseObject.goBiologicalProcess}">--%>
-<%--<div class="grid_23  padding  margin">--%>
-<%--<h5>Additional Information</h5>--%>
-<%--<table class="fixedTable">--%>
-<%--<thead>--%>
-<%--<tr class="tableHead">--%>
-<%--<td></td>--%>
-<%--<td></td>--%>
-<%--</tr>--%>
-<%--</thead>--%>
-<%--<tbody>--%>
-
-<%--<c:if test="${not empty databaseObject.goBiologicalProcess}">--%>
-<%--<tr>--%>
-<%--<td><strong>GO Biological Process</strong></td>--%>
-<%--<td><a href="${databaseObject.goBiologicalProcess.url}" class=""  title="go to ${databaseObject.goBiologicalProcess.databaseName}" rel="nofollow">${databaseObject.goBiologicalProcess.displayName} (${databaseObject.goBiologicalProcess.accession})</a></td>--%>
-<%--</tr>--%>
-<%--</c:if>--%>
-<%--</tbody>--%>
-<%--</table>--%>
-<%--</div>--%>
-<%--</c:if>--%>
-<%--<c:if test="${databaseObject.schemaClass == 'Reaction'}">--%>
-<%--<c:if test="${not empty databaseObject.reverseReaction}">--%>
-<%--<div class="grid_23  padding  margin">--%>
-<%--<h5>ReverseReaction</h5>--%>
-<%--<table class="fixedTable">--%>
-<%--<thead>--%>
-<%--<tr class="tableHead">--%>
-<%--<td></td>--%>
-<%--<td></td>--%>
-<%--</tr>--%>
-<%--</thead>--%>
-<%--<tbody>--%>
-<%--<tr>--%>
-<%--<td><strong>entries</strong></td>--%>
-<%--<td>--%>
-<%--<a href="../detail/${databaseObject.reverseReaction.stableIdentifier}" class="" title="Show Details" rel="nofollow">${databaseObject.reverseReaction.displayName} <c:if test="${not empty databaseObject.reverseReaction.speciesName}">(${databaseObject.reverseReaction.speciesName})</c:if></a>--%>
-<%--</td>--%>
-<%--</tr>--%>
-<%--</table>--%>
-<%--</div>--%>
-<%--</c:if>--%>
-<%--</c:if>--%>
-
-<div class="grid_24">
 <fieldset class="fieldset-details">
     <legend>Components/Components of </legend>
-
     <c:if test="${databaseObject.schemaClass == 'Pathway' || databaseObject.schemaClass == 'BlackBoxEvent'}">
         <c:if test="${not empty databaseObject.hasEvent}">
             <div class="fieldset-pair-container">
@@ -129,6 +54,147 @@
             <div class="fieldset-pair-container">
                 <div class="label">
                     <span>entityOnOtherCell</span>
+                </div>
+                <div class="field">
+                    <ul class="list overflowAuto">
+                        <c:forEach var="entityOnOtherCell" items="${databaseObject.entityOnOtherCell}">
+                            <li><a href="../detail/${entityOnOtherCell.stableIdentifier}" class="" title="Show Details" rel="nofollow">${entityOnOtherCell.displayName} <c:if test="${not empty entityOnOtherCell.speciesName}">(${entityOnOtherCell.speciesName})</c:if></a></li>
+                        </c:forEach>
+                    </ul>
+                </div>
+                <div class="clear"></div>
+            </div>
+        </c:if>
+    </c:if>
+    <c:import url="componentOf.jsp"/>
+</fieldset>
+
+
+    <fieldset class="fieldset-details">
+        <legend>Event Information</legend>
+        <div class="extended-header">
+            <c:if test="${not empty databaseObject.goBiologicalProcess}">
+                <div class="label">
+                    <span>Go Biological Process</span>
+                </div>
+                <div class="field">
+                    <span><a href="${databaseObject.goBiologicalProcess.url}" class=""  title="go to ${databaseObject.goBiologicalProcess.databaseName}" rel="nofollow">${databaseObject.goBiologicalProcess.displayName} (${databaseObject.goBiologicalProcess.accession})</a></span>
+                </div>
+                <div class="clear"></div>
+            </c:if>
+            <c:if test="${databaseObject.schemaClass == 'Reaction'}">
+                <c:if test="${not empty databaseObject.reverseReaction}">
+                    <div class="label">
+                        <span>ReverseReaction</span>
+                    </div>
+                    <div class="field">
+                        <span><a href="../detail/${databaseObject.reverseReaction.stableIdentifier}" class="" title="Show Details" rel="nofollow">${databaseObject.reverseReaction.displayName} <c:if test="${not empty databaseObject.reverseReaction.speciesName}">(${databaseObject.reverseReaction.speciesName})</c:if></a></span>
+                    </div>
+                    <div class="clear"></div>
+                </c:if>
+            </c:if>
+        </div>
+    </fieldset>
+
+
+<%--<c:if test="${not empty databaseObject.goBiologicalProcess}">--%>
+<%--<div class="grid_23  padding  margin">--%>
+<%--<h5>Additional Information</h5>--%>
+<%--<table class="fixedTable">--%>
+<%--<thead>--%>
+<%--<tr class="tableHead">--%>
+<%--<td></td>--%>
+<%--<td></td>--%>
+<%--</tr>--%>
+<%--</thead>--%>
+<%--<tbody>--%>
+
+<%--<c:if test="${not empty databaseObject.goBiologicalProcess}">--%>
+<%--<tr>--%>
+<%--<td><strong>GO Biological Process</strong></td>--%>
+<%--<td><a href="${databaseObject.goBiologicalProcess.url}" class=""  title="go to ${databaseObject.goBiologicalProcess.databaseName}" rel="nofollow">${databaseObject.goBiologicalProcess.displayName} (${databaseObject.goBiologicalProcess.accession})</a></td>--%>
+<%--</tr>--%>
+<%--</c:if>--%>
+<%--</tbody>--%>
+<%--</table>--%>
+<%--</div>--%>
+<%--</c:if>--%>
+<%--<c:if test="${databaseObject.schemaClass == 'Reaction'}">--%>
+<%--<c:if test="${not empty databaseObject.reverseReaction}">--%>
+<%--<div class="grid_23  padding  margin">--%>
+<%--<h5>ReverseReaction</h5>--%>
+<%--<table class="fixedTable">--%>
+<%--<thead>--%>
+<%--<tr class="tableHead">--%>
+<%--<td></td>--%>
+<%--<td></td>--%>
+<%--</tr>--%>
+<%--</thead>--%>
+<%--<tbody>--%>
+<%--<tr>--%>
+<%--<td><strong>entries</strong></td>--%>
+<%--<td>--%>
+<%--<a href="../detail/${databaseObject.reverseReaction.stableIdentifier}" class="" title="Show Details" rel="nofollow">${databaseObject.reverseReaction.displayName} <c:if test="${not empty databaseObject.reverseReaction.speciesName}">(${databaseObject.reverseReaction.speciesName})</c:if></a>--%>
+<%--</td>--%>
+<%--</tr>--%>
+<%--</table>--%>
+<%--</div>--%>
+<%--</c:if>--%>
+<%--</c:if>--%>
+
+
+    <c:if test="${databaseObject.schemaClass == 'Pathway' || databaseObject.schemaClass == 'BlackBoxEvent'}">
+        <c:if test="${not empty databaseObject.hasEvent}">
+            <div class="fieldset-pair-container">
+                <div class="label">
+                    <span>contained events:</span>
+                </div>
+                <div class="field">
+                    <ul class="list overflowAuto">
+                        <c:forEach var="hasEvent" items="${databaseObject.hasEvent}">
+                            <li><a href="../detail/${hasEvent.stableIdentifier}" class="" title="Show Details" rel="nofollow">${hasEvent.displayName} <c:if test="${not empty hasEvent.speciesName}">(${hasEvent.speciesName})</c:if></a></li>
+                        </c:forEach>
+                    </ul>
+                </div>
+                <div class="clear"></div>
+            </div>
+        </c:if>
+    </c:if>
+    <c:if test="${isReactionLikeEvent}">
+        <c:if test="${not empty databaseObject.input}">
+            <div class="fieldset-pair-container">
+                <div class="label">
+                    <span>contained inputs:</span>
+                </div>
+                <div class="field">
+                    <ul class="list overflowAuto">
+                        <c:forEach var="input" items="${databaseObject.input}">
+                            <li><a href="../detail/${input.stableIdentifier}" class="" title="Show Details" rel="nofollow">${input.displayName} <c:if test="${not empty input.speciesName}">(${input.speciesName})</c:if></a></li>
+                        </c:forEach>
+                    </ul>
+                </div>
+                <div class="clear"></div>
+            </div>
+        </c:if>
+        <c:if test="${not empty databaseObject.output}">
+            <div class="fieldset-pair-container">
+                <div class="label">
+                    <span>contained output:</span>
+                </div>
+                <div class="field">
+                    <ul class="list overflowAuto">
+                        <c:forEach var="output" items="${databaseObject.output}">
+                            <li><a href="../detail/${output.stableIdentifier}" class="" title="Show Details" rel="nofollow">${output.displayName} <c:if test="${not empty output.speciesName}">(${output.speciesName})</c:if></a></li>
+                        </c:forEach>
+                    </ul>
+                </div>
+                <div class="clear"></div>
+            </div>
+        </c:if>
+        <c:if test="${not empty databaseObject.entityOnOtherCell}">
+            <div class="fieldset-pair-container">
+                <div class="label">
+                    <span>entityOnotherCell</span>
                 </div>
                 <div class="field">
                     <ul class="list overflowAuto">
