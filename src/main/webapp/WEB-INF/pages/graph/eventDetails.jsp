@@ -128,7 +128,7 @@
         <c:if test="${not empty databaseObject.entityOnOtherCell}">
             <div class="fieldset-pair-container">
                 <div class="label">
-                    <span>entityOnotherCell</span>
+                    <span>entityOnOtherCell</span>
                 </div>
                 <div class="field">
                     <ul class="list overflowAuto">

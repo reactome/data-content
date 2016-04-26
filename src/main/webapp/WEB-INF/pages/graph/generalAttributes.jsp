@@ -4,7 +4,7 @@
 <div class="grid_24">
 
     <fieldset class="fieldset-details">
-        <legend>Additional Information GUI</legend>
+        <legend>Additional Information</legend>
 
 
 

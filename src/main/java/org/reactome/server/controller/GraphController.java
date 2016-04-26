@@ -24,7 +24,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import psidev.psi.mi.tab.model.CrossReference;
 
 import java.sql.SQLException;
 import java.util.*;
@@ -155,13 +154,7 @@ class GraphController {
                 model.addAttribute("availableSpecies", DatabaseObjectUtils.getAvailableSpecies(topLevelNodes));
                 model.addAttribute("componentOf", contentDetails.getComponentOf());
                 model.addAttribute("otherFormsOfThisMolecule", contentDetails.getOtherFormsOfThisMolecule());
-
-
-
-
                 model.addAttribute("crossReference", groupCrossReferences(getCrossReference(databaseObject)));
-
-
 
                 if (databaseObject instanceof ReactionLikeEvent) {
                     model.addAttribute("isReactionLikeEvent", true);
@@ -169,7 +162,7 @@ class GraphController {
                 if (databaseObject instanceof EntitySet) {
                     model.addAttribute("isEntitySet", true);
                 }
-                if(databaseObject instanceof OpenSet ||databaseObject instanceof EntityWithAccessionedSequence || databaseObject instanceof SimpleEntity) {
+                if(databaseObject instanceof OpenSet || databaseObject instanceof EntityWithAccessionedSequence || databaseObject instanceof SimpleEntity) {
                     model.addAttribute("hasReferenceEntity", true);
                 }
                 if (databaseObject instanceof EntityWithAccessionedSequence) {

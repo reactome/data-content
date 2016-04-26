@@ -453,7 +453,9 @@ ul.tree li a:hover {
 
 .wrap {
     /*width: 352px;*/
-    margin-bottom: 30px;
+    /*margin-bottom: 0px;*/
+    padding-left: 20px;
+    padding-right: 20px;
 }
 
 .wrap table {
@@ -469,6 +471,7 @@ ul.tree li a:hover {
 
 .wrap .fixedTable td {
     width: 20%;
+    border:none;
 }
 
 .wrap .inner_table_div {
@@ -486,6 +489,7 @@ ul.tree li a:hover {
 
 .wrap .inner_table_div table td{
     width: 20%;
+    border:none;
 }
 
 .pathway_location_section {
@@ -621,10 +625,12 @@ div.extended-header .clear, div.fieldset-pair-container .clear {
     clear:both;
 }
 
-/* TESTING SPRITE IMAGES */
+/* START SPRITE SECTION */
 .sprite {
-    background-image: url(../images/spritesheet.png);
-    background-repeat: no-repeat;
+    /*background-image: url(../images/spritesheet.png);*/
+    /*background-repeat: no-repeat;*/
+    background: url(../images/spritesheet.png) no-repeat;
+    /*background-repeat: ;*/
     display: inline-block;
 }
 
@@ -829,33 +835,37 @@ div.extended-header .clear, div.fieldset-pair-container .clear {
     height: 20px;
     background-position: -35px -135px;
 }
+/* END OF SPRITE SECTION */
+
 
 /* FIELDSET DETAILS PAGE STYLING */
 .fieldset-details {
     margin: 20px;
     padding-top: 20px;
-    border: 1px solid #d3d3d3;
+    border: 1px solid #D3D3D3;
     padding-bottom: 40px;
     border-radius: 3px;
 }
 
 .fieldset-details legend {
     /* new style */
-    /*color: #e68a00;*/
+    color: #e68a00;
     /*padding-left: 10px;*/
     /*padding-right: 10px;*/
+    font-size: 16px;
+    margin-left: 20px;
+    padding: 4px 10px 4px 10px;
+
+    /* DO NOT DELETE HERE -- GUI */
+    /* style compatible with results page */
+    /*color: #1F419A;*/
     /*font-size: 16px;*/
     /*margin-left: 20px;*/
-
-    /* style compatible with results page */
-    color: #1F419A;
-    font-size: 15px;
-    margin-left: 20px;
-    background-color: #EEE;
-    border-top-right-radius: 8px;
-    border-top-left-radius: 8px;
-    padding: 4px 10px 4px 10px;
-    background: -webkit-linear-gradient(top, #eeeeee, #d8d8d8);
+    /*background-color: #EEE;*/
+    /*border-top-right-radius: 8px;*/
+    /*border-top-left-radius: 8px;*/
+    /*padding: 4px 10px 4px 10px;*/
+    /*background: -webkit-linear-gradient(top, #eeeeee, #d8d8d8);*/
 }
 
 .fieldset-details > .padding {

@@ -44,15 +44,17 @@
                     </div>
                     <div class="clear"></div>
 
-                    <c:if test="${not empty databaseObject.referenceEntity.geneName}">
-                        <div class="label">
-                            <span>Gene Names</span>
-                        </div>
-                        <div class="field">
-                            <c:forEach var="geneName" items="${databaseObject.referenceEntity.geneName}" varStatus="loop">${geneName}<c:if test="${!loop.last}">, </c:if>
-                            </c:forEach>
-                        </div>
-                        <div class="clear"></div>
+                    <c:if test="${isReferenceSequence}">
+                        <c:if test="${not empty databaseObject.referenceEntity.geneName}">
+                            <div class="label">
+                                <span>Gene Names</span>
+                            </div>
+                            <div class="field">
+                                <c:forEach var="geneName" items="${databaseObject.referenceEntity.geneName}" varStatus="loop">${geneName}<c:if test="${!loop.last}">, </c:if>
+                                </c:forEach>
+                            </div>
+                            <div class="clear"></div>
+                        </c:if>
                     </c:if>
 
                     <c:if test="${databaseObject.referenceType == 'ReferenceGeneProduct'}">
@@ -67,8 +69,6 @@
                             </div>
                             <div class="clear"></div>
                         </c:if>
-                    </c:if>
-                    <c:if test="${databaseObject.referenceType == 'ReferenceGeneProduct'}">
                         <c:if test="${not empty databaseObject.referenceEntity.referenceGene}">
                             <div class="label">
                                 <span>Reference Genes</span>
@@ -151,7 +151,6 @@
     </c:if>
 </c:if>
 
-
 <c:if test="${not empty databaseObject.goCellularComponent}">
     <div class="grid_23  padding  margin">
         <h5>Go Cellular Component</h5>
@@ -174,20 +173,18 @@
     </div>
 </c:if>
 
-<fieldset class="fieldset-details">
-    <legend>Inferred</legend>
-
-
-    <c:if test="${not empty databaseObject.inferredFrom || not empty databaseObject.inferredTo}">
+<c:if test="${not empty databaseObject.inferredFrom || not empty databaseObject.inferredTo}">
+    <fieldset class="fieldset-details">
+        <legend>Inferred</legend>
         <div class="grid_23  padding  margin">
             <h5>Inferred Entries</h5>
             <table  class="fixedTable">
-                <thead>
-                <tr class="tableHead">
-                    <td></td>
-                    <td></td>
-                </tr>
-                </thead>
+                <%--<thead>--%>
+                <%--<tr class="tableHead">--%>
+                    <%--<td></td>--%>
+                    <%--<td></td>--%>
+                <%--</tr>--%>
+                <%--</thead>--%>
                 <tbody>
                 <c:if test="${not empty databaseObject.inferredFrom}">
                     <tr>
@@ -216,15 +213,19 @@
                 </tbody>
             </table>
         </div>
-    </c:if>
-</fieldset>
+    </fieldset>
+</c:if>
 
+<%--
+    The field is not inside the if-tag because a database object has
+    one of this entries below, unless it is an orphan
+--%>
 <fieldset class="fieldset-details">
     <legend>Components / Components of </legend>
     <c:if test="${databaseObject.schemaClass == 'EntityWithAccessionedSequence'}">
         <c:if test="${not empty databaseObject.hasModifiedResidue}">
             <div class="grid_23  padding  margin">
-                <h5>ModifiedResidues</h5>
+                <h5>Modified Residues</h5>
                 <table>
                     <thead>
                     <tr class="tableHead">
