@@ -1,8 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
-<div class="grid_23  padding">
-
     <h5>Locations in the PathwayBrowser</h5>
     <c:if test="${fn:length(availableSpecies) gt 1}">
         <div class="padding">
@@ -14,7 +12,7 @@
         </div>
     </c:if>
 
-    <div class="paddingleft">
+    <div style="padding: 0 5px">
         <c:forEach var="topLvl" items="${topLevelNodes}">
             <c:choose>
                 <c:when test="${empty topLvl.children}">
@@ -42,4 +40,3 @@
             </c:choose>
         </c:forEach>
     </div>
-</div>

@@ -86,12 +86,10 @@
 
 <%--Both physicalEntities and event can have a summation--%>
 <c:if test="${not empty databaseObject.summation}">
-    <div class="grid_23  padding">
-        <h5>Summation</h5>
-        <div class="paddingleft">
-            <c:forEach var="summation" items="${databaseObject.summation}">
-                <p style="text-align: justify;">${summation.text}</p>
-            </c:forEach>
-        </div>
+    <h5>Summation</h5>
+    <div style="padding: 0 5px">
+        <c:forEach var="summation" items="${databaseObject.summation}">
+            <p style="text-align: justify;">${summation.text}</p>
+        </c:forEach>
     </div>
 </c:if>

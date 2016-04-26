@@ -159,7 +159,7 @@ class GraphController {
 
 
 
-                model.addAttribute("crossReference", groupCrossReferences(getCrossReference(databaseObject)));
+                model.addAttribute("crossReferences", groupCrossReferences(getCrossReference(databaseObject)));
 
 
 
