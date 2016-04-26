@@ -5,6 +5,7 @@
 <%--@elvariable id="literature" type="org.reactome.server.graph.domain.model.LiteratureReference"--%>
 
 <c:import url="../header.jsp"/>
+
 <div class="ebi-content">
 
     <c:import url="title.jsp"/>
@@ -26,8 +27,6 @@
     <c:if test="${clazz == 'Regulation'}">
         <c:import url="regulationDetails.jsp"/>
     </c:if>
-
-
 
     <c:if test="${not empty interactions}">
         <c:import url="interactionDetails.jsp"/>

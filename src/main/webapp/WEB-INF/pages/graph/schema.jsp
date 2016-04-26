@@ -1,7 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
-<c:import url="http://www.reactome.org/common/header.php"/>
+<c:import url="../header.jsp"/>
 <link rel="stylesheet" href="/css/main.css" type="text/css">
 <link rel="stylesheet" href="/css/ebi-fluid.css" type="text/css">
 <div class="ebi-content">
@@ -141,4 +141,4 @@
 <div class="clear"></div>
 
 </div>            <%--A weird thing to avoid problems--%>
-<c:import url="http://www.reactome.org/common/footer.php"/>
+<c:import url="../footer.jsp"/>

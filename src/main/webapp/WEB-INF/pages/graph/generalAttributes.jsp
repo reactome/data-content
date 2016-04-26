@@ -6,7 +6,7 @@
     <table style="width: 100%; padding: 0 5px">
         <thead>
         <tr class="tableHead">
-            <td>pubMedId</td>
+            <td>PubMed ID</td>
             <td>Title</td>
             <td>Journal</td>
             <td>Year</td>

@@ -2,12 +2,8 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <div class="grid_23  padding  margin">
-
-
     <fieldset class="fieldset-details">
-
         <legend>Interactors</legend>
-
         <div class="wrap">
             <table class="fixedTable">
                 <thead style="border-bottom: 1px solid #d3d3d3">
@@ -60,7 +56,4 @@
             </div>
         </div>
     </fieldset>
-
-    <%--<h5>Interactions</h5>--%>
-
 </div>
