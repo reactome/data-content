@@ -1,3 +1,6 @@
+@import url("sprite.css");
+@import url("table.css");
+
 .more {
     color: #1F419A;
     cursor: pointer;
@@ -464,33 +467,48 @@ ul.tree li a:hover {
     table-layout: fixed;
 }
 
-.wrap .fixedTable {
-    margin-bottom: 0;
-    border-bottom: 0;
-}
+/*.wrap .fixedTable {*/
+    /*margin-bottom: 0;*/
+    /*border-bottom: 0;*/
+/*}*/
 
-.wrap .fixedTable td {
-    width: 20%;
-    border:none;
-}
+/*.wrap .fixedTable th {*/
+    /*/!*width: 20%;*!/*/
+    /*border:none;*/
+    /*color: #1F419A;*/
+    /*font-weight: bold;*/
+    /*font-size: 14px;*/
+    /*/!*background-color: #d3d3d3;*!/*/
+    /*box-shadow: 2px 2px 1px #AFAFAF;*/
+    /*text-shadow: 1px 1px 3px #ffffff;*/
+    /*background-color: #eeeeee;*/
+    /*background: -moz-linear-gradient(top, #eeeeee, #d8d8d8);*/
+    /*background: -o-linear-gradient(top, #eeeeee, #d8d8d8);*/
+    /*background: -webkit-linear-gradient(top, #eeeeee, #d8d8d8);*/
+    /*background: linear-gradient(top, #eeeeee, #d8d8d8);*/
+    /*padding: 8px 15px 5px 15px;*/
+/*}*/
 
 .wrap .inner_table_div {
     /*border: 0px solid !important;*/
-    height: 200px;
+    max-height: 200px;
     overflow-y: auto;
     border-top: 0 solid;
-    margin-top: 0;
+    margin-top: 5px;
 }
 
-.wrap .inner_table_div table {
-    border-top: 0 solid;
-    margin-top: 0;
-}
+/*.wrap .inner_table_div table {*/
+    /*border-top: 0 solid;*/
+    /*margin-top: 0;*/
+/*}*/
 
-.wrap .inner_table_div table td{
-    width: 20%;
-    border:none;
-}
+/*.wrap .inner_table_div table td{*/
+    /*/!*width: 20%;*!/*/
+    /*border:none;*/
+    /*color: #000;*/
+    /*padding-left: 20px;*/
+
+/*}*/
 
 .pathway_location_section {
     padding: 6px;
@@ -618,243 +636,34 @@ div.extended-header .field, div.fieldset-pair-container .field {
     padding-left: 20px;
     /*padding-bottom: 1px;*/
     border-left: 2px solid orange;
-
+    word-wrap: break-word;
+    max-width: 75%;
 }
 
 div.extended-header .clear, div.fieldset-pair-container .clear {
     clear:both;
 }
 
-/* START SPRITE SECTION */
-.sprite {
-    /*background-image: url(../images/spritesheet.png);*/
-    /*background-repeat: no-repeat;*/
-    background: url(../images/spritesheet.png) no-repeat;
-    /*background-repeat: ;*/
-    display: inline-block;
-}
-
-.sprite-resize {
-    zoom: .75;
-    -moz-transform: scale(.75);
-}
-
-.sprite-resize-small {
-    zoom: .6;
-    -moz-transform: scale(.6);
-}   
-
-.sprite-BlackBoxEvent {
-    width: 16px;
-    height: 16px;
-    background-position: -5px -5px;
-}
-
-.sprite-CandidateSet {
-    width: 16px;
-    height: 16px;
-    background-position: -31px -5px;
-}
-
-.sprite-Complex {
-    width: 16px;
-    height: 16px;
-    background-position: -57px -5px;
-}
-
-.sprite-ConceptualEvent {
-    width: 16px;
-    height: 16px;
-    background-position: -83px -5px;
-}
-
-.sprite-DefinedSet {
-    width: 16px;
-    height: 16px;
-    background-position: -109px -5px;
-}
-
-.sprite-Depolymerization {
-    width: 16px;
-    height: 16px;
-    background-position: -5px -31px;
-}
-
-.sprite-EntitySet {
-    width: 16px;
-    height: 16px;
-    background-position: -31px -31px;
-}
-
-.sprite-EntityWithAccessionedSequence {
-    width: 16px;
-    height: 16px;
-    background-position: -57px -31px;
-}
-
-.sprite-EquivalentEventSet {
-    width: 16px;
-    height: 16px;
-    background-position: -83px -31px;
-}
-
-.sprite-FailedReaction {
-    width: 16px;
-    height: 16px;
-    background-position: -109px -31px;
-}
-
-.sprite-GenomeEncodedEntity {
-    width: 16px;
-    height: 16px;
-    background-position: -5px -57px;
-}
-
-.sprite-Interactor {
-    width: 16px;
-    height: 16px;
-    background-position: -31px -57px;
-}
-
-.sprite-NegativeRegulation {
-    width: 16px;
-    height: 16px;
-    background-position: -57px -57px;
-}
-
-.sprite-OpenSet {
-    width: 16px;
-    height: 16px;
-    background-position: -83px -57px;
-}
-
-.sprite-OtherEntity {
-    width: 16px;
-    height: 16px;
-    background-position: -109px -57px;
-}
-
-.sprite-Pathway {
-    width: 16px;
-    height: 16px;
-    background-position: -5px -83px;
-}
-
-.sprite-Polymer {
-    width: 16px;
-    height: 16px;
-    background-position: -31px -83px;
-}
-
-.sprite-Polymerisation {
-    width: 16px;
-    height: 16px;
-    background-position: -57px -83px;
-}
-
-.sprite-PositiveRegulation {
-    width: 16px;
-    height: 16px;
-    background-position: -83px -83px;
-}
-
-.sprite-Reaction {
-    width: 16px;
-    height: 16px;
-    background-position: -109px -83px;
-}
-
-.sprite-ReferenceDNASequence {
-    width: 16px;
-    height: 16px;
-    background-position: -5px -109px;
-}
-
-.sprite-ReferenceGeneProduct {
-    width: 16px;
-    height: 16px;
-    background-position: -31px -109px;
-}
-
-.sprite-ReferenceGroup {
-    width: 16px;
-    height: 16px;
-    background-position: -57px -109px;
-}
-
-.sprite-ReferenceIsoform {
-    width: 16px;
-    height: 16px;
-    background-position: -83px -109px;
-}
-
-.sprite-ReferenceMolecule {
-    width: 16px;
-    height: 16px;
-    background-position: -109px -109px;
-}
-
-.sprite-ReferenceRNASequence {
-    width: 16px;
-    height: 16px;
-    background-position: -135px -5px;
-}
-
-.sprite-Requirement {
-    width: 16px;
-    height: 16px;
-    background-position: -135px -31px;
-}
-
-.sprite-SimpleEntity {
-    width: 16px;
-    height: 16px;
-    background-position: -135px -57px;
-}
-
-.sprite-TopLevelPathway {
-    width: 16px;
-    height: 16px;
-    background-position: -135px -83px;
-}
-
-.sprite-isDisease {
-    width: 10px;
-    height: 16px;
-    background-position: -135px -109px;
-}
-
-.sprite-minus {
-    width: 20px;
-    height: 20px;
-    background-position: -5px -135px;
-}
-
-.sprite-plus {
-    width: 20px;
-    height: 20px;
-    background-position: -35px -135px;
-}
-/* END OF SPRITE SECTION */
-
-
 /* FIELDSET DETAILS PAGE STYLING */
 .fieldset-details {
     margin: 20px;
-    padding-top: 20px;
+    /*padding-top: 20px;*/
     border: 1px solid #D3D3D3;
-    padding-bottom: 40px;
-    border-radius: 3px;
+    /*padding-bottom: 40px;*/
+    /*border-radius: 3px;*/
+    padding: 5px 0 22px 0;
+    border-radius: 5px 5px 0 0;
+    box-shadow: 2px 2px 2px #D3D3D3;
 }
 
 .fieldset-details legend {
     /* new style */
     color: #e68a00;
-    /*padding-left: 10px;*/
-    /*padding-right: 10px;*/
-    font-size: 16px;
+    font-size: 18px;
     margin-left: 20px;
     padding: 4px 10px 4px 10px;
+    text-shadow: 0px 1px 1px #ddd;
+    /*color:#05194C;*/
 
     /* DO NOT DELETE HERE -- GUI */
     /* style compatible with results page */

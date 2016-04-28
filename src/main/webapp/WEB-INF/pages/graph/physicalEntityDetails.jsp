@@ -27,7 +27,7 @@
 
 <c:if test="${hasReferenceEntity}">
     <c:if test="${not empty databaseObject.referenceEntity}">
-        <div class="grid_24">
+        <%--<div class="grid_24">--%>
             <fieldset class="fieldset-details">
                 <legend>External Reference Information</legend>
 
@@ -74,11 +74,11 @@
                                 <span>Reference Genes</span>
                             </div>
                             <div class="field">
-                                <ul class="list overflowAuto">
-                                    <c:forEach var="referenceGene" items="${databaseObject.referenceEntity.referenceGene}">
-                                        <li><a href="${referenceGene.url}" title="show ${referenceGene.displayName}" rel="nofollow">${referenceGene.displayName}</a></li>
+                                <%--<ul class="list overflowAuto">--%>
+                                    <c:forEach var="referenceGene" items="${databaseObject.referenceEntity.referenceGene}" varStatus="loop">
+                                        <a href="${referenceGene.url}" title="show ${referenceGene.displayName}" rel="nofollow">${referenceGene.displayName}</a><c:if test="${!loop.last}">, </c:if>
                                     </c:forEach>
-                                </ul>
+                                <%--</ul>--%>
                             </div>
                             <div class="clear"></div>
                         </c:if>
@@ -147,7 +147,7 @@
                     </div>
                 </c:if>
             </fieldset>
-        </div>
+        <%--</div>--%>
     </c:if>
 </c:if>
 

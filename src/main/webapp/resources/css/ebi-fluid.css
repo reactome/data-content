@@ -147,7 +147,8 @@ h5 a:active{
     background-image: linear-gradient(top, #eeeeee, #d8d8d8);
 }
 .tableHead th, td {
-    color:#1F419A;
+    /*color:#1F419A;*/
+    color: #05194C;
     font-size: 108%;
 }
 
