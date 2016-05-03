@@ -42,3 +42,14 @@
 
 </div>            <%--A weird thing to avoid problems--%>
 <c:import url="../footer.jsp"/>
+
+
+<%--
+ALIGNED DIV MODEL WITH ORANGE BORDER
+
+<div class="fieldset-pair-container">
+    <div class="label"></div>
+    <div class="field"></div>
+    <div class="clear"></div>
+</div>
+--%>
