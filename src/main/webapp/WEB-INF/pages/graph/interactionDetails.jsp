@@ -11,7 +11,7 @@
                     <th style="width:60px;">Confidence Score</th>
                     <th style="width:100px;">Interactor Accession</th>
                     <th style="width:100px;">Interactor Name</th>
-                    <th style="width:25px;">Evidence</th>
+                    <th style="width:25px;">Evidence (IntAct)</th>
                 </tr>
             </thead>
         </table>

@@ -696,3 +696,31 @@ div.extended-header .clear, div.fieldset-pair-container .clear {
     margin-left: 5px;
     margin-right: 5px;
 }
+
+.fieldset-details-inner {
+    margin: 20px;
+    border: 1px solid #D3D3D3;
+    padding: 5px 0 10px 0;
+    border-radius: 5px 5px 0 0;
+    box-shadow: 2px 2px 2px #D3D3D3;
+}
+
+.fieldset-details-inner legend {
+    /* new style */
+    color: #e68a00;
+    font-size: 15px;
+    margin-left: 20px;
+    padding: 0px 10px 0px 10px;
+    text-shadow: 0px 1px 1px #ddd;
+
+    /* DO NOT DELETE HERE -- GUI */
+    /* style compatible with results page */
+    /*color: #1F419A;*/
+    /*font-size: 16px;*/
+    /*margin-left: 20px;*/
+    /*background-color: #EEE;*/
+    /*border-top-right-radius: 8px;*/
+    /*border-top-left-radius: 8px;*/
+    /*padding: 4px 10px 4px 10px;*/
+    /*background: -webkit-linear-gradient(top, #eeeeee, #d8d8d8);*/
+}

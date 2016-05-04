@@ -17,7 +17,7 @@
                         <th style="width: 55px">Confidence Score</th>
                         <th style="width: 45px">Accession</th>
                         <th style="width: 230px">Reactome Entry</th>
-                        <th style="width: 50px">Evidence</th>
+                        <th style="width: 50px">Evidence (IntAct)</th>
                     </tr>
                     </thead>
                 </table>
@@ -42,7 +42,7 @@
                                     </c:forEach>
                                 </td>
                                 <td style="width: 55px">
-                                    <a href="${interaction.evidencesURL}" title="Open evidence" rel="nofollow"
+                                    <a href="${interaction.evidencesURL}" title="Open evidence in IntAct" rel="nofollow"
                                        target="_blank">${fn:length(interaction.interactionEvidences)}</a>
                                 </td>
                             </tr>

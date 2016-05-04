@@ -264,7 +264,6 @@
 <fieldset class="fieldset-details">
     <legend>Components / Components of </legend>
 
-
     <c:if test="${databaseObject.schemaClass == 'Complex'}">
         <c:if test="${not empty databaseObject.hasComponent}">
             <div class="fieldset-pair-container">

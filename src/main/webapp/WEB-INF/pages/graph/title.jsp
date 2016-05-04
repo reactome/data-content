@@ -79,6 +79,16 @@
                 <div class="clear"></div>
             </c:if>
 
+            <c:if test="${clazz == 'PhysicalEntity'}">
+                <c:if test="${not empty databaseObject.goCellularComponent}">
+                    <div class="label"><span>GO Cellular Component</span></div>
+                    <div class="field">
+                        <a href="${databaseObject.goCellularComponent.url}" class="" title="show ${databaseObject.goCellularComponent.name}" rel="nofollow">${databaseObject.goCellularComponent.name}</a> (${databaseObject.goCellularComponent.accession})
+                    </div>
+                    <div class="clear"></div>
+                </c:if>
+            </c:if>
+
         </c:if>
     </div>
 </div>
