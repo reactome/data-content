@@ -551,7 +551,6 @@ div#two {
     padding-bottom: 20px;
 }
 
-
 .dataschema-tree {
 
     border-collapse:collapse;
@@ -606,7 +605,7 @@ ul.tree li.schema-item {
 }
 
 div.extended-header, div.fieldset-pair-container {
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 }
 
 div.fieldset-pair-container div {
@@ -626,17 +625,18 @@ div.extended-header .label, div.fieldset-pair-container .label {
 div.extended-header .field, div.fieldset-pair-container .field {
     float: left;
     padding-left: 20px;
-    /*padding-bottom: 1px;*/
     border-left: 2px solid orange;
     word-wrap: break-word;
     width: 75%;
     max-width: 75%;
-    /*height: 30px;*/
     min-height: 10px;
     max-height: 150px;
     overflow: auto;
 }
 
+div.fieldset-pair-container .field {
+    border-left: 2px solid #1F419A;
+}
 
 div.extended-header .clear, div.fieldset-pair-container .clear {
     clear:both;
@@ -645,12 +645,9 @@ div.extended-header .clear, div.fieldset-pair-container .clear {
 
 /* START FIELDSET DETAILS PAGE STYLING */
 .fieldset-details {
-    margin: 20px;
-    /*padding-top: 20px;*/
+    /*margin: 20px;*/
     border: 1px solid #D3D3D3;
-    /*padding-bottom: 40px;*/
-    /*border-radius: 3px;*/
-    padding: 5px 0 22px 0;
+    padding: 5px 0 10px 0;
     border-radius: 5px 5px 0 0;
     box-shadow: 2px 2px 2px #D3D3D3;
 }
@@ -660,9 +657,8 @@ div.extended-header .clear, div.fieldset-pair-container .clear {
     color: #e68a00;
     font-size: 18px;
     margin-left: 20px;
-    padding: 4px 10px 4px 10px;
+    padding: 0px 10px 0px 10px;
     text-shadow: 0px 1px 1px #ddd;
-    /*color:#05194C;*/
 
     /* DO NOT DELETE HERE -- GUI */
     /* style compatible with results page */
@@ -675,6 +671,7 @@ div.extended-header .clear, div.fieldset-pair-container .clear {
     /*padding: 4px 10px 4px 10px;*/
     /*background: -webkit-linear-gradient(top, #eeeeee, #d8d8d8);*/
 }
+
 .fieldset-details table.something tr:hover {
     background-color: #f9f9f9;
 }

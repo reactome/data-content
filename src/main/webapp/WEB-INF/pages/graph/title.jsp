@@ -73,8 +73,7 @@
                 </div>
                 <div class="field">
                     <c:forEach var="synonym" items="${databaseObject.name}" varStatus="loop">
-                        <c:if test="${!loop.first}">${synonym}</c:if>
-                        <c:if test="${!loop.first && !loop.last}">, </c:if>
+                        <c:if test="${!loop.first}">${synonym}</c:if><c:if test="${!loop.first && !loop.last}">, </c:if>
                     </c:forEach>
                 </div>
                 <div class="clear"></div>

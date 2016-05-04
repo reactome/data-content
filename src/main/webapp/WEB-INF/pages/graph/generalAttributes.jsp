@@ -34,7 +34,7 @@
                     </div>
                 </div>
             </c:if>
-<br/>
+
             <c:if test="${not empty crossReferences}">
                 <div class="wrap">
                     <h5>Cross References</h5>
@@ -54,8 +54,7 @@
                                         <td style="width:55px;"><strong>${crossReference.key}</strong></td>
                                         <td style="width:255px;">
                                             <c:forEach var="value" items="${crossReference.value}" varStatus="loop">
-                                                <a href="${value.url}" title="show ${value.displayName}" rel="nofollow">${value.identifier}</a>
-                                                <c:if test="${!loop.last}">, </c:if>
+                                                <a href="${value.url}" title="show ${value.displayName}" rel="nofollow">${value.identifier}</a><c:if test="${!loop.last}">, </c:if>
                                             </c:forEach>
                                         </td>
                                     </tr>
@@ -64,6 +63,18 @@
                         </table>
                     </div>
                 </div>
+            </c:if>
+
+            <c:if test="${clazz == 'PhysicalEntity'}">
+                <c:if test="${not empty databaseObject.goCellularComponent}">
+                    <div class="fieldset-pair-container">
+                        <div class="label">GO Cellular Component</div>
+                        <div class="field">
+                            <a href="${databaseObject.goCellularComponent.url}" class="" title="show ${databaseObject.goCellularComponent.name}" rel="nofollow">${databaseObject.goCellularComponent.name}</a> (${databaseObject.goCellularComponent.accession})
+                        </div>
+                        <div class="clear"></div>
+                    </div>
+                </c:if>
             </c:if>
 
         </fieldset>

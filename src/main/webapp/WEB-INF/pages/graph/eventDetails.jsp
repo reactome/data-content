@@ -6,7 +6,7 @@
         <c:if test="${not empty databaseObject.hasEvent}">
             <div class="fieldset-pair-container">
                 <div class="label">
-                    <span><strong>contained events:</strong></span>
+                    <span><strong>contained events</strong></span>
                 </div>
                 <div class="field">
                     <ul class="list overflowAuto">
@@ -23,7 +23,7 @@
         <c:if test="${not empty databaseObject.input}">
             <div class="fieldset-pair-container">
                 <div class="label">
-                    <span><strong>contained inputs:</strong></span>
+                    <span><strong>contained inputs</strong></span>
                 </div>
                 <div class="field">
                     <ul class="list overflowAuto">
@@ -38,7 +38,7 @@
         <c:if test="${not empty databaseObject.output}">
             <div class="fieldset-pair-container">
                 <div class="label">
-                    <span><strong>contained output:</strong></span>
+                    <span><strong>contained output</strong></span>
                 </div>
                 <div class="field">
                     <ul class="list overflowAuto">
@@ -96,52 +96,6 @@
         </div>
     </fieldset>
 </c:if>
-
-<%--<c:if test="${not empty databaseObject.goBiologicalProcess}">--%>
-<%--<div class="grid_23  padding  margin">--%>
-<%--<h5>Additional Information</h5>--%>
-<%--<table class="fixedTable">--%>
-<%--<thead>--%>
-<%--<tr class="tableHead">--%>
-<%--<td></td>--%>
-<%--<td></td>--%>
-<%--</tr>--%>
-<%--</thead>--%>
-<%--<tbody>--%>
-
-<%--<c:if test="${not empty databaseObject.goBiologicalProcess}">--%>
-<%--<tr>--%>
-<%--<td><strong>GO Biological Process</strong></td>--%>
-<%--<td><a href="${databaseObject.goBiologicalProcess.url}" class=""  title="go to ${databaseObject.goBiologicalProcess.databaseName}" rel="nofollow">${databaseObject.goBiologicalProcess.displayName} (${databaseObject.goBiologicalProcess.accession})</a></td>--%>
-<%--</tr>--%>
-<%--</c:if>--%>
-<%--</tbody>--%>
-<%--</table>--%>
-<%--</div>--%>
-<%--</c:if>--%>
-<%--<c:if test="${databaseObject.schemaClass == 'Reaction'}">--%>
-<%--<c:if test="${not empty databaseObject.reverseReaction}">--%>
-<%--<div class="grid_23  padding  margin">--%>
-<%--<h5>ReverseReaction</h5>--%>
-<%--<table class="fixedTable">--%>
-<%--<thead>--%>
-<%--<tr class="tableHead">--%>
-<%--<td></td>--%>
-<%--<td></td>--%>
-<%--</tr>--%>
-<%--</thead>--%>
-<%--<tbody>--%>
-<%--<tr>--%>
-<%--<td><strong>entries</strong></td>--%>
-<%--<td>--%>
-<%--<a href="../detail/${databaseObject.reverseReaction.stableIdentifier}" class="" title="Show Details" rel="nofollow">${databaseObject.reverseReaction.displayName} <c:if test="${not empty databaseObject.reverseReaction.speciesName}">(${databaseObject.reverseReaction.speciesName})</c:if></a>--%>
-<%--</td>--%>
-<%--</tr>--%>
-<%--</table>--%>
-<%--</div>--%>
-<%--</c:if>--%>
-<%--</c:if>--%>
-
 
 <c:if test="${not empty databaseObject.negativelyRegulatedBy || not empty databaseObject.positivelyRegulatedBy || isReactionLikeEvent && not empty databaseObject.catalystActivity}">
 
@@ -240,35 +194,33 @@
 </c:if>
 
 <c:if test="${not empty databaseObject.inferredFrom || not empty databaseObject.orthologousEvent}">
-    <div class="grid_24">
-        <fieldset class="fieldset-details">
-            <legend>Inferred Entries</legend>
-            <c:if test="${not empty databaseObject.inferredFrom}">
-                <div class="fieldset-pair-container">
-                    <div class="label">Inferred From</div>
-                    <div class="field">
-                        <ul class="list overflowList">
-                            <c:forEach var="inferredFrom" items="${databaseObject.inferredFrom}">
-                                <li><a href="../detail/${inferredFrom.stableIdentifier}" class="" title="Show Details" rel="nofollow">${inferredFrom.displayName} (${inferredFrom.speciesName})</a></li>
-                            </c:forEach>
-                        </ul>
-                    </div>
-                    <div class="clear"></div>
+    <fieldset class="fieldset-details">
+        <legend>Inferred Entries</legend>
+        <c:if test="${not empty databaseObject.inferredFrom}">
+            <div class="fieldset-pair-container">
+                <div class="label">Inferred From</div>
+                <div class="field">
+                    <ul class="list overflowList">
+                        <c:forEach var="inferredFrom" items="${databaseObject.inferredFrom}">
+                            <li><a href="../detail/${inferredFrom.stableIdentifier}" class="" title="Show Details" rel="nofollow">${inferredFrom.displayName} (${inferredFrom.speciesName})</a></li>
+                        </c:forEach>
+                    </ul>
                 </div>
-            </c:if>
-            <c:if test="${not empty databaseObject.orthologousEvent}">
-                <div class="fieldset-pair-container">
-                    <div class="label">Orthologous events</div>
-                    <div class="field">
-                        <ul class="list overflowList">
-                            <c:forEach var="orthologousEvent" items="${databaseObject.orthologousEvent}">
-                                <li><a href="../detail/${orthologousEvent.stableIdentifier}" class="" title="Show Details" rel="nofollow">${orthologousEvent.displayName} (${orthologousEvent.speciesName})</a></li>
-                            </c:forEach>
-                        </ul>
-                    </div>
-                    <div class="clear"></div>
+                <div class="clear"></div>
+            </div>
+        </c:if>
+        <c:if test="${not empty databaseObject.orthologousEvent}">
+            <div class="fieldset-pair-container">
+                <div class="label">Orthologous events</div>
+                <div class="field">
+                    <ul class="list overflowList">
+                        <c:forEach var="orthologousEvent" items="${databaseObject.orthologousEvent}">
+                            <li><a href="../detail/${orthologousEvent.stableIdentifier}" class="" title="Show Details" rel="nofollow">${orthologousEvent.displayName} (${orthologousEvent.speciesName})</a></li>
+                        </c:forEach>
+                    </ul>
                 </div>
-            </c:if>
-        </fieldset>
-    </div>
+                <div class="clear"></div>
+            </div>
+        </c:if>
+    </fieldset>
 </c:if>

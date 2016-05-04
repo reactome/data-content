@@ -1,6 +1,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <c:if test="${not empty componentOf}">
+
+    <%-- TODO: Separate them into complex, entity set, etc --%>
     <c:forEach var="component" items="${componentOf}">
         <div class="fieldset-pair-container">
         <div class="label">

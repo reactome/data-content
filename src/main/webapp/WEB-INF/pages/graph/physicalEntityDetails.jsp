@@ -100,8 +100,8 @@
                     <table class="dt-fixed-header">
                         <thead>
                             <tr>
-                                <th style="width:60px;">Database</th>
-                                <th style="width:100px;">Identifier</th>
+                                <th style="width:30px;">Database</th>
+                                <th style="width:270px;">Identifier</th>
                             </tr>
                         </thead>
                     </table>
@@ -110,8 +110,8 @@
                             <tbody>
                                 <c:forEach var="crossReference" items="${referenceCrossReference}">
                                     <tr>
-                                        <td style="width:50px;">${crossReference.key}</td>
-                                        <td style="width:80px;">
+                                        <td style="width:35px;">${crossReference.key}</td>
+                                        <td style="width:275px;">
                                             <c:forEach var="value" items="${crossReference.value}" varStatus="loop">
                                                 <a href="${value.url}" title="show ${value.displayName}" rel="nofollow">${value.identifier}</a><c:if test="${!loop.last}">, </c:if>
                                             </c:forEach>
@@ -123,8 +123,6 @@
                     </div>
                 </div>
             </c:if>
-
-            <br/> <%-- TODO: REMOVE THIS BR --%>
 
             <c:if test="${not empty databaseObject.referenceEntity.otherIdentifier}">
                 <div class="padding">
@@ -152,16 +150,6 @@
 
         </fieldset>
     </c:if>
-</c:if>
-
-<c:if test="${not empty databaseObject.goCellularComponent}">
-    <div class="fieldset-pair-container">
-        <div class="label">Go Cellular Component</div>
-        <div class="field">
-            <a href="${databaseObject.goCellularComponent.url}" class="" title="show ${databaseObject.goCellularComponent.name}" rel="nofollow">${databaseObject.goCellularComponent.name}</a> (${databaseObject.goCellularComponent.accession})
-        </div>
-        <div class="clear"></div>
-    </div>
 </c:if>
 
 <c:if test="${not empty databaseObject.inferredFrom || not empty databaseObject.inferredTo}">
@@ -198,80 +186,85 @@
     </fieldset>
 </c:if>
 
+<c:if test="${databaseObject.schemaClass == 'EntityWithAccessionedSequence'}">
+    <c:if test="${not empty databaseObject.hasModifiedResidue}">
+        <fieldset class="fieldset-details">
+        <legend>Modified Residues</legend>
+        <div class="wrap">
+            <table class="dt-fixed-header">
+                <thead>
+                <tr>
+                    <th style="width:20px;">Name</th>
+                    <th style="width:20px;">Coordinate</th>
+                    <th style="width:20px;">Modification</th>
+                    <th style="width:200px;">PsiMod</th>
+                </tr>
+                </thead>
+            </table>
+            <div class="dt-content">
+                <table>
+                    <tbody>
+                    <c:forEach var="modifiedResidue" items="${databaseObject.hasModifiedResidue}">
+                        <tr>
+                            <td style="vertical-align: middle; width:25px;">${modifiedResidue.displayName}</td>
+                            <td style="vertical-align: middle; width:25px;">${modifiedResidue.coordinate}</td>
+                            <c:choose>
+                                <c:when test="${modifiedResidue.schemaClass == 'InterChainCrosslinkedResidue' || modifiedResidue.schemaClass == 'IntraChainCrosslinkedResidue' || modifiedResidue.schemaClass == 'GroupModifiedResidue'}">
+                                    <td style="width:25px;"><c:if test="${not empty modifiedResidue.modification.displayName}"><a href="../detail/${modifiedResidue.modification.stableIdentifier}" class="" title="Show Details" rel="nofollow">${modifiedResidue.modification.displayName}</a></c:if></td>
+                                </c:when>
+                                <c:otherwise>
+                                    <td style="width:25px;"></td>
+                                </c:otherwise>
+                            </c:choose>
+                            <td style="padding: 0px; width:225px;">
+                                <table border="0" class="psiModTable">
+                                    <tbody>
+                                        <%-- TODO: Improve here, the question is - how ? --%>
+                                    <c:choose>
+                                        <c:when test="${modifiedResidue.psiMod.getClass().getSimpleName() == 'ArrayList'}">
+                                            <c:forEach var="psiMod" items="${modifiedResidue.psiMod}" varStatus="loop">
+                                                <tr>
+                                                    <td <c:if test="${loop.index % 2 == 0}">class="specialborder"</c:if>>
+                                                        <c:if test="${not empty psiMod.displayName}"><a href="${psiMod.url}" class="" title="Show Details" rel="nofollow">${psiMod.displayName}</a></c:if>
+                                                    </td>
+                                                    <td <c:if test="${loop.index % 2 == 0}">class="specialborder"</c:if>>
+                                                        <c:if test="${not empty psiMod.definition}">${psiMod.definition}</c:if>
+                                                    </td>
+                                                </tr>
+                                            </c:forEach>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <tr>
+                                                <td>
+                                                    <c:if test="${not empty modifiedResidue.psiMod.displayName}"><a href="${modifiedResidue.psiMod.url}" class="" title="Show Details" rel="nofollow">${modifiedResidue.psiMod.displayName}</a></c:if>
+                                                </td>
+                                                <td>
+                                                    <c:if test="${not empty modifiedResidue.psiMod.definition}">${modifiedResidue.psiMod.definition}</c:if>
+                                                </td>
+                                            </tr>
+                                        </c:otherwise>
+                                    </c:choose>
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+                    </c:forEach>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        </fieldset>
+    </c:if>
+</c:if>
+
+
 <%--
     The field is not inside the if-tag because a database object has
     one of this entries below, unless it is an orphan
 --%>
 <fieldset class="fieldset-details">
     <legend>Components / Components of </legend>
-    <c:if test="${databaseObject.schemaClass == 'EntityWithAccessionedSequence'}">
-        <c:if test="${not empty databaseObject.hasModifiedResidue}">
-            <div class="wrap">
-                <h5>Modified Residues</h5>
-                <table class="dt-fixed-header">
-                    <thead>
-                        <tr>
-                            <th style="width:20px;">Name</th>
-                            <th style="width:20px;">Coordinate</th>
-                            <th style="width:20px;">Modification</th>
-                            <th style="width:200px;">PsiMod</th>
-                        </tr>
-                    </thead>
-                </table>
-                <div class="dt-content">
-                    <table>
-                        <tbody>
-                            <c:forEach var="modifiedResidue" items="${databaseObject.hasModifiedResidue}">
-                                <tr>
-                                    <td style="vertical-align: middle; width:25px;">${modifiedResidue.displayName}</td>
-                                    <td style="vertical-align: middle; width:25px;">${modifiedResidue.coordinate}</td>
-                                    <c:choose>
-                                        <c:when test="${modifiedResidue.schemaClass == 'InterChainCrosslinkedResidue' || modifiedResidue.schemaClass == 'IntraChainCrosslinkedResidue' || modifiedResidue.schemaClass == 'GroupModifiedResidue'}">
-                                            <td style="width:25px;"><c:if test="${not empty modifiedResidue.modification.displayName}"><a href="../detail/${modifiedResidue.modification.stableIdentifier}" class="" title="Show Details" rel="nofollow">${modifiedResidue.modification.displayName}</a></c:if></td>
-                                        </c:when>
-                                        <c:otherwise>
-                                            <td style="width:25px;"></td>
-                                        </c:otherwise>
-                                    </c:choose>
-                                    <td style="padding: 0px; width:225px;">
-                                        <table border="0" class="psiModTable">
-                                            <tbody>
-                                                <%-- TODO: Improve here, the question is - how ? --%>
-                                                <c:choose>
-                                                    <c:when test="${modifiedResidue.psiMod.getClass().getSimpleName() == 'ArrayList'}">
-                                                        <c:forEach var="psiMod" items="${modifiedResidue.psiMod}" varStatus="loop">
-                                                            <tr>
-                                                                <td <c:if test="${loop.index % 2 == 0}">class="specialborder"</c:if>>
-                                                                    <c:if test="${not empty psiMod.displayName}"><a href="${psiMod.url}" class="" title="Show Details" rel="nofollow">${psiMod.displayName}</a></c:if>
-                                                                </td>
-                                                                <td <c:if test="${loop.index % 2 == 0}">class="specialborder"</c:if>>
-                                                                    <c:if test="${not empty psiMod.definition}">${psiMod.definition}</c:if>
-                                                                </td>
-                                                            </tr>
-                                                        </c:forEach>
-                                                    </c:when>
-                                                    <c:otherwise>
-                                                        <tr>
-                                                            <td>
-                                                                <c:if test="${not empty modifiedResidue.psiMod.displayName}"><a href="${modifiedResidue.psiMod.url}" class="" title="Show Details" rel="nofollow">${modifiedResidue.psiMod.displayName}</a></c:if>
-                                                            </td>
-                                                            <td>
-                                                                <c:if test="${not empty modifiedResidue.psiMod.definition}">${modifiedResidue.psiMod.definition}</c:if>
-                                                            </td>
-                                                        </tr>
-                                                    </c:otherwise>
-                                                </c:choose>
-                                            </tbody>
-                                        </table>
-                                    </td>
-                                </tr>
-                            </c:forEach>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </c:if>
-    </c:if>
+
 
     <c:if test="${databaseObject.schemaClass == 'Complex'}">
         <c:if test="${not empty databaseObject.hasComponent}">
@@ -338,6 +331,7 @@
     </c:if>
 
     <c:import url="componentOf.jsp"/>
+
 </fieldset>
 
 <c:if test="${not empty databaseObject.negativelyRegulates || not empty databaseObject.positivelyRegulates}">

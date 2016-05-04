@@ -12,11 +12,11 @@
     </div>
 </c:if>
 
-<div style="padding: 0 5px">
+<div style="padding: 0 0 17px 15px">
     <c:forEach var="topLvl" items="${topLevelNodes}">
         <c:choose>
             <c:when test="${empty topLvl.children}">
-                <i class="sprite-resize sprite sprite-Pathway"></i><a href="${topLvl.url}" class=""   title="goto Reactome Pathway Browser" rel="nofollow">${topLvl.name} (${topLvl.species})</a>
+                <i class="sprite-resize sprite sprite-Pathway"></i><a href="${topLvl.url}" class="" title="goto Reactome Pathway Browser" rel="nofollow">${topLvl.name} (${topLvl.species})</a>
             </c:when>
             <c:otherwise>
                 <%--
@@ -28,7 +28,7 @@
                     <span class="plus" title="click here to expand or collapse the tree">
                         <i class="sprite-resize-small sprite sprite-plus" title="click here to expand or collapse the tree"></i>
                     </span>
-                    <span style="font-size:14px"><i class="sprite-resize sprite sprite-Pathway"></i> <a href="${topLvl.url}" class=""   title="goto Reactome Pathway Browser" rel="nofollow">${topLvl.name} (${topLvl.species})</a></span>
+                    <span style="font-size:14px"><i class="sprite-resize sprite sprite-Pathway"></i> <a href="${topLvl.url}" class="" title="goto Reactome Pathway Browser" rel="nofollow">${topLvl.name} (${topLvl.species})</a></span>
                     <div class="treeContent">
                         <ul class="tree">
                             <c:set var="node" value="${topLvl}" scope="request"/>
