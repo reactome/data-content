@@ -634,6 +634,10 @@ div.extended-header .field, div.fieldset-pair-container .field {
     overflow: auto;
 }
 
+div.fieldset-pair-container .label {
+    width: 170px;
+}
+
 div.fieldset-pair-container .field {
     border-left: 2px solid #1F419A;
 }

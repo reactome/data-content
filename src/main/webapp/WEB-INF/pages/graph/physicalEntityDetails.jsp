@@ -3,7 +3,8 @@
 <c:if test="${not empty otherFormsOfThisMolecule}">
     <fieldset class="fieldset-details">
         <legend>Other forms of this molecule</legend>
-        <div style="height: auto; max-height: 120px; overflow:auto;" class="paddingleft">
+
+        <div style="height: auto; max-height: 120px; overflow:auto;" class="padding">
             <table border="0" width="100%" style="border: 0px;">
                 <tbody>
                 <tr>
@@ -70,11 +71,9 @@
                             <span>Reference Genes</span>
                         </div>
                         <div class="field">
-                            <%--<ul class="list overflowAuto">--%>
-                                <c:forEach var="referenceGene" items="${databaseObject.referenceEntity.referenceGene}" varStatus="loop">
-                                    <a href="${referenceGene.url}" title="show ${referenceGene.displayName}" rel="nofollow">${referenceGene.displayName}</a><c:if test="${!loop.last}">, </c:if>
-                                </c:forEach>
-                            <%--</ul>--%>
+                            <c:forEach var="referenceGene" items="${databaseObject.referenceEntity.referenceGene}" varStatus="loop">
+                                <a href="${referenceGene.url}" title="show ${referenceGene.displayName}" rel="nofollow">${referenceGene.displayName}</a><c:if test="${!loop.last}">, </c:if>
+                            </c:forEach>
                         </div>
                         <div class="clear"></div>
                     </c:if>

@@ -3,7 +3,7 @@
 
 <c:if test="${clazz != 'Regulation'}">
 
-    <c:if test="${not empty databaseObject.disease || not empty crossReferences}">
+    <c:if test="${not empty databaseObject.disease || not empty crossReferences || clazz == 'PhysicalEntity' && not empty databaseObject.goCellularComponent}">
         <fieldset class="fieldset-details">
             <legend>Additional Information</legend>
 
@@ -13,9 +13,9 @@
                     <table class="dt-fixed-header">
                         <thead>
                         <tr>
-                            <th style="">Name</th>
-                            <th style="">Identifier</th>
-                            <th style="">Synonyms</th>
+                            <th style="width: 60px;">Name</th>
+                            <th style="width: 60px;">Identifier</th>
+                            <th style="width: 260px;">Synonyms</th>
                         </tr>
                         </thead>
                     </table>
@@ -24,9 +24,9 @@
                             <tbody>
                                 <c:forEach var="disease" items="${databaseObject.disease}">
                                     <tr>
-                                        <td><a href="${diseases.database.url}" class=""  title="Show Details" rel="nofollow">${disease.displayName} </a></td>
-                                        <td><c:if test="${not empty disease.identifier}">${disease.identifier}</c:if></td>
-                                        <td><c:if test="${not empty disease.synonym}">${disease.synonym}</c:if></td>
+                                        <td style="width: 65px;"><a href="${diseases.database.url}" class=""  title="Show Details" rel="nofollow">${disease.displayName} </a></td>
+                                        <td style="width: 65px;"><c:if test="${not empty disease.identifier}">${disease.identifier}</c:if></td>
+                                        <td style="width: 265px;"><c:if test="${not empty disease.synonym}">${disease.synonym}</c:if></td>
                                     </tr>
                                 </c:forEach>
                             </tbody>
