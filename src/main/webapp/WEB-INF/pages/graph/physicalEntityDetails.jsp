@@ -1,9 +1,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <c:if test="${not empty otherFormsOfThisMolecule}">
-    <div class="grid_23  padding  margin">
-        <h5>Other forms of this molecule</h5>
-
+    <fieldset class="fieldset-details">
+        <legend>Other forms of this molecule</legend>
         <div style="height: auto; max-height: 120px; overflow:auto;" class="paddingleft">
             <table border="0" width="100%" style="border: 0px;">
                 <tbody>
@@ -21,7 +20,7 @@
                 </tbody>
             </table>
         </div>
-    </div>
+    </fieldset>
 </c:if>
 
 <c:if test="${hasReferenceEntity}">
@@ -156,26 +155,6 @@
 </c:if>
 
 <c:if test="${not empty databaseObject.goCellularComponent}">
-    <%--<div class="grid_23  padding  margin">--%>
-        <%--<h5>Go Cellular Component</h5>--%>
-        <%--<table class="fixedTable">--%>
-            <%--<thead>--%>
-            <%--<tr class="tableHead">--%>
-                <%--<td></td>--%>
-                <%--<td></td>--%>
-            <%--</tr>--%>
-            <%--</thead>--%>
-            <%--<tbody>--%>
-            <%--<tr>--%>
-                <%--<td><a href="${databaseObject.goCellularComponent.url}" class="" title="show ${databaseObject.goCellularComponent.name}"--%>
-                       <%--rel="nofollow">${databaseObject.goCellularComponent.name}</a> (${databaseObject.goCellularComponent.accession})--%>
-                <%--</td>--%>
-                <%--<td>${databaseObject.definition}</td> &lt;%&ndash; Gui added it &ndash;%&gt;--%>
-            <%--</tr>--%>
-            <%--</tbody>--%>
-        <%--</table>--%>
-    <%--</div>--%>
-
     <div class="fieldset-pair-container">
         <div class="label">Go Cellular Component</div>
         <div class="field">
@@ -183,7 +162,6 @@
         </div>
         <div class="clear"></div>
     </div>
-
 </c:if>
 
 <c:if test="${not empty databaseObject.inferredFrom || not empty databaseObject.inferredTo}">
@@ -297,31 +275,6 @@
 
     <c:if test="${databaseObject.schemaClass == 'Complex'}">
         <c:if test="${not empty databaseObject.hasComponent}">
-            <%--<div class="grid_23  padding  margin">--%>
-                <%--<h5>Components of this complex</h5>--%>
-                <%--<table class="fixedTable">--%>
-                    <%--<thead>--%>
-                    <%--<tr class="tableHead">--%>
-                        <%--<td></td>--%>
-                        <%--<td></td>--%>
-                    <%--</tr>--%>
-                    <%--</thead>--%>
-                    <%--<tbody>--%>
-                    <%--<c:if test="${not empty databaseObject.hasComponent}">--%>
-                    <%--<tr>--%>
-                        <%--<td><strong>output entries</strong></td>--%>
-                        <%--<td>--%>
-                            <%--<ul class="list overflowAuto">--%>
-                                <%--<c:forEach var="hasComponent" items="${databaseObject.hasComponent}">--%>
-                                    <%--<li><a href="../detail/${hasComponent.stableIdentifier}" class="" title="Show Details" rel="nofollow">${hasComponent.displayName} <c:if test="${not empty hasComponent.speciesName}">(${hasComponent.speciesName})</c:if></a></li>--%>
-                                <%--</c:forEach>--%>
-                            <%--</ul>--%>
-                        <%--</td>--%>
-                    <%--</tr>--%>
-                    <%--</c:if>--%>
-                <%--</table>--%>
-            <%--</div>--%>
-
             <div class="fieldset-pair-container">
                 <div class="label">Components of this complex</div>
                 <div class="field">
@@ -338,31 +291,6 @@
 
     <c:if test="${databaseObject.schemaClass == 'Polymer'}">
         <c:if test="${not empty databaseObject.repeatedUnit}">
-            <%--<div class="grid_23  padding  margin">--%>
-                <%--<h5>Repeated Units of this Polymer</h5>--%>
-                <%--<table class="fixedTable">--%>
-                    <%--<thead>--%>
-                    <%--<tr class="tableHead">--%>
-                        <%--<td></td>--%>
-                        <%--<td></td>--%>
-                    <%--</tr>--%>
-                    <%--</thead>--%>
-                    <%--<tbody>--%>
-                    <%--<c:if test="${not empty databaseObject.repeatedUnit}">--%>
-                    <%--<tr>--%>
-                        <%--<td><strong>output entries</strong></td>--%>
-                        <%--<td>--%>
-                            <%--<ul class="list overflowAuto">--%>
-                                <%--<c:forEach var="repeatedUnit" items="${databaseObject.repeatedUnit}">--%>
-                                    <%--<li><a href="../detail/${repeatedUnit.stableIdentifier}" class="" title="Show Details" rel="nofollow">${repeatedUnit.displayName} <c:if test="${not empty repeatedUnit.speciesName}">(${repeatedUnit.speciesName})</c:if></a></li>--%>
-                                <%--</c:forEach>--%>
-                            <%--</ul>--%>
-                        <%--</td>--%>
-                    <%--</tr>--%>
-                    <%--</c:if>--%>
-                <%--</table>--%>
-            <%--</div>--%>
-
             <div class="fieldset-pair-container">
                 <div class="label">Repeated Units of this Polymer</div>
                 <div class="field">
@@ -379,31 +307,6 @@
 
     <c:if test="${isEntitySet}">
         <c:if test="${not empty databaseObject.hasMember}">
-            <%--<div class="grid_23  padding  margin">--%>
-                <%--<h5>Members of this Set</h5>--%>
-                <%--<table class="fixedTable">--%>
-                    <%--<thead>--%>
-                    <%--<tr class="tableHead">--%>
-                        <%--<td></td>--%>
-                        <%--<td></td>--%>
-                    <%--</tr>--%>
-                    <%--</thead>--%>
-                    <%--<tbody>--%>
-                    <%--<c:if test="${not empty databaseObject.hasMember}">--%>
-                    <%--<tr>--%>
-                        <%--<td><strong>output entries</strong></td>--%>
-                        <%--<td>--%>
-                            <%--<ul class="list overflowAuto">--%>
-                                <%--<c:forEach var="hasMember" items="${databaseObject.hasMember}">--%>
-                                    <%--<li><a href="../detail/${hasMember.stableIdentifier}" class="" title="Show Details" rel="nofollow">${hasMember.displayName} <c:if test="${not empty hasMember.speciesName}">(${hasMember.speciesName})</c:if></a></li>--%>
-                                <%--</c:forEach>--%>
-                            <%--</ul>--%>
-                        <%--</td>--%>
-                    <%--</tr>--%>
-                    <%--</c:if>--%>
-                <%--</table>--%>
-            <%--</div>--%>
-
             <div class="fieldset-pair-container">
                 <div class="label">Members of this Set</div>
                 <div class="field">
@@ -420,31 +323,6 @@
 
     <c:if test="${databaseObject.schemaClass == 'CandidateSet'}">
         <c:if test="${not empty databaseObject.hasCandidate}">
-            <%--<div class="grid_23  padding  margin">--%>
-                <%--<h5>Candidates of this Set</h5>--%>
-                <%--<table class="fixedTable">--%>
-                    <%--<thead>--%>
-                    <%--<tr class="tableHead">--%>
-                        <%--<td></td>--%>
-                        <%--<td></td>--%>
-                    <%--</tr>--%>
-                    <%--</thead>--%>
-                    <%--<tbody>--%>
-                    <%--<c:if test="${not empty databaseObject.hasCandidate}">--%>
-                    <%--<tr>--%>
-                        <%--<td><strong>output entries</strong></td>--%>
-                        <%--<td>--%>
-                            <%--<ul class="list overflowAuto">--%>
-                                <%--<c:forEach var="hasCandidate" items="${databaseObject.hasCandidate}">--%>
-                                    <%--<li><a href="../detail/${hasCandidate.stableIdentifier}" class="" title="Show Details" rel="nofollow">${hasCandidate.displayName} <c:if test="${not empty hasCandidate.speciesName}">(${hasCandidate.speciesName})</c:if></a></li>--%>
-                                <%--</c:forEach>--%>
-                            <%--</ul>--%>
-                        <%--</td>--%>
-                    <%--</tr>--%>
-                    <%--</c:if>--%>
-                <%--</table>--%>
-            <%--</div>--%>
-
             <div class="fieldset-pair-container">
                 <div class="label">Candidates of this Set</div>
                 <div class="field">
@@ -463,83 +341,49 @@
 </fieldset>
 
 <c:if test="${not empty databaseObject.negativelyRegulates || not empty databaseObject.positivelyRegulates}">
-    <%--<div class="grid_23  padding  margin">--%>
-        <%--<h5>This entity regulates</h5>--%>
-        <%--<table class="fixedTable">--%>
-            <%--<thead>--%>
-            <%--<tr class="tableHead">--%>
-                <%--<td>Regulation type</td>--%>
-                <%--<td>Name</td>--%>
-            <%--</tr>--%>
-            <%--</thead>--%>
-            <%--<tbody>--%>
-
-                <%--<tr>--%>
-                    <%--<td><strong>NegativeRegulation</strong></td>--%>
-                    <%--<td>--%>
-                        <%--<c:forEach var="negativeRegulation" items="${databaseObject.negativelyRegulates}">--%>
-                            <%--<ul class="list overflowList">--%>
-                                <%--<li><c:if test="${not empty negativeRegulation.regulatedEntity.stableIdentifier}"><a href="../detail/${negativeRegulation.regulatedEntity.stableIdentifier}" class="" title="Show Details" rel="nofollow">${negativeRegulation.regulatedEntity.displayName}<c:if test="${not empty negativeRegulation.regulatedEntity.speciesName}"> (${negativeRegulation.regulatedEntity.speciesName})</c:if></a></c:if></li>--%>
-                            <%--</ul>--%>
-                        <%--</c:forEach>--%>
-                    <%--</td>--%>
-                <%--</tr>--%>
-
-                <%--<tr>--%>
-                    <%--<td><strong>PositiveRegulation</strong></td>--%>
-                    <%--<td>--%>
-                        <%--<c:forEach var="positiveRegulation" items="${databaseObject.positivelyRegulates}">--%>
-                            <%--<ul class="list overflowList">--%>
-                                <%--<li><c:if test="${not empty positiveRegulation.regulatedEntity.stableIdentifier}"><a href="../detail/${positiveRegulation.regulatedEntity.stableIdentifier}" class="" title="Show Details" rel="nofollow">${positiveRegulation.regulatedEntity.displayName}<c:if test="${not empty positiveRegulation.regulatedEntity.speciesName}"> (${positiveRegulation.regulatedEntity.speciesName})</c:if></a></c:if></li>--%>
-                            <%--</ul>--%>
-                        <%--</c:forEach>--%>
-                    <%--</td>--%>
-                <%--</tr>--%>
-
-            <%--</tbody>--%>
-        <%--</table>--%>
-    <%--</div>--%>
-
-
-
-    <div class="wrap">
-        <table class="dt-fixed-header">
-            <thead>
-            <tr>
-                <th style="">Regulation type</th>
-                <th style="">Name</th>
-            </tr>
-            </thead>
-        </table>
-        <div class="dt-content">
-            <table>
-                <tbody>
-                    <tr>
-                        <td><strong>NegativeRegulation</strong></td>
-                        <td>
-                            <c:forEach var="negativeRegulation" items="${databaseObject.negativelyRegulates}">
-                                <ul class="list overflowList">
-                                    <li><c:if test="${not empty negativeRegulation.regulatedEntity.stableIdentifier}"><a href="../detail/${negativeRegulation.regulatedEntity.stableIdentifier}" class="" title="Show Details" rel="nofollow">${negativeRegulation.regulatedEntity.displayName}<c:if test="${not empty negativeRegulation.regulatedEntity.speciesName}"> (${negativeRegulation.regulatedEntity.speciesName})</c:if></a></c:if></li>
-                                </ul>
-                            </c:forEach>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td><strong>PositiveRegulation</strong></td>
-                        <td>
-                            <c:forEach var="positiveRegulation" items="${databaseObject.positivelyRegulates}">
-                                <ul class="list overflowList">
-                                    <li><c:if test="${not empty positiveRegulation.regulatedEntity.stableIdentifier}"><a href="../detail/${positiveRegulation.regulatedEntity.stableIdentifier}" class="" title="Show Details" rel="nofollow">${positiveRegulation.regulatedEntity.displayName}<c:if test="${not empty positiveRegulation.regulatedEntity.speciesName}"> (${positiveRegulation.regulatedEntity.speciesName})</c:if></a></c:if></li>
-                                </ul>
-                            </c:forEach>
-                        </td>
-                    </tr>
-                </tbody>
+    <fieldset class="fieldset-details">
+        <legend>This entity regulates</legend>
+        <div class="wrap">
+            <table class="dt-fixed-header">
+                <thead>
+                <tr>
+                    <th style="width: 50px;">Regulation type</th>
+                    <th style="width: 250px;">Name</th>
+                </tr>
+                </thead>
             </table>
+            <div class="dt-content">
+                <table>
+                    <tbody>
+                        <c:if test="${not empty databaseObject.negativelyRegulates}">
+                            <tr>
+                                <td style="width: 55px;"><strong>NegativeRegulation</strong></td>
+                                <td style="width: 255px;">
+                                    <c:forEach var="negativeRegulation" items="${databaseObject.negativelyRegulates}">
+                                        <ul class="list overflowList">
+                                            <li><c:if test="${not empty negativeRegulation.regulatedEntity.stableIdentifier}"><a href="../detail/${negativeRegulation.regulatedEntity.stableIdentifier}" class="" title="Show Details" rel="nofollow">${negativeRegulation.regulatedEntity.displayName}<c:if test="${not empty negativeRegulation.regulatedEntity.speciesName}"> (${negativeRegulation.regulatedEntity.speciesName})</c:if></a></c:if></li>
+                                        </ul>
+                                    </c:forEach>
+                                </td>
+                            </tr>
+                        </c:if>
+                        <c:if test="${not empty databaseObject.positivelyRegulates}">
+                            <tr>
+                                <td style="width: 55px;"><strong>PositiveRegulation</strong></td>
+                                <td style="width: 255px;">
+                                    <c:forEach var="positiveRegulation" items="${databaseObject.positivelyRegulates}">
+                                        <ul class="list overflowList">
+                                            <li><c:if test="${not empty positiveRegulation.regulatedEntity.stableIdentifier}"><a href="../detail/${positiveRegulation.regulatedEntity.stableIdentifier}" class="" title="Show Details" rel="nofollow">${positiveRegulation.regulatedEntity.displayName}<c:if test="${not empty positiveRegulation.regulatedEntity.speciesName}"> (${positiveRegulation.regulatedEntity.speciesName})</c:if></a></c:if></li>
+                                        </ul>
+                                    </c:forEach>
+                                </td>
+                            </tr>
+                        </c:if>
+                    </tbody>
+                </table>
+            </div>
         </div>
-    </div>
-
+    </fieldset>
 </c:if>
 
 

@@ -28,6 +28,10 @@
         <c:import url="regulationDetails.jsp"/>
     </c:if>
 
+    <c:if test="${not empty databaseObject.literatureReference}">
+        <c:import url="literatureReferences.jsp"/>
+    </c:if>
+
     <c:if test="${not empty interactions}">
         <c:import url="interactionDetails.jsp"/>
     </c:if>

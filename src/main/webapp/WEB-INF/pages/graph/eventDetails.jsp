@@ -6,7 +6,7 @@
         <c:if test="${not empty databaseObject.hasEvent}">
             <div class="fieldset-pair-container">
                 <div class="label">
-                    <span>contained events:</span>
+                    <span><strong>contained events:</strong></span>
                 </div>
                 <div class="field">
                     <ul class="list overflowAuto">
@@ -23,7 +23,7 @@
         <c:if test="${not empty databaseObject.input}">
             <div class="fieldset-pair-container">
                 <div class="label">
-                    <span>contained inputs:</span>
+                    <span><strong>contained inputs:</strong></span>
                 </div>
                 <div class="field">
                     <ul class="list overflowAuto">
@@ -38,7 +38,7 @@
         <c:if test="${not empty databaseObject.output}">
             <div class="fieldset-pair-container">
                 <div class="label">
-                    <span>contained output:</span>
+                    <span><strong>contained output:</strong></span>
                 </div>
                 <div class="field">
                     <ul class="list overflowAuto">
@@ -53,7 +53,7 @@
         <c:if test="${not empty databaseObject.entityOnOtherCell}">
             <div class="fieldset-pair-container">
                 <div class="label">
-                    <span>entityOnOtherCell</span>
+                    <span><strong>entityOnOtherCell</strong></span>
                 </div>
                 <div class="field">
                     <ul class="list overflowAuto">
@@ -75,7 +75,7 @@
         <div class="fieldset-pair-container">
             <c:if test="${not empty databaseObject.goBiologicalProcess}">
                 <div class="label">
-                    <span>Go Biological Process</span>
+                    <span><strong>Go Biological Process</strong></span>
                 </div>
                 <div class="field">
                     <span><a href="${databaseObject.goBiologicalProcess.url}" class=""  title="go to ${databaseObject.goBiologicalProcess.databaseName}" rel="nofollow">${databaseObject.goBiologicalProcess.displayName} (${databaseObject.goBiologicalProcess.accession})</a></span>
@@ -85,7 +85,7 @@
             <c:if test="${databaseObject.schemaClass == 'Reaction'}">
                 <c:if test="${not empty databaseObject.reverseReaction}">
                     <div class="label">
-                        <span>Reverse Reaction</span>
+                        <span><strong>Reverse Reaction</strong></span>
                     </div>
                     <div class="field">
                         <span><a href="../detail/${databaseObject.reverseReaction.stableIdentifier}" class="" title="Show Details" rel="nofollow">${databaseObject.reverseReaction.displayName} <c:if test="${not empty databaseObject.reverseReaction.speciesName}">(${databaseObject.reverseReaction.speciesName})</c:if></a></span>
@@ -203,8 +203,8 @@
                 <table class="dt-fixed-header">
                     <thead>
                     <tr>
-                        <th style="">Regulation type</th>
-                        <th style="">Name</th>
+                        <th style="width:50px;">Regulation type</th>
+                        <th style="width:250px;">Name</th>
                     </tr>
                     </thead>
                 </table>
@@ -213,8 +213,8 @@
                         <tbody>
                             <c:forEach var="negativelyRegulatedBy" items="${databaseObject.negativelyRegulatedBy}">
                                 <tr>
-                                    <td><strong>${negativelyRegulatedBy.schemaClass}</strong></td>
-                                    <td>
+                                    <td style="width:55px;"><strong>${negativelyRegulatedBy.schemaClass}</strong></td>
+                                    <td style="width:255px;">
                                         <ul class="list overflowList">
                                             <li><c:if test="${not empty negativelyRegulatedBy.regulator.stableIdentifier}"><a href="../detail/${negativelyRegulatedBy.regulator.stableIdentifier}" class="" title="Show Details" rel="nofollow">${negativelyRegulatedBy.regulator.displayName}<c:if test="${not empty negativelyRegulatedBy.regulator.speciesName}"> (${negativelyRegulatedBy.regulator.speciesName})</c:if></a></c:if></li>
                                         </ul>
@@ -223,8 +223,8 @@
                             </c:forEach>
                             <c:forEach var="positivelyRegulatedBy" items="${databaseObject.positivelyRegulatedBy}">
                                 <tr>
-                                    <td><strong>${positivelyRegulatedBy.schemaClass}</strong></td>
-                                    <td>
+                                    <td style="width:55px;"><strong>${positivelyRegulatedBy.schemaClass}</strong></td>
+                                    <td style="width:255px;">
                                         <ul class="list overflowList">
                                             <li><c:if test="${not empty positivelyRegulatedBy.regulator.stableIdentifier}"><a href="../detail/${positivelyRegulatedBy.regulator.stableIdentifier}" class="" title="Show Details" rel="nofollow">${positivelyRegulatedBy.regulator.displayName}<c:if test="${not empty positivelyRegulatedBy.regulator.speciesName}"> (${positivelyRegulatedBy.regulator.speciesName})</c:if></a></c:if></li>
                                         </ul>
