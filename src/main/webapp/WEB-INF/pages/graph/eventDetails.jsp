@@ -8,7 +8,7 @@
                 <legend>Components of this entry</legend>
                 <div class="fieldset-pair-container">
                     <div class="label">
-                        <span><strong>contained events</strong></span>
+                        contained events
                     </div>
                     <div class="field">
                         <ul class="list overflowAuto">
@@ -31,7 +31,7 @@
                 <c:if test="${not empty databaseObject.input}">
                     <div class="fieldset-pair-container">
                         <div class="label">
-                            <span><strong>contained inputs</strong></span>
+                            contained inputs
                         </div>
                         <div class="field">
                             <ul class="list overflowAuto">
@@ -46,7 +46,7 @@
                 <c:if test="${not empty databaseObject.output}">
                     <div class="fieldset-pair-container">
                         <div class="label">
-                            <span><strong>contained output</strong></span>
+                            contained output
                         </div>
                         <div class="field">
                             <ul class="list overflowAuto">
@@ -61,7 +61,7 @@
                 <c:if test="${not empty databaseObject.entityOnOtherCell}">
                     <div class="fieldset-pair-container">
                         <div class="label">
-                            <span><strong>entityOnOtherCell</strong></span>
+                            entityOnOtherCell
                         </div>
                         <div class="field">
                             <ul class="list overflowAuto">
@@ -86,7 +86,7 @@
         <div class="fieldset-pair-container">
             <c:if test="${not empty databaseObject.goBiologicalProcess}">
                 <div class="label">
-                    <span><strong>Go Biological Process</strong></span>
+                    Go Biological Process
                 </div>
                 <div class="field">
                     <span><a href="${databaseObject.goBiologicalProcess.url}" class=""  title="go to ${databaseObject.goBiologicalProcess.databaseName}" rel="nofollow">${databaseObject.goBiologicalProcess.displayName} (${databaseObject.goBiologicalProcess.accession})</a></span>
@@ -96,7 +96,7 @@
             <c:if test="${databaseObject.schemaClass == 'Reaction'}">
                 <c:if test="${not empty databaseObject.reverseReaction}">
                     <div class="label">
-                        <span><strong>Reverse Reaction</strong></span>
+                        Reverse Reaction
                     </div>
                     <div class="field">
                         <span><a href="../detail/${databaseObject.reverseReaction.stableIdentifier}" class="" title="Show Details" rel="nofollow">${databaseObject.reverseReaction.displayName} <c:if test="${not empty databaseObject.reverseReaction.speciesName}">(${databaseObject.reverseReaction.speciesName})</c:if></a></span>

@@ -8,7 +8,7 @@
         <c:forEach var="component" items="${componentOf}">
             <div class="fieldset-pair-container">
                 <div class="label">
-                    <span><strong>${component.type}</strong></span>
+                    ${component.type}
                 </div>
                 <div class="field">
                     <ul class="list overflowList">

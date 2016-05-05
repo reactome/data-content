@@ -5,7 +5,7 @@
         <legend>Regulation participants</legend>
         <c:if test="${not empty databaseObject.schemaClass}">
             <div class="fieldset-pair-container">
-                <div class="label">regulation type</div>
+                <div class="label">Regulation type</div>
                 <div class="field">${databaseObject.schemaClass}</div>
                 <div class="clear"></div>
             </div>
