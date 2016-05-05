@@ -13,20 +13,20 @@
                     <table class="dt-fixed-header">
                         <thead>
                         <tr>
-                            <th style="width: 60px;">Name</th>
+                            <th style="width: 260px;">Name</th>
                             <th style="width: 60px;">Identifier</th>
-                            <th style="width: 260px;">Synonyms</th>
+                            <th style="width: 60px;">Synonyms</th>
                         </tr>
                         </thead>
                     </table>
-                    <div class="dt-content">
+                    <div class="dt-content-ovf">
                         <table>
                             <tbody>
                                 <c:forEach var="disease" items="${databaseObject.disease}">
                                     <tr>
-                                        <td style="width: 65px;"><a href="${diseases.database.url}" class=""  title="Show Details" rel="nofollow">${disease.displayName} </a></td>
+                                        <td style="width: 265px;"><a href="${diseases.database.url}" class=""  title="Show Details" rel="nofollow">${disease.displayName} </a></td>
                                         <td style="width: 65px;"><c:if test="${not empty disease.identifier}">${disease.identifier}</c:if></td>
-                                        <td style="width: 265px;"><c:if test="${not empty disease.synonym}">${disease.synonym}</c:if></td>
+                                        <td style="width: 65px;"><c:if test="${not empty disease.synonym}">${disease.synonym}</c:if></td>
                                     </tr>
                                 </c:forEach>
                             </tbody>
@@ -46,7 +46,7 @@
                         </tr>
                         </thead>
                     </table>
-                    <div class="dt-content">
+                    <div class="dt-content-ovf">
                         <table>
                             <tbody>
                                 <c:forEach var="crossReference" items="${crossReferences}">

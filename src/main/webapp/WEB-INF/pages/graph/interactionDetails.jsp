@@ -11,11 +11,11 @@
                     <th style="width:60px;">Confidence Score</th>
                     <th style="width:100px;">Interactor Accession</th>
                     <th style="width:100px;">Interactor Name</th>
-                    <th style="width:25px;">Evidence (IntAct)</th>
+                    <th style="width:40px;">Evidence (IntAct)</th>
                 </tr>
             </thead>
         </table>
-        <div class="dt-content">
+        <div class="dt-content-ovf">
             <table>
                 <tbody>
                 <c:forEach var="interaction" items="${interactions}">
@@ -37,7 +37,7 @@
                             </c:choose>
                         </td>
                         <td style="width:80px;">${interaction.interactorB.alias}</td>
-                        <td style="width:10px;">
+                        <td style="width:25px;">
                             <c:choose>
                                 <c:when test="${fn:length(interaction.interactionDetailsList) == 0}">
                                     ${fn:length(interaction.interactionDetailsList)}

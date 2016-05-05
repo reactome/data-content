@@ -104,7 +104,7 @@
                             </tr>
                         </thead>
                     </table>
-                    <div class="dt-content">
+                    <div class="dt-content-ovf">
                         <table>
                             <tbody>
                                 <c:forEach var="crossReference" items="${referenceCrossReference}">
@@ -200,7 +200,7 @@
                 </tr>
                 </thead>
             </table>
-            <div class="dt-content">
+            <div class="dt-content-ovf">
                 <table>
                     <tbody>
                     <c:forEach var="modifiedResidue" items="${databaseObject.hasModifiedResidue}">
@@ -262,10 +262,12 @@
     one of this entries below, unless it is an orphan
 --%>
 <fieldset class="fieldset-details">
-    <legend>Components / Components of </legend>
+    <legend>Components</legend>
 
     <c:if test="${databaseObject.schemaClass == 'Complex'}">
         <c:if test="${not empty databaseObject.hasComponent}">
+            <fieldset class="fieldset-details-inner">
+                <legend>Components of this entry</legend>
             <div class="fieldset-pair-container">
                 <div class="label">Components of this complex</div>
                 <div class="field">
@@ -277,11 +279,14 @@
                 </div>
                 <div class="clear"></div>
             </div>
+            </fieldset>
         </c:if>
     </c:if>
 
     <c:if test="${databaseObject.schemaClass == 'Polymer'}">
         <c:if test="${not empty databaseObject.repeatedUnit}">
+            <fieldset class="fieldset-details-inner">
+                <legend>Components of this entry</legend>
             <div class="fieldset-pair-container">
                 <div class="label">Repeated Units of this Polymer</div>
                 <div class="field">
@@ -293,11 +298,14 @@
                 </div>
                 <div class="clear"></div>
             </div>
+            </fieldset>
         </c:if>
     </c:if>
 
     <c:if test="${isEntitySet}">
         <c:if test="${not empty databaseObject.hasMember}">
+            <fieldset class="fieldset-details-inner">
+                <legend>Components of this entry</legend>
             <div class="fieldset-pair-container">
                 <div class="label">Members of this Set</div>
                 <div class="field">
@@ -309,11 +317,15 @@
                 </div>
                 <div class="clear"></div>
             </div>
+            </fieldset>
         </c:if>
     </c:if>
 
     <c:if test="${databaseObject.schemaClass == 'CandidateSet'}">
         <c:if test="${not empty databaseObject.hasCandidate}">
+            <fieldset class="fieldset-details-inner">
+                <legend>Components of this entry</legend>
+
             <div class="fieldset-pair-container">
                 <div class="label">Candidates of this Set</div>
                 <div class="field">
@@ -325,6 +337,7 @@
                 </div>
                 <div class="clear"></div>
             </div>
+            </fieldset>
         </c:if>
     </c:if>
 
@@ -344,7 +357,7 @@
                 </tr>
                 </thead>
             </table>
-            <div class="dt-content">
+            <div class="dt-content-ovf">
                 <table>
                     <tbody>
                         <c:if test="${not empty databaseObject.negativelyRegulates}">

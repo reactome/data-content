@@ -50,23 +50,29 @@
 .wrap .dt-fixed-header th:first-child {
     border-radius: 5px 0 0 0;
 }
+
 .wrap .dt-fixed-header th:last-child {
     border-radius: 0 5px 0 0;
 }
 
+/** Use this style in the tables if you don't want overflow **/
 .wrap .dt-content {
-    max-height: 200px;
-    overflow-y: auto;
     margin-top: 5px;
 }
 
-.wrap .dt-content table {
+/** Use this style in the tables if you DO want overflow **/
+.wrap .dt-content-ovf {
+    margin-top: 5px;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.wrap .dt-content-ovf table, .wrap .dt-content table {
     margin-top: 0;
 }
 
-.wrap .dt-content table td{
+.wrap .dt-content-ovf table td, .wrap .dt-content table td{
     border:none;
     color: #000;
     padding-left: 20px;
-
 }

@@ -14,10 +14,10 @@
                 <table class="dt-fixed-header">
                     <thead>
                     <tr>
-                        <th style="width: 55px">Confidence Score</th>
+                        <th style="width: 75px">Confidence Score</th>
                         <th style="width: 45px">Accession</th>
                         <th style="width: 230px">Reactome Entry</th>
-                        <th style="width: 50px">Evidence (IntAct)</th>
+                        <th style="width: 70px">Evidence (IntAct)</th>
                     </tr>
                     </thead>
                 </table>
@@ -26,11 +26,11 @@
                         <tbody>
                         <c:forEach var="interaction" items="${entry.interactions}">
                             <tr>
-                                <td style="width: 60px">${interaction.score}</td>
-                                <td style="width: 50px"><a href="${interaction.accessionURL}" class=""
+                                <td style="width: 80px;">${interaction.score}</td>
+                                <td style="width: 50px;"><a href="${interaction.accessionURL}" class=""
                                                            title="Show ${interaction.accession}"
                                                            rel="nofollow">${interaction.accession}</a></td>
-                                <td style="width: 235px">
+                                <td style="width: 235px;">
                                     <c:forEach var="reactomeEntry" items="${interaction.interactorReactomeEntries}">
                                         <ul class="list overflowList">
                                             <li>
@@ -41,7 +41,7 @@
                                         </ul>
                                     </c:forEach>
                                 </td>
-                                <td style="width: 55px">
+                                <td style="width: 75px;">
                                     <a href="${interaction.evidencesURL}" title="Open evidence in IntAct" rel="nofollow"
                                        target="_blank">${fn:length(interaction.interactionEvidences)}</a>
                                 </td>

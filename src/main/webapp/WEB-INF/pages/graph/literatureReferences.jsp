@@ -14,7 +14,7 @@
             </tr>
             </thead>
         </table>
-        <div class="dt-content">
+        <div class="dt-content-ovf">
             <table>
                 <tbody>
                 <c:forEach var="literature" items="${databaseObject.literatureReference}">

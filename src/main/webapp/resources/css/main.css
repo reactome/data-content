@@ -698,17 +698,17 @@ div.extended-header .clear, div.fieldset-pair-container .clear {
 }
 
 .fieldset-details-inner {
-    margin: 20px;
+    margin: 5px 20px 15px 20px;
     border: 1px solid #D3D3D3;
     padding: 5px 0 10px 0;
     border-radius: 5px 5px 0 0;
-    box-shadow: 2px 2px 2px #D3D3D3;
+    /*box-shadow: 2px 2px 2px #D3D3D3;*/
 }
 
 .fieldset-details-inner legend {
     /* new style */
-    color: #e68a00;
-    font-size: 15px;
+    color: #1F419A;
+    font-size: 14px;
     margin-left: 20px;
     padding: 0px 10px 0px 10px;
     text-shadow: 0px 1px 1px #ddd;

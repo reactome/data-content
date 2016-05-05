@@ -115,7 +115,7 @@
                         </tr>
                         </thead>
                     </table>
-                    <div class="dt-content">
+                    <div class="dt-content-ovf">
                         <table>
                             <tbody>
                                 <c:forEach var="catalystActivity" items="${databaseObject.catalystActivity}">
@@ -162,7 +162,7 @@
                     </tr>
                     </thead>
                 </table>
-                <div class="dt-content">
+                <div class="dt-content-ovf">
                     <table>
                         <tbody>
                             <c:forEach var="negativelyRegulatedBy" items="${databaseObject.negativelyRegulatedBy}">
