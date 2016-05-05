@@ -264,83 +264,76 @@
 <fieldset class="fieldset-details">
     <legend>Components</legend>
 
-    <c:if test="${databaseObject.schemaClass == 'Complex'}">
-        <c:if test="${not empty databaseObject.hasComponent}">
-            <fieldset class="fieldset-details-inner">
-                <legend>Components of this entry</legend>
-            <div class="fieldset-pair-container">
-                <div class="label">Components of this complex</div>
-                <div class="field">
-                    <ul class="list overflowAuto">
-                        <c:forEach var="hasComponent" items="${databaseObject.hasComponent}">
-                            <li><a href="../detail/${hasComponent.stableIdentifier}" class="" title="Show Details" rel="nofollow">${hasComponent.displayName} <c:if test="${not empty hasComponent.speciesName}">(${hasComponent.speciesName})</c:if></a></li>
-                        </c:forEach>
-                    </ul>
-                </div>
-                <div class="clear"></div>
-            </div>
-            </fieldset>
-        </c:if>
+    <c:if test="${ databaseObject.schemaClass == 'Complex' &&  not empty databaseObject.hasComponent || databaseObject.schemaClass == 'Polymer' && not empty databaseObject.repeatedUnit || isEntitySet && not empty databaseObject.hasMember || databaseObject.schemaClass == 'CandidateSet' && not empty databaseObject.hasCandidate }">
+        <fieldset class="fieldset-details-inner">
+            <legend>Components of this entry</legend>
+            <c:if test="${databaseObject.schemaClass == 'Complex'}">
+                <c:if test="${not empty databaseObject.hasComponent}">
+                    <div class="fieldset-pair-container">
+                        <div class="label">Components of this complex</div>
+                        <div class="field">
+                            <ul class="list overflowAuto">
+                                <c:forEach var="hasComponent" items="${databaseObject.hasComponent}">
+                                    <li><a href="../detail/${hasComponent.stableIdentifier}" class="" title="Show Details" rel="nofollow">${hasComponent.displayName} <c:if test="${not empty hasComponent.speciesName}">(${hasComponent.speciesName})</c:if></a></li>
+                                </c:forEach>
+                            </ul>
+                        </div>
+                        <div class="clear"></div>
+                    </div>
+                </c:if>
+            </c:if>
+
+            <c:if test="${databaseObject.schemaClass == 'Polymer'}">
+                <c:if test="${not empty databaseObject.repeatedUnit}">
+                    <div class="fieldset-pair-container">
+                        <div class="label">Repeated Units of this Polymer</div>
+                        <div class="field">
+                            <ul class="list overflowAuto">
+                                <c:forEach var="repeatedUnit" items="${databaseObject.repeatedUnit}">
+                                    <li><a href="../detail/${repeatedUnit.stableIdentifier}" class="" title="Show Details" rel="nofollow">${repeatedUnit.displayName} <c:if test="${not empty repeatedUnit.speciesName}">(${repeatedUnit.speciesName})</c:if></a></li>
+                                </c:forEach>
+                            </ul>
+                        </div>
+                        <div class="clear"></div>
+                    </div>
+                </c:if>
+            </c:if>
+
+            <c:if test="${isEntitySet}">
+                <c:if test="${not empty databaseObject.hasMember}">
+                    <div class="fieldset-pair-container">
+                        <div class="label">Members of this Set</div>
+                        <div class="field">
+                            <ul class="list overflowAuto">
+                                <c:forEach var="hasMember" items="${databaseObject.hasMember}">
+                                    <li><a href="../detail/${hasMember.stableIdentifier}" class="" title="Show Details" rel="nofollow">${hasMember.displayName} <c:if test="${not empty hasMember.speciesName}">(${hasMember.speciesName})</c:if></a></li>
+                                </c:forEach>
+                            </ul>
+                        </div>
+                        <div class="clear"></div>
+                    </div>
+                </c:if>
+            </c:if>
+
+            <c:if test="${databaseObject.schemaClass == 'CandidateSet'}">
+                <c:if test="${not empty databaseObject.hasCandidate}">
+                    <div class="fieldset-pair-container">
+                        <div class="label">Candidates of this Set</div>
+                        <div class="field">
+                            <ul class="list overflowAuto">
+                                <c:forEach var="hasCandidate" items="${databaseObject.hasCandidate}">
+                                    <li><a href="../detail/${hasCandidate.stableIdentifier}" class="" title="Show Details" rel="nofollow">${hasCandidate.displayName} <c:if test="${not empty hasCandidate.speciesName}">(${hasCandidate.speciesName})</c:if></a></li>
+                                </c:forEach>
+                            </ul>
+                        </div>
+                        <div class="clear"></div>
+                    </div>
+                </c:if>
+            </c:if>
+        </fieldset>
     </c:if>
 
-    <c:if test="${databaseObject.schemaClass == 'Polymer'}">
-        <c:if test="${not empty databaseObject.repeatedUnit}">
-            <fieldset class="fieldset-details-inner">
-                <legend>Components of this entry</legend>
-            <div class="fieldset-pair-container">
-                <div class="label">Repeated Units of this Polymer</div>
-                <div class="field">
-                    <ul class="list overflowAuto">
-                        <c:forEach var="repeatedUnit" items="${databaseObject.repeatedUnit}">
-                            <li><a href="../detail/${repeatedUnit.stableIdentifier}" class="" title="Show Details" rel="nofollow">${repeatedUnit.displayName} <c:if test="${not empty repeatedUnit.speciesName}">(${repeatedUnit.speciesName})</c:if></a></li>
-                        </c:forEach>
-                    </ul>
-                </div>
-                <div class="clear"></div>
-            </div>
-            </fieldset>
-        </c:if>
-    </c:if>
-
-    <c:if test="${isEntitySet}">
-        <c:if test="${not empty databaseObject.hasMember}">
-            <fieldset class="fieldset-details-inner">
-                <legend>Components of this entry</legend>
-            <div class="fieldset-pair-container">
-                <div class="label">Members of this Set</div>
-                <div class="field">
-                    <ul class="list overflowAuto">
-                        <c:forEach var="hasMember" items="${databaseObject.hasMember}">
-                            <li><a href="../detail/${hasMember.stableIdentifier}" class="" title="Show Details" rel="nofollow">${hasMember.displayName} <c:if test="${not empty hasMember.speciesName}">(${hasMember.speciesName})</c:if></a></li>
-                        </c:forEach>
-                    </ul>
-                </div>
-                <div class="clear"></div>
-            </div>
-            </fieldset>
-        </c:if>
-    </c:if>
-
-    <c:if test="${databaseObject.schemaClass == 'CandidateSet'}">
-        <c:if test="${not empty databaseObject.hasCandidate}">
-            <fieldset class="fieldset-details-inner">
-                <legend>Components of this entry</legend>
-
-            <div class="fieldset-pair-container">
-                <div class="label">Candidates of this Set</div>
-                <div class="field">
-                    <ul class="list overflowAuto">
-                        <c:forEach var="hasCandidate" items="${databaseObject.hasCandidate}">
-                            <li><a href="../detail/${hasCandidate.stableIdentifier}" class="" title="Show Details" rel="nofollow">${hasCandidate.displayName} <c:if test="${not empty hasCandidate.speciesName}">(${hasCandidate.speciesName})</c:if></a></li>
-                        </c:forEach>
-                    </ul>
-                </div>
-                <div class="clear"></div>
-            </div>
-            </fieldset>
-        </c:if>
-    </c:if>
-
+    <%-- This entry is a component of --%>
     <c:import url="componentOf.jsp"/>
 
 </fieldset>
