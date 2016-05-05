@@ -1,70 +1,81 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <fieldset class="fieldset-details">
-    <legend>Components/Components of </legend>
+    <legend>Components</legend>
     <c:if test="${databaseObject.schemaClass == 'Pathway' || databaseObject.schemaClass == 'BlackBoxEvent' || databaseObject.schemaClass == 'TopLevelPathway'}">
         <c:if test="${not empty databaseObject.hasEvent}">
-            <div class="fieldset-pair-container">
-                <div class="label">
-                    <span><strong>contained events</strong></span>
+            <fieldset class="fieldset-details-inner">
+                <legend>Components of this entry</legend>
+                <div class="fieldset-pair-container">
+                    <div class="label">
+                        <span><strong>contained events</strong></span>
+                    </div>
+                    <div class="field">
+                        <ul class="list overflowAuto">
+                            <c:forEach var="hasEvent" items="${databaseObject.hasEvent}">
+                                <li><a href="../detail/${hasEvent.stableIdentifier}" class="" title="Show Details" rel="nofollow">${hasEvent.displayName} <c:if test="${not empty hasEvent.speciesName}">(${hasEvent.speciesName})</c:if></a></li>
+                            </c:forEach>
+                        </ul>
+                    </div>
+                    <div class="clear"></div>
                 </div>
-                <div class="field">
-                    <ul class="list overflowAuto">
-                        <c:forEach var="hasEvent" items="${databaseObject.hasEvent}">
-                            <li><a href="../detail/${hasEvent.stableIdentifier}" class="" title="Show Details" rel="nofollow">${hasEvent.displayName} <c:if test="${not empty hasEvent.speciesName}">(${hasEvent.speciesName})</c:if></a></li>
-                        </c:forEach>
-                    </ul>
-                </div>
-                <div class="clear"></div>
-            </div>
+            </fieldset>
         </c:if>
     </c:if>
+
     <c:if test="${isReactionLikeEvent}">
-        <c:if test="${not empty databaseObject.input}">
-            <div class="fieldset-pair-container">
-                <div class="label">
-                    <span><strong>contained inputs</strong></span>
-                </div>
-                <div class="field">
-                    <ul class="list overflowAuto">
-                        <c:forEach var="input" items="${databaseObject.input}">
-                            <li><a href="../detail/${input.stableIdentifier}" class="" title="Show Details" rel="nofollow">${input.displayName} <c:if test="${not empty input.speciesName}">(${input.speciesName})</c:if></a></li>
-                        </c:forEach>
-                    </ul>
-                </div>
-                <div class="clear"></div>
-            </div>
+
+        <c:if test="${not empty databaseObject.input || not empty databaseObject.output || not empty databaseObject.entityOnOtherCell}">
+            <fieldset class="fieldset-details-inner">
+                <legend>Components of this entry</legend>
+                <c:if test="${not empty databaseObject.input}">
+                    <div class="fieldset-pair-container">
+                        <div class="label">
+                            <span><strong>contained inputs</strong></span>
+                        </div>
+                        <div class="field">
+                            <ul class="list overflowAuto">
+                                <c:forEach var="input" items="${databaseObject.input}">
+                                    <li><a href="../detail/${input.stableIdentifier}" class="" title="Show Details" rel="nofollow">${input.displayName} <c:if test="${not empty input.speciesName}">(${input.speciesName})</c:if></a></li>
+                                </c:forEach>
+                            </ul>
+                        </div>
+                        <div class="clear"></div>
+                    </div>
+                </c:if>
+                <c:if test="${not empty databaseObject.output}">
+                    <div class="fieldset-pair-container">
+                        <div class="label">
+                            <span><strong>contained output</strong></span>
+                        </div>
+                        <div class="field">
+                            <ul class="list overflowAuto">
+                                <c:forEach var="output" items="${databaseObject.output}">
+                                    <li><a href="../detail/${output.stableIdentifier}" class="" title="Show Details" rel="nofollow">${output.displayName} <c:if test="${not empty output.speciesName}">(${output.speciesName})</c:if></a></li>
+                                </c:forEach>
+                            </ul>
+                        </div>
+                        <div class="clear"></div>
+                    </div>
+                </c:if>
+                <c:if test="${not empty databaseObject.entityOnOtherCell}">
+                    <div class="fieldset-pair-container">
+                        <div class="label">
+                            <span><strong>entityOnOtherCell</strong></span>
+                        </div>
+                        <div class="field">
+                            <ul class="list overflowAuto">
+                                <c:forEach var="entityOnOtherCell" items="${databaseObject.entityOnOtherCell}">
+                                    <li><a href="../detail/${entityOnOtherCell.stableIdentifier}" class="" title="Show Details" rel="nofollow">${entityOnOtherCell.displayName} <c:if test="${not empty entityOnOtherCell.speciesName}">(${entityOnOtherCell.speciesName})</c:if></a></li>
+                                </c:forEach>
+                            </ul>
+                        </div>
+                        <div class="clear"></div>
+                    </div>
+                </c:if>
+            </fieldset>
         </c:if>
-        <c:if test="${not empty databaseObject.output}">
-            <div class="fieldset-pair-container">
-                <div class="label">
-                    <span><strong>contained output</strong></span>
-                </div>
-                <div class="field">
-                    <ul class="list overflowAuto">
-                        <c:forEach var="output" items="${databaseObject.output}">
-                            <li><a href="../detail/${output.stableIdentifier}" class="" title="Show Details" rel="nofollow">${output.displayName} <c:if test="${not empty output.speciesName}">(${output.speciesName})</c:if></a></li>
-                        </c:forEach>
-                    </ul>
-                </div>
-                <div class="clear"></div>
-            </div>
-        </c:if>
-        <c:if test="${not empty databaseObject.entityOnOtherCell}">
-            <div class="fieldset-pair-container">
-                <div class="label">
-                    <span><strong>entityOnOtherCell</strong></span>
-                </div>
-                <div class="field">
-                    <ul class="list overflowAuto">
-                        <c:forEach var="entityOnOtherCell" items="${databaseObject.entityOnOtherCell}">
-                            <li><a href="../detail/${entityOnOtherCell.stableIdentifier}" class="" title="Show Details" rel="nofollow">${entityOnOtherCell.displayName} <c:if test="${not empty entityOnOtherCell.speciesName}">(${entityOnOtherCell.speciesName})</c:if></a></li>
-                        </c:forEach>
-                    </ul>
-                </div>
-                <div class="clear"></div>
-            </div>
-        </c:if>
+
     </c:if>
     <c:import url="componentOf.jsp"/>
 </fieldset>
