@@ -65,18 +65,6 @@
                 </div>
             </c:if>
 
-            <%--<c:if test="${clazz == 'PhysicalEntity'}">--%>
-                <%--<c:if test="${not empty databaseObject.goCellularComponent}">--%>
-                    <%--<div class="fieldset-pair-container">--%>
-                        <%--<div class="label">GO Cellular Component</div>--%>
-                        <%--<div class="field">--%>
-                            <%--<a href="${databaseObject.goCellularComponent.url}" class="" title="show ${databaseObject.goCellularComponent.name}" rel="nofollow">${databaseObject.goCellularComponent.name}</a> (${databaseObject.goCellularComponent.accession})--%>
-                        <%--</div>--%>
-                        <%--<div class="clear"></div>--%>
-                    <%--</div>--%>
-                <%--</c:if>--%>
-            <%--</c:if>--%>
-
         </fieldset>
     </c:if>
 

@@ -11,7 +11,7 @@
                     ${component.type}
                 </div>
                 <div class="field">
-                    <ul class="list overflowList">
+                    <ul class="list">
                         <c:forEach var="names" items="${component.names}" varStatus="loop">
                             <li><c:if test="${not empty component.stIds}"><a href="../detail/${component.stIds.get(loop.index)}" class="" title="Show Details" rel="nofollow">${names}</a></c:if></li>
                         </c:forEach>

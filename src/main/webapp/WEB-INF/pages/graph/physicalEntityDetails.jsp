@@ -47,7 +47,8 @@
                             <span>Gene Names</span>
                         </div>
                         <div class="field">
-                            <c:forEach var="geneName" items="${databaseObject.referenceEntity.geneName}" varStatus="loop">${geneName}<c:if test="${!loop.last}">, </c:if>
+                            <c:forEach var="geneName" items="${databaseObject.referenceEntity.geneName}" varStatus="loop">
+                                ${geneName}<c:if test="${!loop.last}">, </c:if>
                             </c:forEach>
                         </div>
                         <div class="clear"></div>
@@ -60,8 +61,8 @@
                             <span>Chain</span>
                         </div>
                         <div class="field">
-                            <c:forEach var="chain" items="${databaseObject.referenceEntity.chain}"
-                                       varStatus="loop">${chain}<c:if test="${!loop.last}">, </c:if>
+                            <c:forEach var="chain" items="${databaseObject.referenceEntity.chain}" varStatus="loop">
+                                ${chain}<c:if test="${!loop.last}">, </c:if>
                             </c:forEach>
                         </div>
                         <div class="clear"></div>
@@ -82,7 +83,7 @@
                             <span>Reference Transcript</span>
                         </div>
                         <div class="field">
-                            <ul class="list overflowAuto">
+                            <ul class="list">
                                 <c:forEach var="referenceTranscript" items="${databaseObject.referenceEntity.referenceTranscript}">
                                     <li><a href="${referenceTranscript.url}" title="show ${referenceTranscript.displayName}" rel="nofollow">${referenceTranscript.displayName}</a></li>
                                 </c:forEach>
@@ -158,7 +159,7 @@
             <div class="fieldset-pair-container">
                 <div class="label">Inferred From</div>
                 <div class="field">
-                    <ul class="list overflowList">
+                    <ul class="list">
                         <c:forEach var="inferredFrom" items="${databaseObject.inferredFrom}">
                             <li><a href="../detail/${inferredFrom.stableIdentifier}" class="" title="Show Details" rel="nofollow">${inferredFrom.displayName} (${inferredFrom.speciesName})</a></li>
                         </c:forEach>
@@ -172,7 +173,7 @@
             <div class="fieldset-pair-container">
                 <div class="label">Inferred To</div>
                 <div class="field">
-                    <ul class="list overflowList">
+                    <ul class="list">
                         <c:forEach var="inferredTo" items="${databaseObject.inferredTo}">
                             <li><a href="../detail/${inferredTo.stableIdentifier}" class="" title="Show Details" rel="nofollow">${inferredTo.displayName} (${inferredTo.speciesName})</a></li>
                         </c:forEach>
@@ -272,7 +273,7 @@
                     <div class="fieldset-pair-container">
                         <div class="label">Components of this complex</div>
                         <div class="field">
-                            <ul class="list overflowAuto">
+                            <ul class="list">
                                 <c:forEach var="hasComponent" items="${databaseObject.hasComponent}">
                                     <li><a href="../detail/${hasComponent.stableIdentifier}" class="" title="Show Details" rel="nofollow">${hasComponent.displayName} <c:if test="${not empty hasComponent.speciesName}">(${hasComponent.speciesName})</c:if></a></li>
                                 </c:forEach>
@@ -288,7 +289,7 @@
                     <div class="fieldset-pair-container">
                         <div class="label">Repeated Units of this Polymer</div>
                         <div class="field">
-                            <ul class="list overflowAuto">
+                            <ul class="list">
                                 <c:forEach var="repeatedUnit" items="${databaseObject.repeatedUnit}">
                                     <li><a href="../detail/${repeatedUnit.stableIdentifier}" class="" title="Show Details" rel="nofollow">${repeatedUnit.displayName} <c:if test="${not empty repeatedUnit.speciesName}">(${repeatedUnit.speciesName})</c:if></a></li>
                                 </c:forEach>
@@ -304,7 +305,7 @@
                     <div class="fieldset-pair-container">
                         <div class="label">Members of this Set</div>
                         <div class="field">
-                            <ul class="list overflowAuto">
+                            <ul class="list">
                                 <c:forEach var="hasMember" items="${databaseObject.hasMember}">
                                     <li><a href="../detail/${hasMember.stableIdentifier}" class="" title="Show Details" rel="nofollow">${hasMember.displayName} <c:if test="${not empty hasMember.speciesName}">(${hasMember.speciesName})</c:if></a></li>
                                 </c:forEach>
@@ -320,7 +321,7 @@
                     <div class="fieldset-pair-container">
                         <div class="label">Candidates of this Set</div>
                         <div class="field">
-                            <ul class="list overflowAuto">
+                            <ul class="list">
                                 <c:forEach var="hasCandidate" items="${databaseObject.hasCandidate}">
                                     <li><a href="../detail/${hasCandidate.stableIdentifier}" class="" title="Show Details" rel="nofollow">${hasCandidate.displayName} <c:if test="${not empty hasCandidate.speciesName}">(${hasCandidate.speciesName})</c:if></a></li>
                                 </c:forEach>

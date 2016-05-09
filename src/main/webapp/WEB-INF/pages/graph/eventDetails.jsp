@@ -11,7 +11,7 @@
                         contained events
                     </div>
                     <div class="field">
-                        <ul class="list overflowAuto">
+                        <ul class="list">
                             <c:forEach var="hasEvent" items="${databaseObject.hasEvent}">
                                 <li><a href="../detail/${hasEvent.stableIdentifier}" class="" title="Show Details" rel="nofollow">${hasEvent.displayName} <c:if test="${not empty hasEvent.speciesName}">(${hasEvent.speciesName})</c:if></a></li>
                             </c:forEach>
@@ -34,7 +34,7 @@
                             contained inputs
                         </div>
                         <div class="field">
-                            <ul class="list overflowAuto">
+                            <ul class="list">
                                 <c:forEach var="input" items="${databaseObject.input}">
                                     <li><a href="../detail/${input.stableIdentifier}" class="" title="Show Details" rel="nofollow">${input.displayName} <c:if test="${not empty input.speciesName}">(${input.speciesName})</c:if></a></li>
                                 </c:forEach>
@@ -49,7 +49,7 @@
                             contained output
                         </div>
                         <div class="field">
-                            <ul class="list overflowAuto">
+                            <ul class="list">
                                 <c:forEach var="output" items="${databaseObject.output}">
                                     <li><a href="../detail/${output.stableIdentifier}" class="" title="Show Details" rel="nofollow">${output.displayName} <c:if test="${not empty output.speciesName}">(${output.speciesName})</c:if></a></li>
                                 </c:forEach>
@@ -64,7 +64,7 @@
                             entityOnOtherCell
                         </div>
                         <div class="field">
-                            <ul class="list overflowAuto">
+                            <ul class="list">
                                 <c:forEach var="entityOnOtherCell" items="${databaseObject.entityOnOtherCell}">
                                     <li><a href="../detail/${entityOnOtherCell.stableIdentifier}" class="" title="Show Details" rel="nofollow">${entityOnOtherCell.displayName} <c:if test="${not empty entityOnOtherCell.speciesName}">(${entityOnOtherCell.speciesName})</c:if></a></li>
                                 </c:forEach>
@@ -206,12 +206,12 @@
 
 <c:if test="${not empty databaseObject.inferredFrom || not empty databaseObject.orthologousEvent}">
     <fieldset class="fieldset-details">
-        <legend>Inferred Entries</legend>
+        <legend>Inferred</legend>
         <c:if test="${not empty databaseObject.inferredFrom}">
             <div class="fieldset-pair-container">
                 <div class="label">Inferred From</div>
                 <div class="field">
-                    <ul class="list overflowList">
+                    <ul class="list">
                         <c:forEach var="inferredFrom" items="${databaseObject.inferredFrom}">
                             <li><a href="../detail/${inferredFrom.stableIdentifier}" class="" title="Show Details" rel="nofollow">${inferredFrom.displayName} (${inferredFrom.speciesName})</a></li>
                         </c:forEach>
@@ -224,7 +224,7 @@
             <div class="fieldset-pair-container">
                 <div class="label">Orthologous events</div>
                 <div class="field">
-                    <ul class="list overflowList">
+                    <ul class="list">
                         <c:forEach var="orthologousEvent" items="${databaseObject.orthologousEvent}">
                             <li><a href="../detail/${orthologousEvent.stableIdentifier}" class="" title="Show Details" rel="nofollow">${orthologousEvent.displayName} (${orthologousEvent.speciesName})</a></li>
                         </c:forEach>
