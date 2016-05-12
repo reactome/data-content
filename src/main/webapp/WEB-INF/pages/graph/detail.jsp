@@ -12,11 +12,11 @@
 
 
     <div class="grid_24">
-        <c:if test="${not empty topLevelNodes}">
-            <c:import url="locationsInThePWB.jsp"/>
-        </c:if>
 
-        <c:import url="generalAttributes.jsp"/>
+
+        <c:if test="${not empty databaseObject.literatureReference}">
+            <c:import url="literatureReferences.jsp"/>
+        </c:if>
 
         <c:if test="${clazz == 'PhysicalEntity'}">
             <c:import url="physicalEntityDetails.jsp"/>
@@ -26,12 +26,10 @@
             <c:import url="eventDetails.jsp"/>
         </c:if>
 
+        <c:import url="generalAttributes.jsp"/>
+
         <c:if test="${clazz == 'Regulation'}">
             <c:import url="regulationDetails.jsp"/>
-        </c:if>
-
-        <c:if test="${not empty databaseObject.literatureReference}">
-            <c:import url="literatureReferences.jsp"/>
         </c:if>
 
         <c:if test="${not empty interactions}">

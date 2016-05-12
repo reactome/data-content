@@ -91,14 +91,24 @@
 
         </c:if>
     </div>
-</div>
 
+<c:if test="${not empty topLevelNodes}">
+    <c:import url="locationsInThePWB.jsp"/>
+</c:if>
 <%--Both physicalEntities and event can have a summation--%>
 <c:if test="${not empty databaseObject.summation}">
-    <h5>Summation</h5>
-    <div style="padding: 0 5px">
-        <c:forEach var="summation" items="${databaseObject.summation}">
-            <p style="text-align: justify;">${summation.text}</p>
-        </c:forEach>
-    </div>
+    <fieldset class="fieldset-details">
+        <legend>Summation</legend>
+        <div class="wrap overflow">
+            <c:forEach var="summation" items="${databaseObject.summation}">
+                <p style="text-align: justify; margin-right: 8px;">${summation.text}</p>
+            </c:forEach>
+        </div>
+    </fieldset>
+    <%--<h5 style="font-size: 17px; margin-left: 23px">Summation</h5>--%>
+    <%--<div style="padding: 0 5px">--%>
+        <%----%>
+    <%--</div>--%>
 </c:if>
+
+</div>

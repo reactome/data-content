@@ -32,7 +32,7 @@
                                                            rel="nofollow">${interaction.accession}</a></td>
                                 <td style="width: 235px;">
                                     <c:forEach var="reactomeEntry" items="${interaction.interactorReactomeEntries}">
-                                        <ul class="list overflowList">
+                                        <ul class="list overflow">
                                             <li>
                                                 <a href="/content/detail/${reactomeEntry.reactomeId}" class=""
                                                    title="Show Details"

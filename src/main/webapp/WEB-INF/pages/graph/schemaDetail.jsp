@@ -30,7 +30,7 @@
                                 ${entry.value}
                             </c:when>
                             <c:when test="${entry.value.getClass().getSimpleName() == 'ArrayList'}">
-                                <ul class="list overflowList">
+                                <ul class="list overflow">
                                     <c:forEach var="list" items="${entry.value}">
                                         <li>
                                             <c:choose>

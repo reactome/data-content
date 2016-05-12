@@ -192,8 +192,8 @@ div#search-results h4 a:active {
     overflow-y: auto;
 }
 
-.overflowList {
-    max-height: 200px;
+.overflow {
+    max-height: 150px;
     overflow-y: auto;
 }
 
@@ -613,7 +613,7 @@ div.fieldset-pair-container div {
 }
 
 div.extended-header .label, div.fieldset-pair-container .label {
-    width: 150px;
+    width: 140px;
     text-align: right;
     float: left;
     padding-right: 10px;
@@ -635,11 +635,12 @@ div.extended-header .field, div.fieldset-pair-container .field {
 }
 
 div.fieldset-pair-container .label {
-    width: 170px;
+    width: 140px;
 }
 
 div.fieldset-pair-container .field {
-    border-left: 2px solid #1F419A;
+    /*border-left: 2px solid #1F419A;*/
+    border-left: 2px solid orange;
 }
 
 div.extended-header .clear, div.fieldset-pair-container .clear {
@@ -652,21 +653,22 @@ div.extended-header .clear, div.fieldset-pair-container .clear {
     /*margin: 20px;*/
     border: 1px solid #D3D3D3;
     padding: 5px 0 10px 0;
-    border-radius: 5px 5px 0 0;
+    border-radius: 5px;
     box-shadow: 2px 2px 2px #D3D3D3;
 }
 
 .fieldset-details legend {
     /* new style */
-    color: #e68a00;
-    font-size: 18px;
-    margin-left: 20px;
+    /*color: #e68a00;*/
+    font-size: 16px;
+    margin-left: 15px;
+    margin-bottom: 5px;
     padding: 0px 10px 0px 10px;
     text-shadow: 0px 1px 1px #ddd;
 
     /* DO NOT DELETE HERE -- GUI */
     /* style compatible with results page */
-    /*color: #1F419A;*/
+    color: #1F419A;
     /*font-size: 16px;*/
     /*margin-left: 20px;*/
     /*background-color: #EEE;*/
@@ -701,7 +703,7 @@ div.extended-header .clear, div.fieldset-pair-container .clear {
     margin: 5px 20px 15px 20px;
     border: 1px solid #D3D3D3;
     padding: 5px 0 10px 0;
-    border-radius: 5px 5px 0 0;
+    border-radius: 5px 5px 5px 5px;
     /*box-shadow: 2px 2px 2px #D3D3D3;*/
 }
 

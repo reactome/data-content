@@ -1,7 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
-<h5>Locations in the PathwayBrowser</h5>
+<h5 style="font-size: 17px; margin-left: 23px">Locations in the PathwayBrowser</h5>
 <c:if test="${fn:length(availableSpecies) gt 1}">
     <div class="padding">
         <select name="availableSpecies" id="availableSpeciesSel" style="height: 1.5em;">
@@ -12,7 +12,7 @@
     </div>
 </c:if>
 
-<div style="padding: 0 0 17px 15px">
+<div style="padding: 0 0 17px 25px">
     <c:forEach var="topLvl" items="${topLevelNodes}">
         <c:choose>
             <c:when test="${empty topLvl.children}">
