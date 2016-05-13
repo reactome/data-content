@@ -192,6 +192,43 @@
 <%-- This entry is a component of --%>
 <c:import url="componentOf.jsp"/>
 
+<c:if test="${not empty databaseObject.negativelyRegulates || not empty databaseObject.positivelyRegulates}">
+    <fieldset class="fieldset-details">
+        <legend>This entity regulates</legend>
+        <c:if test="${not empty databaseObject.negativelyRegulates}">
+            <div class="fieldset-pair-container">
+                <div class="label">Negative Regulation</div>
+                <div class="field">
+                    <ul class="list">
+                        <c:forEach var="negativelyRegulates" items="${databaseObject.negativelyRegulates}">
+                            <li>
+                                <a href="../detail/${negativelyRegulates.stableIdentifier}" class="" title="Show Details" rel="nofollow">${negativelyRegulates.displayName}</a>
+                            </li>
+                        </c:forEach>
+                    </ul>
+                </div>
+                <div class="clear"></div>
+            </div>
+        </c:if>
+        <c:if test="${not empty databaseObject.positivelyRegulates}">
+            <div class="fieldset-pair-container">
+                <div class="label">Positive Regulation</div>
+                <div class="field">
+                    <ul class="list">
+                        <c:forEach var="positivelyRegulates" items="${databaseObject.positivelyRegulates}">
+                            <li>
+                                <a href="../detail/${positivelyRegulates.stableIdentifier}" class="" title="Show Details" rel="nofollow">${positivelyRegulates.displayName}</a>
+                            </li>
+                        </c:forEach>
+                    </ul>
+                </div>
+                <div class="clear"></div>
+            </div>
+        </c:if>
+    </fieldset>
+</c:if>
+
+
 
 <c:if test="${not empty otherFormsOfThisMolecule}">
     <fieldset class="fieldset-details">
@@ -329,51 +366,5 @@
 
 
 
-
-<c:if test="${not empty databaseObject.negativelyRegulates || not empty databaseObject.positivelyRegulates}">
-    <fieldset class="fieldset-details">
-        <legend>This entity regulates</legend>
-        <div class="wrap">
-            <table class="dt-fixed-header">
-                <thead>
-                <tr>
-                    <th style="width: 50px;">Regulation type</th>
-                    <th style="width: 250px;">Name</th>
-                </tr>
-                </thead>
-            </table>
-            <div class="dt-content-ovf">
-                <table>
-                    <tbody>
-                    <c:if test="${not empty databaseObject.negativelyRegulates}">
-                        <tr>
-                            <td style="width: 55px;"><strong>NegativeRegulation</strong></td>
-                            <td style="width: 255px;">
-                                <c:forEach var="negativeRegulation" items="${databaseObject.negativelyRegulates}">
-                                    <ul class="list overflow">
-                                        <li><c:if test="${not empty negativeRegulation.regulatedEntity.stableIdentifier}"><a href="../detail/${negativeRegulation.regulatedEntity.stableIdentifier}" class="" title="Show Details" rel="nofollow">${negativeRegulation.regulatedEntity.displayName}<c:if test="${not empty negativeRegulation.regulatedEntity.speciesName}"> (${negativeRegulation.regulatedEntity.speciesName})</c:if></a></c:if></li>
-                                    </ul>
-                                </c:forEach>
-                            </td>
-                        </tr>
-                    </c:if>
-                    <c:if test="${not empty databaseObject.positivelyRegulates}">
-                        <tr>
-                            <td style="width: 55px;"><strong>PositiveRegulation</strong></td>
-                            <td style="width: 255px;">
-                                <c:forEach var="positiveRegulation" items="${databaseObject.positivelyRegulates}">
-                                    <ul class="list overflow">
-                                        <li><c:if test="${not empty positiveRegulation.regulatedEntity.stableIdentifier}"><a href="../detail/${positiveRegulation.regulatedEntity.stableIdentifier}" class="" title="Show Details" rel="nofollow">${positiveRegulation.regulatedEntity.displayName}<c:if test="${not empty positiveRegulation.regulatedEntity.speciesName}"> (${positiveRegulation.regulatedEntity.speciesName})</c:if></a></c:if></li>
-                                    </ul>
-                                </c:forEach>
-                            </td>
-                        </tr>
-                    </c:if>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </fieldset>
-</c:if>
 
 

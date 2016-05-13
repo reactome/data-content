@@ -6,7 +6,7 @@
         <c:if test="${not empty databaseObject.schemaClass}">
             <div class="fieldset-pair-container">
                 <div class="label">Regulation type</div>
-                <div class="field">${databaseObject.schemaClass}</div>
+                <div class="field">${databaseObject.className}</div>
                 <div class="clear"></div>
             </div>
         </c:if>

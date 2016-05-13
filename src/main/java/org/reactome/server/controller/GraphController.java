@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import psidev.psi.mi.tab.model.CrossReference;
 
 import java.sql.SQLException;
 import java.util.*;
@@ -131,8 +132,10 @@ class GraphController {
     @RequestMapping(value = "/detail/{id:.*}", method = RequestMethod.GET)
     public String detail(@PathVariable String id, ModelMap model) throws Exception {
 
-        ContentDetails contentDetails = detailsService.getContentDetails(id);
-        if (contentDetails != null && contentDetails.getDatabaseObject() != null) {
+        try {
+            ContentDetails contentDetails = detailsService.getContentDetails2(id);
+
+            if (contentDetails != null && contentDetails.getDatabaseObject() != null) {
             DatabaseObject databaseObject = contentDetails.getDatabaseObject();
             String superClass = getClazz(databaseObject);
             if (superClass == null) {
@@ -154,8 +157,8 @@ class GraphController {
                 model.addAttribute("availableSpecies", DatabaseObjectUtils.getAvailableSpecies(topLevelNodes));
                 model.addAttribute("componentOf", contentDetails.getComponentOf());
                 model.addAttribute("otherFormsOfThisMolecule", contentDetails.getOtherFormsOfThisMolecule());
-                model.addAttribute("crossReferences", groupCrossReferences(getCrossReference(databaseObject)));
-
+                List<DatabaseIdentifier> crossReferences = new ArrayList<>();
+                crossReferences.addAll(getCrossReference(databaseObject));
                 if (databaseObject instanceof ReactionLikeEvent) {
                     model.addAttribute("isReactionLikeEvent", true);
                 }
@@ -171,16 +174,21 @@ class GraphController {
                     model.addAttribute("interactions", interactions);
                     model.addAttribute(INTERACTOR_RESOURCES_MAP, interactorResourceMap); // interactor URL
                     model.addAttribute(EVIDENCES_URL_MAP, WebUtils.prepareEvidencesURLs(interactions)); // evidencesURL
-
+                    crossReferences.addAll(getCrossReference(ewas));
                     if (ewas.getReferenceEntity() instanceof ReferenceSequence) {
                         model.addAttribute("isReferenceSequence", true);
                     }
-                        model.addAttribute("referenceCrossReference", groupCrossReferences(ewas.getReferenceEntity().getCrossReference()));
                 }
+                model.addAttribute("crossReferences", groupCrossReferences(crossReferences));
                 return "graph/detail";
             }
         }
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("!!!!!!!!!  id: " + id);
+        }
         return "search/noDetailsFound";
+
     }
 
 
@@ -194,14 +202,13 @@ class GraphController {
     }
 
     private List<DatabaseIdentifier> getCrossReference(DatabaseObject databaseObject) {
+        List<DatabaseIdentifier> crossReferences = null;
         if (databaseObject instanceof PhysicalEntity) {
-            PhysicalEntity physicalEntity = (PhysicalEntity) databaseObject;
-            return physicalEntity.getCrossReference();
+            crossReferences = ((PhysicalEntity) databaseObject).getCrossReference();
         } else if (databaseObject instanceof Event) {
-            Event event = (Event) databaseObject;
-            return event.getCrossReference();
+            crossReferences = ((Event) databaseObject).getCrossReference();
         }
-        return Collections.EMPTY_LIST;
+        return crossReferences != null ? crossReferences : Collections.EMPTY_LIST;
     }
 
     private String getClazz(DatabaseObject databaseObject) throws Exception {
