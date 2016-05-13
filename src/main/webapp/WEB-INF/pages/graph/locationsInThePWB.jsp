@@ -34,9 +34,12 @@
                  --%>
                 <div class="tplSpe_${fn:replace(topLvl.species, ' ', '_')}" style="display: none">
                     <span class="plus" title="click here to expand or collapse the tree">
-                        <i class="sprite-resize-small sprite sprite-plus" title="click here to expand or collapse the tree"></i>
+                           <i class="sprite-resize-small sprite sprite-plus" title="click here to expand or collapse the tree" style="vertical-align: middle"></i>
                     </span>
-                    <span style="font-size:14px"><i class="sprite-resize sprite sprite-Pathway"></i> <a href="${topLvl.url}" class="" title="goto Reactome Pathway Browser" rel="nofollow">${topLvl.name} (${topLvl.species})</a></span>
+                    <span style="font-size:14px">
+                        <i class="sprite-resize sprite sprite-Pathway" style="vertical-align: middle"></i>
+                        <a href="${topLvl.url}" class="" title="goto Reactome Pathway Browser" rel="nofollow">${topLvl.name} (${topLvl.species})</a>
+                    </span>
                     <div class="treeContent">
                         <ul class="tree">
                             <c:set var="node" value="${topLvl}" scope="request"/>
