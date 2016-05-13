@@ -1,8 +1,6 @@
 package org.reactome.server.controller;
 
 import org.apache.commons.lang.StringUtils;
-import org.reactome.server.interactors.model.InteractorResource;
-import org.reactome.server.interactors.service.InteractorResourceService;
 import org.reactome.server.search.domain.FacetMapping;
 import org.reactome.server.search.domain.InteractorEntry;
 import org.reactome.server.search.domain.Query;
@@ -19,10 +17,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
-import java.sql.SQLException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import static org.reactome.server.util.WebUtils.cleanReceivedParameter;
 import static org.reactome.server.util.WebUtils.cleanReceivedParameters;
@@ -46,12 +41,8 @@ class SearchController {
     @Autowired
     private MailService mailService;
 
-    //@Autowired
-    //private InteractorResourceService interactorResourceService;
-
-    private static String defaultSubject;
     private static final int rowCount = 30;
-    private Map<Long, InteractorResource> interactorResourceMap = new HashMap<>();
+   // private Map<Long, InteractorResource> interactorResourceMap = new HashMap<>();
 
     private static final String SPECIES_FACET = "species_facet";
     private static final String TYPES_FACET = "type_facet";
@@ -76,11 +67,7 @@ class SearchController {
     private static final String MAIL_SUBJECT_PLACEHOLDER = "[SEARCH] No results found for ";
     private static final String MAIL_MESSAGE = "message";
 
-    private static final String INTERACTOR_RESOURCES_MAP = "interactorResourceMap";
-    private static final String EVIDENCES_URL_MAP = "evidencesUrlMap";
-
     // PAGES REDIRECT
-    private static final String PAGE_DETAIL = "search/detail";
     private static final String PAGE_INTERACTOR = "search/interactors";
 
     private static final String PAGE_NO_DETAILS_FOUND = "search/noDetailsFound";
@@ -94,19 +81,19 @@ class SearchController {
     @Value("${mail_support_dest}")
     private String mailSupportDest; // W
 
-    @Autowired
-    public SearchController(InteractorResourceService interactorResourceService) {
-        try {
-            /**
-             * These resources are the same all the time.
-             * In order to speed up the query result and less memory usage, I decided to keep the resource out of the query
-             * and keep a cache with them. Thus we avoid having the same information for all results.
-             */
-            interactorResourceMap = interactorResourceService.getAllMappedById();
-        } catch (SQLException e) {
-            logger.error("An error has occurred while querying InteractorResource: " + e.getMessage(), e);
-        }
-    }
+//    @Autowired
+//    public SearchController(InteractorResourceService interactorResourceService) {
+//        try {
+//            /**
+//             * These resources are the same all the time.
+//             * In order to speed up the query result and less memory usage, I decided to keep the resource out of the query
+//             * and keep a cache with them. Thus we avoid having the same information for all results.
+//             */
+//            interactorResourceMap = interactorResourceService.getAllMappedById();
+//        } catch (SQLException e) {
+//            logger.error("An error has occurred while querying InteractorResource: " + e.getMessage(), e);
+//        }
+//    }
 
     /**
      * Method for autocompletion
@@ -138,37 +125,6 @@ class SearchController {
         model.addAttribute(TITLE, "advanced Search");
         return PAGE_EBI_ADVANCED;
     }
-
-    /**
-     * Shows detailed information of an entry
-     *
-     * @param id    StId or DbId
-     *              //     * @param q,species,types,compartments,keywords parameters to save existing query and facets
-     * @param model SpringModel
-     * @return Detailed page
-     * @throws EnricherException
-     * @throws SolrSearcherException
-     */
-//    @RequestMapping(value = "/detail/{id:.*}", method = RequestMethod.GET)
-//    public String detail(@PathVariable String id, ModelMap model) throws EnricherException, SolrSearcherException {
-//
-//        EnrichedEntry entry = searchService.getEntryById(id);
-//        DatabaseObject databaseObject = new Pathway();
-//        databaseObject.setStableIdentifier(entry.getStId());
-//        databaseObject.setDisplayName(entry.getName());
-//        databaseObject.setSpeciesName(entry.getSpecies());
-//        entry.setLocationsPathwayBrowser(genericService.getLocationsInPathwayBrowser(databaseObject));
-//        if (entry != null) {
-//            model.addAttribute(ENTRY, entry);
-//            model.addAttribute(TITLE, entry.getName());
-//            model.addAttribute(INTERACTOR_RESOURCES_MAP, interactorResourceMap); // interactor URL
-//            model.addAttribute(EVIDENCES_URL_MAP, WebUtils.prepareEvidencesURLs()prepareEvidencesURLs(entry.getInteractionList())); // evidencesURL
-//            return PAGE_DETAIL;
-//        } else {
-//            autoFillDetailsPage(model, id);
-//            return PAGE_NO_DETAILS_FOUND;
-//        }
-//    }
 
     /**
      * Shows detailed information of an entry
@@ -260,6 +216,7 @@ class SearchController {
                           @RequestParam String message,
                           @RequestParam String exception,
                           @RequestParam String url,
+                          @RequestParam String subject,
                           @RequestParam String source) throws Exception {
 
         String to = mailSupportDest;
@@ -267,14 +224,14 @@ class SearchController {
             to = mailErrorDest;
             message = message.concat("\n\n URL: " + url);
             message = message.concat("\n\n Exception: " + exception);
-            defaultSubject = "Unexpected error occurred.";
+            subject = "Unexpected error occurred.";
         }
         if(StringUtils.isNotBlank(contactName)) {
             contactName = contactName.trim();
             message = message.concat("--\n").concat(contactName.trim());
         }
         // Call email service.
-        mailService.send(to, mailAddress, defaultSubject, message, sendEmailCopy, contactName);
+        mailService.send(to, mailAddress, subject, message, sendEmailCopy, contactName);
         return "success";
     }
 
@@ -288,8 +245,8 @@ class SearchController {
         } catch (SolrSearcherException e) {
             logger.error("Error building suggestions on autoFillContactForm.");
         }
-        defaultSubject = MAIL_SUBJECT_PLACEHOLDER + search;
-        model.addAttribute(MAIL_SUBJECT, defaultSubject);
+
+        model.addAttribute(MAIL_SUBJECT, MAIL_SUBJECT_PLACEHOLDER + search);
         model.addAttribute(MAIL_MESSAGE, String.format(MAIL_MESSAGE_PLACEHOLDER, search));
         model.addAttribute(TITLE, "No results found for " + search);
     }
