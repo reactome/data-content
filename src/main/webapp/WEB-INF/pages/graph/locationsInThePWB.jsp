@@ -1,18 +1,26 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
-<h5 style="font-size: 17px; margin-left: 23px">Locations in the PathwayBrowser</h5>
-<c:if test="${fn:length(availableSpecies) gt 1}">
-    <div class="padding">
-        <select name="availableSpecies" id="availableSpeciesSel" style="height: 1.5em;">
-            <c:forEach items="${availableSpecies}" var="species">
-                <option value="${fn:replace(species, ' ', '_')}" ${species == 'Homo_sapiens' ? 'selected' : ''}>${species}</option>
-            </c:forEach>
-        </select>
-    </div>
-</c:if>
+<fieldset class="fieldset-details">
+    <legend>Locations in the PathwayBrowser
 
-<div style="padding: 0 0 17px 25px">
+        <c:if test="${fn:length(availableSpecies) gt 1}">
+            <%--<div class="padding">--%>
+            for Species:
+                <select name="availableSpecies" id="availableSpeciesSel" class="speciesSelection" >
+                    <c:forEach items="${availableSpecies}" var="species">
+                        <option value="${fn:replace(species, ' ', '_')}" ${species == 'Homo_sapiens' ? 'selected' : ''}>${species}</option>
+                    </c:forEach>
+                </select>
+            <%--</div>--%>
+        </c:if>
+
+    </legend>
+
+<%--<h5 style="font-size: 17px; margin-left: 23px">Locations in the PathwayBrowser</h5>--%>
+
+
+<div class="wrap">
     <c:forEach var="topLvl" items="${topLevelNodes}">
         <c:choose>
             <c:when test="${empty topLvl.children}">
@@ -40,3 +48,4 @@
         </c:choose>
     </c:forEach>
 </div>
+</fieldset>

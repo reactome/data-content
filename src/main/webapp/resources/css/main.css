@@ -533,7 +533,7 @@ div#two {
     text-overflow: ellipsis;
     color: #1F419A;
     border: 0;
-    padding: 0;
+    padding: 0 6px 0 0;
 }
 
 .overme_5c {
@@ -604,8 +604,12 @@ ul.tree li.schema-item {
     padding-left: 3px;
 }
 
-div.extended-header, div.fieldset-pair-container {
-    margin-bottom: 10px;
+div.extended-header {
+    margin-bottom: 20px;
+}
+
+div.fieldset-pair-container {
+    margin-bottom: 5px;
 }
 
 div.fieldset-pair-container div {
@@ -619,16 +623,17 @@ div.extended-header .label, div.fieldset-pair-container .label {
     padding-right: 10px;
     padding-bottom: 1px;
     color: #1F419A;
-    font-weight: bold;
+    font-size: 13px;
+    /*font-weight: bold;*/
 }
 
 div.extended-header .field, div.fieldset-pair-container .field {
     float: left;
     padding-left: 20px;
-    border-left: 2px solid orange;
+    border-left: 1px solid orange;
     word-wrap: break-word;
     width: 75%;
-    max-width: 75%;
+    max-width: 756px;
     min-height: 10px;
     max-height: 150px;
     overflow: auto;
@@ -639,8 +644,8 @@ div.fieldset-pair-container .label {
 }
 
 div.fieldset-pair-container .field {
-    /*border-left: 2px solid #1F419A;*/
-    border-left: 2px solid orange;
+    border-left: 1px solid #1F419A;
+    /*border-left: 1px solid orange;*/
 }
 
 div.extended-header .clear, div.fieldset-pair-container .clear {
@@ -725,4 +730,9 @@ div.extended-header .clear, div.fieldset-pair-container .clear {
     /*border-top-left-radius: 8px;*/
     /*padding: 4px 10px 4px 10px;*/
     /*background: -webkit-linear-gradient(top, #eeeeee, #d8d8d8);*/
+}
+
+.speciesSelection {
+    font-size: 12px;
+    color: rgb(31, 65, 154);
 }

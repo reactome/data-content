@@ -8,11 +8,24 @@
 
 <div class="ebi-content">
 
-    <c:import url="title.jsp"/>
-
-
     <div class="grid_24">
 
+        <c:import url="title.jsp"/>
+
+        <c:if test="${not empty topLevelNodes}">
+            <c:import url="locationsInThePWB.jsp"/>
+        </c:if>
+
+        <c:if test="${not empty databaseObject.summation}">
+            <fieldset class="fieldset-details">
+                <legend>Summation</legend>
+                <div class="wrap overflow">
+                    <c:forEach var="summation" items="${databaseObject.summation}">
+                        <p style="text-align: justify; margin-right: 8px;">${summation.text}</p>
+                    </c:forEach>
+                </div>
+            </fieldset>
+        </c:if>
 
         <c:if test="${not empty databaseObject.literatureReference}">
             <c:import url="literatureReferences.jsp"/>

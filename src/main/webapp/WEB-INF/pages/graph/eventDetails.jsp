@@ -205,32 +205,24 @@
 <c:if test="${not empty databaseObject.inferredFrom}">
     <fieldset class="fieldset-details">
         <legend>Inferred From</legend>
-        <div class="fieldset-pair-container">
-            <div class="label">Inferred From</div>
-            <div class="field">
+        <div class="wrap overflow">
                 <ul class="list">
                     <c:forEach var="inferredFrom" items="${databaseObject.inferredFrom}">
                         <li><a href="../detail/${inferredFrom.stableIdentifier}" class="" title="Show Details" rel="nofollow">${inferredFrom.displayName} (${inferredFrom.speciesName})</a></li>
                     </c:forEach>
                 </ul>
-            </div>
-            <div class="clear"></div>
         </div>
     </fieldset>
 </c:if>
 <c:if test="${not empty databaseObject.orthologousEvent}">
     <fieldset class="fieldset-details">
         <legend>Orthologous Events</legend>
-        <div class="fieldset-pair-container">
-            <div class="label">Orthologous events</div>
-            <div class="field">
+        <div class="wrap overflow">
                 <ul class="list">
                     <c:forEach var="orthologousEvent" items="${databaseObject.orthologousEvent}">
                         <li><a href="../detail/${orthologousEvent.stableIdentifier}" class="" title="Show Details" rel="nofollow">${orthologousEvent.displayName} (${orthologousEvent.speciesName})</a></li>
                     </c:forEach>
                 </ul>
-            </div>
-            <div class="clear"></div>
         </div>
     </fieldset>
 </c:if>
