@@ -11,9 +11,7 @@
             <div class="fieldset-pair-container">
                 <div class="label">External Reference</div>
                 <div class="field">
-                    <a href="${databaseObject.referenceEntity.url}" class="" title="Show Details" rel="show ${databaseObject.referenceEntity.identifier}">
-                            ${databaseObject.referenceEntity.displayName}
-                    </a>
+                    <a href="${databaseObject.referenceEntity.url}" class="" title="Go to External Reference">${databaseObject.referenceEntity.displayName}</a>
                 </div>
                 <div class="clear"></div>
 

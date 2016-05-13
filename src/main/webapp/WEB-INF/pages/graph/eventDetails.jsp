@@ -109,102 +109,102 @@
 <c:if test="${not empty databaseObject.negativelyRegulatedBy || not empty databaseObject.positivelyRegulatedBy || isReactionLikeEvent && not empty databaseObject.catalystActivity}">
 
     <fieldset class="fieldset-details">
-    <legend>This entity is regulated by: </legend>
+        <legend>This entity is regulated by: </legend>
 
-    <c:if test="${isReactionLikeEvent}">
-        <c:if test="${not empty databaseObject.catalystActivity}">
-            <div class="wrap">
-                <table class="dt-fixed-header">
-                    <thead>
-                    <tr>
-                        <th style="">Title</th>
-                        <th style="">Physical Entity</th>
-                        <th style="">Activity</th>
-                    </tr>
-                    </thead>
-                </table>
-                <div class="dt-content-ovf">
-                    <table>
-                        <tbody>
-                        <c:forEach var="catalystActivity" items="${databaseObject.catalystActivity}">
-                            <tr>
-                                <td>${catalystActivity.displayName}</td>
-                                <td>
-                                    <c:if test="${not empty catalystActivity.physicalEntity}">
-                                        <a href="../detail/${catalystActivity.physicalEntity.stableIdentifier}" class="" title="show Reactome ${catalystActivity.physicalEntity.stableIdentifier}" rel="nofollow">${catalystActivity.physicalEntity.displayName}</a>
-                                    </c:if>
-                                </td>
-                                <td>
-                                    <c:if test="${not empty catalystActivity.activity}">
-                                        <a href="${catalystActivity.activity.url}" class=""  title="show ${catalystActivity.activity.databaseName}" rel="nofollow">${catalystActivity.activity.displayName} (${catalystActivity.activity.accession})</a>
-                                    </c:if>
-                                </td>
-                            </tr>
-                        </c:forEach>
-                        </tbody>
+        <c:if test="${isReactionLikeEvent}">
+            <c:if test="${not empty databaseObject.catalystActivity}">
+                <div class="wrap">
+                    <table class="dt-fixed-header">
+                        <thead>
+                        <tr>
+                            <th style="">Title</th>
+                            <th style="">Physical Entity</th>
+                            <th style="">Activity</th>
+                        </tr>
+                        </thead>
                     </table>
+                    <div class="dt-content-ovf">
+                        <table>
+                            <tbody>
+                            <c:forEach var="catalystActivity" items="${databaseObject.catalystActivity}">
+                                <tr>
+                                    <td>${catalystActivity.displayName}</td>
+                                    <td>
+                                        <c:if test="${not empty catalystActivity.physicalEntity}">
+                                            <a href="../detail/${catalystActivity.physicalEntity.stableIdentifier}" class="" title="show Reactome ${catalystActivity.physicalEntity.stableIdentifier}" rel="nofollow">${catalystActivity.physicalEntity.displayName}</a>
+                                        </c:if>
+                                    </td>
+                                    <td>
+                                        <c:if test="${not empty catalystActivity.activity}">
+                                            <a href="${catalystActivity.activity.url}" class=""  title="show ${catalystActivity.activity.databaseName}" rel="nofollow">${catalystActivity.activity.displayName} (${catalystActivity.activity.accession})</a>
+                                        </c:if>
+                                    </td>
+                                </tr>
+                            </c:forEach>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
+            </c:if>
+        </c:if>
+
+
+            <%--<c:if test="${not empty entry.regulatedEvents}">--%>
+        <c:if test="${not empty databaseObject.negativelyRegulatedBy}">
+            <div class="fieldset-pair-container">
+                <div class="label">Negative Regulation</div>
+                <div class="field">
+                    <ul class="list">
+                        <c:forEach var="negativelyRegulatedBy" items="${databaseObject.negativelyRegulatedBy}">
+                            <li>
+                                <a href="../detail/${negativelyRegulatedBy.stableIdentifier}" class="" title="Show Details" rel="nofollow">${negativelyRegulatedBy.displayName}</a>
+                            </li>
+                        </c:forEach>
+                    </ul>
+                </div>
+                <div class="clear"></div>
             </div>
         </c:if>
-    </c:if>
-
-
-    <%--<c:if test="${not empty entry.regulatedEvents}">--%>
-    <c:if test="${not empty databaseObject.negativelyRegulatedBy}">
-        <div class="fieldset-pair-container">
-        <div class="label">Negative Regulation</div>
-        <div class="field">
-            <ul class="list">
-                <c:forEach var="negativelyRegulatedBy" items="${databaseObject.negativelyRegulatedBy}">
-                    <li>
-                        <a href="../detail/${negativelyRegulatedBy.stableIdentifier}" class="" title="Show Details" rel="nofollow">${negativelyRegulatedBy.displayName}</a>
-                    </li>
-                </c:forEach>
-            </ul>
-        </div>
-        <div class="clear"></div>
+        <c:if test="${not empty databaseObject.positivelyRegulatedBy}">
+            <div class="fieldset-pair-container">
+                <div class="label">Positive Regulation</div>
+                <div class="field">
+                    <ul class="list">
+                        <c:forEach var="positivelyRegulatedBy" items="${databaseObject.positivelyRegulatedBy}">
+                            <li>
+                                <a href="../detail/${positivelyRegulatedBy.stableIdentifier}" class="" title="Show Details" rel="nofollow">${positivelyRegulatedBy.displayName}</a>
+                            </li>
+                        </c:forEach>
+                    </ul>
+                </div>
+                <div class="clear"></div>
             </div>
-    </c:if>
-    <c:if test="${not empty databaseObject.positivelyRegulatedBy}">
-        <div class="fieldset-pair-container">
-        <div class="label">Positive Regulation</div>
-        <div class="field">
-            <ul class="list">
-                <c:forEach var="positivelyRegulatedBy" items="${databaseObject.positivelyRegulatedBy}">
-                    <li>
-                        <a href="../detail/${positivelyRegulatedBy.stableIdentifier}" class="" title="Show Details" rel="nofollow">${positivelyRegulatedBy.displayName}</a>
-                    </li>
-                </c:forEach>
-            </ul>
-        </div>
-        <div class="clear"></div>
-            </div>
-    </c:if>
+        </c:if>
     </fieldset>
 </c:if>
 
 
-    <c:if test="${not empty databaseObject.inferredFrom}">
-        <fieldset class="fieldset-details">
-            <legend>Inferred From</legend>
-            <div class="wrap overflow">
-                <ul class="list">
-                    <c:forEach var="inferredFrom" items="${databaseObject.inferredFrom}">
-                        <li><a href="../detail/${inferredFrom.stableIdentifier}" class="" title="Show Details" rel="nofollow">${inferredFrom.displayName} (${inferredFrom.speciesName})</a></li>
-                    </c:forEach>
-                </ul>
-            </div>
-        </fieldset>
-    </c:if>
-    <c:if test="${not empty databaseObject.orthologousEvent}">
-        <fieldset class="fieldset-details">
-            <legend>Orthologous Events</legend>
-            <div class="wrap overflow">
-                <ul class="list">
-                    <c:forEach var="orthologousEvent" items="${databaseObject.orthologousEvent}">
-                        <li><a href="../detail/${orthologousEvent.stableIdentifier}" class="" title="Show Details" rel="nofollow">${orthologousEvent.displayName} (${orthologousEvent.speciesName})</a></li>
-                    </c:forEach>
-                </ul>
-            </div>
-        </fieldset>
-    </c:if>
+<c:if test="${not empty databaseObject.inferredFrom}">
+    <fieldset class="fieldset-details">
+        <legend>Inferred From</legend>
+        <div class="wrap overflow">
+            <ul class="list">
+                <c:forEach var="inferredFrom" items="${databaseObject.inferredFrom}">
+                    <li><a href="../detail/${inferredFrom.stableIdentifier}" class="" title="Show Details" rel="nofollow">${inferredFrom.displayName} (${inferredFrom.speciesName})</a></li>
+                </c:forEach>
+            </ul>
+        </div>
+    </fieldset>
+</c:if>
+<c:if test="${not empty databaseObject.orthologousEvent}">
+    <fieldset class="fieldset-details">
+        <legend>Orthologous Events</legend>
+        <div class="wrap overflow">
+            <ul class="list">
+                <c:forEach var="orthologousEvent" items="${databaseObject.orthologousEvent}">
+                    <li><a href="../detail/${orthologousEvent.stableIdentifier}" class="" title="Show Details" rel="nofollow">${orthologousEvent.displayName} (${orthologousEvent.speciesName})</a></li>
+                </c:forEach>
+            </ul>
+        </div>
+    </fieldset>
+</c:if>

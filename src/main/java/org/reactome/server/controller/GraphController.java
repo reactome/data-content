@@ -174,7 +174,7 @@ class GraphController {
                     model.addAttribute("interactions", interactions);
                     model.addAttribute(INTERACTOR_RESOURCES_MAP, interactorResourceMap); // interactor URL
                     model.addAttribute(EVIDENCES_URL_MAP, WebUtils.prepareEvidencesURLs(interactions)); // evidencesURL
-                    crossReferences.addAll(getCrossReference(ewas));
+                    crossReferences.addAll(getCrossReference(ewas.getReferenceEntity()));
                     if (ewas.getReferenceEntity() instanceof ReferenceSequence) {
                         model.addAttribute("isReferenceSequence", true);
                     }
@@ -207,6 +207,8 @@ class GraphController {
             crossReferences = ((PhysicalEntity) databaseObject).getCrossReference();
         } else if (databaseObject instanceof Event) {
             crossReferences = ((Event) databaseObject).getCrossReference();
+        } else if (databaseObject instanceof ReferenceEntity) {
+            crossReferences = ((ReferenceEntity) databaseObject).getCrossReference();
         }
         return crossReferences != null ? crossReferences : Collections.EMPTY_LIST;
     }

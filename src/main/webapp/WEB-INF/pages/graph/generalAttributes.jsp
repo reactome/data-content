@@ -40,33 +40,19 @@
     <c:if test="${not empty crossReferences}">
         <fieldset class="fieldset-details">
             <legend>Cross References</legend>
-            <div class="wrap">
-                    <%--<h5>Cross References</h5>--%>
-                <table class="dt-fixed-header">
-                    <thead>
-                    <tr>
-                        <th style="width:50px;">Database Name</th>
-                        <th style="width:250px;">Identifier</th>
-                    </tr>
-                    </thead>
-                </table>
-                <div class="dt-content-ovf">
-                    <table>
-                        <tbody>
-                        <c:forEach var="crossReference" items="${crossReferences}">
-                            <tr>
-                                <td style="width:55px;"><strong>${crossReference.key}</strong></td>
-                                <td style="width:255px;">
-                                    <c:forEach var="value" items="${crossReference.value}" varStatus="loop">
-                                        <a href="${value.url}" title="show ${value.displayName}" rel="nofollow">${value.identifier}</a><c:if test="${!loop.last}">, </c:if>
-                                    </c:forEach>
-                                </td>
-                            </tr>
-                        </c:forEach>
-                        </tbody>
-                    </table>
+
+            <c:forEach var="crossReference" items="${crossReferences}">
+            <div class="fieldset-pair-container">
+                <div class="label">${crossReference.key}</div>
+                <div class="field">
+                    <c:forEach var="value" items="${crossReference.value}" varStatus="loop">
+                        <a href="${value.url}" title="show ${value.displayName}" rel="nofollow">${value.identifier}</a><c:if test="${!loop.last}">, </c:if>
+                    </c:forEach>
                 </div>
+                <div class="clear"></div>
             </div>
+            </c:forEach>
+
         </fieldset>
     </c:if>
 
