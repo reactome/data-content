@@ -34,7 +34,7 @@
                                     <c:forEach var="reactomeEntry" items="${interaction.interactorReactomeEntries}">
                                         <ul class="list overflow">
                                             <li>
-                                                <a href="/content/detail/${reactomeEntry.reactomeId}" class=""
+                                                <a href="/content/detail/${reactomeEntry.reactomeId}?interactor=${entry.name}" class=""
                                                    title="Show Details"
                                                    rel="nofollow">${reactomeEntry.reactomeName}<span> (${reactomeEntry.reactomeId})</span></a>
                                             </li>
