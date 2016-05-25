@@ -225,8 +225,8 @@ ul.tree li {
     padding: 0 12px;
     font-size: 14px;
     line-height: 20px;
-    color: #369;
-    font-weight: bold;
+    #color: #369;
+    #font-weight: bold;
     position: relative;
 }
 
@@ -249,6 +249,15 @@ ul.tree ul li:last-child:before {
 }
 
 ul.tree li a {
+
+    -webkit-transition: font-size 0.5s ease, background-color 0.5s ease;
+    -moz-transition: font-size 0.5s ease, background-color 0.5s ease;
+    -o-transition: font-size 0.5s ease, background-color 0.5s ease;
+    -ms-transition: font-size 0.5s ease, background-color 0.5s ease;
+    transition: font-size 0.5s ease, background-color 0.5s ease;
+}
+
+ul.tree li a:visited {
 
     -webkit-transition: font-size 0.5s ease, background-color 0.5s ease;
     -moz-transition: font-size 0.5s ease, background-color 0.5s ease;
@@ -735,4 +744,24 @@ div.extended-header .clear, div.fieldset-pair-container .clear {
 .speciesSelection {
     font-size: 12px;
     color: rgb(31, 65, 154);
+}
+
+.tree-root {
+    color: #1F419A;
+}
+
+a.tree-root:visited {
+    color: #1F419A;
+}
+
+.tree-highlighted-item {
+    background-color: beige;
+}
+
+.tree-grayedout-item {
+    color: #AFAFAF;
+}
+
+a.tree-highlighted-item:visited {
+    color: #1F419A;
 }
