@@ -1,5 +1,6 @@
 package org.reactome.server.controller;
 
+import org.apache.commons.lang.StringUtils;
 import org.reactome.server.graph.domain.model.*;
 import org.reactome.server.graph.service.DatabaseObjectService;
 import org.reactome.server.graph.service.DetailsService;
@@ -24,7 +25,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import psidev.psi.mi.tab.model.CrossReference;
 
 import java.sql.SQLException;
 import java.util.*;
@@ -40,7 +40,6 @@ import java.util.*;
 class GraphController {
 
     private static final String TITLE = "title";
-    private static final String ENTRY = "entry";
     private static final String INTERACTOR_RESOURCES_MAP = "interactorResourceMap";
     private static final String EVIDENCES_URL_MAP = "evidencesUrlMap";
 
@@ -130,10 +129,15 @@ class GraphController {
      * @throws SolrSearcherException
      */
     @RequestMapping(value = "/detail/{id:.*}", method = RequestMethod.GET)
-    public String detail(@PathVariable String id, ModelMap model) throws Exception {
+    public String detail(@PathVariable String id,
+                         @RequestParam(required = false, defaultValue = "") String interactor,
+                         ModelMap model) throws Exception {
 
         try {
-            ContentDetails contentDetails = detailsService.getContentDetails2(id);
+
+            boolean interactorPage = StringUtils.isNotEmpty(interactor);
+
+            ContentDetails contentDetails = detailsService.getContentDetails(id, interactorPage);
 
             if (contentDetails != null && contentDetails.getDatabaseObject() != null) {
             DatabaseObject databaseObject = contentDetails.getDatabaseObject();
