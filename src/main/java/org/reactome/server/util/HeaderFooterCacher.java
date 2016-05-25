@@ -37,7 +37,7 @@ public class HeaderFooterCacher extends Thread {
     private final String server;
 
     @Autowired
-    public HeaderFooterCacher(@Value("${template_server_host}") String server) {
+    public HeaderFooterCacher(@Value("${template.server}") String server) {
         this.server = server;
         start();
     }

@@ -75,10 +75,10 @@ class SearchController {
     private static final String PAGE_EBI_ADVANCED = "search/advanced";
     private static final String PAGE_EBI_SEARCHER = "search/results";
 
-    @Value("${mail_error_dest}")
+    @Value("${mail.error.dest}")
     private String mailErrorDest; // E
 
-    @Value("${mail_support_dest}")
+    @Value("${mail.support.dest}")
     private String mailSupportDest; // W
 
 //    @Autowired
