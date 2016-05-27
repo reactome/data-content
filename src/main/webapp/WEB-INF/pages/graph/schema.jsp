@@ -31,7 +31,7 @@
                                     <a href="/object/detail/${object.dbId}">${object.dbId}</a>
                                 </td>
                                 <td style="width: 18%">
-                                    <a href="/object/detail/${object.stableIdentifier}">${object.stableIdentifier}</a>
+                                    <a href="/object/detail/${object.stId}">${object.stId}</a>
                                 <td style="width: 72%">
                                     <div class=scrollable>
                                             ${object.displayName}

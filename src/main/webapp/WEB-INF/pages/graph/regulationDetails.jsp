@@ -13,14 +13,14 @@
         <c:if test="${not empty databaseObject.regulatedEntity}">
             <div class="fieldset-pair-container">
                 <div class="label">Regulated entity</div>
-                <div class="field"><a href="../detail/${databaseObject.regulatedEntity.stableIdentifier}" class="" title="Show Details" rel="nofollow">${databaseObject.regulatedEntity.displayName}</a></div>
+                <div class="field"><a href="../detail/${databaseObject.regulatedEntity.stId}" class="" title="Show Details" rel="nofollow">${databaseObject.regulatedEntity.displayName}</a></div>
                 <div class="clear"></div>
             </div>
         </c:if>
         <c:if test="${not empty databaseObject.regulator}">
             <div class="fieldset-pair-container">
                 <div class="label">Regulator</div>
-                <div class="field"><a href="../detail/${databaseObject.regulator.stableIdentifier}" class="" title="Show Details" rel="nofollow">${databaseObject.regulator.displayName}</a></div>
+                <div class="field"><a href="../detail/${databaseObject.regulator.stId}" class="" title="Show Details" rel="nofollow">${databaseObject.regulator.displayName}</a></div>
                 <div class="clear"></div>
             </div>
         </c:if>

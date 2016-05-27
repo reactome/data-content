@@ -23,12 +23,12 @@
 </h3>
 
 <div class="extended-header">
-    <c:if test="${not empty databaseObject.stableIdentifier}">
+    <c:if test="${not empty databaseObject.stId}">
         <div class="label">
             <span>Stable Identifier</span>
         </div>
         <div class="field">
-            <span>${databaseObject.stableIdentifier}</span>
+            <span>${databaseObject.stId}</span>
         </div>
         <div class="clear"></div>
     </c:if>
