@@ -10,6 +10,7 @@ import org.reactome.server.graph.service.helper.PathwayBrowserNode;
 import org.reactome.server.graph.service.helper.RelationshipDirection;
 import org.reactome.server.graph.service.helper.SchemaNode;
 import org.reactome.server.graph.service.util.DatabaseObjectUtils;
+import org.reactome.server.graph.service.util.PathwayBrowserLocationsUtils;
 import org.reactome.server.interactors.model.Interaction;
 import org.reactome.server.interactors.model.InteractorResource;
 import org.reactome.server.interactors.service.InteractionService;
@@ -97,7 +98,7 @@ class GraphController {
         model.addAttribute("className", className);
         model.addAttribute("page", page);
         model.addAttribute("maxpage", classBrowserCache.findMaxPage(className, OFFSET));
-        model.addAttribute("objects", generalService.findObjectsByClassName(className,page,OFFSET));
+        model.addAttribute("objects", generalService.findByClassName(className,page,OFFSET));
         return "graph/schema";
     }
 
@@ -148,17 +149,17 @@ class GraphController {
                  * To complete the object for the object/details view all incoming relationships have to be loaded.
                  * The Mapping will be done automatically by Spring.
                  */
-                generalService.findByDbId(databaseObject.getDbId(), RelationshipDirection.INCOMING);
+                generalService.findById(databaseObject.getDbId(), RelationshipDirection.INCOMING);
                 model.addAttribute("map", DatabaseObjectUtils.getAllFields(databaseObject));
                 return "redirect:/object/detail/" + id;
             } else {
-                Set<PathwayBrowserNode> topLevelNodes = contentDetails.getLeaves();
+                Set<PathwayBrowserNode> topLevelNodes = contentDetails.getNodes();
 
                 model.addAttribute(TITLE, databaseObject.getDisplayName());
                 model.addAttribute("databaseObject", databaseObject);
                 model.addAttribute("clazz", superClass);
                 model.addAttribute("topLevelNodes", topLevelNodes);
-                model.addAttribute("availableSpecies", DatabaseObjectUtils.getAvailableSpecies(topLevelNodes));
+                model.addAttribute("availableSpecies", PathwayBrowserLocationsUtils.getAvailableSpecies(topLevelNodes));
                 model.addAttribute("componentOf", contentDetails.getComponentOf());
                 model.addAttribute("otherFormsOfThisMolecule", contentDetails.getOtherFormsOfThisMolecule());
                 List<DatabaseIdentifier> crossReferences = new ArrayList<>();
