@@ -2,9 +2,7 @@ package org.reactome.server.controller;
 
 import org.apache.commons.lang.StringUtils;
 import org.reactome.server.graph.domain.model.*;
-import org.reactome.server.graph.service.DatabaseObjectService;
-import org.reactome.server.graph.service.DetailsService;
-import org.reactome.server.graph.service.GeneralService;
+import org.reactome.server.graph.service.*;
 import org.reactome.server.graph.service.helper.ContentDetails;
 import org.reactome.server.graph.service.helper.PathwayBrowserNode;
 import org.reactome.server.graph.service.helper.RelationshipDirection;
@@ -54,10 +52,16 @@ class GraphController {
     private GeneralService generalService;
 
     @Autowired
+    private AdvancedDatabaseObjectService advancedDatabaseObjectService;
+
+    @Autowired
     private InteractionService interactionService;
 
     @Autowired
     private DetailsService detailsService;
+
+    @Autowired
+    private SchemaService schemaService;
 
     private SchemaNode classBrowserCache;
 
@@ -98,7 +102,7 @@ class GraphController {
         model.addAttribute("className", className);
         model.addAttribute("page", page);
         model.addAttribute("maxpage", classBrowserCache.findMaxPage(className, OFFSET));
-        model.addAttribute("objects", generalService.findByClassName(className,page,OFFSET));
+        model.addAttribute("objects", schemaService.getByClassName(className,page,OFFSET));
         return "graph/schema";
     }
 
@@ -149,7 +153,7 @@ class GraphController {
                  * To complete the object for the object/details view all incoming relationships have to be loaded.
                  * The Mapping will be done automatically by Spring.
                  */
-                generalService.findById(databaseObject.getDbId(), RelationshipDirection.INCOMING);
+                advancedDatabaseObjectService.findById(databaseObject.getDbId(), RelationshipDirection.INCOMING);
                 model.addAttribute("map", DatabaseObjectUtils.getAllFields(databaseObject));
                 return "redirect:/object/detail/" + id;
             } else {
