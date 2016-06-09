@@ -17,7 +17,7 @@
         </rollingPolicy>
         <triggeringPolicy
                 class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
-            <maxFileSize>10KB</maxFileSize>
+            <maxFileSize>10MB</maxFileSize>
         </triggeringPolicy>
         <encoder>
             <pattern>%d %-5level [%thread] %logger{0}: %msg%n</pattern>
@@ -46,29 +46,18 @@
         </connectionSource>
     </appender>
 
-    <!--//not Working because SQLITE does not support getGeneratedKeys method. This way would speed up logging to db-->
-    <!--<appender name="DB" class="ch.qos.logback.classic.db.DBAppender">-->
-    <!--<connectionSource class="ch.qos.logback.core.db.DataSourceConnectionSource">-->
-    <!--<dataSource class="com.mchange.v2.c3p0.ComboPooledDataSource">-->
-    <!--<driverClass>org.sqlite.JDBC</driverClass>-->
-    <!--<url>jdbc:sqlite:/home/flo/IdeaProjects/logback.db</url>-->
-    <!--</dataSource>-->
-    <!--</connectionSource>-->
-    <!--</appender>-->
-
-    <!--Async appender-->
-    <!--<appender name="ASYNC" class="ch.qos.logback.classic.AsyncAppender">-->
-        <!--<appender-ref ref="DB" />-->
-        <!--<includeCallerData>true</includeCallerData>-->
-    <!--</appender>-->
+    <!--Async appender, will add 10 ms per request if not used-->
+    <appender name="ASYNC" class="ch.qos.logback.classic.AsyncAppender">
+        <appender-ref ref="DB" />
+        <includeCallerData>true</includeCallerData>
+    </appender>
 
     <logger name="infoLogger" level="INFO"  >
-        <appender-ref ref="DB"/>
+        <appender-ref ref="ASYNC"/>
     </logger>
 
     <logger name="errorLogger" level="ERROR">
         <appender-ref ref="EMAIL" />
-        <appender-ref ref="DB"/>
     </logger>
 
     <root level="INFO">
