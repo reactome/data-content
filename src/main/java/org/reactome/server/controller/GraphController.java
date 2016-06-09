@@ -17,6 +17,8 @@ import org.reactome.server.interactors.util.InteractorConstant;
 import org.reactome.server.search.exception.EnricherException;
 import org.reactome.server.search.exception.SolrSearcherException;
 import org.reactome.server.util.WebUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -34,14 +36,17 @@ import java.util.*;
  * @author Florian Korninger (florian.korninger@ebi.ac.uk)
  * @since 10.02.16.
  */
+@SuppressWarnings("SameReturnValue")
 @Controller
 @RequestMapping("")
 class GraphController {
 
+    private static final Logger infoLogger = LoggerFactory.getLogger("infoLogger");
+    private static final Logger errorLogger = LoggerFactory.getLogger("errorLogger");
+
     private static final String TITLE = "title";
     private static final String INTERACTOR_RESOURCES_MAP = "interactorResourceMap";
     private static final String EVIDENCES_URL_MAP = "evidencesUrlMap";
-
 
     private static final int OFFSET = 25;
 
@@ -67,31 +72,35 @@ class GraphController {
 
     private Map<Long, InteractorResource> interactorResourceMap = new HashMap<>();
 
-
+    /**
+     * These resources are the same all the time.
+     * In order to speed up the query result and less memory usage, I decided to keep the resource out of the query
+     * and keep a cache with them. Thus we avoid having the same information for all results.
+     * @param interactorResourceService
+     */
     @Autowired
     public GraphController(InteractorResourceService interactorResourceService) {
         try {
-            /**
-             * These resources are the same all the time.
-             * In order to speed up the query result and less memory usage, I decided to keep the resource out of the query
-             * and keep a cache with them. Thus we avoid having the same information for all results.
-             */
             interactorResourceMap = interactorResourceService.getAllMappedById();
         } catch (SQLException e) {
-//            logger.error("An error has occurred while querying InteractorResource: " + e.getMessage(), e);
+            errorLogger.error("An error has occurred while querying InteractorResource: " + e.getMessage(), e);
         }
     }
 
-
-    @RequestMapping(value = "/object/detail/{id:.*}", method = RequestMethod.GET)
+    @RequestMapping(value = "/schema/object/detail/{id}", method = RequestMethod.GET)
     public String objectDetail(@PathVariable String id, ModelMap model) {
 
         DatabaseObject databaseObject = databaseObjectService.findById(id);
+        if (databaseObject == null) {
+            infoLogger.info("DatabaseObject for id: {} was {}", id, "not found");
+            return "search/noDetailsFound";
+        }
         model.addAttribute("map", DatabaseObjectUtils.getAllFields(databaseObject));
+        infoLogger.info("DatabaseObject for id: {} was {}", id, "found");
         return "graph/schemaDetail";
     }
 
-    @RequestMapping(value = "/details/{className:.*}", method = RequestMethod.GET)
+    @RequestMapping(value = "/schema/objects/{className}", method = RequestMethod.GET)
     public String getClassBrowserInstances(@PathVariable String className,
                                            @RequestParam Integer page,
                                            ModelMap model) throws ClassNotFoundException {
@@ -102,11 +111,17 @@ class GraphController {
         model.addAttribute("className", className);
         model.addAttribute("page", page);
         model.addAttribute("maxpage", classBrowserCache.findMaxPage(className, OFFSET));
-        model.addAttribute("objects", schemaService.getByClassName(className,page,OFFSET));
+        Collection<DatabaseObject> databaseObjects = schemaService.getByClassName(className,page,OFFSET);
+        if (databaseObjects == null || databaseObjects.isEmpty()) {
+            infoLogger.info("DatabaseObjects for class: {} were {}", className, "not found");
+            return "search/noDetailsFound";
+        }
+        model.addAttribute("objects", databaseObjects);
+        infoLogger.info("DatabaseObjects for class: {} were {}", className, "fFound");
         return "graph/schema";
     }
 
-    @RequestMapping(value = "/schema/{className:.*}", method = RequestMethod.GET)
+    @RequestMapping(value = "/schema/{className}", method = RequestMethod.GET)
     public String getClassBrowserDetails(@PathVariable String className, ModelMap model) throws ClassNotFoundException {
         if (classBrowserCache == null) {
             classBrowserCache = DatabaseObjectUtils.getGraphModelTree(generalService.getSchemaClassCounts());
@@ -122,12 +137,10 @@ class GraphController {
         return getClassBrowserDetails(DatabaseObject.class.getSimpleName(), model);
     }
 
-
     /**
      * Shows detailed information of an entry
      *
      * @param id    StId or DbId
-     *              //     * @param q,species,types,compartments,keywords parameters to save existing query and facets
      * @param model SpringModel
      * @return Detailed page
      * @throws EnricherException
@@ -137,8 +150,6 @@ class GraphController {
     public String detail(@PathVariable String id,
                          @RequestParam(required = false, defaultValue = "") String interactor,
                          ModelMap model) throws Exception {
-
-        try {
 
             boolean interactorPage = StringUtils.isNotEmpty(interactor);
 
@@ -168,15 +179,8 @@ class GraphController {
                 model.addAttribute("otherFormsOfThisMolecule", contentDetails.getOtherFormsOfThisMolecule());
                 List<DatabaseIdentifier> crossReferences = new ArrayList<>();
                 crossReferences.addAll(getCrossReference(databaseObject));
-                if (databaseObject instanceof ReactionLikeEvent) {
-                    model.addAttribute("isReactionLikeEvent", true);
-                }
-                if (databaseObject instanceof EntitySet) {
-                    model.addAttribute("isEntitySet", true);
-                }
-                if(databaseObject instanceof OpenSet || databaseObject instanceof EntityWithAccessionedSequence || databaseObject instanceof SimpleEntity) {
-                    model.addAttribute("hasReferenceEntity", true);
-                }
+                setClassAttributes(databaseObject, model);
+
                 if (databaseObject instanceof EntityWithAccessionedSequence) {
                     EntityWithAccessionedSequence ewas = (EntityWithAccessionedSequence) databaseObject;
                     List<Interaction> interactions = interactionService.getInteractions(ewas.getReferenceEntity().getIdentifier(), InteractorConstant.STATIC);
@@ -189,17 +193,26 @@ class GraphController {
                     }
                 }
                 model.addAttribute("crossReferences", groupCrossReferences(crossReferences));
+                infoLogger.info("DatabaseObject for id: {} was {}", id, "found");
                 return "graph/detail";
             }
         }
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.out.println("!!!!!!!!!  id: " + id);
-        }
+        infoLogger.info("DatabaseObject for id: {} was {}", id, "notFound");
         return "search/noDetailsFound";
-
     }
 
+
+    private void setClassAttributes (DatabaseObject databaseObject, ModelMap model) {
+        if (databaseObject instanceof ReactionLikeEvent) {
+            model.addAttribute("isReactionLikeEvent", true);
+        }
+        else if (databaseObject instanceof EntitySet) {
+            model.addAttribute("isEntitySet", true);
+        }
+        else if(databaseObject instanceof OpenSet || databaseObject instanceof EntityWithAccessionedSequence || databaseObject instanceof SimpleEntity) {
+            model.addAttribute("hasReferenceEntity", true);
+        }
+    }
 
     private Map<String, List<DatabaseIdentifier>> groupCrossReferences(List<DatabaseIdentifier> databaseIdentifiers) {
         if (databaseIdentifiers == null) return null;
@@ -222,7 +235,7 @@ class GraphController {
         return crossReferences != null ? crossReferences : Collections.EMPTY_LIST;
     }
 
-    private String getClazz(DatabaseObject databaseObject) throws Exception {
+    private String getClazz(DatabaseObject databaseObject) {
         if (databaseObject != null) {
             if (databaseObject instanceof Event) {
                 return Event.class.getSimpleName();
@@ -234,63 +247,4 @@ class GraphController {
         }
         return null;
     }
-
-    /**
-     * Shows detailed information of an entry
-     *
-     * @param id    StId or DbId
-     *              //     * @param q,species,types,compartments,keywords parameters to save existing query and facets
-     * @param model SpringModel
-     * @return Detailed page
-     * @throws EnricherException
-     * @throws SolrSearcherException
-     */
-//    @RequestMapping(value = "/detail/{id:.*}", method = RequestMethod.GET)
-//    public String detail(@PathVariable String id, ModelMap model) throws EnricherException, SolrSearcherException {
-//
-//        EnrichedEntry entry = searchService.getEntryById(id);
-//        DatabaseObject databaseObject = new Pathway();
-//        databaseObject.setStableIdentifier(entry.getStId());
-//        databaseObject.setDisplayName(entry.getName());
-//        databaseObject.setSpeciesName(entry.getSpecies());
-//        entry.setLocationsPathwayBrowser(genericService.getLocationsInPathwayBrowser(databaseObject));
-//        if (entry != null) {
-//            model.addAttribute(ENTRY, entry);
-//            model.addAttribute(TITLE, entry.getName());
-//            model.addAttribute(INTERACTOR_RESOURCES_MAP, interactorResourceMap); // interactor URL
-//            model.addAttribute(EVIDENCES_URL_MAP, prepareEvidencesURLs(entry.getInteractionList())); // evidencesURL
-//            return PAGE_DETAIL;
-//        } else {
-//            autoFillDetailsPage(model, id);
-//            return PAGE_NO_DETAILS_FOUND;
-//        }
-//    }
-
-    /**
-     * These resources are the same all the time.
-     * In order to speed up the query result and less memory usage, I decided to keep the resource out of the query
-     * and keep a cache with them. Thus we avoid having the same information for all result.
-     *
-     * This method set the map class attribute.
-     */
-//    private void cacheResources(){
-//        cacheInteractionResources();
-//        cacheInteractorResources();
-//    }
-//
-//    private void cacheInteractorResources(){
-//        try {
-//            interactorResourceMap = interactorResourceService.getAllMappedById();
-//        } catch (SQLException e) {
-//            logger.error("An error has occurred while querying InteractorResource: " + e.getMessage(), e);
-//        }
-//    }
-//
-//    private void cacheInteractionResources(){
-//        try {
-//            interactionResourceMap = interactionResourceService.getAllMappedById();
-//        } catch (SQLException e) {
-//            logger.error("An error has occurred while querying InteractionResource: " + e.getMessage(), e);
-//        }
-//    }
 }

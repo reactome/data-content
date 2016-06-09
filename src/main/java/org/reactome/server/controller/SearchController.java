@@ -33,7 +33,8 @@ import static org.reactome.server.util.WebUtils.cleanReceivedParameters;
 @RequestMapping("")
 class SearchController {
 
-    private static final Logger logger = LoggerFactory.getLogger(SearchController.class);
+    private static final Logger errorLogger = LoggerFactory.getLogger("errorLogger");
+    private static final Logger infoLogger = LoggerFactory.getLogger("infoLogger");
 
     @Autowired
     private SearchService searchService;
@@ -81,20 +82,6 @@ class SearchController {
     @Value("${mail.support.dest}")
     private String mailSupportDest; // W
 
-//    @Autowired
-//    public SearchController(InteractorResourceService interactorResourceService) {
-//        try {
-//            /**
-//             * These resources are the same all the time.
-//             * In order to speed up the query result and less memory usage, I decided to keep the resource out of the query
-//             * and keep a cache with them. Thus we avoid having the same information for all results.
-//             */
-//            interactorResourceMap = interactorResourceService.getAllMappedById();
-//        } catch (SQLException e) {
-//            logger.error("An error has occurred while querying InteractorResource: " + e.getMessage(), e);
-//        }
-//    }
-
     /**
      * Method for autocompletion
      *
@@ -106,6 +93,12 @@ class SearchController {
     @ResponseBody
     public List<String> getTags(@RequestParam String tagName) throws SolrSearcherException {
         return searchService.getAutocompleteSuggestions(tagName);
+    }
+
+    @RequestMapping(value = "/error", method = RequestMethod.GET)
+    @ResponseBody
+    public List<String> getTags() throws SolrSearcherException {
+        throw new SolrSearcherException("Error at time: " + System.currentTimeMillis());
     }
 
     /**
@@ -136,15 +129,17 @@ class SearchController {
      * @throws SolrSearcherException
      */
     @RequestMapping(value = "/detail/interactor/{id:.*}", method = RequestMethod.GET)
-    public String interactorDetail(@PathVariable String id, ModelMap model) throws EnricherException, SolrSearcherException {
+    public String interactorDetail(@PathVariable String id, ModelMap model) throws SolrSearcherException {
 
         InteractorEntry entry = searchService.getInteractionDetail(id);
         if (entry != null) {
             model.addAttribute(ENTRY, entry);
             model.addAttribute(TITLE, entry.getName());
+            infoLogger.info("Search request for id: {} was ", id, "found");
             return PAGE_INTERACTOR;
         } else {
             autoFillDetailsPage(model, id);
+            infoLogger.info("Search request for id: {} was ", id, "notFound");
             return PAGE_NO_DETAILS_FOUND;
         }
     }
@@ -169,6 +164,7 @@ class SearchController {
                          ModelMap model) throws SolrSearcherException {
 
         if (q != null && !q.isEmpty()) {
+
             if (cluster == null) cluster = false;
             if (page == null || page == 0) page = 1;
 
@@ -198,6 +194,7 @@ class SearchController {
                 model.addAttribute(COMPARTMENTS_FACET, searchResult.getFacetMapping().getCompartmentFacet());
                 model.addAttribute(MAX_PAGE, (int) Math.ceil(searchResult.getResultCount() / searchResult.getRows()));
                 model.addAttribute(GROUPED_RESULT, searchResult.getGroupedResult());
+                infoLogger.info("Search request for query: {} was ", q, "found");
                 return PAGE_EBI_SEARCHER;
             } else {
                 // Generating spell check suggestions if no faceting information was found, while using no filters
@@ -205,6 +202,7 @@ class SearchController {
             }
         }
         autoFillContactForm(model, q);
+        infoLogger.info("Search request for query: {} was ", q, "not found");
         return PAGE_NO_RESULTS_FOUND;
     }
 
@@ -243,9 +241,8 @@ class SearchController {
             List<String> suggestions = searchService.getSpellcheckSuggestions(search);
             model.addAttribute(SUGGESTIONS, suggestions);
         } catch (SolrSearcherException e) {
-            logger.error("Error building suggestions on autoFillContactForm.");
+            errorLogger.error("Error building suggestions on autoFillContactForm.");
         }
-
         model.addAttribute(MAIL_SUBJECT, MAIL_SUBJECT_PLACEHOLDER + search);
         model.addAttribute(MAIL_MESSAGE, String.format(MAIL_MESSAGE_PLACEHOLDER, search));
         model.addAttribute(TITLE, "No results found for " + search);

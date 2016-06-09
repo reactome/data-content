@@ -13,7 +13,7 @@
                 <div class="field">
                     <ul class="list">
                         <c:forEach var="hasEvent" items="${databaseObject.hasEvent}">
-                            <li><a href="../detail/${hasEvent.stableIdentifier}" class="" title="Show Details" rel="nofollow">${hasEvent.displayName} <c:if test="${not empty hasEvent.speciesName}">(${hasEvent.speciesName})</c:if></a></li>
+                            <li><a href="../detail/${hasEvent.stId}" class="" title="Show Details" rel="nofollow">${hasEvent.displayName} <c:if test="${not empty hasEvent.speciesName}">(${hasEvent.speciesName})</c:if></a></li>
                         </c:forEach>
                     </ul>
                 </div>

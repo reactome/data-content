@@ -24,7 +24,8 @@ import java.io.IOException;
 @ControllerAdvice
 class GlobalExceptionHandler {
 
-    private static final Logger logger = LoggerFactory.getLogger(GlobalExceptionHandler.class);
+    private static final Logger errorLogger = LoggerFactory.getLogger("errorLogger");
+
     private static final String EXCEPTION = "exception";
     private static final String URL = "url";
     private static final String SUBJECT = "subject";
@@ -32,11 +33,6 @@ class GlobalExceptionHandler {
     private static final String TITLE = "title";
 
     private static final String PAGE = "search/errorPage";
-
-    @ExceptionHandler(EnricherException.class)
-    public ModelAndView handleOtherExceptions(HttpServletRequest request, EnricherException e) {
-        return buildModelView(request, e);
-    }
 
     @ExceptionHandler(SolrSearcherException.class)
     public ModelAndView handleSolrSearcherException(HttpServletRequest request, SolrSearcherException e) {
@@ -46,11 +42,11 @@ class GlobalExceptionHandler {
     @ResponseStatus(value = HttpStatus.NOT_FOUND, reason = "IOException occurred")
     @ExceptionHandler(IOException.class)
     public void handleIOException() {
-        logger.error("IOException handler executed");  //returning 404 error code
+        errorLogger.error("IOException handler executed");  //returning 404 error code
     }
 
     private ModelAndView buildModelView(HttpServletRequest request, Exception e) {
-        logger.info("Exception occurred:: URL=" + request.getRequestURL());
+        errorLogger.error("Exception occurred:: URL=" + request.getRequestURL(), e);
 
         ModelAndView model = new ModelAndView(PAGE);
         model.addObject(EXCEPTION, e);

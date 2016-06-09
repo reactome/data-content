@@ -9,3 +9,7 @@
 #### Project usage
 
 ...
+
+sqlite
+
+sqlite3 -init /dir/to/sqllite.sql -version /dir/to/logback.db

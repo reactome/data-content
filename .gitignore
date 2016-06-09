@@ -4,6 +4,7 @@
 
 header.jsp
 footer.jsp
+*.db
 
 *target*
 *.jar
