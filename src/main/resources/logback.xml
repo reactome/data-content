@@ -29,7 +29,7 @@
         <smtpHost>${mail.host}</smtpHost>
         <smtpPort>${mail.port}</smtpPort>
         <to>${mail.to}</to>
-        <from>{mail.from}</from>
+        <from>${mail.from}</from>
         <subject>${mail.subject}</subject>
 
         <maxMessages>5</maxMessages>
