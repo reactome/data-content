@@ -4,6 +4,8 @@
 <fieldset class="fieldset-details">
     <legend>Locations in the PathwayBrowser
 
+        <c:if test="${not empty param['interactor']}"> for interactor ${param['interactor']}</c:if>
+
         <c:if test="${fn:length(availableSpecies) gt 1}">
             <%--<div class="padding">--%>
             for Species:
