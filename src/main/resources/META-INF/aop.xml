@@ -1,0 +1,15 @@
+<!DOCTYPE aspectj PUBLIC
+        "-//AspectJ//DTD//EN" "http://www.eclipse.org/aspectj/dtd/aspectj.dtd">
+<aspectj>
+    <weaver>
+        <!-- only weave classes in our application-specific packages -->
+        <include within="org.reactome.server.graph.domain.model.*" />
+
+        <!-- The Lazy Fetch Aspect should be included in the weaver context -->
+        <include within="org.reactome.server.graph.aop.LazyFetchAspect"/>
+    </weaver>
+    <aspects>
+        <!-- weave in just this aspect -->
+        <aspect name="org.reactome.server.graph.aop.LazyFetchAspect" />
+    </aspects>
+</aspectj>

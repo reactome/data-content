@@ -14,6 +14,9 @@
     <context:component-scan base-package="org.reactome.server"/>
     <context:property-placeholder location="classpath:/core.properties" />
 
+    <!-- Enabling AOP Load-Time-Weaver -->
+    <context:load-time-weaver />
+
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix" value="/WEB-INF/pages/"/>
         <property name="suffix" value=".jsp"/>
@@ -85,5 +88,8 @@
             </list>
         </property>
     </bean>
+
+    <!-- The aspect is a singleton object and is created outside the Spring container. A solution with XML configuration is to use Spring's factory method to retrieve the aspect -->
+    <bean id="lazyFetchAspect" class="org.reactome.server.graph.aop.LazyFetchAspect" factory-method="aspectOf" />
 
 </beans>
