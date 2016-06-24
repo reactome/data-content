@@ -327,19 +327,9 @@ ul.tree li a:hover {
     width: auto;
 }
 
-/*select {*/
-/*width: 22em;*/
-/*height: 13em;*/
-/*white-space: nowrap;*/
-/*overflow: scroll;*/
-/*}*/
-
 .advTable {
     width: 80%; align-content : center;
     table-layout: fixed;
-
-    /*margin-left: auto;*/
-    /*margin-right: auto;*/
 }
 
 .advTable td {
@@ -368,20 +358,6 @@ ul.tree li a:hover {
     width: 98%;
     height: 10%;
 }
-
-/*#double {*/
-/*-webkit-column-count: 3;*/
-/*-moz-column-count: 3;*/
-/*-ms-column-count: 3;*/
-/*-o-column-count: 3;*/
-/*column-count: 3;*/
-/*-webkit-column-gap: 15px;*/
-/*-moz-column-gap: 15px;*/
-/*-ms-column-gap: 15px;*/
-/*-o-column-gap: 15px;*/
-/*column-gap: 15px;*/
-/*columns: 3;*/
-/*}*/
 
 .contact-form {
     padding: 1px;
@@ -463,59 +439,6 @@ ul.tree li a:hover {
     color: #05194C !important;
 }
 
-/*.wrap {*/
-    /*!*width: 352px;*!*/
-    /*!*margin-bottom: 0px;*!*/
-    /*padding-left: 20px;*/
-    /*padding-right: 20px;*/
-/*}*/
-
-/*.wrap table {*/
-    /*!*border: 0px solid !important;*!*/
-    /*width: 300px;*/
-    /*table-layout: fixed;*/
-/*}*/
-
-/*.wrap .fixedTable {*/
-    /*margin-bottom: 0;*/
-    /*border-bottom: 0;*/
-/*}*/
-
-/*.wrap .fixedTable th {*/
-    /*border:none;*/
-    /*color: #1F419A;*/
-    /*font-weight: bold;*/
-    /*font-size: 14px;*/
-    /*box-shadow: 2px 2px 1px #AFAFAF;*/
-    /*text-shadow: 1px 1px 3px #ffffff;*/
-    /*background-color: #eeeeee;*/
-    /*background: -moz-linear-gradient(top, #eeeeee, #d8d8d8);*/
-    /*background: -o-linear-gradient(top, #eeeeee, #d8d8d8);*/
-    /*background: -webkit-linear-gradient(top, #eeeeee, #d8d8d8);*/
-    /*background: linear-gradient(top, #eeeeee, #d8d8d8);*/
-    /*padding: 8px 15px 5px 15px;*/
-/*}*/
-
-/*.wrap .inner_table_div {*/
-    /*!*border: 0px solid !important;*!*/
-    /*max-height: 200px;*/
-    /*overflow-y: auto;*/
-    /*border-top: 0 solid;*/
-    /*margin-top: 5px;*/
-/*}*/
-
-/*.wrap .inner_table_div table {*/
-    /*border-top: 0 solid;*/
-    /*margin-top: 0;*/
-/*}*/
-
-/*.wrap .inner_table_div table td{*/
-    /*border:none;*/
-    /*color: #000;*/
-    /*padding-left: 20px;*/
-
-/*}*/
-
 .pathway_location_section {
     padding: 6px;
 }
@@ -551,7 +474,7 @@ div#two {
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
-    color: #000;
+    color: #1F419A;
     border: 0;
     padding: 0;
 }

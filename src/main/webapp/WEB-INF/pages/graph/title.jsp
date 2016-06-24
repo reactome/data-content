@@ -2,9 +2,17 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <h3 class="details-title">
-    <c:if test="${not empty databaseObject.schemaClass}">
-        <i class="sprite sprite-${databaseObject.schemaClass}" title="${type}"></i>
-    </c:if>
+
+    <c:choose>
+        <c:when test="${hasReferenceEntity}">
+            <i class="sprite sprite-${databaseObject.referenceType}" title="${type}"></i>
+        </c:when>
+        <c:otherwise>
+            <c:if test="${not empty databaseObject.schemaClass}">
+                <i class="sprite sprite-${databaseObject.schemaClass}" title="${type}"></i>
+            </c:if>
+        </c:otherwise>
+    </c:choose>
 
     <c:if test="${clazz == 'Event'}">
         <c:if test="${databaseObject.isInDisease}">

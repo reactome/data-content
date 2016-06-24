@@ -14,9 +14,6 @@
     <context:component-scan base-package="org.reactome.server"/>
     <context:property-placeholder location="classpath:/core.properties" />
 
-    <!-- Enabling AOP Load-Time-Weaver -->
-    <context:load-time-weaver />
-
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix" value="/WEB-INF/pages/"/>
         <property name="suffix" value=".jsp"/>
@@ -66,7 +63,6 @@
         </property>
     </bean>
 
-
     <bean class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
         <property name="targetClass" value="java.lang.System"/>
         <property name="targetMethod" value="setProperty"/>
@@ -89,7 +85,8 @@
         </property>
     </bean>
 
-    <!-- The aspect is a singleton object and is created outside the Spring container. A solution with XML configuration is to use Spring's factory method to retrieve the aspect -->
-    <bean id="lazyFetchAspect" class="org.reactome.server.graph.aop.LazyFetchAspect" factory-method="aspectOf" />
-
+    <!-- Disabling the LazyLoading feature -->
+    <bean class="org.reactome.server.graph.aop.LazyFetchAspect" factory-method="aspectOf">
+        <property name="enableAOP" value="false"/>
+    </bean>
 </beans>
