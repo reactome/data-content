@@ -8,10 +8,9 @@
     </appender>
 
     <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>${logging.dir}/content.log</file>
-
+        <file>${logging.dir}/content/content.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
-            <fileNamePattern>${logging.dir}/content-%i-log.zip</fileNamePattern>
+            <fileNamePattern>${logging.dir}/content/content-%i-log.zip</fileNamePattern>
             <minIndex>1</minIndex>
             <maxIndex>3</maxIndex>
         </rollingPolicy>
@@ -27,7 +26,7 @@
     <appender name="EMAIL" class="org.reactome.server.util.ScheduledSMTPAppender">
 
         <smtpHost>${mail.host}</smtpHost>
-        <smtpPort>${mail.port}</smtpPort>
+        <smtpPort>${mail.port}</smtpPort> have different Class objects for the type org/apache/http/HttpRequestInterceptor used in the signature
         <to>${mail.to}</to>
         <from>${mail.from}</from>
         <subject>${mail.subject}</subject>
@@ -61,7 +60,6 @@
     </logger>
 
     <root level="INFO">
-        <appender-ref ref="STDOUT" />
         <appender-ref ref="FILE"/>
     </root>
 </configuration>
