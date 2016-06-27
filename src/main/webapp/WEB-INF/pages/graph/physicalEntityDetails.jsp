@@ -58,62 +58,31 @@
                         <div class="clear"></div>
                     </c:if>
                 </c:if>
+
+                <c:if test="${not empty databaseObject.referenceEntity.otherIdentifier}">
+                    <div class="label">Other Identifiers</div>
+                    <div class="field">
+                        <div class="wrap overflow">
+                            <table class="tabular">
+                                <tbody>
+                                <tr>
+                                    <c:forEach var="otherIdentifier" items="${databaseObject.referenceEntity.otherIdentifier}" varStatus="loop">
+                                    <c:if test="${not loop.first and loop.index % 5 == 0}">
+                                </tr>
+                                <tr>
+                                    </c:if>
+                                    <td class="overme_5c">
+                                        <span title="${otherIdentifier}">&nbsp;${otherIdentifier}</span>
+                                    </td>
+                                    </c:forEach>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="clear"></div>
+                </c:if>
             </div>
-
-                <%--<c:if test="${not empty referenceCrossReference}">--%>
-                <%--<div class="wrap">--%>
-                <%--<h5>Cross References</h5>--%>
-                <%--<table class="dt-fixed-header">--%>
-                <%--<thead>--%>
-                <%--<tr>--%>
-                <%--<th style="width:30px;">Database</th>--%>
-                <%--<th style="width:270px;">Identifier</th>--%>
-                <%--</tr>--%>
-                <%--</thead>--%>
-                <%--</table>--%>
-                <%--<div class="dt-content-ovf">--%>
-                <%--<table>--%>
-                <%--<tbody>--%>
-                <%--<c:forEach var="crossReference" items="${referenceCrossReference}">--%>
-                <%--<tr>--%>
-                <%--<td style="width:35px;">${crossReference.key}</td>--%>
-                <%--<td style="width:275px;">--%>
-                <%--<c:forEach var="value" items="${crossReference.value}" varStatus="loop">--%>
-                <%--<a href="${value.url}" title="show ${value.displayName}" rel="nofollow">${value.identifier}</a><c:if test="${!loop.last}">, </c:if>--%>
-                <%--</c:forEach>--%>
-                <%--</td>--%>
-                <%--</tr>--%>
-                <%--</c:forEach>--%>
-                <%--</tbody>--%>
-                <%--</table>--%>
-                <%--</div>--%>
-                <%--</div>--%>
-                <%--</c:if>--%>
-
-                <%--<c:if test="${not empty databaseObject.referenceEntity.otherIdentifier}">--%>
-                <%--<div class="padding">--%>
-                <%--<h5>Other Identifiers</h5>--%>
-
-                <%--<div class="overflow-content-div">--%>
-                <%--<table border="0" width="100%" style="border: none">--%>
-                <%--<tbody>--%>
-                <%--<tr>--%>
-                <%--<c:forEach var="otherIdentifier" items="${databaseObject.referenceEntity.otherIdentifier}" varStatus="loop">--%>
-                <%--<c:if test="${not loop.first and loop.index % 5 == 0}">--%>
-                <%--</tr>--%>
-                <%--<tr>--%>
-                <%--</c:if>--%>
-                <%--<td class="overme_5c">--%>
-                <%--<span title="${otherIdentifier}">&nbsp;${otherIdentifier}</span>--%>
-                <%--</td>--%>
-                <%--</c:forEach>--%>
-                <%--</tr>--%>
-                <%--</tbody>--%>
-                <%--</table>--%>
-                <%--</div>--%>
-                <%--</div>--%>
-                <%--</c:if>--%>
-
         </fieldset>
     </c:if>
 </c:if>
@@ -355,14 +324,3 @@
         </fieldset>
     </c:if>
 </c:if>
-
-
-<%--
-    The field is not inside the if-tag because a database object has
-    one of this entries below, unless it is an orphan
---%>
-
-
-
-
-
