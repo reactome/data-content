@@ -62,7 +62,7 @@
                 <c:if test="${not empty databaseObject.referenceEntity.otherIdentifier}">
                     <div class="label">Other Identifiers</div>
                     <div class="field">
-                        <div class="wrap overflow">
+                        <div class="wrap">
                             <table class="tabular">
                                 <tbody>
                                 <tr>
