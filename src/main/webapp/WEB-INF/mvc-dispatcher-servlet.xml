@@ -34,7 +34,6 @@
                 <prop key="mail.debug">true</prop>
             </props>
         </property>
-
     </bean>
 
     <!-- Configuration for the Interactors-Core components -->
@@ -54,6 +53,7 @@
 
     <!-- Disabling the LazyLoading feature -->
     <bean class="org.reactome.server.graph.aop.LazyFetchAspect" factory-method="aspectOf">
+        <!--suppress SpringModelInspection -->
         <property name="enableAOP" value="false"/>
     </bean>
 

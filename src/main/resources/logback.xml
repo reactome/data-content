@@ -25,6 +25,12 @@
 
     <appender name="EMAIL" class="org.reactome.server.util.ScheduledSMTPAppender">
 
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+
         <smtpHost>${mail.host}</smtpHost>
         <smtpPort>${mail.port}</smtpPort> have different Class objects for the type org/apache/http/HttpRequestInterceptor used in the signature
         <to>${mail.to}</to>
@@ -55,8 +61,9 @@
         <appender-ref ref="ASYNC"/>
     </logger>
 
-    <logger name="errorLogger" level="ERROR">
+    <logger name="errorLogger" level="WARN">
         <appender-ref ref="EMAIL" />
+        <appender-ref ref="STDOUT" />
     </logger>
 
     <root level="INFO">

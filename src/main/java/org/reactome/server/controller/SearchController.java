@@ -28,9 +28,7 @@ import static org.reactome.server.util.WebUtils.cleanReceivedParameters;
  * @author Florian Korninger (fkorn@ebi.ac.uk)
  * @version 1.0
  */
-@SuppressWarnings("SameReturnValue")
 @Controller
-@RequestMapping("")
 class SearchController {
 
     private static final Logger errorLogger = LoggerFactory.getLogger("errorLogger");
@@ -95,12 +93,6 @@ class SearchController {
         return searchService.getAutocompleteSuggestions(tagName);
     }
 
-    @RequestMapping(value = "/error", method = RequestMethod.GET)
-    @ResponseBody
-    public List<String> getTags() throws SolrSearcherException {
-        throw new SolrSearcherException("Error at time: " + System.currentTimeMillis());
-    }
-
     /**
      * Loads data for advanced view and displays advanced view
      *
@@ -125,7 +117,6 @@ class SearchController {
      * @param id    StId or DbId
      * @param model SpringModel
      * @return Detailed page
-     * @throws EnricherException
      * @throws SolrSearcherException
      */
     @RequestMapping(value = "/detail/interactor/{id:.*}", method = RequestMethod.GET)

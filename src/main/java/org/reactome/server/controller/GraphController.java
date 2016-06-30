@@ -36,9 +36,7 @@ import java.util.*;
  * @author Florian Korninger (florian.korninger@ebi.ac.uk)
  * @since 10.02.16.
  */
-@SuppressWarnings("SameReturnValue")
 @Controller
-@RequestMapping("")
 class GraphController {
 
     private static final Logger infoLogger = LoggerFactory.getLogger("infoLogger");
@@ -76,7 +74,6 @@ class GraphController {
      * These resources are the same all the time.
      * In order to speed up the query result and less memory usage, I decided to keep the resource out of the query
      * and keep a cache with them. Thus we avoid having the same information for all results.
-     * @param interactorResourceService
      */
     @Autowired
     public GraphController(InteractorResourceService interactorResourceService) {
@@ -209,7 +206,9 @@ class GraphController {
         else if (databaseObject instanceof EntitySet) {
             model.addAttribute("isEntitySet", true);
         }
-        else if(databaseObject instanceof OpenSet || databaseObject instanceof EntityWithAccessionedSequence || databaseObject instanceof SimpleEntity) {
+        // Cant explain why warning appears here, should be correct
+        else //noinspection ConstantConditions
+            if(databaseObject instanceof OpenSet || databaseObject instanceof EntityWithAccessionedSequence || databaseObject instanceof SimpleEntity) {
             model.addAttribute("hasReferenceEntity", true);
         }
     }
