@@ -44,7 +44,7 @@
                                                 <c:otherwise>
                                                     <c:catch>
                                                         <c:if test="${!empty list.getDbId()}">
-                                                            <a href="/object/detail/${list.getDbId()}">[${list.getDbId()}]</a>
+                                                            <a href="/schema/object/detail/${list.getDbId()}">[${list.getDbId()}]</a>
                                                             ${list.getDisplayName()}
                                                         </c:if>
                                                     </c:catch>
@@ -57,7 +57,7 @@
                             <c:otherwise>
                                 <c:catch>
                                     <c:if test="${!empty entry.value.dbId}">
-                                        <a href="/object/detail/${entry.value.getDbId()}">${entry.value.getDisplayName()}</a>
+                                        <a href="/schema/object/detail/${entry.value.getDbId()}">${entry.value.getDisplayName()}</a>
                                     </c:if>
                                 </c:catch>
                             </c:otherwise>

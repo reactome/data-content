@@ -163,7 +163,7 @@ class GraphController {
                  */
                 advancedDatabaseObjectService.findById(databaseObject.getDbId(), RelationshipDirection.INCOMING);
                 model.addAttribute("map", DatabaseObjectUtils.getAllFields(databaseObject));
-                return "redirect:/object/detail/" + id;
+                return "redirect:/schema/object/detail/" + id;
             } else {
                 Set<PathwayBrowserNode> topLevelNodes = contentDetails.getNodes();
 

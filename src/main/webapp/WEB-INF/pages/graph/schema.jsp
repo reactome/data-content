@@ -28,10 +28,10 @@
                         <c:forEach var="object" items="${objects}">
                             <tr>
                                 <td style="width: 10%">
-                                    <a href="/object/detail/${object.dbId}">${object.dbId}</a>
+                                    <a href="/schema/object/detail/${object.dbId}">${object.dbId}</a>
                                 </td>
                                 <td style="width: 18%">
-                                    <a href="/object/detail/${object.stId}">${object.stId}</a>
+                                    <a href="/schema/object/detail/${object.stId}">${object.stId}</a>
                                 <td style="width: 72%">
                                     <div class=scrollable>
                                             ${object.displayName}
@@ -50,7 +50,7 @@
                                     <span class="search-page active">first</span>
                                 </c:when>
                                 <c:otherwise>
-                                    <a class="search-page" href="/details/${className}?page=1">first</a>
+                                    <a class="search-page" href="/schema/objects/${className}?page=1">first</a>
                                 </c:otherwise>
                             </c:choose>
                             <c:forEach var="val" begin="2" end="${maxpage - 1}" >
@@ -60,7 +60,7 @@
                                             <span class="search-page active">${val}</span>
                                         </c:when>
                                         <c:otherwise>
-                                            <a class="search-page" href="/details/${className}?page=${val}">${val}</a>
+                                            <a class="search-page" href="/schema/objects/${className}?page=${val}">${val}</a>
                                         </c:otherwise>
                                     </c:choose>
                                 </c:if>
@@ -70,7 +70,7 @@
                                     <span class="search-page active">last</span>
                                 </c:when>
                                 <c:otherwise>
-                                    <a class="search-page" href="/details/${className}?page=${maxpage}">last</a>
+                                    <a class="search-page" href="/schema/objects/${className}?page=${maxpage}">last</a>
                                 </c:otherwise>
                             </c:choose>
                         </c:when>
