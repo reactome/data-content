@@ -96,8 +96,10 @@
                     <div class="label">Components of this complex</div>
                     <div class="field">
                         <ul class="list">
-                            <c:forEach var="hasComponent" items="${databaseObject.hasComponent}">
-                                <li><a href="../detail/${hasComponent.stId}" class="" title="Show Details" rel="nofollow">${hasComponent.displayName} <c:if test="${not empty hasComponent.speciesName}">(${hasComponent.speciesName})</c:if></a></li>
+                            <c:forEach var="hasComponent" items="${databaseObject.fetchHasComponent()}">
+                                <li>
+                                    <c:if test="${hasComponent.stoichiometry gt 1}">${hasComponent.stoichiometry} x </c:if>
+                                    <a href="../detail/${hasComponent.object.stId}" class="" title="Show Details" rel="nofollow">${hasComponent.object.displayName} <c:if test="${not empty hasComponent.object.speciesName}">(${hasComponent.object.speciesName})</c:if></a></li>
                             </c:forEach>
                         </ul>
                     </div>
@@ -112,8 +114,10 @@
                     <div class="label">Repeated Units of this Polymer</div>
                     <div class="field">
                         <ul class="list">
-                            <c:forEach var="repeatedUnit" items="${databaseObject.repeatedUnit}">
-                                <li><a href="../detail/${repeatedUnit.stId}" class="" title="Show Details" rel="nofollow">${repeatedUnit.displayName} <c:if test="${not empty repeatedUnit.speciesName}">(${repeatedUnit.speciesName})</c:if></a></li>
+                            <c:forEach var="repeatedUnit" items="${databaseObject.fetchRepeatedUnit()}">
+                                <li>
+                                    <c:if test="${repeatedUnit.stoichiometry gt 1}">${repeatedUnit.stoichiometry} x </c:if>
+                                    <a href="../detail/${repeatedUnit.object.stId}" class="" title="Show Details" rel="nofollow">${repeatedUnit.object.displayName} <c:if test="${not empty repeatedUnit.object.speciesName}">(${repeatedUnit.object.speciesName})</c:if></a></li>
                             </c:forEach>
                         </ul>
                     </div>

@@ -32,8 +32,10 @@
                     </div>
                     <div class="field">
                         <ul class="list">
-                            <c:forEach var="input" items="${databaseObject.input}">
-                                <li><a href="../detail/${input.stId}" class="" title="Show Details" rel="nofollow">${input.displayName} <c:if test="${not empty input.speciesName}">(${input.speciesName})</c:if></a></li>
+                            <c:forEach var="input" items="${databaseObject.fetchInput()}">
+                                <li>
+                                    <c:if test="${input.stoichiometry gt 1}">${input.stoichiometry} x </c:if>
+                                    <a href="../detail/${input.object.stId}" class="" title="Show Details" rel="nofollow">${input.object.displayName} <c:if test="${not empty input.object.speciesName}">(${input.object.speciesName})</c:if></a></li>
                             </c:forEach>
                         </ul>
                     </div>
@@ -47,8 +49,10 @@
                     </div>
                     <div class="field">
                         <ul class="list">
-                            <c:forEach var="output" items="${databaseObject.output}">
-                                <li><a href="../detail/${output.stId}" class="" title="Show Details" rel="nofollow">${output.displayName} <c:if test="${not empty output.speciesName}">(${output.speciesName})</c:if></a></li>
+                            <c:forEach var="output" items="${databaseObject.fetchOutput()}">
+                                <li>
+                                    <c:if test="${output.stoichiometry gt 1}">${output.stoichiometry} x </c:if>
+                                    <a href="../detail/${output.object.stId}" class="" title="Show Details" rel="nofollow">${output.object.displayName} <c:if test="${not empty output.object.speciesName}">(${output.object.speciesName})</c:if></a></li>
                             </c:forEach>
                         </ul>
                     </div>
