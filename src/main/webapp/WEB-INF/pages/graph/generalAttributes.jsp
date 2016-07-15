@@ -3,7 +3,6 @@
 
 <c:if test="${clazz != 'Regulation'}">
 
-
     <c:if test="${not empty databaseObject.disease}">
         <fieldset class="fieldset-details">
             <legend>Disease</legend>
@@ -12,9 +11,9 @@
                 <table class="dt-fixed-header">
                     <thead>
                     <tr>
-                        <th >Name</th>
-                        <th >Identifier</th>
-                        <th >Synonyms</th>
+                        <th>Name</th>
+                        <th>Identifier</th>
+                        <th>Synonyms</th>
                     </tr>
                     </thead>
                 </table>
@@ -23,9 +22,9 @@
                         <tbody>
                         <c:forEach var="disease" items="${databaseObject.disease}">
                             <tr>
-                                <td ><a href="${diseases.database.url}" class=""  title="Show Details" rel="nofollow">${disease.displayName} </a></td>
-                                <td ><c:if test="${not empty disease.identifier}">${disease.identifier}</c:if></td>
-                                <td ><c:if test="${not empty disease.synonym}">${disease.synonym}</c:if></td>
+                                <td><a href="${diseases.database.url}" class=""  title="Show Details" rel="nofollow">${disease.displayName} </a></td>
+                                <td><c:if test="${not empty disease.identifier}">${disease.identifier}</c:if></td>
+                                <td><c:if test="${not empty disease.synonym}">${disease.synonym}</c:if></td>
                             </tr>
                         </c:forEach>
                         </tbody>
@@ -34,8 +33,6 @@
             </div>
         </fieldset>
     </c:if>
-
-
 
     <c:if test="${not empty crossReferences}">
         <fieldset class="fieldset-details">
@@ -55,9 +52,6 @@
 
         </fieldset>
     </c:if>
-
-
-
 
 </c:if>
 

@@ -92,6 +92,7 @@ class GraphController {
             infoLogger.info("DatabaseObject for id: {} was {}", id, "not found");
             return "search/noDetailsFound";
         }
+        model.addAttribute(TITLE, id);
         model.addAttribute("map", DatabaseObjectUtils.getAllFields(databaseObject));
         infoLogger.info("DatabaseObject for id: {} was {}", id, "found");
         return "graph/schemaDetail";
@@ -104,6 +105,7 @@ class GraphController {
         if (classBrowserCache == null) {
             classBrowserCache = DatabaseObjectUtils.getGraphModelTree(generalService.getSchemaClassCounts());
         }
+        model.addAttribute(TITLE, className);
         model.addAttribute("node", classBrowserCache);
         model.addAttribute("className", className);
         model.addAttribute("page", page);
@@ -123,6 +125,7 @@ class GraphController {
         if (classBrowserCache == null) {
             classBrowserCache = DatabaseObjectUtils.getGraphModelTree(generalService.getSchemaClassCounts());
         }
+        model.addAttribute(TITLE, className);
         model.addAttribute("node", classBrowserCache);
         model.addAttribute("properties", DatabaseObjectUtils.getAttributeTable(className));
         model.addAttribute("className", className);

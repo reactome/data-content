@@ -14,10 +14,8 @@
     list-style-type: none;
     padding-left: 0;
     margin-left: 6px;
-    /*12px*/
     white-space: nowrap;
     overflow-x: auto;
-
 }
 
 .term-list li {
@@ -131,7 +129,6 @@ div#search-results h4 a:active {
 .inline {
     margin-top: 0.1em;
     margin-bottom: 0.1em;
-
 }
 
 .result-detail {
@@ -180,7 +177,6 @@ div#search-results h4 a:active {
 .plus {
     font-size: 108%;
     cursor: pointer;
-
     margin: 0 3px;
     padding: 0;
 }
@@ -225,8 +221,6 @@ ul.tree li {
     padding: 0 12px;
     font-size: 14px;
     line-height: 20px;
-    #color: #369;
-    #font-weight: bold;
     position: relative;
 }
 
@@ -249,7 +243,6 @@ ul.tree ul li:last-child:before {
 }
 
 ul.tree li a {
-
     -webkit-transition: font-size 0.5s ease, background-color 0.5s ease;
     -moz-transition: font-size 0.5s ease, background-color 0.5s ease;
     -o-transition: font-size 0.5s ease, background-color 0.5s ease;
@@ -258,7 +251,6 @@ ul.tree li a {
 }
 
 ul.tree li a:visited {
-
     -webkit-transition: font-size 0.5s ease, background-color 0.5s ease;
     -moz-transition: font-size 0.5s ease, background-color 0.5s ease;
     -o-transition: font-size 0.5s ease, background-color 0.5s ease;
@@ -267,7 +259,6 @@ ul.tree li a:visited {
 }
 
 ul.tree li a:hover {
-    /*font-size: 110%;*/
     background: #f6f6f6;
 }
 
@@ -287,7 +278,6 @@ ul.tree li a:hover {
 
 .search-page {
     text-decoration: none;
-    /*link-style: none;*/
     display: inline-block;
     padding: 0 9px;
     margin-right: 4px;
@@ -298,21 +288,16 @@ ul.tree li a:hover {
     font-size: .875em;
     color: #207a7a;
     text-shadow: 0 1px 0 rgba(255, 255, 255, 1);
-
     background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#f8f8f8), to(#e9e9e9));
-    /*background: -moz-linear-gradient(0% 0% 270deg, #f8f8f8, #e9e9e9);*/
 }
 
 .search-page a:link {
     text-decoration: none;
-    /*link-style: none;*/
-
 }
 
 .search-page:hover {
     background: #fefefe;
     background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#FEFEFE), to(#f0f0f0));
-    /*background: -moz-linear-gradient(0% 0% 270deg, #FEFEFE, #f0f0f0);*/
 }
 
 .fixedTable {
@@ -328,7 +313,8 @@ ul.tree li a:hover {
 }
 
 .advTable {
-    width: 80%; align-content : center;
+    width: 80%;
+    align-content: center;
     table-layout: fixed;
 }
 
@@ -344,8 +330,6 @@ ul.tree li a:hover {
     height: 250px;
     overflow-x: auto;
     overflow-y: auto;
-    /*12px*/
-
 }
 
 .adv-list li {
@@ -363,7 +347,6 @@ ul.tree li a:hover {
     padding: 1px;
     width: 100%;
     margin-top: 20px;
-
 }
 
 .contact-form h4 {
@@ -372,14 +355,11 @@ ul.tree li a:hover {
 }
 
 .contact-form .fieldarea {
-    /*padding: 4px;*/
-    /*margin: 1px;*/
     background: #fff;
     padding-left: 20px;
 }
 
 .contact-form .fieldarea label {
-    /*display: inline-block;*/
     width: 80px;
     margin-left: 5px;
 }
@@ -390,7 +370,6 @@ ul.tree li a:hover {
 }
 
 .contact-form .fieldarea textarea {
-    /*display: inline-flex;*/
     width: 387px;
 }
 
@@ -404,7 +383,6 @@ ul.tree li a:hover {
 .contact-form .field label {
     display: inline-block;
     width: 80px;
-    /*margin-left: 5px;*/
 }
 
 .contact-form .button-send {
@@ -431,7 +409,6 @@ ul.tree li a:hover {
 }
 
 .grid_24 .no-results-div {
-
     padding-left: 20px;
 }
 
@@ -483,15 +460,6 @@ div#two {
     padding-bottom: 20px;
 }
 
-.dataschema-tree {
-
-    border-collapse:collapse;
-    width:99%;
-    background-color:white;
-    margin:9px auto;
-    border:5px solid #f1f1f1;
-}
-
 .scrollable {
     width: 100%;
     height: 100%;
@@ -501,31 +469,47 @@ div#two {
 }
 
 .div-header {
-    color:#1F419A;
-    font-size: 108%;
-
-    padding: 9px 5px 5px 5px;
-
-    /*height: 35px;*/
+    border: none;
+    color: #1F419A;
+    font-weight: bold;
+    font-size: 13px;
+    text-shadow: 1px 1px 3px #ffffff;
     background-color: #eeeeee;
-    background-image: -moz-linear-gradient(top, #eeeeee, #d8d8d8);
-    background-image: -webkit-gradient(linear,left top,left bottom,color-stop(0, #eeeeee),color-stop(1, #d8d8d8));
-    background-image: -webkit-linear-gradient(#eeeeee, #d8d8d8);
-    background-image: linear-gradient(top, #eeeeee, #d8d8d8);
+    background: -moz-linear-gradient(top, #eeeeee, #d8d8d8);
+    background: -o-linear-gradient(top, #eeeeee, #d8d8d8);
+    background: -webkit-linear-gradient(top, #eeeeee, #d8d8d8);
+    background: linear-gradient(top, #eeeeee, #d8d8d8);
+    border-radius: 4px 4px 0 0;
+    padding: 4px 3px 0 12px;
 }
 
-ul.tree li.schema-item {
-    /*font-size: 12px;*/
+.dataschema-tree {
+    box-shadow: 2px 2px 1px #AFAFAF;
+    width: 100%;
+    background-color: #B0C4DE;
+    margin: 9px auto;
+    border-radius: 5px 5px 0 0;
 }
 
 .dataschema-tree ul.tree li {
-
     margin-right: 0;
     padding-right: 0;
 }
 
-.dataschema-tree ul.tree li.schema-item {
-    font-size: 12px;
+.dataschema-tree ul.tree li.schema-item a{
+    font-size: 12px !important;
+}
+
+.dataschema-tree ul.tree li.schema-item a:visited{
+    font-size: 12px !important;
+    color: #009;
+}
+
+.dataschema-tree ul.tree ul li:last-child:before {
+    background: #B0C4DE;
+    height: auto;
+    top: 10px;
+    bottom: 0;
 }
 
 /* START DETAILS HEADER */
@@ -581,13 +565,13 @@ div.fieldset-pair-container .field {
 }
 
 div.extended-header .clear, div.fieldset-pair-container .clear {
-    clear:both;
+    clear: both;
 }
+
 /* END START DETAILS HEADER */
 
 /* START FIELDSET DETAILS PAGE STYLING */
 .fieldset-details {
-    /*margin: 20px;*/
     border: 1px solid #D3D3D3;
     padding: 5px 0 10px 0;
     border-radius: 5px;
@@ -595,24 +579,12 @@ div.extended-header .clear, div.fieldset-pair-container .clear {
 }
 
 .fieldset-details legend {
-    /* new style */
-    /*color: #e68a00;*/
+    color: #1F419A;
     font-size: 16px;
     margin-left: 15px;
     margin-bottom: 5px;
     padding: 0px 10px 0px 10px;
     text-shadow: 0px 1px 1px #ddd;
-
-    /* DO NOT DELETE HERE -- GUI */
-    /* style compatible with results page */
-    color: #1F419A;
-    /*font-size: 16px;*/
-    /*margin-left: 20px;*/
-    /*background-color: #EEE;*/
-    /*border-top-right-radius: 8px;*/
-    /*border-top-left-radius: 8px;*/
-    /*padding: 4px 10px 4px 10px;*/
-    /*background: -webkit-linear-gradient(top, #eeeeee, #d8d8d8);*/
 }
 
 .fieldset-details table.something tr:hover {
@@ -623,6 +595,7 @@ div.extended-header .clear, div.fieldset-pair-container .clear {
     padding-left: 25px;
     padding-right: 25px;
 }
+
 /* END FIELDSET DETAILS PAGE STYLING */
 
 .overflow-content-div {
@@ -641,27 +614,14 @@ div.extended-header .clear, div.fieldset-pair-container .clear {
     border: 1px solid #D3D3D3;
     padding: 5px 0 10px 0;
     border-radius: 5px 5px 5px 5px;
-    /*box-shadow: 2px 2px 2px #D3D3D3;*/
 }
 
 .fieldset-details-inner legend {
-    /* new style */
     color: #1F419A;
     font-size: 14px;
     margin-left: 20px;
     padding: 0px 10px 0px 10px;
     text-shadow: 0px 1px 1px #ddd;
-
-    /* DO NOT DELETE HERE -- GUI */
-    /* style compatible with results page */
-    /*color: #1F419A;*/
-    /*font-size: 16px;*/
-    /*margin-left: 20px;*/
-    /*background-color: #EEE;*/
-    /*border-top-right-radius: 8px;*/
-    /*border-top-left-radius: 8px;*/
-    /*padding: 4px 10px 4px 10px;*/
-    /*background: -webkit-linear-gradient(top, #eeeeee, #d8d8d8);*/
 }
 
 .speciesSelection {
@@ -687,4 +647,23 @@ a.tree-root:visited {
 
 a.tree-highlighted-item:visited {
     color: #1F419A;
+}
+
+.schema-attr-header {
+    color: white !important;
+    font-size: 14pt;
+    background-color: navy;
+    text-align: center;
+    margin: 10px 0;
+    border-radius: 5px 5px 0 0;
+    box-shadow: 2px 2px 1px #AFAFB2;
+}
+
+.schema-attr-table {
+    margin: 0 !important;
+    width: 100% !important;
+}
+
+.no-margin {
+    margin: 0;
 }
