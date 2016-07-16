@@ -29,7 +29,7 @@
                                     <span style="color:black"> ${entry.value} </span>
                                 </c:when>
                                 <c:when test="${entry.value.getClass().getSimpleName() == 'StoichiometryObject'}">
-                                    <c:if test="${entry.value.stoichiometry gt 1}">${entry.value.stoichiometry} x </c:if><a href="/schema/object/detail/${entry.value.object.getDbId()}">[${entry.value.object.getSchemaClass()}:${entry.value.object.getDbId()}] ${entry.value.object.getDisplayName()}</a>
+                                    <c:if test="${entry.value.stoichiometry gt 1}">${entry.value.stoichiometry} x </c:if><a href="./${entry.value.object.getDbId()}">[${entry.value.object.getSchemaClass()}:${entry.value.object.getDbId()}] ${entry.value.object.getDisplayName()}</a>
                                 </c:when>
                                 <c:when test="${entry.value.getClass().getSimpleName() == 'ArrayList' || entry.value.getClass().getSimpleName() == 'HashSet'}">
                                     <ul class="list overflow">
@@ -44,12 +44,12 @@
                                                         <span style="color:black"> ${list} </span>
                                                     </c:when>
                                                     <c:when test="${list.getClass().getSimpleName() == 'StoichiometryObject'}">
-                                                        <c:if test="${list.stoichiometry gt 1}"> <span title="Stoichiometry">${list.stoichiometry} &times;</span></c:if> <a href="/schema/object/detail/${list.object.getDbId()}">[${list.object.getSchemaClass()}:${list.object.getDbId()}] ${list.object.getDisplayName()}</a>
+                                                        <c:if test="${list.stoichiometry gt 1}"> <span title="Stoichiometry">${list.stoichiometry} &times;</span></c:if> <a href="./${list.object.getDbId()}">[${list.object.getSchemaClass()}:${list.object.getDbId()}] ${list.object.getDisplayName()}</a>
                                                     </c:when>
                                                     <c:otherwise>
                                                         <c:catch>
                                                             <c:if test="${!empty list.getDbId()}">
-                                                                <a href="/schema/object/detail/${list.getDbId()}">[${list.getSchemaClass()}:${list.getDbId()}] ${list.getDisplayName()}</a>
+                                                                <a href="./${list.getDbId()}">[${list.getSchemaClass()}:${list.getDbId()}] ${list.getDisplayName()}</a>
                                                             </c:if>
                                                         </c:catch>
                                                     </c:otherwise>
@@ -61,7 +61,7 @@
                                 <c:otherwise>
                                     <c:catch>
                                         <c:if test="${!empty entry.value.dbId}">
-                                            <a href="/schema/object/detail/${entry.value.getDbId()}">[${entry.value.getSchemaClass()}:${entry.value.getDbId()}] ${entry.value.getDisplayName()}</a>
+                                            <a href="./${entry.value.getDbId()}">[${entry.value.getSchemaClass()}:${entry.value.getDbId()}] ${entry.value.getDisplayName()}</a>
                                         </c:if>
                                     </c:catch>
                                 </c:otherwise>

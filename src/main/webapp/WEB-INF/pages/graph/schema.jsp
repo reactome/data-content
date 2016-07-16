@@ -31,10 +31,10 @@
                                     <td style="width: 50px">
                                         <c:choose>
                                             <c:when test="${empty object.stId}">
-                                                <a href="/schema/object/detail/${object.dbId}">${object.dbId}</a>
+                                                <a href="../object/detail/${object.dbId}">${object.dbId}</a>
                                             </c:when>
                                             <c:otherwise>
-                                                <a href="/schema/object/detail/${object.stId}">${object.stId}</a>
+                                                <a href="../object/detail/${object.stId}">${object.stId}</a>
                                             </c:otherwise>
                                         </c:choose>
                                     </td>
@@ -57,7 +57,7 @@
                                     <span class="search-page active">first</span>
                                 </c:when>
                                 <c:otherwise>
-                                    <a class="search-page" href="/schema/objects/${className}?page=1">first</a>
+                                    <a class="search-page" href="./objects/${className}?page=1">first</a>
                                 </c:otherwise>
                             </c:choose>
                             <c:forEach var="val" begin="2" end="${maxpage - 1}" >
@@ -67,7 +67,7 @@
                                             <span class="search-page active">${val}</span>
                                         </c:when>
                                         <c:otherwise>
-                                            <a class="search-page" href="/schema/objects/${className}?page=${val}">${val}</a>
+                                            <a class="search-page" href="./objects/${className}?page=${val}">${val}</a>
                                         </c:otherwise>
                                     </c:choose>
                                 </c:if>
@@ -77,7 +77,7 @@
                                     <span class="search-page active">last</span>
                                 </c:when>
                                 <c:otherwise>
-                                    <a class="search-page" href="/schema/objects/${className}?page=${maxpage}">last</a>
+                                    <a class="search-page" href="./objects/${className}?page=${maxpage}">last</a>
                                 </c:otherwise>
                             </c:choose>
                         </c:when>
@@ -110,7 +110,7 @@
                                                     <td width="50px">${property.cardinality}</td>
                                                     <c:choose>
                                                         <c:when test="${property.valueTypeDatabaseObject}">
-                                                            <td width="100px"><a href="/schema/${property.valueType.simpleName}" title="Show Class attributes">${property.valueType.simpleName}</td>
+                                                            <td width="100px"><a href="./${property.valueType.simpleName}" title="Show Class attributes">${property.valueType.simpleName}</td>
                                                         </c:when>
                                                         <c:otherwise>
                                                             <td width="100px">${property.valueType.simpleName}</td>
@@ -125,13 +125,13 @@
                                                     <td width="50px">${property.cardinality}</td>
                                                     <c:choose>
                                                         <c:when test="${property.valueTypeDatabaseObject}">
-                                                            <td width="100px"><a href="/schema/${property.valueType.simpleName}" title="Show Class attributes">${property.valueType.simpleName}</td>
+                                                            <td width="100px"><a href="./${property.valueType.simpleName}" title="Show Class attributes">${property.valueType.simpleName}</td>
                                                         </c:when>
                                                         <c:otherwise>
                                                             <td width="100px">${property.valueType.simpleName}</td>
                                                         </c:otherwise>
                                                     </c:choose>
-                                                    <td width="100px"><a href="/schema/${property.origin.simpleName}" title="Show Class attributes">${property.origin.simpleName}</a></td>
+                                                    <td width="100px"><a href="./${property.origin.simpleName}" title="Show Class attributes">${property.origin.simpleName}</a></td>
                                                 </tr>
                                             </c:otherwise>
                                         </c:choose>
@@ -173,8 +173,8 @@
                     <%--</div>--%>
                     <ul class="tree">
                         <li class="schema-item">
-                            <a href="/schema/${node.clazz.simpleName}" title="Show Class attributes">${node.clazz.simpleName}</a>
-                            [<a href="/schema/objects/${node.clazz.simpleName}?page=1" title="Show Entries">${node.count}</a>]
+                            <a href="./${node.clazz.simpleName}" title="Show Class attributes">${node.clazz.simpleName}</a>
+                            [<a href="./objects/${node.clazz.simpleName}?page=1" title="Show Entries">${node.count}</a>]
                             <c:import url="schemaNode.jsp"/>
                         </li>
                     </ul>

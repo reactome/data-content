@@ -132,7 +132,7 @@ class GraphController {
         return "graph/schema";
     }
 
-    @RequestMapping(value = "/schema", method = RequestMethod.GET)
+    @RequestMapping(value = "/schema/", method = RequestMethod.GET)
     public String getClassBrowser(ModelMap model) throws ClassNotFoundException {
         return getClassBrowserDetails(DatabaseObject.class.getSimpleName(), model);
     }
