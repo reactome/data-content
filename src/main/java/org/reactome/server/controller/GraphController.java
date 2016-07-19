@@ -87,12 +87,13 @@ class GraphController {
     @RequestMapping(value = "/schema/object/detail/{id}", method = RequestMethod.GET)
     public String objectDetail(@PathVariable String id, ModelMap model) {
 
-        DatabaseObject databaseObject = databaseObjectService.findById(id);
+        DatabaseObject databaseObject = advancedDatabaseObjectService.findById(id, 1000);
         if (databaseObject == null) {
             infoLogger.info("DatabaseObject for id: {} was {}", id, "not found");
             return "search/noDetailsFound";
         }
-        model.addAttribute(TITLE, id);
+        model.addAttribute(TITLE, databaseObject.getDisplayName());
+        model.addAttribute("breadcrumbSchemaClass", databaseObject.getSchemaClass());
         model.addAttribute("map", DatabaseObjectUtils.getAllFields(databaseObject));
         infoLogger.info("DatabaseObject for id: {} was {}", id, "found");
         return "graph/schemaDetail";

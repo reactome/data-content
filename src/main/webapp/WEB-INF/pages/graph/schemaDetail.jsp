@@ -8,6 +8,11 @@
 
 <div class="ebi-content">
     <div class="grid_24">
+        <div class="breadcrumbs">
+            <a href="${pageContext.request.contextPath}/schema/">Schema</a> &gt;
+            <a href="${pageContext.request.contextPath}/schema/${breadcrumbSchemaClass}">${breadcrumbSchemaClass}</a> &gt;
+            <a href="${pageContext.request.contextPath}/schema/objects/${breadcrumbSchemaClass}?page=1">Entries</a>
+        </div>
 
         <h3 class="details-title">
             ${map.get('DisplayName')}
@@ -18,8 +23,8 @@
 
                 <c:forEach var="entry" items="${map}" varStatus="loopStatus">
                     <tr class="${loopStatus.index % 2 == 0 ? 'even' : 'odd'}">
-                        <td style="width: 20%">${entry.key}</td>
-                        <td style="width: 80%">
+                        <td style="width: 25%">${entry.key}</td>
+                        <td style="width: 75%">
                             <c:choose>
                                 <c:when test="${entry.value.getClass().getSimpleName() == 'String' ||
                                                     entry.value.getClass().getSimpleName() == 'Long'   ||
@@ -71,6 +76,9 @@
                 </c:forEach>
                 </tbody>
             </table>
+
+
+
         </div>
     </div>
 </div>

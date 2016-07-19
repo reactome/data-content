@@ -5,11 +5,11 @@
 
     <c:choose>
         <c:when test="${hasReferenceEntity}">
-            <i class="sprite sprite-${databaseObject.referenceType}" title="${type}"></i>
+            <i class="sprite sprite-${databaseObject.referenceType}" title="${databaseObject.referenceType}"></i>
         </c:when>
         <c:otherwise>
             <c:if test="${not empty databaseObject.schemaClass}">
-                <i class="sprite sprite-${databaseObject.schemaClass}" title="${type}"></i>
+                <i class="sprite sprite-${databaseObject.schemaClass}" title="${databaseObject.schemaClass}"></i>
             </c:if>
         </c:otherwise>
     </c:choose>

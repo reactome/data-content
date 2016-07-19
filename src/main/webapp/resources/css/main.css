@@ -258,14 +258,14 @@ ul.tree li a:visited {
     transition: font-size 0.5s ease, background-color 0.5s ease;
 }
 
-ul.tree li a:hover {
+ul.tree li a.gui:hover {
     background: #f6f6f6;
 }
 
 /*pagination*/
 .pagination {
-    padding: 20px 0;
-    margin-bottom: 20px;
+    /*padding: 20px 0;*/
+    margin: 20px 0 20px 10px;
 }
 
 .search-page.active {
@@ -496,13 +496,27 @@ div#two {
     padding-right: 0;
 }
 
-.dataschema-tree ul.tree li.schema-item a{
-    font-size: 12px !important;
+.dataschema-tree ul.tree li span:hover {
+    background-color: aliceblue;
+    /*padding-right: 2px;*/
+    /*padding-bottom: 1px;*/
+    /*padding-left: 2px;*/
+    border-radius: 3px;
+    box-shadow: 1px 1px 1px #AFAFB2;
 }
 
-.dataschema-tree ul.tree li.schema-item a:visited{
+.dataschema-tree ul.tree li.schema-item a {
     font-size: 12px !important;
     color: #009;
+}
+
+.dataschema-tree ul.tree li.schema-item a:visited {
+    font-size: 12px !important;
+    color: #009;
+}
+
+.dataschema-tree ul.tree li.schema-item {
+    padding-left: 11px;
 }
 
 .dataschema-tree ul.tree ul li:last-child:before {
@@ -518,6 +532,7 @@ div#two {
     margin-top: 30px;
     padding-bottom: 3px;
     padding-left: 3px;
+    word-wrap: break-word;
 }
 
 div.extended-header {
@@ -650,20 +665,47 @@ a.tree-highlighted-item:visited {
 }
 
 .schema-attr-header {
-    color: white !important;
-    font-size: 14pt;
-    background-color: navy;
+    background-color: #B0C4DE;
     text-align: center;
     margin: 10px 0;
     border-radius: 5px 5px 0 0;
     box-shadow: 2px 2px 1px #AFAFB2;
-}
-
-.schema-attr-table {
-    margin: 0 !important;
-    width: 100% !important;
+    padding: 3px 0;
+    text-shadow: 1px 1px 1px darkgray;
 }
 
 .no-margin {
     margin: 0;
+}
+
+.attributeBrowser {
+    margin-left: 10px;
+}
+
+.instructions {
+    margin-top: 20px;
+}
+
+.selected {
+    background-color: aliceblue;
+    /*padding-right: 2px;*/
+    /*padding-bottom: 1px;*/
+    /*padding-left: 2px;*/
+    /*border-radius: 3px;*/
+    box-shadow: 1px 1px 1px #AFAFB2;
+}
+
+.node-item {
+    padding-right: 2px;
+    padding-bottom: 1px;
+    padding-left: 2px;
+    border-radius: 3px;
+}
+
+.breadcrumbs {
+    margin: 12px 0 -15px 2px;
+}
+
+.breadcrumbs a, a:visited {
+    color: #1F419A;
 }

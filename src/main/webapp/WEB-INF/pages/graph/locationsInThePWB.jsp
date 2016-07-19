@@ -27,7 +27,7 @@
         <c:choose>
             <c:when test="${empty topLvl.children}">
                 <span style="font-size:13px"><i class="sprite-resize sprite sprite-Pathway" title="${topLvl.type}"></i></span>
-                <a href="${topLvl.url}" <c:if test="${topLvl.highlighted}">class="tree-highlighted-item"</c:if> title="goto Reactome Pathway Browser" rel="nofollow">${topLvl.name} (${topLvl.species})</a>
+                <a href="${topLvl.url}" <c:if test="${topLvl.highlighted}">class="pbt-item tree-highlighted-item"</c:if> title="goto Reactome Pathway Browser" rel="nofollow">${topLvl.name} (${topLvl.species})</a>
             </c:when>
             <c:otherwise>
                 <%--
