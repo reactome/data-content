@@ -13,7 +13,10 @@
                 <div class="field">
                     <ul class="list">
                         <c:forEach var="hasEvent" items="${databaseObject.hasEvent}">
-                            <li><a href="../detail/${hasEvent.stId}" class="" title="Show Details" rel="nofollow">${hasEvent.displayName} <c:if test="${not empty hasEvent.speciesName}">(${hasEvent.speciesName})</c:if></a></li>
+                            <li>
+                                <i class="sprite sprite-resize sprite-${hasEvent.schemaClass} sprite-position" title="${hasEvent.schemaClass}"></i>
+                                <a href="../detail/${hasEvent.stId}" class="" title="Show Details" rel="nofollow">${hasEvent.displayName} <c:if test="${not empty hasEvent.speciesName}">(${hasEvent.speciesName})</c:if></a>
+                            </li>
                         </c:forEach>
                     </ul>
                 </div>
@@ -34,8 +37,10 @@
                         <ul class="list">
                             <c:forEach var="input" items="${databaseObject.fetchInput()}">
                                 <li>
+                                    <i class="sprite sprite-resize sprite-${input.object.schemaClass} sprite-position" title="${input.object.schemaClass}"></i>
                                     <c:if test="${input.stoichiometry gt 1}">${input.stoichiometry} x </c:if>
-                                    <a href="../detail/${input.object.stId}" class="" title="Show Details" rel="nofollow">${input.object.displayName} <c:if test="${not empty input.object.speciesName}">(${input.object.speciesName})</c:if></a></li>
+                                    <a href="../detail/${input.object.stId}" class="" title="Show Details" rel="nofollow">${input.object.displayName} <c:if test="${not empty input.object.speciesName}">(${input.object.speciesName})</c:if></a>
+                                </li>
                             </c:forEach>
                         </ul>
                     </div>
@@ -51,8 +56,10 @@
                         <ul class="list">
                             <c:forEach var="output" items="${databaseObject.fetchOutput()}">
                                 <li>
+                                    <i class="sprite sprite-resize sprite-${output.object.schemaClass} sprite-position" title="${output.object.schemaClass}"></i>
                                     <c:if test="${output.stoichiometry gt 1}">${output.stoichiometry} x </c:if>
-                                    <a href="../detail/${output.object.stId}" class="" title="Show Details" rel="nofollow">${output.object.displayName} <c:if test="${not empty output.object.speciesName}">(${output.object.speciesName})</c:if></a></li>
+                                    <a href="../detail/${output.object.stId}" class="" title="Show Details" rel="nofollow">${output.object.displayName} <c:if test="${not empty output.object.speciesName}">(${output.object.speciesName})</c:if></a>
+                                </li>
                             </c:forEach>
                         </ul>
                     </div>
@@ -67,7 +74,10 @@
                     <div class="field">
                         <ul class="list">
                             <c:forEach var="entityOnOtherCell" items="${databaseObject.entityOnOtherCell}">
-                                <li><a href="../detail/${entityOnOtherCell.stId}" class="" title="Show Details" rel="nofollow">${entityOnOtherCell.displayName} <c:if test="${not empty entityOnOtherCell.speciesName}">(${entityOnOtherCell.speciesName})</c:if></a></li>
+                                <li>
+                                    <i class="sprite sprite-resize sprite-${entityOnOtherCell.schemaClass} sprite-position" title="${entityOnOtherCell.schemaClass}"></i>
+                                    <a href="../detail/${entityOnOtherCell.stId}" class="" title="Show Details" rel="nofollow">${entityOnOtherCell.displayName} <c:if test="${not empty entityOnOtherCell.speciesName}">(${entityOnOtherCell.speciesName})</c:if></a>
+                                </li>
                             </c:forEach>
                         </ul>
                     </div>
@@ -135,6 +145,7 @@
                                     <td>${catalystActivity.displayName}</td>
                                     <td>
                                         <c:if test="${not empty catalystActivity.physicalEntity}">
+                                            <i class="sprite sprite-resize sprite-${catalystActivity.physicalEntity.schemaClass} sprite-position" title="${catalystActivity.physicalEntity.schemaClass}"></i>
                                             <a href="../detail/${catalystActivity.physicalEntity.stId}" class="" title="show Reactome ${catalystActivity.physicalEntity.stId}" rel="nofollow">${catalystActivity.physicalEntity.displayName}</a>
                                         </c:if>
                                     </td>

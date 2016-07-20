@@ -98,6 +98,7 @@
                         <ul class="list">
                             <c:forEach var="hasComponent" items="${databaseObject.fetchHasComponent()}">
                                 <li>
+                                    <i class="sprite sprite-resize sprite-${hasComponent.object.schemaClass} sprite-position" title="${hasComponent.object.schemaClass}"></i>
                                     <c:if test="${hasComponent.stoichiometry gt 1}">${hasComponent.stoichiometry} x </c:if>
                                     <a href="../detail/${hasComponent.object.stId}" class="" title="Show Details" rel="nofollow">${hasComponent.object.displayName} <c:if test="${not empty hasComponent.object.speciesName}">(${hasComponent.object.speciesName})</c:if></a></li>
                             </c:forEach>
@@ -114,11 +115,10 @@
                     <div class="label">Repeated Units of this Polymer</div>
                     <div class="field">
                         <ul class="list">
-                            <c:forEach var="repeatedUnit" items="${databaseObject.fetchRepeatedUnit()}">
-                                <li>
-                                    <c:if test="${repeatedUnit.stoichiometry gt 1}">${repeatedUnit.stoichiometry} x </c:if>
-                                    <a href="../detail/${repeatedUnit.object.stId}" class="" title="Show Details" rel="nofollow">${repeatedUnit.object.displayName} <c:if test="${not empty repeatedUnit.object.speciesName}">(${repeatedUnit.object.speciesName})</c:if></a></li>
-                            </c:forEach>
+                            <li>
+                                <i class="sprite sprite-resize sprite-${databaseObject.fetchRepeatedUnit().object.schemaClass} sprite-position" title="${databaseObject.fetchRepeatedUnit().object.schemaClass}"></i>
+                                <c:if test="${databaseObject.fetchRepeatedUnit().stoichiometry gt 1}">${databaseObject.fetchRepeatedUnit().stoichiometry} x </c:if>
+                                <a href="../detail/${databaseObject.fetchRepeatedUnit().object.stId}" class="" title="Show Details" rel="nofollow">${databaseObject.fetchRepeatedUnit().object.displayName} <c:if test="${not empty databaseObject.fetchRepeatedUnit().object.speciesName}">(${databaseObject.fetchRepeatedUnit().object.speciesName})</c:if></a></li>
                         </ul>
                     </div>
                     <div class="clear"></div>
@@ -133,7 +133,9 @@
                     <div class="field">
                         <ul class="list">
                             <c:forEach var="hasMember" items="${databaseObject.hasMember}">
-                                <li><a href="../detail/${hasMember.stId}" class="" title="Show Details" rel="nofollow">${hasMember.displayName} <c:if test="${not empty hasMember.speciesName}">(${hasMember.speciesName})</c:if></a></li>
+                                <li>
+                                    <i class="sprite sprite-resize sprite-${hasMember.schemaClass} sprite-position" title="${hasMember.schemaClass}"></i>
+                                    <a href="../detail/${hasMember.stId}" class="" title="Show Details" rel="nofollow">${hasMember.displayName} <c:if test="${not empty hasMember.speciesName}">(${hasMember.speciesName})</c:if></a></li>
                             </c:forEach>
                         </ul>
                     </div>
@@ -149,7 +151,9 @@
                     <div class="field">
                         <ul class="list">
                             <c:forEach var="hasCandidate" items="${databaseObject.hasCandidate}">
-                                <li><a href="../detail/${hasCandidate.stId}" class="" title="Show Details" rel="nofollow">${hasCandidate.displayName} <c:if test="${not empty hasCandidate.speciesName}">(${hasCandidate.speciesName})</c:if></a></li>
+                                <li>
+                                    <i class="sprite sprite-resize sprite-${hasCandidate.schemaClass} sprite-position" title="${hasCandidate.schemaClass}"></i>
+                                    <a href="../detail/${hasCandidate.stId}" class="" title="Show Details" rel="nofollow">${hasCandidate.displayName} <c:if test="${not empty hasCandidate.speciesName}">(${hasCandidate.speciesName})</c:if></a></li>
                             </c:forEach>
                         </ul>
                     </div>
@@ -200,21 +204,18 @@
 </c:if>
 
 
-
 <c:if test="${not empty otherFormsOfThisMolecule}">
     <fieldset class="fieldset-details">
         <legend>Other forms of this molecule</legend>
-
-            <%--<div style="height: auto; max-height: 120px; overflow:auto;" class="padding">--%>
         <div class="wrap overflow">
             <table class="tabular">
-                <tbody >
+                <tbody>
                 <tr>
                     <c:forEach var="derivedEwas" items="${otherFormsOfThisMolecule}" varStatus="loop">
                     <c:if test="${not loop.first and loop.index % 4 == 0}">
-                </tr><tr>
+                </tr>
+                <tr>
                     </c:if>
-
                     <td class="overme_3c"> <%--(${derivedEwas.compartment}) --%>
                         <a href="../detail/${derivedEwas.stId}" title="Open ${derivedEwas.displayName}" rel="nofollow">${derivedEwas.displayName}</a>
                     </td>
@@ -233,7 +234,7 @@
         <div class="wrap">
             <ul class="overflow list">
                 <c:forEach var="inferredFrom" items="${databaseObject.inferredFrom}">
-                    <li><a href="../detail/${inferredFrom.stId}" class="" title="Show Details" rel="nofollow">${inferredFrom.displayName} (${inferredFrom.speciesName})</a></li>
+                    <li><a href="../detail/${inferredFrom.stId}" class="" title="Show Details" rel="nofollow">${inferredFrom.displayName} <c:if test="${not empty inferredFrom.speciesName}"> (${inferredFrom.speciesName})</c:if></a></li>
                 </c:forEach>
             </ul>
         </div>
@@ -246,14 +247,13 @@
         <div class="wrap">
             <ul class="overflow list">
                 <c:forEach var="inferredTo" items="${databaseObject.inferredTo}">
-                    <li><a href="../detail/${inferredTo.stId}" class="" title="Show Details" rel="nofollow">${inferredTo.displayName} (${inferredTo.speciesName})</a></li>
+                    <li><a href="../detail/${inferredTo.stId}" class="" title="Show Details" rel="nofollow">${inferredTo.displayName} <c:if test="${not empty inferredTo.speciesName}"> (${inferredTo.speciesName})</c:if></a></li>
                 </c:forEach>
             </ul>
         </div>
     </fieldset>
 
 </c:if>
-
 
 
 <c:if test="${databaseObject.schemaClass == 'EntityWithAccessionedSequence'}">

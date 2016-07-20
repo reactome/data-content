@@ -8,15 +8,24 @@
 
 <div class="ebi-content">
     <div class="grid_24">
-        <div class="breadcrumbs">
-            <a href="${pageContext.request.contextPath}/schema/">Schema</a> &gt;
-            <a href="${pageContext.request.contextPath}/schema/${breadcrumbSchemaClass}">${breadcrumbSchemaClass}</a> &gt;
-            <a href="${pageContext.request.contextPath}/schema/objects/${breadcrumbSchemaClass}?page=1">Entries</a>
-        </div>
 
+        <div style="height: 20px;">
+            <div class="breadcrumbs" style="float: left;">
+                <a href="${pageContext.request.contextPath}/schema/">Schema</a> &gt;
+                <a href="${pageContext.request.contextPath}/schema/${breadcrumbSchemaClass}">${breadcrumbSchemaClass}</a> &gt;
+                <a href="${pageContext.request.contextPath}/schema/objects/${breadcrumbSchemaClass}?page=1">Entries</a>
+            </div>
+
+            <div class="breadcrumbs" style="float: right;">
+                <c:if test="${linkToDetailsPage}">
+                    <a href="${pageContext.request.contextPath}/detail/${id}">Go to Details</a>
+                </c:if>
+            </div>
+        </div>
         <h3 class="details-title">
             ${map.get('DisplayName')}
         </h3>
+
         <div class="schema-div">
             <table class="schema-detail-table">
                 <tbody>

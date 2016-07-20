@@ -95,6 +95,13 @@ class GraphController {
         model.addAttribute(TITLE, databaseObject.getDisplayName());
         model.addAttribute("breadcrumbSchemaClass", databaseObject.getSchemaClass());
         model.addAttribute("map", DatabaseObjectUtils.getAllFields(databaseObject));
+
+        if (databaseObject instanceof PhysicalEntity || databaseObject instanceof Event || databaseObject instanceof Regulation) {
+            model.addAttribute("linkToDetailsPage", true);
+            model.addAttribute("id", StringUtils.isNotEmpty(databaseObject.getStId()) ? databaseObject.getStId() : databaseObject.getDbId());
+
+        }
+
         infoLogger.info("DatabaseObject for id: {} was {}", id, "found");
         return "graph/schemaDetail";
     }

@@ -1,3 +1,4 @@
+/** START - Sprite base configuration **/
 .sprite {
     background: url(../images/spritesheet.png) no-repeat;
     display: inline-block;
@@ -12,6 +13,12 @@
     zoom: .6;
     -moz-transform: scale(.6);
 }
+
+.sprite-position {
+    vertical-align: middle;
+    padding: 2px;
+}
+/** END - Sprite base configuration **/
 
 .sprite-BlackBoxEvent {
     width: 16px;
