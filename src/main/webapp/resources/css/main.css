@@ -702,6 +702,6 @@ a.tree-highlighted-item:visited {
     margin: 12px 0 -15px 2px;
 }
 
-.breadcrumbs a a:visited{
+.breadcrumbs a, .breadcrumbs a:visited{
     color: #1F419A;
 }

@@ -53,7 +53,9 @@
                                 <c:when test="${entry.value.getClass().getSimpleName() == 'StoichiometryObject'}">
                                     <c:if test="${entry.value.stoichiometry gt 1}">${entry.value.stoichiometry} x </c:if><a href="./${entry.value.object.getDbId()}">[${entry.value.object.getSchemaClass()}:${entry.value.object.getDbId()}] ${entry.value.object.getDisplayName()}</a>
                                 </c:when>
-                                <c:when test="${entry.value.getClass().getSimpleName() == 'ArrayList' || entry.value.getClass().getSimpleName() == 'HashSet'}">
+                                <c:when test="${entry.value.getClass().getSimpleName() == 'ArrayList' ||
+                                                entry.value.getClass().getSimpleName() == 'HashSet' ||
+                                                entry.value.getClass().getSimpleName() == 'LinkedHashSet'}">
                                     <ul class="list overflow">
                                         <c:forEach var="list" items="${entry.value}">
                                             <li>
