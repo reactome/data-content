@@ -4,7 +4,7 @@
 
     <%-- TODO: Separate them into complex, entity set, etc --%>
     <fieldset class="fieldset-details">
-        <legend>Component Of</legend>
+        <legend>Participant Of</legend>
         <c:forEach var="component" items="${componentOf}">
             <div class="fieldset-pair-container">
                 <div class="label">

@@ -89,11 +89,11 @@
 
 <c:if test="${ databaseObject.schemaClass == 'Complex' &&  not empty databaseObject.hasComponent || databaseObject.schemaClass == 'Polymer' && not empty databaseObject.repeatedUnit || isEntitySet && not empty databaseObject.hasMember || databaseObject.schemaClass == 'CandidateSet' && not empty databaseObject.hasCandidate }">
     <fieldset class="fieldset-details">
-        <legend>Components</legend>
+        <legend>Participants</legend>
         <c:if test="${databaseObject.schemaClass == 'Complex'}">
             <c:if test="${not empty databaseObject.hasComponent}">
                 <div class="fieldset-pair-container">
-                    <div class="label">Components of this complex</div>
+                    <div class="label">components</div>
                     <div class="field">
                         <ul class="list">
                             <c:forEach var="hasComponent" items="${databaseObject.fetchHasComponent()}">
@@ -112,7 +112,7 @@
         <c:if test="${databaseObject.schemaClass == 'Polymer'}">
             <c:if test="${not empty databaseObject.repeatedUnit}">
                 <div class="fieldset-pair-container">
-                    <div class="label">Repeated Units of this Polymer</div>
+                    <div class="label">repeated unit</div>
                     <div class="field">
                         <ul class="list">
                             <li>
@@ -129,7 +129,7 @@
         <c:if test="${isEntitySet}">
             <c:if test="${not empty databaseObject.hasMember}">
                 <div class="fieldset-pair-container">
-                    <div class="label">Members of this Set</div>
+                    <div class="label">members</div>
                     <div class="field">
                         <ul class="list">
                             <c:forEach var="hasMember" items="${databaseObject.hasMember}">
@@ -147,7 +147,7 @@
         <c:if test="${databaseObject.schemaClass == 'CandidateSet'}">
             <c:if test="${not empty databaseObject.hasCandidate}">
                 <div class="fieldset-pair-container">
-                    <div class="label">Candidates of this Set</div>
+                    <div class="label">candidates</div>
                     <div class="field">
                         <ul class="list">
                             <c:forEach var="hasCandidate" items="${databaseObject.hasCandidate}">

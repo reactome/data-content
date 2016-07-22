@@ -1,14 +1,14 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <fieldset class="fieldset-details">
-    <legend>Components</legend>
+    <legend>Participants</legend>
 
     <c:if test="${databaseObject.schemaClass == 'Pathway' || databaseObject.schemaClass == 'BlackBoxEvent' || databaseObject.schemaClass == 'TopLevelPathway'}">
         <c:if test="${not empty databaseObject.hasEvent}">
 
             <div class="fieldset-pair-container">
                 <div class="label">
-                    contained events
+                     events
                 </div>
                 <div class="field">
                     <ul class="list">
@@ -31,7 +31,7 @@
             <c:if test="${not empty databaseObject.input}">
                 <div class="fieldset-pair-container">
                     <div class="label">
-                        contained inputs
+                        input
                     </div>
                     <div class="field">
                         <ul class="list">
@@ -50,7 +50,7 @@
             <c:if test="${not empty databaseObject.output}">
                 <div class="fieldset-pair-container">
                     <div class="label">
-                        contained output
+                        output
                     </div>
                     <div class="field">
                         <ul class="list">
