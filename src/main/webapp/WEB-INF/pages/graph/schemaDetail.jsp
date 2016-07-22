@@ -23,7 +23,7 @@
             </div>
         </div>
         <h3 class="details-title">
-            ${map.get('DisplayName')}
+            ${map.get('displayName')}
         </h3>
 
         <div class="schema-div">
@@ -40,7 +40,15 @@
                                                     entry.value.getClass().getSimpleName() == 'Integer'   ||
                                                     entry.value.getClass().getSimpleName() == 'Date'   ||
                                                     entry.value.getClass().getSimpleName() == 'Boolean'}">
-                                    <span style="color:black"> ${entry.value} </span>
+                                    <c:choose>
+                                        <%-- add value into an anchor tag just to show as a link. it's generic we need this check --%>
+                                        <c:when test="${fn:startsWith(entry.value, 'http://') || fn:startsWith(entry.value, 'https://')}">
+                                            <a href="${entry.value}">${entry.value}</a>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <span style="color:black"> ${entry.value} </span>
+                                        </c:otherwise>
+                                    </c:choose>
                                 </c:when>
                                 <c:when test="${entry.value.getClass().getSimpleName() == 'StoichiometryObject'}">
                                     <c:if test="${entry.value.stoichiometry gt 1}">${entry.value.stoichiometry} x </c:if><a href="./${entry.value.object.getDbId()}">[${entry.value.object.getSchemaClass()}:${entry.value.object.getDbId()}] ${entry.value.object.getDisplayName()}</a>
@@ -85,9 +93,6 @@
                 </c:forEach>
                 </tbody>
             </table>
-
-
-
         </div>
     </div>
 </div>

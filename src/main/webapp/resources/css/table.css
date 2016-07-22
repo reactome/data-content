@@ -161,13 +161,13 @@
     border-radius: 0 5px 0 0;
 }
 
-.schema-attr-table tr td, tr th {
+.schema-attr-table tr td, .schema-attr-table tr th {
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
 }
 
-.schema-attr-table tr td, tr th, tbody, thead {
+.schema-attr-table tr td, .schema-attr-table tr th, .schema-attr-table tbody, .schema-attr-table thead {
     padding-left: 10px !important;
     padding-right: 5px !important;
 }

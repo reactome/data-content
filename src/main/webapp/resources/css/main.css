@@ -258,10 +258,6 @@ ul.tree li a:visited {
     transition: font-size 0.5s ease, background-color 0.5s ease;
 }
 
-ul.tree li a.gui:hover {
-    background: #f6f6f6;
-}
-
 /*pagination*/
 .pagination {
     /*padding: 20px 0;*/
@@ -706,6 +702,6 @@ a.tree-highlighted-item:visited {
     margin: 12px 0 -15px 2px;
 }
 
-.breadcrumbs a, a:visited {
+.breadcrumbs a a:visited{
     color: #1F419A;
 }
