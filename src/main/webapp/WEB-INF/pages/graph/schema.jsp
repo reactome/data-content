@@ -168,7 +168,7 @@
                 class.
             </p>
             <p>The main panel shows attributes of the selected class. Own attributes, i.e. the ones which are not
-                inherited from a parent class are indicated in <a class="own">colour</a>.
+                inherited from a parent class are indicated in <span class="own">colour</span>.
             </p>
             <p>'+' in 'Cardinality' column indicates that this is a multi-value attribute.
             </p>

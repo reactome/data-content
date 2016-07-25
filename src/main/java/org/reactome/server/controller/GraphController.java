@@ -140,9 +140,10 @@ class GraphController {
         return "graph/schema";
     }
 
-    @RequestMapping(value = "/schema/", method = RequestMethod.GET)
-    public String getClassBrowser(ModelMap model) throws ClassNotFoundException {
-        return getClassBrowserDetails(DatabaseObject.class.getSimpleName(), model);
+    @RequestMapping(value = "/schema", method = RequestMethod.GET)
+    public String getClassBrowser() throws ClassNotFoundException {
+        /** When we load the schema page, DatabaseObject is loaded by default, then we redirect to it **/
+        return "redirect:/schema/DatabaseObject";
     }
 
     /**
