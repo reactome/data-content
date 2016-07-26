@@ -705,3 +705,8 @@ a.tree-highlighted-item:visited {
 .breadcrumbs a, .breadcrumbs a:visited{
     color: #1F419A;
 }
+
+.own {
+    background-color: #F5DEB3;
+    padding: 1px 1px 1px 2px;
+}
