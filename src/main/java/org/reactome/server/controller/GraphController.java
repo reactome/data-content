@@ -83,7 +83,7 @@ class GraphController {
         }
     }
 
-    @RequestMapping(value = "/schema/object/detail/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/schema/instance/browser/{id}", method = RequestMethod.GET)
     public String objectDetail(@PathVariable String id, ModelMap model) {
 
         DatabaseObject databaseObject = advancedDatabaseObjectService.findById(id, 1000);
@@ -102,7 +102,7 @@ class GraphController {
         }
 
         infoLogger.info("DatabaseObject for id: {} was {}", id, "found");
-        return "graph/schemaDetail";
+        return "graph/instanceBrowser";
     }
 
     @RequestMapping(value = "/schema/objects/{className}", method = RequestMethod.GET)
@@ -170,12 +170,12 @@ class GraphController {
             if (superClass == null) {
                 /*
                  * The database object contains already all outgoing relationships.
-                 * To complete the object for the object/details view all incoming relationships have to be loaded.
+                 * To complete the object for the instance/browser view all incoming relationships have to be loaded.
                  * The Mapping will be done automatically by Spring.
                  */
                 advancedDatabaseObjectService.findById(databaseObject.getDbId(), RelationshipDirection.INCOMING);
                 model.addAttribute("map", DatabaseObjectUtils.getAllFields(databaseObject));
-                return "redirect:/schema/object/detail/" + id;
+                return "redirect:/schema/instance/browser/" + id;
             } else {
                 Set<PathwayBrowserNode> topLevelNodes = contentDetails.getNodes();
 
