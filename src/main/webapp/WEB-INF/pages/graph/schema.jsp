@@ -9,6 +9,7 @@
     <%--<div class="grid_24">--%>
     <%--<h2>Data Schema</h2>--%>
     <%--</div>--%>
+    <div style="font-weight: bold;font-size: larger; color:#009;margin-left: 10px;">Graph Database :: Data Schema</div>
 
     <div class="grid_16 push_8">
         <c:choose>
@@ -153,6 +154,42 @@
                         </div>
                     </c:if>
                 </div>
+
+                <c:if test="${not empty referrals}">
+                    <div class="attributeBrowser" style="margin-top:50px;">
+                        <h5 class="schema-attr-header">Referrals of class '${className}' instances</h5>
+                        <div class="wrap no-margin">
+                            <table class="dt-fixed-header schema-attr-table">
+                                <thead>
+                                <tr>
+                                    <th width="30%">Attribute Origin</th>
+                                    <th width="30%">Attribute name</th>
+                                    <th width="14%">Cardinality</th>
+                                    <th width="26%">Value Type</th>
+                                </tr>
+                                </thead>
+                            </table>
+                            <div class="dt-content">
+                                <table class="schema-attr-table">
+                                    <tbody>
+                                    <c:forEach var="property" items="${referrals}">
+                                        <tr>
+                                            <td width="30%" title="${property.origin.simpleName}">
+                                                <a href="./${property.origin.simpleName}" title="${property.origin.simpleName}">${property.origin.simpleName}</a>
+                                            </td>
+                                            <td width="30%">${property.name}</td>
+                                            <td width="14%">${property.cardinality}</td>
+                                            <td width="26%" title="${property.valueType.simpleName}">
+                                                <a href="./${property.valueType.simpleName}" title="${property.valueType.simpleName}">${property.valueType.simpleName}</a>
+                                            </td>
+                                        </tr>
+                                    </c:forEach>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </c:if>
             </c:otherwise>
         </c:choose>
 
@@ -198,8 +235,11 @@
                             <span class="node-item ${node.clazz.simpleName == className ? 'selected' : ''}">
                                 <a href="${pageContext.request.contextPath}/schema/${node.clazz.simpleName}"
                                    >${node.clazz.simpleName}</a>
-                                [<a href="${pageContext.request.contextPath}/schema/objects/${node.clazz.simpleName}?page=1"
+                                    <%--
+                                    <!-- No entities number for the DatabaseObject -->
+                                    [<a href="${pageContext.request.contextPath}/schema/objects/${node.clazz.simpleName}?page=1"
                                     title="Show Entries">${node.count}</a>]
+                                    --%>
                             </span>
                             <c:import url="schemaNode.jsp"/>
                         </li>

@@ -136,13 +136,14 @@ class GraphController {
         model.addAttribute(TITLE, className);
         model.addAttribute("node", classBrowserCache);
         model.addAttribute("properties", DatabaseObjectUtils.getAttributeTable(className));
+        model.addAttribute("referrals", DatabaseObjectUtils.getReferrals(className));
         model.addAttribute("className", className);
         return "graph/schema";
     }
 
     @RequestMapping(value = "/schema", method = RequestMethod.GET)
     public String getClassBrowser() throws ClassNotFoundException {
-        /** When we load the schema page, DatabaseObject is loaded by default, then we redirect to it **/
+        // When we load the schema page, DatabaseObject is loaded by default, then we redirect to it
         return "redirect:/schema/DatabaseObject";
     }
 
@@ -168,7 +169,7 @@ class GraphController {
             DatabaseObject databaseObject = contentDetails.getDatabaseObject();
             String superClass = getClazz(databaseObject);
             if (superClass == null) {
-                /**
+                /*
                  * The database object contains already all outgoing relationships.
                  * To complete the object for the object/details view all incoming relationships have to be loaded.
                  * The Mapping will be done automatically by Spring.
