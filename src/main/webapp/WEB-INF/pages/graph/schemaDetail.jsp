@@ -3,9 +3,6 @@
 
 <c:import url="../header.jsp"/>
 
-<link rel="stylesheet" href="/css/main.css" type="text/css">
-<link rel="stylesheet" href="/css/ebi-fluid.css" type="text/css">
-
 <div class="ebi-content">
     <div class="grid_24">
 
@@ -23,7 +20,7 @@
             </div>
         </div>
         <h3 class="details-title">
-            ${map.get('displayName')}<c:if test="${not empty map.get('speciesName')}"> [${map.get('speciesName')}]</c:if>
+            ${map.get('displayName')}<c:catch><c:if test="${not empty map.get('speciesName')}"> [${map.get('speciesName')}]</c:if></c:catch>
         </h3>
 
         <div class="schema-div">
@@ -51,7 +48,7 @@
                                     </c:choose>
                                 </c:when>
                                 <c:when test="${entry.value.getClass().getSimpleName() == 'StoichiometryObject'}">
-                                    <c:if test="${entry.value.stoichiometry gt 1}">${entry.value.stoichiometry} x </c:if><a href="./${entry.value.object.getDbId()}">[${entry.value.object.getSchemaClass()}:${entry.value.object.getDbId()}] ${entry.value.object.getDisplayName()}<c:if test="${not empty list.getSpeciesName()}"> - ${list.getSpeciesName()}</c:if></a>
+                                    <c:if test="${entry.value.stoichiometry gt 1}">${entry.value.stoichiometry} x </c:if><a href="./${entry.value.object.getDbId()}">[${entry.value.object.getSchemaClass()}:${entry.value.object.getDbId()}] ${entry.value.object.getDisplayName()}<c:catch><c:if test="${not empty list.getSpeciesName()}"> - ${list.getSpeciesName()}</c:if></c:catch></a>
                                 </c:when>
                                 <c:when test="${entry.value.getClass().getSimpleName() == 'ArrayList' ||
                                                 entry.value.getClass().getSimpleName() == 'HashSet' ||
@@ -68,12 +65,12 @@
                                                         <span style="color:black"> ${list} </span>
                                                     </c:when>
                                                     <c:when test="${list.getClass().getSimpleName() == 'StoichiometryObject'}">
-                                                        <c:if test="${list.stoichiometry gt 1}"> <span title="Stoichiometry">${list.stoichiometry} &times;</span></c:if> <a href="./${list.object.getDbId()}">[${list.object.getSchemaClass()}:${list.object.getDbId()}] ${list.object.getDisplayName()}<c:if test="${not empty list.getSpeciesName()}"> - ${list.getSpeciesName()}</c:if></a>
+                                                        <c:if test="${list.stoichiometry gt 1}"> <span title="Stoichiometry">${list.stoichiometry} &times;</span></c:if> <a href="./${list.object.getDbId()}">[${list.object.getSchemaClass()}:${list.object.getDbId()}] ${list.object.getDisplayName()}<c:catch><c:if test="${not empty list.getSpeciesName()}"> - ${list.getSpeciesName()}</c:if></c:catch> </a>
                                                     </c:when>
                                                     <c:otherwise>
                                                         <c:catch>
                                                             <c:if test="${!empty list.getDbId()}">
-                                                                <a href="./${list.getDbId()}">[${list.getSchemaClass()}:${list.getDbId()}] ${list.getDisplayName()}<c:if test="${not empty list.getSpeciesName()}"> - ${list.getSpeciesName()}</c:if></a>
+                                                                <a href="./${list.getDbId()}">[${list.getSchemaClass()}:${list.getDbId()}] ${list.getDisplayName()}<c:catch><c:if test="${not empty list.getSpeciesName()}"> - ${list.getSpeciesName()}</c:if></c:catch></a>
                                                             </c:if>
                                                         </c:catch>
                                                     </c:otherwise>
@@ -85,7 +82,7 @@
                                 <c:otherwise>
                                     <c:catch>
                                         <c:if test="${!empty entry.value.dbId}">
-                                            <a href="./${entry.value.getDbId()}">[${entry.value.getSchemaClass()}:${entry.value.getDbId()}] ${entry.value.getDisplayName()}<c:if test="${not empty list.getSpeciesName()}"> - ${list.getSpeciesName()}</c:if></a>
+                                            <a href="./${entry.value.getDbId()}">[${entry.value.getSchemaClass()}:${entry.value.getDbId()}] ${entry.value.getDisplayName()}<c:catch><c:if test="${not empty list.getSpeciesName()}"> - ${list.getSpeciesName()}</c:if></c:catch></a>
                                         </c:if>
                                     </c:catch>
                                 </c:otherwise>
@@ -106,7 +103,7 @@
                             <td style="width: 75%">
                                 <c:forEach var="list" items="${entry.objects}">
                                     <c:if test="${!empty list.getDbId()}">
-                                        <a href="./${list.getDbId()}">[${list.getSchemaClass()}:${list.getDbId()}] ${list.getDisplayName()}<c:if test="${not empty list.getSpeciesName()}"> - ${list.getSpeciesName()}</c:if></a>
+                                        <a href="./${list.getDbId()}">[${list.getSchemaClass()}:${list.getDbId()}] ${list.getDisplayName()}<c:catch><c:if test="${not empty list.getSpeciesName()}"> - ${list.getSpeciesName()}</c:if></c:catch></a>
                                     </c:if>
                                 </c:forEach>
                             </td>

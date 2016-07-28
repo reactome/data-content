@@ -2,8 +2,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <c:import url="../header.jsp"/>
-<link rel="stylesheet" href="/css/main.css" type="text/css">
-<link rel="stylesheet" href="/css/ebi-fluid.css" type="text/css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/schema-table.css" type="text/css">
 <div class="ebi-content" style="margin-top: 10px">
 
     <%--<div class="grid_24">--%>
@@ -16,7 +15,7 @@
             <c:when test="${not empty objects}">
                 <div class="attributeBrowser">
                     <h5 class="schema-attr-header">Entries: ${className}</h5>
-                    <div class="wrap no-margin">
+                    <div class="schema-table no-margin">
                         <table class="dt-fixed-header schema-attr-table">
                             <thead>
                             <tr>
@@ -91,7 +90,7 @@
                 <div class="attributeBrowser">
                     <c:if test="${not empty properties}">
                         <h5 class="schema-attr-header">Attributes of class ${className}</h5>
-                        <div class="wrap no-margin">
+                        <div class="schema-table no-margin">
                             <table class="dt-fixed-header schema-attr-table">
                                 <thead>
                                 <tr>
@@ -158,7 +157,7 @@
                 <c:if test="${not empty referrals}">
                     <div class="attributeBrowser" style="margin-top:50px;">
                         <h5 class="schema-attr-header">Referrals of class '${className}' instances</h5>
-                        <div class="wrap no-margin">
+                        <div class="schema-table no-margin">
                             <table class="dt-fixed-header schema-attr-table">
                                 <thead>
                                 <tr>
