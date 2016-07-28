@@ -95,6 +95,26 @@
                 </c:forEach>
                 </tbody>
             </table>
+
+            <c:if test="${not empty referrals}">
+            <div style="margin-top:25px; font-size: larger; font-weight: bold">Referrals</div>
+            <table class="schema-detail-table">
+                <tbody>
+                    <c:forEach var="entry" items="${referrals}" varStatus="loopStatus">
+                        <tr class="${loopStatus.index % 2 == 0 ? 'even' : 'odd'}">
+                            <td style="width: 25%; text-decoration: underline">(${entry.referral})</td>
+                            <td style="width: 75%">
+                                <c:forEach var="list" items="${entry.objects}">
+                                    <c:if test="${!empty list.getDbId()}">
+                                        <a href="./${list.getDbId()}">[${list.getSchemaClass()}:${list.getDbId()}] ${list.getDisplayName()}<c:if test="${not empty list.getSpeciesName()}"> - ${list.getSpeciesName()}</c:if></a>
+                                    </c:if>
+                                </c:forEach>
+                            </td>
+                        </tr>
+                    </c:forEach>
+                </tbody>
+            </table>
+            </c:if>
         </div>
     </div>
 </div>
