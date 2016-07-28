@@ -20,9 +20,13 @@
     table-layout: fixed;
 }
 
+.schema-table table tbody tr {
+    border-bottom: 1px dotted #dddddd;
+}
 
-.schema-table table tr:hover *{
-    font-weight: bold !important;
+.schema-table table tr:hover td{
+    border-top: 1px solid #1F419A !important;
+    border-bottom: 1px solid #1F419A !important;
 }
 
 .schema-table .dt-fixed-header {
@@ -31,7 +35,7 @@
 }
 
 .schema-table .dt-fixed-header th {
-    border:none;
+    border:none !important;
     color: #1F419A;
     font-weight: bold;
     font-size: 13px;
@@ -78,11 +82,20 @@
 }
 
 .schema-table .dt-content-ovf table td, .schema-table .dt-content table td{
-    border:none;
+    border: none !important;
     color: #000;
     padding-left: 20px;
     padding-bottom: 2px;
     padding-top: 3px;
+    vertical-align: middle;
+}
+
+.schema-table .dt-content-ovf table tr:first-child, .schema-table .dt-content table tr:first-child {
+    border-top: 1px solid transparent !important;
+}
+
+.schema-table .dt-content-ovf table tr:last-child, .schema-table .dt-content table tr:last-child {
+    border-bottom: 1px solid transparent !important;
 }
 
 .schema-table .tabular {

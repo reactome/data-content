@@ -32,10 +32,10 @@
                                         <td style="width: 20%">
                                             <c:choose>
                                                 <c:when test="${empty object.stId}">
-                                                    <a href="../object/detail/${object.dbId}">${object.dbId}</a>
+                                                    <a href="../instance/browser/${object.dbId}">${object.dbId}</a>
                                                 </c:when>
                                                 <c:otherwise>
-                                                    <a href="../object/detail/${object.stId}">${object.stId}</a>
+                                                    <a href="../instance/browser/${object.stId}">${object.stId}</a>
                                                 </c:otherwise>
                                             </c:choose>
                                         </td>
@@ -105,47 +105,27 @@
                                 <table class="schema-attr-table">
                                     <tbody>
                                     <c:forEach var="property" items="${properties}">
-                                        <c:choose>
-                                            <c:when test="${property.origin.simpleName == className}">
-                                                <tr class="declared">
-                                                    <td width="30%" title="${property.name}">${property.name}</td>
-                                                    <td width="14%">${property.cardinality}</td>
+                                        <tr <c:if test="${property.origin.simpleName == className}">class="declared"</c:if>>
+                                            <td width="30%" title="${property.name}">${property.name}</td>
+                                            <td width="14%">${property.cardinality}</td>
+                                            <td width="26%" title="${type.simpleName}">
+                                                <ul class="list">
+                                                <c:forEach items="${property.attributeClasses}" var="attr">
+                                                    <li>
                                                     <c:choose>
-                                                        <c:when test="${property.valueTypeDatabaseObject}">
-                                                            <td width="26%" title="${property.valueType.simpleName}"><a
-                                                                    href="./${property.valueType.simpleName}"
-                                                                    title="${property.valueType.simpleName}">${property.valueType.simpleName}
-                                                            </td>
+                                                        <c:when test="${attr.valueTypeDatabaseObject}">
+                                                            <a href="./${attr.type.simpleName}" title="${attr.type.simpleName}">${attr.type.simpleName}</a>
                                                         </c:when>
                                                         <c:otherwise>
-                                                            <td width="26%" title="${property.valueType.simpleName}">${property.valueType.simpleName}</td>
+                                                            <span width="26%" title="${attr.type.simpleName}">${attr.type.simpleName}</span>
                                                         </c:otherwise>
                                                     </c:choose>
-                                                    <td width="30%" title="${property.origin.simpleName}">${property.origin.simpleName}</td>
-                                                </tr>
-                                            </c:when>
-                                            <c:otherwise>
-                                                <tr>
-                                                    <td width="30%">${property.name}</td>
-                                                    <td width="14%">${property.cardinality}</td>
-                                                    <c:choose>
-                                                        <c:when test="${property.valueTypeDatabaseObject}">
-                                                            <td width="26%" title="${property.valueType.simpleName}"><a
-                                                                    href="./${property.valueType.simpleName}"
-                                                                    title="${property.valueType.simpleName}">${property.valueType.simpleName}
-                                                            </td>
-                                                        </c:when>
-                                                        <c:otherwise>
-                                                            <td width="26%" title="${property.valueType.simpleName}">${property.valueType.simpleName}</td>
-                                                        </c:otherwise>
-                                                    </c:choose>
-                                                    <td width="30%" title="${property.origin.simpleName}">
-                                                        <a href="./${property.origin.simpleName}" title="${property.origin.simpleName}">${property.origin.simpleName}</a>
-                                                    </td>
-                                                </tr>
-                                            </c:otherwise>
-                                        </c:choose>
-
+                                                    </li>
+                                                </c:forEach>
+                                                </ul>
+                                            </td>
+                                            <td width="30%" title="${property.origin.simpleName}"><a href="./${property.origin.simpleName}">${property.origin.simpleName}</a></td>
+                                        </tr>
                                     </c:forEach>
                                     </tbody>
                                 </table>
@@ -178,8 +158,12 @@
                                             </td>
                                             <td width="30%">${property.name}</td>
                                             <td width="14%">${property.cardinality}</td>
-                                            <td width="26%" title="${property.valueType.simpleName}">
-                                                <a href="./${property.valueType.simpleName}" title="${property.valueType.simpleName}">${property.valueType.simpleName}</a>
+                                            <td>
+                                                <ul class="list">
+                                                <c:forEach items="${property.attributeClasses}" var="attr">
+                                                    <li title="${attr.type.simpleName}"><a href="./${attr.type.simpleName}" title="${attr.type.simpleName}">${attr.type.simpleName}</a></li>
+                                                </c:forEach>
+                                                </ul>
                                             </td>
                                         </tr>
                                     </c:forEach>

@@ -101,11 +101,13 @@
                         <tr class="${loopStatus.index % 2 == 0 ? 'even' : 'odd'}">
                             <td style="width: 25%; text-decoration: underline">(${entry.referral})</td>
                             <td style="width: 75%">
+                                <ul class="list">
                                 <c:forEach var="list" items="${entry.objects}">
                                     <c:if test="${!empty list.getDbId()}">
-                                        <a href="./${list.getDbId()}">[${list.getSchemaClass()}:${list.getDbId()}] ${list.getDisplayName()}<c:catch><c:if test="${not empty list.getSpeciesName()}"> - ${list.getSpeciesName()}</c:if></c:catch></a>
+                                        <li><a href="./${list.getDbId()}">[${list.getSchemaClass()}:${list.getDbId()}] ${list.getDisplayName()}<c:catch><c:if test="${not empty list.getSpeciesName()}"> - ${list.getSpeciesName()}</c:if></c:catch></a></li>
                                     </c:if>
                                 </c:forEach>
+                                </ul>
                             </td>
                         </tr>
                     </c:forEach>
