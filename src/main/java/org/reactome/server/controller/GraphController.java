@@ -31,10 +31,9 @@ import java.sql.SQLException;
 import java.util.*;
 
 /**
- * Created by:
- *
  * @author Florian Korninger (florian.korninger@ebi.ac.uk)
- * @since 10.02.16.
+ * @author Guilherme Viteri (gviteri@ebi.ac.uk)
+ * @author Åntonio Fabregat (fabregat@ebi.ac.uk)
  */
 @Controller
 class GraphController {
@@ -47,9 +46,6 @@ class GraphController {
     private static final String EVIDENCES_URL_MAP = "evidencesUrlMap";
 
     private static final int OFFSET = 25;
-
-    @Autowired
-    private DatabaseObjectService databaseObjectService;
 
     @Autowired
     private GeneralService generalService;
@@ -65,6 +61,9 @@ class GraphController {
 
     @Autowired
     private SchemaService schemaService;
+
+    @Autowired
+    private AdvancedLinkageService advancedLinkageService;
 
     private SchemaNode classBrowserCache;
 
@@ -95,11 +94,11 @@ class GraphController {
         model.addAttribute(TITLE, databaseObject.getDisplayName());
         model.addAttribute("breadcrumbSchemaClass", databaseObject.getSchemaClass());
         model.addAttribute("map", DatabaseObjectUtils.getAllFields(databaseObject));
+        model.addAttribute("referrals", advancedLinkageService.getReferralsTo(id));
 
         if (databaseObject instanceof PhysicalEntity || databaseObject instanceof Event || databaseObject instanceof Regulation) {
             model.addAttribute("linkToDetailsPage", true);
             model.addAttribute("id", StringUtils.isNotEmpty(databaseObject.getStId()) ? databaseObject.getStId() : databaseObject.getDbId());
-
         }
 
         infoLogger.info("DatabaseObject for id: {} was {}", id, "found");
