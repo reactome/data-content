@@ -236,15 +236,15 @@
             </p>
             <p>'+' in 'Cardinality' column indicates that this is a multi-value attribute.
             </p>
-            <p>'Value defines instance' column indicates the attributes the values of which determine instance identity
-                and are used to check if an identical instance has been stored in the database already. 'ALL' indicates
-                that
-                that all of the values of a given attribute must be identical while 'ANY' shows that identity of any
-                single
-                value of a given attribute is enough. Of course, if the identity is defined by multiple attributes each
-                of them
-                has to match.
-            </p>
+            <%--<p>'Value defines instance' column indicates the attributes the values of which determine instance identity--%>
+                <%--and are used to check if an identical instance has been stored in the database already. 'ALL' indicates--%>
+                <%--that--%>
+                <%--that all of the values of a given attribute must be identical while 'ANY' shows that identity of any--%>
+                <%--single--%>
+                <%--value of a given attribute is enough. Of course, if the identity is defined by multiple attributes each--%>
+                <%--of them--%>
+                <%--has to match.--%>
+            <%--</p>--%>
         </div>
         <%--</div>--%>
 
