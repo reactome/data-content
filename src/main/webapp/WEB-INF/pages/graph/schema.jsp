@@ -58,19 +58,20 @@
                             <c:when test="${maxpage>1}">
                                 <c:choose>
                                     <c:when test="${1 == page}">
-                                        <span class="search-page active">first</span>
+                                        <span class="search-page active">1</span>
                                     </c:when>
                                     <c:otherwise>
                                         <c:choose>
                                             <c:when test="${empty selectedSpecies}">
-                                                <a class="search-page" href="./${className}">first</a>
+                                                <a class="search-page" href="./${className}">1</a>
                                             </c:when>
                                             <c:otherwise>
-                                                <a class="search-page" href="./${className}&speciesTaxId=${selectedSpecies}">first</a>
+                                                <a class="search-page" href="./${className}&speciesTaxId=${selectedSpecies}">1</a>
                                             </c:otherwise>
                                         </c:choose>
                                     </c:otherwise>
                                 </c:choose>
+                                <c:if test="${page > 5}">...&nbsp;&nbsp;</c:if>
                                 <c:forEach var="val" begin="2" end="${maxpage - 1}">
                                     <c:if test="${val > page-4 && val < page+4}">
                                         <c:choose>
@@ -90,17 +91,18 @@
                                         </c:choose>
                                     </c:if>
                                 </c:forEach>
+                                <c:if test="${page < (maxpage - 4)}">...&nbsp;&nbsp;</c:if>
                                 <c:choose>
                                     <c:when test="${maxpage == page}">
-                                        <span class="search-page active">last</span>
+                                        <span class="search-page active">${maxpage}</span>
                                     </c:when>
                                     <c:otherwise>
                                         <c:choose>
                                             <c:when test="${empty selectedSpecies}">
-                                                <a class="search-page" href="./${className}?page=${maxpage}">last</a>
+                                                <a class="search-page" href="./${className}?page=${maxpage}">${maxpage}</a>
                                             </c:when>
                                             <c:otherwise>
-                                                <a class="search-page" href="./${className}?speciesTaxId=${selectedSpecies}&page=${maxpage}">last</a>
+                                                <a class="search-page" href="./${className}?speciesTaxId=${selectedSpecies}&page=${maxpage}">${maxpage}</a>
                                             </c:otherwise>
                                         </c:choose>
                                     </c:otherwise>
