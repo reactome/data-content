@@ -11,10 +11,17 @@
     <div style="font-weight: bold;font-size: larger; color:#009;margin-left: 10px;">Graph Database :: Data Schema</div>
 
     <div class="grid_16 push_8">
+        <c:if test="${type == 'list'}">
+            <h5 class="schema-attr-header">Entries: ${className}</h5>
+            <c:if test="${not empty speciesList}">
+                <div>Select species: <select onchange="location = '?speciesTaxId=' + this.options[this.selectedIndex].value;"><c:forEach var="species" items="${speciesList}">
+                    <option value="${species.taxId}" <c:if test="${species.taxId == selectedSpecies}">selected="selected"</c:if>>${species.displayName}</option>
+                </c:forEach></select></div>
+            </c:if>
+        </c:if>
         <c:choose>
             <c:when test="${not empty objects}">
                 <div class="attributeBrowser">
-                    <h5 class="schema-attr-header">Entries: ${className}</h5>
                     <div class="schema-table no-margin">
                         <table class="dt-fixed-header schema-attr-table">
                             <thead>
@@ -57,7 +64,14 @@
                                         <span class="search-page active">first</span>
                                     </c:when>
                                     <c:otherwise>
-                                        <a class="search-page" href="../objects/${className}?page=1">first</a>
+                                        <c:choose>
+                                            <c:when test="${empty selectedSpecies}">
+                                                <a class="search-page" href="./${className}">first</a>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <a class="search-page" href="./${className}&speciesTaxId=${selectedSpecies}">first</a>
+                                            </c:otherwise>
+                                        </c:choose>
                                     </c:otherwise>
                                 </c:choose>
                                 <c:forEach var="val" begin="2" end="${maxpage - 1}">
@@ -67,8 +81,14 @@
                                                 <span class="search-page active">${val}</span>
                                             </c:when>
                                             <c:otherwise>
-                                                <a class="search-page"
-                                                   href="../objects/${className}?page=${val}">${val}</a>
+                                                <c:choose>
+                                                    <c:when test="${empty selectedSpecies}">
+                                                        <a class="search-page" href="./${className}?page=${val}">${val}</a>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <a class="search-page" href="./${className}?speciesTaxId=${selectedSpecies}&page=${val}">${val}</a>
+                                                    </c:otherwise>
+                                                </c:choose>
                                             </c:otherwise>
                                         </c:choose>
                                     </c:if>
@@ -78,7 +98,14 @@
                                         <span class="search-page active">last</span>
                                     </c:when>
                                     <c:otherwise>
-                                        <a class="search-page" href="../objects/${className}?page=${maxpage}">last</a>
+                                        <c:choose>
+                                            <c:when test="${empty selectedSpecies}">
+                                                <a class="search-page" href="./${className}?page=${maxpage}">last</a>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <a class="search-page" href="./${className}?speciesTaxId=${selectedSpecies}&page=${maxpage}">last</a>
+                                            </c:otherwise>
+                                        </c:choose>
                                     </c:otherwise>
                                 </c:choose>
                             </c:when>
@@ -87,6 +114,24 @@
                 </div>
             </c:when>
             <c:otherwise>
+                <c:if test="${type == 'list'}">
+                    <div class="attributeBrowser">
+                        <div class="schema-table no-margin">
+                            <table class="dt-fixed-header schema-attr-table">
+                                <thead>
+                                <tr>
+                                    <th style="width: 20%">Identifier</th>
+                                    <th style="width: 80%">Name</th>
+                                </tr>
+                                </thead>
+                            </table>
+                            <div class="dt-content" style="font-weight: bold;font-size: 14px; color:#009;margin-left: 10px;text-align: center;">
+                                No entries found for this species
+                            </div>
+                        </div>
+                    </div>
+                </c:if>
+
                 <div class="attributeBrowser">
                     <c:if test="${not empty properties}">
                         <h5 class="schema-attr-header">Attributes of class ${className}</h5>
@@ -220,7 +265,7 @@
                                    >${node.clazz.simpleName}</a>
                                     <%--
                                     <!-- No entities number for the DatabaseObject -->
-                                    [<a href="${pageContext.request.contextPath}/schema/objects/${node.clazz.simpleName}?page=1"
+                                    [<a href="${pageContext.request.contextPath}/schema/objects/${node.clazz.simpleName}"
                                     title="Show Entries">${node.count}</a>]
                                     --%>
                             </span>

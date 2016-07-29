@@ -14,8 +14,6 @@ import org.reactome.server.interactors.model.InteractorResource;
 import org.reactome.server.interactors.service.InteractionService;
 import org.reactome.server.interactors.service.InteractorResourceService;
 import org.reactome.server.interactors.util.InteractorConstant;
-import org.reactome.server.search.exception.EnricherException;
-import org.reactome.server.search.exception.SolrSearcherException;
 import org.reactome.server.util.WebUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.lang.reflect.Method;
 import java.sql.SQLException;
 import java.util.*;
 
@@ -35,6 +34,7 @@ import java.util.*;
  * @author Guilherme Viteri (gviteri@ebi.ac.uk)
  * @author Åntonio Fabregat (fabregat@ebi.ac.uk)
  */
+@SuppressWarnings("unused")
 @Controller
 class GraphController {
 
@@ -61,6 +61,9 @@ class GraphController {
 
     @Autowired
     private SchemaService schemaService;
+
+    @Autowired
+    private SpeciesService speciesService;
 
     @Autowired
     private AdvancedLinkageService advancedLinkageService;
@@ -107,21 +110,43 @@ class GraphController {
 
     @RequestMapping(value = "/schema/objects/{className}", method = RequestMethod.GET)
     public String getClassBrowserInstances(@PathVariable String className,
-                                           @RequestParam Integer page,
+                                           @RequestParam(defaultValue = "9606") String speciesTaxId, //default Human
+                                           @RequestParam(defaultValue = "1") Integer page,
                                            ModelMap model) throws ClassNotFoundException {
         if (classBrowserCache == null) {
             classBrowserCache = DatabaseObjectUtils.getGraphModelTree(generalService.getSchemaClassCounts());
         }
         model.addAttribute(TITLE, className);
+        model.addAttribute("type", "list");
         model.addAttribute("node", classBrowserCache);
         model.addAttribute("className", className);
         model.addAttribute("page", page);
-        model.addAttribute("maxpage", classBrowserCache.findMaxPage(className, OFFSET));
-        Collection<DatabaseObject> databaseObjects = schemaService.getByClassName(className,page,OFFSET);
-        if (databaseObjects == null || databaseObjects.isEmpty()) {
+
+        Class clazz = DatabaseObjectUtils.getClassForName(className);
+        Collection<DatabaseObject> databaseObjects;
+        try {
+            if(clazz.equals(SimpleEntity.class)) throw new Exception("No species available for simple entity");
+            //noinspection unchecked,unused
+            Method m = clazz.getMethod("getSpecies");
+            databaseObjects = schemaService.getByClassName(className, speciesTaxId, page, OFFSET);
+            Integer num = schemaService.countByClassAndSpecies(className, speciesTaxId);
+            model.addAttribute("maxpage", (int) Math.ceil(num / (double) OFFSET));
+
+            //Only keep information related to species when it makes sense
+            model.addAttribute("speciesList", speciesService.getSpecies());
+            if(!speciesTaxId.equals("9606")){
+                model.addAttribute("selectedSpecies", speciesTaxId);
+            }
+        } catch (Exception e) {
+            databaseObjects = schemaService.getByClassName(className, page, OFFSET);
+            model.addAttribute("maxpage", classBrowserCache.findMaxPage(className, OFFSET));
+        }
+
+        if (databaseObjects == null){ // || databaseObjects.isEmpty()) {
             infoLogger.info("DatabaseObjects for class: {} were {}", className, "not found");
             return "search/noDetailsFound";
         }
+
         model.addAttribute("objects", databaseObjects);
         infoLogger.info("DatabaseObjects for class: {} were {}", className, "fFound");
         return "graph/schema";
@@ -147,24 +172,23 @@ class GraphController {
     }
 
     /**
-     * Shows detailed information of an entry
+     * * Shows detailed information of an entry
      *
      * @param id    StId or DbId
      * @param model SpringModel
      * @return Detailed page
-     * @throws EnricherException
-     * @throws SolrSearcherException
+     * @throws Exception Either a EnricherException or SolrSearcherException
      */
     @RequestMapping(value = "/detail/{id:.*}", method = RequestMethod.GET)
     public String detail(@PathVariable String id,
                          @RequestParam(required = false, defaultValue = "") String interactor,
                          ModelMap model) throws Exception {
 
-            boolean interactorPage = StringUtils.isNotEmpty(interactor);
+        boolean interactorPage = StringUtils.isNotEmpty(interactor);
 
-            ContentDetails contentDetails = detailsService.getContentDetails(id, interactorPage);
+        ContentDetails contentDetails = detailsService.getContentDetails(id, interactorPage);
 
-            if (contentDetails != null && contentDetails.getDatabaseObject() != null) {
+        if (contentDetails != null && contentDetails.getDatabaseObject() != null) {
             DatabaseObject databaseObject = contentDetails.getDatabaseObject();
             String superClass = getClazz(databaseObject);
             if (superClass == null) {
@@ -211,18 +235,17 @@ class GraphController {
     }
 
 
-    private void setClassAttributes (DatabaseObject databaseObject, ModelMap model) {
+    private void setClassAttributes(DatabaseObject databaseObject, ModelMap model) {
         if (databaseObject instanceof ReactionLikeEvent) {
             model.addAttribute("isReactionLikeEvent", true);
-        }
-        else if (databaseObject instanceof EntitySet) {
+        } else if (databaseObject instanceof EntitySet) {
             model.addAttribute("isEntitySet", true);
         }
         // Cant explain why warning appears here, should be correct
         else //noinspection ConstantConditions
-            if(databaseObject instanceof OpenSet || databaseObject instanceof EntityWithAccessionedSequence || databaseObject instanceof SimpleEntity) {
-            model.addAttribute("hasReferenceEntity", true);
-        }
+            if (databaseObject instanceof OpenSet || databaseObject instanceof EntityWithAccessionedSequence || databaseObject instanceof SimpleEntity) {
+                model.addAttribute("hasReferenceEntity", true);
+            }
     }
 
     private Map<String, List<DatabaseIdentifier>> groupCrossReferences(List<DatabaseIdentifier> databaseIdentifiers) {

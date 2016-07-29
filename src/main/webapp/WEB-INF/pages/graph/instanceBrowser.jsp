@@ -10,7 +10,7 @@
             <div class="breadcrumbs" style="float: left;">
                 <a href="${pageContext.request.contextPath}/schema/">Schema</a> &gt;
                 <a href="${pageContext.request.contextPath}/schema/${breadcrumbSchemaClass}">${breadcrumbSchemaClass}</a> &gt;
-                <a href="${pageContext.request.contextPath}/schema/objects/${breadcrumbSchemaClass}?page=1">Entries</a>
+                <a href="${pageContext.request.contextPath}/schema/objects/${breadcrumbSchemaClass}">Entries</a>
             </div>
 
             <div class="breadcrumbs" style="float: right;">

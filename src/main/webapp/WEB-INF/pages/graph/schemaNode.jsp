@@ -5,7 +5,9 @@
         <li class="schema-item">
             <span class="node-item ${node.clazz.simpleName == className ? 'selected' : ''}">
                 <a href="${pageContext.request.contextPath}/schema/${node.clazz.simpleName}">${node.clazz.simpleName}</a>
-                [<a href="${pageContext.request.contextPath}/schema/objects/${node.clazz.simpleName}?page=1" title="Show Entries">${node.count}</a>]
+            </span>
+            <span class="node-count">
+                [<a href="${pageContext.request.contextPath}/schema/objects/${node.clazz.simpleName}" title="Show Entries">${node.count}</a>]
             </span>
             <c:set var="node" value="${node}" scope="request"/>
             <c:import url="schemaNode.jsp"/>
