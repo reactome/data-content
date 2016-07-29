@@ -150,11 +150,11 @@
                                 <table class="schema-attr-table">
                                     <tbody>
                                     <c:forEach var="property" items="${properties}">
-                                        <tr <c:if test="${property.origin.simpleName == className}">class="declared"</c:if>>
+                                        <tr class="<c:if test="${property.origin.simpleName != className}">un</c:if>declared">
                                             <td width="30%" title="${property.name}">${property.name}</td>
                                             <td width="14%">${property.cardinality}</td>
                                             <td width="26%" title="${type.simpleName}">
-                                                <ul class="list">
+                                                <ul class="types">
                                                 <c:forEach items="${property.attributeClasses}" var="attr">
                                                     <li>
                                                     <c:choose>
@@ -186,10 +186,10 @@
                             <table class="dt-fixed-header schema-attr-table">
                                 <thead>
                                 <tr>
-                                    <th width="30%">Attribute Origin</th>
+                                    <th width="28%">Attribute Origin</th>
                                     <th width="30%">Attribute name</th>
                                     <th width="14%">Cardinality</th>
-                                    <th width="26%">Value Type</th>
+                                    <th width="28%">Value Type</th>
                                 </tr>
                                 </thead>
                             </table>
@@ -197,14 +197,14 @@
                                 <table class="schema-attr-table">
                                     <tbody>
                                     <c:forEach var="property" items="${referrals}">
-                                        <tr>
-                                            <td width="30%" title="${property.origin.simpleName}">
+                                        <tr class="undeclared">
+                                            <td width="28%" title="${property.origin.simpleName}">
                                                 <a href="./${property.origin.simpleName}" title="${property.origin.simpleName}">${property.origin.simpleName}</a>
                                             </td>
                                             <td width="30%">${property.name}</td>
                                             <td width="14%">${property.cardinality}</td>
-                                            <td>
-                                                <ul class="list">
+                                            <td width="28%">
+                                                <ul class="types">
                                                 <c:forEach items="${property.attributeClasses}" var="attr">
                                                     <li title="${attr.type.simpleName}"><a href="./${attr.type.simpleName}" title="${attr.type.simpleName}">${attr.type.simpleName}</a></li>
                                                 </c:forEach>
