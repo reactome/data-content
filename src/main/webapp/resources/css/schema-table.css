@@ -134,38 +134,38 @@
     margin: 30px 0 30px 0;
 }
 
-.schema-div .schema-detail-table {
+.schema-div table.schema-detail-table {
     padding: 5px 0 10px 0;
     width: 100%;
     box-shadow: 1px 1px 1px #AFAFB2;
     border-radius: 5px;
 }
 
-.schema-div .schema-detail-table  td {
+.schema-div table.schema-detail-table  td {
     padding: 1px 5px;
     border:none;
     word-break: break-all;
     vertical-align: middle;
 }
 
-.schema-div .schema-detail-table tbody tr:first-child td:first-child {
+.schema-div table.schema-detail-table tbody tr:first-child td:first-child {
     border-radius: 5px 0 0 0;
 }
 
-.schema-div .schema-detail-table tbody tr:first-child td:last-child {
+.schema-div table.schema-detail-table tbody tr:first-child td:last-child {
     border-radius: 0 5px 0 0;
 }
 
-.schema-div .schema-detail-table tbody tr:last-child td:first-child {
+.schema-div table.schema-detail-table tbody tr:last-child td:first-child {
     border-radius: 0 0 0 5px;
 }
 
-.schema-div .schema-detail-table tbody tr:last-child td:last-child {
+.schema-div table.schema-detail-table tbody tr:last-child td:last-child {
     border-radius: 0 0 5px 0;
 }
 
-.schema-div .schema-detail-table td:first-child {
-    background-color: #B0C4DE;
+.schema-div table.schema-detail-table td:first-child {
+    background-color: #B0C4DE !important;
     color: #000000;
     font-weight: 500;
     border-bottom:1px solid #E9E9E9;

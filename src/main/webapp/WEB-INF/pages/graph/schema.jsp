@@ -5,16 +5,13 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/schema-table.css" type="text/css">
 <div class="ebi-content" style="margin-top: 10px">
 
-    <%--<div class="grid_24">--%>
-    <%--<h2>Data Schema</h2>--%>
-    <%--</div>--%>
     <div style="font-weight: bold;font-size: larger; color:#009;margin-left: 10px;">Graph Database :: Data Schema</div>
 
     <div class="grid_16 push_8">
         <c:if test="${type == 'list'}">
             <h5 class="schema-attr-header">Entries: ${className}</h5>
             <c:if test="${not empty speciesList}">
-                <div>Select species: <select onchange="location = '?speciesTaxId=' + this.options[this.selectedIndex].value;"><c:forEach var="species" items="${speciesList}">
+                <div><span style="font-weight: bold;font-size: 14px; color:#009;margin-left: 10px;text-align: center;">Select species: </span><select onchange="location = '?speciesTaxId=' + this.options[this.selectedIndex].value;"><c:forEach var="species" items="${speciesList}">
                     <option value="${species.taxId}" <c:if test="${species.taxId == selectedSpecies}">selected="selected"</c:if>>${species.displayName}</option>
                 </c:forEach></select></div>
             </c:if>

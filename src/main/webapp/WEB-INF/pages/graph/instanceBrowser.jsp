@@ -3,6 +3,8 @@
 
 <c:import url="../header.jsp"/>
 
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/schema-table.css" type="text/css">
+
 <div class="ebi-content">
     <div class="grid_24">
 
@@ -26,7 +28,6 @@
         <div class="schema-div">
             <table class="schema-detail-table">
                 <tbody>
-
                 <c:forEach var="entry" items="${map}" varStatus="loopStatus">
                     <tr class="${loopStatus.index % 2 == 0 ? 'even' : 'odd'}">
                         <td style="width: 25%">${entry.key}</td>

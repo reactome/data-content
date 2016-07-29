@@ -14,6 +14,7 @@ import org.reactome.server.interactors.model.InteractorResource;
 import org.reactome.server.interactors.service.InteractionService;
 import org.reactome.server.interactors.service.InteractorResourceService;
 import org.reactome.server.interactors.util.InteractorConstant;
+import org.reactome.server.util.DataSchemaCache;
 import org.reactome.server.util.WebUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -113,6 +114,8 @@ class GraphController {
                                            @RequestParam(defaultValue = "9606") String speciesTaxId, //default Human
                                            @RequestParam(defaultValue = "1") Integer page,
                                            ModelMap model) throws ClassNotFoundException {
+
+        classBrowserCache = DataSchemaCache.getClassBrowserCache();
         if (classBrowserCache == null) {
             classBrowserCache = DatabaseObjectUtils.getGraphModelTree(generalService.getSchemaClassCounts());
         }
@@ -154,6 +157,7 @@ class GraphController {
 
     @RequestMapping(value = "/schema/{className}", method = RequestMethod.GET)
     public String getClassBrowserDetails(@PathVariable String className, ModelMap model) throws ClassNotFoundException {
+        classBrowserCache = DataSchemaCache.getClassBrowserCache();
         if (classBrowserCache == null) {
             classBrowserCache = DatabaseObjectUtils.getGraphModelTree(generalService.getSchemaClassCounts());
         }
