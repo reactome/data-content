@@ -46,7 +46,7 @@ class GraphController {
     private static final String INTERACTOR_RESOURCES_MAP = "interactorResourceMap";
     private static final String EVIDENCES_URL_MAP = "evidencesUrlMap";
 
-    private static final int OFFSET = 25;
+    private static final int OFFSET = 55;
 
     @Autowired
     private GeneralService generalService;
