@@ -53,24 +53,25 @@
                         </div>
                     </div>
 
-                    <div class="pagination">
+                    <div class="pagination" style="margin-top: 25px;" align="center">
                         <c:choose>
                             <c:when test="${maxpage>1}">
                                 <c:choose>
                                     <c:when test="${1 == page}">
-                                        <span class="search-page active">first</span>
+                                        <span class="search-page active">1</span>
                                     </c:when>
                                     <c:otherwise>
                                         <c:choose>
                                             <c:when test="${empty selectedSpecies}">
-                                                <a class="search-page" href="./${className}">first</a>
+                                                <a class="search-page" href="./${className}">1</a>
                                             </c:when>
                                             <c:otherwise>
-                                                <a class="search-page" href="./${className}&speciesTaxId=${selectedSpecies}">first</a>
+                                                <a class="search-page" href="./${className}&speciesTaxId=${selectedSpecies}">1</a>
                                             </c:otherwise>
                                         </c:choose>
                                     </c:otherwise>
                                 </c:choose>
+                                <c:if test="${page > 5}">...&nbsp;&nbsp;</c:if>
                                 <c:forEach var="val" begin="2" end="${maxpage - 1}">
                                     <c:if test="${val > page-4 && val < page+4}">
                                         <c:choose>
@@ -90,17 +91,18 @@
                                         </c:choose>
                                     </c:if>
                                 </c:forEach>
+                                <c:if test="${page < (maxpage - 4)}">...&nbsp;&nbsp;</c:if>
                                 <c:choose>
                                     <c:when test="${maxpage == page}">
-                                        <span class="search-page active">last</span>
+                                        <span class="search-page active">${maxpage}</span>
                                     </c:when>
                                     <c:otherwise>
                                         <c:choose>
                                             <c:when test="${empty selectedSpecies}">
-                                                <a class="search-page" href="./${className}?page=${maxpage}">last</a>
+                                                <a class="search-page" href="./${className}?page=${maxpage}">${maxpage}</a>
                                             </c:when>
                                             <c:otherwise>
-                                                <a class="search-page" href="./${className}?speciesTaxId=${selectedSpecies}&page=${maxpage}">last</a>
+                                                <a class="search-page" href="./${className}?speciesTaxId=${selectedSpecies}&page=${maxpage}">${maxpage}</a>
                                             </c:otherwise>
                                         </c:choose>
                                     </c:otherwise>
@@ -129,123 +131,121 @@
                     </div>
                 </c:if>
 
+                <c:if test="${not empty properties}">
                 <div class="attributeBrowser">
-                    <c:if test="${not empty properties}">
-                        <h5 class="schema-attr-header">Attributes of class ${className}</h5>
-                        <div class="schema-table no-margin">
-                            <table class="dt-fixed-header schema-attr-table">
-                                <thead>
-                                <tr>
-                                    <th width="30%">Attribute name</th>
-                                    <th width="14%">Cardinality</th>
-                                    <th width="26%">Value Type</th>
-                                    <th width="30%">Attribute Origin</th>
-                                </tr>
-                                </thead>
+                    <h5 class="schema-attr-header">Attributes of class ${className}</h5>
+                    <div class="schema-table no-margin">
+                        <table class="dt-fixed-header schema-attr-table">
+                            <thead>
+                            <tr>
+                                <th width="30%">Attribute name</th>
+                                <th width="14%">Cardinality</th>
+                                <th width="26%">Value Type</th>
+                                <th width="30%">Attribute Origin</th>
+                            </tr>
+                            </thead>
+                        </table>
+                        <div class="dt-content">
+                            <table class="schema-attr-table">
+                                <tbody>
+                                <c:forEach var="property" items="${properties}">
+                                    <tr class="<c:if test="${property.origin.simpleName != className}">un</c:if>declared">
+                                        <td width="30%" title="${property.name}">${property.name}</td>
+                                        <td width="14%">${property.cardinality}</td>
+                                        <td width="26%" title="${type.simpleName}">
+                                            <ul class="types">
+                                            <c:forEach items="${property.attributeClasses}" var="attr">
+                                                <li>
+                                                <c:choose>
+                                                    <c:when test="${attr.valueTypeDatabaseObject}">
+                                                        <a href="./${attr.type.simpleName}" title="${attr.type.simpleName}">${attr.type.simpleName}</a>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <span width="26%" title="${attr.type.simpleName}">${attr.type.simpleName}</span>
+                                                    </c:otherwise>
+                                                </c:choose>
+                                                </li>
+                                            </c:forEach>
+                                            </ul>
+                                        </td>
+                                        <td width="30%" title="${property.origin.simpleName}"><a href="./${property.origin.simpleName}">${property.origin.simpleName}</a></td>
+                                    </tr>
+                                </c:forEach>
+                                </tbody>
                             </table>
-                            <div class="dt-content">
-                                <table class="schema-attr-table">
-                                    <tbody>
-                                    <c:forEach var="property" items="${properties}">
-                                        <tr class="<c:if test="${property.origin.simpleName != className}">un</c:if>declared">
-                                            <td width="30%" title="${property.name}">${property.name}</td>
-                                            <td width="14%">${property.cardinality}</td>
-                                            <td width="26%" title="${type.simpleName}">
-                                                <ul class="types">
-                                                <c:forEach items="${property.attributeClasses}" var="attr">
-                                                    <li>
-                                                    <c:choose>
-                                                        <c:when test="${attr.valueTypeDatabaseObject}">
-                                                            <a href="./${attr.type.simpleName}" title="${attr.type.simpleName}">${attr.type.simpleName}</a>
-                                                        </c:when>
-                                                        <c:otherwise>
-                                                            <span width="26%" title="${attr.type.simpleName}">${attr.type.simpleName}</span>
-                                                        </c:otherwise>
-                                                    </c:choose>
-                                                    </li>
-                                                </c:forEach>
-                                                </ul>
-                                            </td>
-                                            <td width="30%" title="${property.origin.simpleName}"><a href="./${property.origin.simpleName}">${property.origin.simpleName}</a></td>
-                                        </tr>
-                                    </c:forEach>
-                                    </tbody>
+                        </div>
+                    </div>
+                </div>
+
+                    <c:if test="${not empty referrals}">
+                        <div class="attributeBrowser" style="margin-top:50px;">
+                            <h5 class="schema-attr-header">Referrals of class '${className}' instances</h5>
+                            <div class="schema-table no-margin">
+                                <table class="dt-fixed-header schema-attr-table">
+                                    <thead>
+                                    <tr>
+                                        <th width="28%">Attribute Origin</th>
+                                        <th width="30%">Attribute name</th>
+                                        <th width="14%">Cardinality</th>
+                                        <th width="28%">Value Type</th>
+                                    </tr>
+                                    </thead>
                                 </table>
+                                <div class="dt-content">
+                                    <table class="schema-attr-table">
+                                        <tbody>
+                                        <c:forEach var="property" items="${referrals}">
+                                            <tr class="undeclared">
+                                                <td width="28%" title="${property.origin.simpleName}">
+                                                    <a href="./${property.origin.simpleName}" title="${property.origin.simpleName}">${property.origin.simpleName}</a>
+                                                </td>
+                                                <td width="30%">${property.name}</td>
+                                                <td width="14%">${property.cardinality}</td>
+                                                <td width="28%">
+                                                    <ul class="types">
+                                                    <c:forEach items="${property.attributeClasses}" var="attr">
+                                                        <li title="${attr.type.simpleName}"><a href="./${attr.type.simpleName}" title="${attr.type.simpleName}">${attr.type.simpleName}</a></li>
+                                                    </c:forEach>
+                                                    </ul>
+                                                </td>
+                                            </tr>
+                                        </c:forEach>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </c:if>
-                </div>
 
-                <c:if test="${not empty referrals}">
-                    <div class="attributeBrowser" style="margin-top:50px;">
-                        <h5 class="schema-attr-header">Referrals of class '${className}' instances</h5>
-                        <div class="schema-table no-margin">
-                            <table class="dt-fixed-header schema-attr-table">
-                                <thead>
-                                <tr>
-                                    <th width="28%">Attribute Origin</th>
-                                    <th width="30%">Attribute name</th>
-                                    <th width="14%">Cardinality</th>
-                                    <th width="28%">Value Type</th>
-                                </tr>
-                                </thead>
-                            </table>
-                            <div class="dt-content">
-                                <table class="schema-attr-table">
-                                    <tbody>
-                                    <c:forEach var="property" items="${referrals}">
-                                        <tr class="undeclared">
-                                            <td width="28%" title="${property.origin.simpleName}">
-                                                <a href="./${property.origin.simpleName}" title="${property.origin.simpleName}">${property.origin.simpleName}</a>
-                                            </td>
-                                            <td width="30%">${property.name}</td>
-                                            <td width="14%">${property.cardinality}</td>
-                                            <td width="28%">
-                                                <ul class="types">
-                                                <c:forEach items="${property.attributeClasses}" var="attr">
-                                                    <li title="${attr.type.simpleName}"><a href="./${attr.type.simpleName}" title="${attr.type.simpleName}">${attr.type.simpleName}</a></li>
-                                                </c:forEach>
-                                                </ul>
-                                            </td>
-                                        </tr>
-                                    </c:forEach>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
+                    <%--<div class="attributeBrowser">--%>
+                    <div class="instructions attributeBrowser" style="margin-top: 50px">
+                        <hr/>
+                        <p>You can find documentation for the Reactome data model <a
+                                href="http://www.reactome.org/pages/documentation/data-model">here</a>.
+                        </p>
+                        <p>Sidebar on the left shows the hierarchy of Reactome classes. The number of instances
+                            of this class is shown in square brackets and is hyperlinked to a page listing all instances in this
+                            class.
+                        </p>
+                        <p>The main panel shows attributes of the selected class. Own attributes, i.e. the ones which are not
+                            inherited from a parent class are indicated in <span class="own">colour</span>.
+                        </p>
+                        <p>'+' in 'Cardinality' column indicates that this is a multi-value attribute.
+                        </p>
+                            <%--<p>'Value defines instance' column indicates the attributes the values of which determine instance identity--%>
+                            <%--and are used to check if an identical instance has been stored in the database already. 'ALL' indicates--%>
+                            <%--that--%>
+                            <%--that all of the values of a given attribute must be identical while 'ANY' shows that identity of any--%>
+                            <%--single--%>
+                            <%--value of a given attribute is enough. Of course, if the identity is defined by multiple attributes each--%>
+                            <%--of them--%>
+                            <%--has to match.--%>
+                            <%--</p>--%>
                     </div>
+                    <%--</div>--%>
                 </c:if>
             </c:otherwise>
         </c:choose>
-
-
-        <%--<div class="attributeBrowser">--%>
-        <div class="instructions attributeBrowser">
-            <hr/>
-            <p>You can find documentation for the Reactome data model <a
-                    href="http://www.reactome.org/pages/documentation/data-model">here</a>.
-            </p>
-            <p>Sidebar on the left shows the hierarchy of Reactome classes. The number of instances
-                of this class is shown in square brackets and is hyperlinked to a page listing all instances in this
-                class.
-            </p>
-            <p>The main panel shows attributes of the selected class. Own attributes, i.e. the ones which are not
-                inherited from a parent class are indicated in <span class="own">colour</span>.
-            </p>
-            <p>'+' in 'Cardinality' column indicates that this is a multi-value attribute.
-            </p>
-            <p>'Value defines instance' column indicates the attributes the values of which determine instance identity
-                and are used to check if an identical instance has been stored in the database already. 'ALL' indicates
-                that
-                that all of the values of a given attribute must be identical while 'ANY' shows that identity of any
-                single
-                value of a given attribute is enough. Of course, if the identity is defined by multiple attributes each
-                of them
-                has to match.
-            </p>
-        </div>
-        <%--</div>--%>
-
     </div>
 
     <div class="grid_8 pull_16">
