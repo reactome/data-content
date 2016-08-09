@@ -17,7 +17,7 @@
 
             <div class="breadcrumbs" style="float: right;">
                 <c:if test="${linkToDetailsPage}">
-                    <a href="${pageContext.request.contextPath}/detail/${id}">Go to Details</a>
+                    <a href="${pageContext.request.contextPath}/detail/${id}" class="goto-details-light">Go to Details</a>
                 </c:if>
             </div>
         </div>

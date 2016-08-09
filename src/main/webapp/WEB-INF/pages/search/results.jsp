@@ -32,31 +32,60 @@
                                     <div class="result-title">
                                         <h4 class="title">
                                             <i class="sprite-resize sprite sprite-${entry.exactType}" title="${entry.exactType}"></i>
-
-                                            <%--<img src="./resources/images/${entry.exactType}.png" title="${entry.exactType}" width="14" height="13" alt=""/>--%>
                                             <c:if test="${entry.isDisease}">
                                                 <i class="sprite-resize sprite sprite-isDisease" title="Disease related entry"></i>
-                                                <%--<img src="./resources/images/isDisease.png" title="Disease related entry" width="13" height="14" alt=""/>--%>
                                             </c:if>
-                                            <c:choose>
 
+                                            <c:choose>
                                                     <c:when test="${entry.exactType == 'Interactor'}" >
                                                         <a href="./detail/interactor/${entry.id}" class="" title="Show Interactor Details" rel="nofollow">${entry.name}</a>
                                                     </c:when>
                                                     <c:otherwise>
-                                                        <c:choose>
-                                                        <c:when test="${entry.species == 'Entries without species'}" >
-                                                            <a href="./detail/${entry.id}" class="" title="Show Details" rel="nofollow">${entry.name} <span>${entry.compartmentNames}</span></a>
-                                                        </c:when>
-                                                        <c:otherwise>
-                                                            <a href="./detail/${entry.id}" class="" title="Show Details" rel="nofollow">${entry.name} <span>(${entry.species})</span></a>
-                                                        </c:otherwise>
-                                                        </c:choose>
+                                                        <%--<a href="./detail/${entry.id}" class="" title="Show Details" rel="nofollow">${entry.name}</a>--%>
+                                                        <%--<c:choose>--%>
+                                                        <%--<c:when test="${entry.species == 'Entries without species'}" >--%>
+                                                            <%--<a href="./detail/${entry.id}" class="" title="Show Details" rel="nofollow">${entry.name}</a>--%>
+                                                        <%--</c:when>--%>
+                                                        <%--<c:otherwise>--%>
+                                                            <%--<a href="./detail/${entry.id}" class="" title="Show Details" rel="nofollow">${entry.name}</a>--%>
+                                                        <%--</c:otherwise>--%>
+                                                        <%--</c:choose>--%>
+
+
+
+                                                        <a href="./detail/${entry.id}" class="" title="Show Details" rel="nofollow">${entry.name}</a>
+
                                                     </c:otherwise>
                                             </c:choose>
                                         </h4>
                                     </div>
+
+                                    <%-- Preparing comparment and species list --%>
+                                    <c:if test="${not empty entry.species && entry.species[0] != 'Entries without species'}">
+                                        <c:forEach var="species" items="${entry.species}" varStatus="loop">
+                                            <c:set var="speciesList" value="${loop.first ? '' : speciesList.concat(',')} ${species}" />
+                                        </c:forEach>
+                                    </c:if>
+                                    <c:if test="${not empty entry.compartmentNames}">
+                                        <c:forEach var="compartment" items="${entry.compartmentNames}" varStatus="loop">
+                                            <c:set var="compartmentList" value="${loop.first ? '' : compartmentList.concat(',')} ${compartment}" />
+                                        </c:forEach>
+                                    </c:if>
+
                                     <div class="result-detail">
+                                        <c:if test="${not empty speciesList || not empty compartmentList}">
+                                            <c:if test="${not empty speciesList}">
+                                                <span>Species: ${speciesList}</span>
+                                            </c:if>
+
+                                            <c:if test="${not empty compartmentList}">
+                                                <span <c:if test="${not empty speciesList}">style="margin-left:45px;"</c:if>>
+                                                    Compartment: ${compartmentList}
+                                                </span>
+                                                <br>
+                                            </c:if>
+                                        </c:if>
+
                                         <c:if test="${not empty entry.regulator}">
                                             <span>Regulator: <a href="./detail/${entry.regulatorId}" class="" title="Show Details" rel="nofollow">${entry.regulator}</a></span>
                                             <br>
@@ -70,10 +99,6 @@
                                             <span>Primary external reference: ${entry.databaseName} <a href="${entry.referenceURL}" class="" rel="nofollow">${entry.referenceName}: ${entry.referenceIdentifier}</a></span>
                                             <br>
                                         </c:if>
-                                        <%--<c:if test="${not empty entry.referenceName}">--%>
-                                            <%--<span>Primary external reference: ${entry.databaseName} ${entry.referenceName}</span>--%>
-                                            <%--<br>--%>
-                                        <%--</c:if>--%>
                                         <c:if test="${not empty entry.summation}">
                                             <div class='summation'> ${entry.summation}</div>
                                         </c:if>

@@ -139,6 +139,10 @@ div#search-results h4 a:active {
     margin-bottom: 10px;
 }
 
+div.result-title {
+    margin-bottom: -5px;
+}
+
 /*detail page list */
 
 .list {
