@@ -46,6 +46,9 @@
     padding-left: 0;
     margin-left: 0;
     font-size: 100%;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
 
 .types a:hover {
