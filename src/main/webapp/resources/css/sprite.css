@@ -98,6 +98,12 @@
     background-position: -57px -57px;
 }
 
+.sprite-NegativeGeneExpressionRegulation {
+    width: 16px;
+    height: 16px;
+    background-position: -57px -57px;
+}
+
 .sprite-OpenSet {
     width: 16px;
     height: 16px;
@@ -129,6 +135,12 @@
 }
 
 .sprite-PositiveRegulation {
+    width: 16px;
+    height: 16px;
+    background-position: -83px -83px;
+}
+
+.sprite-PositiveGeneExpressionRegulation {
     width: 16px;
     height: 16px;
     background-position: -83px -83px;
