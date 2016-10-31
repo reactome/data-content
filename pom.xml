@@ -5,7 +5,7 @@
     <artifactId>content</artifactId>
 
     <packaging>war</packaging>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0.0</version>
     <name>content</name>
 
     <description>The Reactome Content Service ... </description>
@@ -33,8 +33,8 @@
     <properties>
         <deploymentPath>/</deploymentPath>
         <reactome.data.version>0.1.2-SNAPSHOT</reactome.data.version>
-        <reactome.search.version>0.0.5-SNAPSHOT</reactome.search.version>
-        <interactors.version>1.0.4-SNAPSHOT</interactors.version>
+        <reactome.search.version>1.0.0</reactome.search.version>
+        <interactors.version>1.0.6</interactors.version>
         <spring.version>4.2.4.RELEASE</spring.version>
         <javax.servlet.version>4.0.0-b01</javax.servlet.version>
         <jackson.version>2.7.3</jackson.version>
