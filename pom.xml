@@ -32,9 +32,9 @@
 
     <properties>
         <deploymentPath>/</deploymentPath>
-        <reactome.data.version>0.1.2-SNAPSHOT</reactome.data.version>
-        <reactome.search.version>1.0.0</reactome.search.version>
-        <interactors.version>1.0.6</interactors.version>
+        <reactome.graph.core>1.0.0</reactome.graph.core>
+        <reactome.search.core>1.0.0</reactome.search.core>
+        <interactors.core>1.0.6</interactors.core>
         <spring.version>4.2.4.RELEASE</spring.version>
         <javax.servlet.version>4.0.0-b01</javax.servlet.version>
         <jackson.version>2.7.3</jackson.version>
@@ -56,19 +56,19 @@
         <dependency>
             <groupId>org.reactome.server.graph</groupId>
             <artifactId>graph-core</artifactId>
-            <version>${reactome.data.version}</version>
+            <version>${reactome.graph.core}</version>
         </dependency>
         <!--Reactome search-->
         <dependency>
             <groupId>org.reactome.server.search</groupId>
             <artifactId>search-core</artifactId>
-            <version>${reactome.search.version}</version>
+            <version>${reactome.search.core}</version>
         </dependency>
         <!-- Reactome Interactor-core -->
         <dependency>
             <groupId>org.reactome.server.interactors</groupId>
             <artifactId>interactor-core</artifactId>
-            <version>${interactors.version}</version>
+            <version>${interactors.core}</version>
         </dependency>
         <!--Spring-->
         <dependency>
