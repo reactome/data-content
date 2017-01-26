@@ -53,21 +53,30 @@
 
     <!--Async appender, will add 10 ms per request if not used-->
     <appender name="ASYNC" class="ch.qos.logback.classic.AsyncAppender">
-        <appender-ref ref="DB" />
+        <appender-ref ref="DB"/>
         <includeCallerData>true</includeCallerData>
     </appender>
 
-    <logger name="infoLogger" level="INFO"  >
+    <logger name="org.neo4j" level="ERROR"/>
+    <!--
+        Leave it as an error then we ignore the warning message Neo4jPersistentProperty: No identity field found for class of type X
+        SDN will fix http://stackoverflow.com/questions/37441024/neo4j-sdn-warining-no-identity-field-found-for-class-of-type-for-exception-clas
+    -->
+    <logger name="org.springframework" level="ERROR"/>
+    <logger name="org.reflections" level="WARN"/>
+
+    <logger name="infoLogger" level="INFO">
         <appender-ref ref="ASYNC"/>
     </logger>
 
     <logger name="errorLogger" level="WARN">
-        <appender-ref ref="FILE" />
-        <appender-ref ref="EMAIL" />
-        <appender-ref ref="STDOUT" />
+        <appender-ref ref="FILE"/>
+        <appender-ref ref="EMAIL"/>
+        <appender-ref ref="STDOUT"/>
     </logger>
 
     <root level="INFO">
         <appender-ref ref="FILE"/>
+        <appender-ref ref="STDOUT"/>
     </root>
 </configuration>
