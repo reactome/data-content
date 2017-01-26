@@ -27,25 +27,19 @@ public class MailService {
 
     public void send(final String toAddress, final String fromAddress, final String subject, final String msgBody, final Boolean sendEmailCopy, final String fromName) throws Exception {
         try {
-            MimeMessagePreparator preparator = new MimeMessagePreparator() {
-
-                public void prepare(MimeMessage mimeMessage) throws Exception {
-
-                    mimeMessage.setRecipient(Message.RecipientType.TO, new InternetAddress(toAddress));
-                    InternetAddress from = new InternetAddress(fromAddress);
-                    if (StringUtils.isNotBlank(fromName)) {
-                        from = new InternetAddress(fromAddress, fromName);
-                    }
-
-                    if (sendEmailCopy) {
-                        mimeMessage.setRecipient(Message.RecipientType.BCC, new InternetAddress(fromAddress));
-                    }
-                    mimeMessage.setFrom(from);
-                    mimeMessage.setSubject(subject);
-                    mimeMessage.setText(msgBody);
+            MimeMessagePreparator preparator = mimeMessage -> {
+                mimeMessage.setRecipient(Message.RecipientType.TO, new InternetAddress(toAddress));
+                InternetAddress from = new InternetAddress(fromAddress);
+                if (StringUtils.isNotBlank(fromName)) {
+                    from = new InternetAddress(fromAddress, fromName);
                 }
+                if (sendEmailCopy) {
+                    mimeMessage.setRecipient(Message.RecipientType.BCC, new InternetAddress(fromAddress));
+                }
+                mimeMessage.setFrom(from);
+                mimeMessage.setSubject(subject);
+                mimeMessage.setText(msgBody);
             };
-
             mailSender.send(preparator);
         } catch (Exception e) {
             logger.error("[MAILSRVErr] The email could not be sent [To: " + toAddress + " From: " + fromAddress + " Subject: " + subject);
