@@ -226,7 +226,7 @@ class SearchController {
 
     private void autoFillContactForm(ModelMap model, String search) {
 
-        final String MAIL_MESSAGE_PLACEHOLDER = "Dear help desk,\n\nI've searched for \"%s\" and couldn't find it.\n\nThank you.\n\n";
+        final String MAIL_MESSAGE_PLACEHOLDER = "Dear help desk,\n\nI've searched for \"%s\" and couldn't find it.\n\nThank you for contacting us!\nWe will try to get back to you as soon as possible.\n\nNOTE: This is an automatically generated message.\n\n";
         model.addAttribute(Q, search);
         try {
             List<String> suggestions = searchService.getSpellcheckSuggestions(search);
