@@ -167,6 +167,15 @@
     border-radius: 0 0 5px 0;
 }
 
+.schema-div table.schema-detail-table a {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 680px;
+    display: inline-block;
+    vertical-align: middle;
+}
+
 .schema-div table.schema-detail-table td:first-child {
     background-color: #B0C4DE !important;
     color: #000000;

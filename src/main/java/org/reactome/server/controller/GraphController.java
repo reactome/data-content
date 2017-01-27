@@ -15,6 +15,7 @@ import org.reactome.server.interactors.service.InteractionService;
 import org.reactome.server.interactors.service.InteractorResourceService;
 import org.reactome.server.interactors.util.InteractorConstant;
 import org.reactome.server.util.DataSchemaCache;
+import org.reactome.server.util.MapSet;
 import org.reactome.server.util.WebUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,6 +30,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.lang.reflect.Method;
 import java.sql.SQLException;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @author Florian Korninger (florian.korninger@ebi.ac.uk)
@@ -128,7 +130,7 @@ class GraphController {
         Class clazz = DatabaseObjectUtils.getClassForName(className);
         Collection<DatabaseObject> databaseObjects;
         try {
-            if(clazz.equals(SimpleEntity.class)) throw new Exception("No species available for simple entity");
+            if (clazz.equals(SimpleEntity.class)) throw new Exception("No species available for simple entity");
             //noinspection unchecked,unused
             Method m = clazz.getMethod("getSpecies");
             databaseObjects = schemaService.getByClassName(className, speciesTaxId, page, OFFSET);
@@ -137,7 +139,7 @@ class GraphController {
 
             //Only keep information related to species when it makes sense
             model.addAttribute("speciesList", speciesService.getSpecies());
-            if(!speciesTaxId.equals("9606")){
+            if (!speciesTaxId.equals("9606")) {
                 model.addAttribute("selectedSpecies", speciesTaxId);
             }
         } catch (Exception e) {
@@ -145,13 +147,13 @@ class GraphController {
             model.addAttribute("maxpage", classBrowserCache.findMaxPage(className, OFFSET));
         }
 
-        if (databaseObjects == null){ // || databaseObjects.isEmpty()) {
+        if (databaseObjects == null) { // || databaseObjects.isEmpty()) {
             infoLogger.info("DatabaseObjects for class: {} were {}", className, "not found");
             return "search/noDetailsFound";
         }
 
         model.addAttribute("objects", databaseObjects);
-        infoLogger.info("DatabaseObjects for class: {} were {}", className, "fFound");
+        infoLogger.info("DatabaseObjects for class: {} were {}", className, "found");
         return "graph/schema";
     }
 
@@ -208,12 +210,15 @@ class GraphController {
                 Set<PathwayBrowserNode> topLevelNodes = contentDetails.getNodes();
 
                 model.addAttribute(TITLE, databaseObject.getDisplayName());
+
                 model.addAttribute("databaseObject", databaseObject);
                 model.addAttribute("clazz", superClass);
                 model.addAttribute("topLevelNodes", topLevelNodes);
                 model.addAttribute("availableSpecies", PathwayBrowserLocationsUtils.getAvailableSpecies(topLevelNodes));
                 model.addAttribute("componentOf", contentDetails.getComponentOf());
                 model.addAttribute("otherFormsOfThisMolecule", contentDetails.getOtherFormsOfThisMolecule());
+                model.addAttribute("orthologousEvents", getSortedOrthologousEvent(databaseObject));
+                model.addAttribute("inferredTo", getSortedInferredTo(databaseObject));
                 List<DatabaseIdentifier> crossReferences = new ArrayList<>();
                 crossReferences.addAll(getCrossReference(databaseObject));
                 setClassAttributes(databaseObject, model);
@@ -234,7 +239,7 @@ class GraphController {
                 return "graph/detail";
             }
         }
-        infoLogger.info("DatabaseObject for id: {} was {}", id, "notFound");
+        infoLogger.info("DatabaseObject for id: {} was {}", id, "not found");
         return "search/noDetailsFound";
     }
 
@@ -284,5 +289,85 @@ class GraphController {
             }
         }
         return null;
+    }
+
+    @SuppressWarnings("unchecked")
+    private Map<String, Collection<Event>> getSortedOrthologousEvent(DatabaseObject databaseObject) {
+        Map<String, Collection<Event>> ret = new HashMap<>();
+        if (databaseObject instanceof Event) {
+            MapSet<String, Event> mapSet = new MapSet<>();
+            Event event = (Event) databaseObject;
+            if (event.getOrthologousEvent() != null) {
+                for (Event orthologousEvent : event.getOrthologousEvent()) {
+                    mapSet.add(orthologousEvent.getDisplayName(), orthologousEvent);
+                }
+                for (String key : mapSet.keySet()) {
+                    TreeMap<String, Event> sortedMap = new TreeMap<>();
+                    Set<Event> orthologousEvents = mapSet.getElements(key);
+                    for (Event orthologousEvent : orthologousEvents) {
+                        sortedMap.put(orthologousEvent.getSpeciesName(), orthologousEvent);
+                    }
+                    ret.put(key, sortedMap.values());
+                }
+            }
+        }
+        return ret;
+    }
+
+    @SuppressWarnings("unchecked")
+    private Map<String, List<PhysicalEntity>> getSortedInferredTo(DatabaseObject databaseObject) {
+        /*
+         * Sorting inferredTo requires:
+         *  1st: Sort list by name
+         *  2nd: Sort by Species
+         */
+        Map<String, List<PhysicalEntity>> ret = new HashMap<>();
+        if (databaseObject instanceof PhysicalEntity) {
+            MapSet<String, PhysicalEntity> mapSet = new MapSet<>();
+            PhysicalEntity physicalEntity = (PhysicalEntity) databaseObject;
+            if (physicalEntity.getInferredTo() != null) {
+                /*
+                 * Create a MapSet having the key:displayName, value: inferredToObj. Every key (already sorted), has the
+                 * collection of inferredTo (the same entry is present in many species)
+                 *   -Homologues of PTEN [cytosol] (Oryza sativa)
+                 *   -Homologues of PTEN [cytosol] (Danio rerio)
+                 *   -Homologues of PTEN [cytosol] (Arabidopsis thaliana)
+                 *   -PTEN [cytosol] (Bos Taurus)
+                 *   -PTEN [cytosol] (Arabidopsis thaliana)
+                 */
+                for (PhysicalEntity inferredTo : physicalEntity.getInferredTo()) {
+                    mapSet.add(inferredTo.getDisplayName(), inferredTo);
+                }
+
+                /*
+                 * Then, for every key we get the list of inferredTo and sort them by Species.
+                 * However we can have many entries for each species which we are going to take into account only
+                 * the first one. So, the new map has the species as key and a sorted list of inferredTos sorting
+                 * by StId.
+                 */
+                for (String key : mapSet.keySet()) {
+                    TreeMap<String, List<PhysicalEntity>> sortedMap = new TreeMap<>();
+                    Set<PhysicalEntity> inferredsTo = mapSet.getElements(key);
+                    for (PhysicalEntity inferredTo : inferredsTo) {
+                        List<PhysicalEntity> inferredToList;
+                        if (sortedMap.containsKey(inferredTo.getSpeciesName())) {
+                            inferredToList = sortedMap.get(inferredTo.getSpeciesName());
+                            inferredToList.add(inferredTo);
+                        } else {
+                            inferredToList = new ArrayList<>();
+                            inferredToList.add(inferredTo);
+                        }
+                        Collections.sort(inferredToList, (pe1, pe2) -> pe1.getStId().compareTo(pe2.getStId()));
+                        sortedMap.put(inferredTo.getSpeciesName(), inferredToList);
+                    }
+
+                    // map -> key:display, value:sorted inferredTos, only one (the first) per species.
+                    // NOTICE: if you to return all of them -> uses sortedMap.values() and change the return
+                    //         statement to be Collection<List<PhysicalEntity>. Adjust physicalEntityDetails.jsp too.
+                    ret.put(key, sortedMap.values().stream().map(physicalEntities -> physicalEntities.get(0)).collect(Collectors.toList()));
+                }
+            }
+        }
+        return ret;
     }
 }

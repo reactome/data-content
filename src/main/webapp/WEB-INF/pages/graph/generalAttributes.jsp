@@ -25,6 +25,11 @@
                                 <td><a href="${diseases.database.url}" class=""  title="Show Details" rel="nofollow">${disease.displayName} </a></td>
                                 <td><c:if test="${not empty disease.identifier}">${disease.identifier}</c:if></td>
                                 <td><c:if test="${not empty disease.synonym}">${disease.synonym}</c:if></td>
+                                <td>
+                                    <c:forEach var="synonym" items="${disease.synonym}" varStatus="loop">
+                                        ${synonym}<c:if test="${!loop.last}">, </c:if>
+                                    </c:forEach>
+                                </td>
                             </tr>
                         </c:forEach>
                         </tbody>

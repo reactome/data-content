@@ -41,7 +41,7 @@
                                     <c:choose>
                                         <%-- add value into an anchor tag just to show as a link. it's generic we need this check --%>
                                         <c:when test="${fn:startsWith(entry.value, 'http://') || fn:startsWith(entry.value, 'https://')}">
-                                            <a href="${entry.value}">${entry.value}</a>
+                                            <a href="${entry.value}" title="${entry.value}">${entry.value}</a>
                                         </c:when>
                                         <c:otherwise>
                                             <span style="color:black"> ${entry.value} </span>
@@ -49,7 +49,11 @@
                                     </c:choose>
                                 </c:when>
                                 <c:when test="${entry.value.getClass().getSimpleName() == 'StoichiometryObject'}">
-                                    <c:if test="${entry.value.stoichiometry gt 1}">${entry.value.stoichiometry} x </c:if><a href="./${entry.value.object.getDbId()}">[${entry.value.object.getSchemaClass()}:${entry.value.object.getDbId()}] ${entry.value.object.getDisplayName()}<c:catch><c:if test="${not empty list.getSpeciesName()}"> - ${list.getSpeciesName()}</c:if></c:catch></a>
+                                    <c:set var="id" value="${list.getDbId()}"/>
+                                    <c:if test="${!empty list.getStId()}">
+                                        <c:set var="id" value="${list.getStId()}"/>
+                                    </c:if>
+                                    <c:if test="${entry.value.stoichiometry gt 1}">${entry.value.stoichiometry} &times; </c:if><a href="./${id}" title="${entry.value.object.getDisplayName()}">[${entry.value.object.getSchemaClass()}:${id}] ${entry.value.object.getDisplayName()}<c:catch><c:if test="${not empty list.getSpeciesName()}"> - ${list.getSpeciesName()}</c:if></c:catch></a>
                                 </c:when>
                                 <c:when test="${entry.value.getClass().getSimpleName() == 'ArrayList' ||
                                                 entry.value.getClass().getSimpleName() == 'HashSet' ||
@@ -66,12 +70,20 @@
                                                         <span style="color:black"> ${list} </span>
                                                     </c:when>
                                                     <c:when test="${list.getClass().getSimpleName() == 'StoichiometryObject'}">
-                                                        <c:if test="${list.stoichiometry gt 1}"> <span title="Stoichiometry">${list.stoichiometry} &times;</span></c:if> <a href="./${list.object.getDbId()}">[${list.object.getSchemaClass()}:${list.object.getDbId()}] ${list.object.getDisplayName()}<c:catch><c:if test="${not empty list.getSpeciesName()}"> - ${list.getSpeciesName()}</c:if></c:catch> </a>
+                                                        <c:set var="id" value="${list.object.getDbId()}"/>
+                                                        <c:if test="${!empty list.object.getStId()}">
+                                                            <c:set var="id" value="${list.object.getStId()}"/>
+                                                        </c:if>
+                                                        <c:if test="${list.stoichiometry gt 1}"> <span title="Stoichiometry">${list.stoichiometry} &times;</span></c:if> <a href="./${id}" title="${list.object.getDisplayName()}">[${list.object.getSchemaClass()}:${id}] ${list.object.getDisplayName()}<c:catch><c:if test="${not empty list.getSpeciesName()}"> - ${list.getSpeciesName()}</c:if></c:catch> </a>
                                                     </c:when>
                                                     <c:otherwise>
                                                         <c:catch>
                                                             <c:if test="${!empty list.getDbId()}">
-                                                                <a href="./${list.getDbId()}">[${list.getSchemaClass()}:${list.getDbId()}] ${list.getDisplayName()}<c:catch><c:if test="${not empty list.getSpeciesName()}"> - ${list.getSpeciesName()}</c:if></c:catch></a>
+                                                                <c:set var="id" value="${list.getDbId()}"/>
+                                                                <c:if test="${!empty list.getStId()}">
+                                                                    <c:set var="id" value="${list.getStId()}"/>
+                                                                </c:if>
+                                                                <a href="./${id}" title="${list.getDisplayName()}">[${list.getSchemaClass()}:${id}] ${list.getDisplayName()}<c:catch><c:if test="${not empty list.getSpeciesName()}"> - ${list.getSpeciesName()}</c:if></c:catch></a>
                                                             </c:if>
                                                         </c:catch>
                                                     </c:otherwise>
@@ -83,7 +95,11 @@
                                 <c:otherwise>
                                     <c:catch>
                                         <c:if test="${!empty entry.value.dbId}">
-                                            <a href="./${entry.value.getDbId()}">[${entry.value.getSchemaClass()}:${entry.value.getDbId()}] ${entry.value.getDisplayName()}<c:catch><c:if test="${not empty list.getSpeciesName()}"> - ${list.getSpeciesName()}</c:if></c:catch></a>
+                                            <c:set var="id" value="${entry.value.dbId}"/>
+                                            <c:if test="${!empty entry.value.stId}">
+                                                <c:set var="id" value="${entry.value.stId}"/>
+                                            </c:if>
+                                            <a href="./${id}" title="${entry.value.getDisplayName()}">[${entry.value.getSchemaClass()}:${id}] ${entry.value.getDisplayName()}<c:catch><c:if test="${not empty list.getSpeciesName()}"> - ${list.getSpeciesName()}</c:if></c:catch></a>
                                         </c:if>
                                     </c:catch>
                                 </c:otherwise>
@@ -105,7 +121,11 @@
                                 <ul class="list">
                                 <c:forEach var="list" items="${entry.objects}">
                                     <c:if test="${!empty list.getDbId()}">
-                                        <li><a href="./${list.getDbId()}">[${list.getSchemaClass()}:${list.getDbId()}] ${list.getDisplayName()}<c:catch><c:if test="${not empty list.getSpeciesName()}"> - ${list.getSpeciesName()}</c:if></c:catch></a></li>
+                                        <c:set var="id" value="${list.getDbId()}"/>
+                                        <c:if test="${!empty list.getStId()}">
+                                            <c:set var="id" value="${list.getStId()}"/>
+                                        </c:if>
+                                        <li><a href="./${id}" title="${list.getDisplayName()}">[${list.getSchemaClass()}:${id}] ${list.getDisplayName()}<c:catch><c:if test="${not empty list.getSpeciesName()}"> - ${list.getSpeciesName()}</c:if></c:catch></a></li>
                                     </c:if>
                                 </c:forEach>
                                 </ul>

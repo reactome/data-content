@@ -211,13 +211,15 @@
         </div>
     </fieldset>
 </c:if>
-<c:if test="${not empty databaseObject.orthologousEvent}">
+<c:if test="${not empty orthologousEvents}">
     <fieldset class="fieldset-details">
         <legend>Orthologous Events</legend>
         <div class="wrap overflow">
             <ul class="list">
-                <c:forEach var="orthologousEvent" items="${databaseObject.orthologousEvent}">
-                    <li><a href="../detail/${orthologousEvent.stId}" class="" title="Show Details" rel="nofollow">${orthologousEvent.displayName} (${orthologousEvent.speciesName})</a></li>
+                <c:forEach items="${orthologousEvents}" var="orthologousEvents">
+                    <c:forEach items="${orthologousEvents.value}" var="orthologousEvent">
+                        <li><a href="../detail/${orthologousEvent.stId}" class="" title="Show Details" rel="nofollow">${orthologousEvent.displayName} (${orthologousEvent.speciesName})</a></li>
+                    </c:forEach>
                 </c:forEach>
             </ul>
         </div>

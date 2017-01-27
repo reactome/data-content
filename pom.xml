@@ -32,7 +32,7 @@
 
     <properties>
         <deploymentPath>/</deploymentPath>
-        <reactome.graph.core>1.0.0</reactome.graph.core>
+        <reactome.graph.core>1.0.2-SNAPSHOT</reactome.graph.core>
         <reactome.search.core>1.0.0</reactome.search.core>
         <interactors.core>1.0.7</interactors.core>
         <spring.version>4.2.4.RELEASE</spring.version>

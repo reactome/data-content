@@ -203,7 +203,6 @@
     </fieldset>
 </c:if>
 
-
 <c:if test="${not empty otherFormsOfThisMolecule}">
     <fieldset class="fieldset-details">
         <legend>Other forms of this molecule</legend>
@@ -227,7 +226,6 @@
     </fieldset>
 </c:if>
 
-
 <c:if test="${not empty databaseObject.inferredFrom}">
     <fieldset class="fieldset-details">
         <legend>Inferred From</legend>
@@ -241,18 +239,22 @@
     </fieldset>
 </c:if>
 
-<c:if test="${not empty databaseObject.inferredTo}">
+<c:if test="${not empty inferredTo}">
     <fieldset class="fieldset-details">
         <legend>Inferred To</legend>
         <div class="wrap">
             <ul class="overflow list">
-                <c:forEach var="inferredTo" items="${databaseObject.inferredTo}">
-                    <li><a href="../detail/${inferredTo.stId}" class="" title="Show Details" rel="nofollow">${inferredTo.displayName} <c:if test="${not empty inferredTo.speciesName}"> (${inferredTo.speciesName})</c:if></a></li>
+                <c:forEach items="${inferredTo}" var="inferredToMap">
+                    <c:forEach items="${inferredToMap.value}" var="inferredTo">
+                        <%-- Uncomment to take all the inferredTo into account. Adjust the variable in the <a> tag --%>
+                        <%--<c:forEach items="${inferredTo}" var="o">--%>
+                            <li><a href="../detail/${inferredTo.stId}" class="" title="Show Details" rel="nofollow">${inferredTo.displayName} <c:if test="${not empty inferredTo.speciesName}"> (${inferredTo.speciesName})</c:if></a></li>
+                        <%--</c:forEach>--%>
+                    </c:forEach>
                 </c:forEach>
             </ul>
         </div>
     </fieldset>
-
 </c:if>
 
 

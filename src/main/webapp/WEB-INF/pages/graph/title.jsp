@@ -46,7 +46,7 @@
             <span>Type</span>
         </div>
         <div class="field">
-            <span title="${databaseObject.explanation}">${databaseObject.className}</span>
+            <span title="${databaseObject.explanation}">${databaseObject.className} <c:if test="${databaseObject.schemaClass ne databaseObject.className}">[${databaseObject.schemaClass}]</c:if></span>
         </div>
         <div class="clear"></div>
     </c:if>
