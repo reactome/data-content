@@ -235,6 +235,14 @@ class GraphController {
                     }
                 }
                 model.addAttribute("crossReferences", groupCrossReferences(crossReferences));
+
+                try {
+                    ReferenceEntity re = (ReferenceEntity) databaseObject.getClass().getMethod("getReferenceEntity").invoke(databaseObject);
+                    model.addAttribute("flg", re.getIdentifier());
+                } catch (NoSuchMethodException e){
+                    // nothing here
+                }
+
                 infoLogger.info("DatabaseObject for id: {} was {}", id, "found");
                 return "graph/detail";
             }
