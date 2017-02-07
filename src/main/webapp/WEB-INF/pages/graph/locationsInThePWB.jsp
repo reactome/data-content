@@ -20,9 +20,13 @@
     </legend>
 
 <%--<h5 style="font-size: 17px; margin-left: 23px">Locations in the PathwayBrowser</h5>--%>
-    <div style="text-align: right; padding: 0px 10px 0px 0px;float: right;">
-        <a style="text-align:right; cursor: pointer;" id="pwb_toggle" class="expand">Expand all</a>
-    </div>
+    <c:if test="${not empty topLevelNodes}">
+        <c:if test="${ (not empty topLevelNodes) && (not empty topLevelNodes.iterator().next().children)}" >
+            <div style="text-align: right; padding: 0px 10px 0px 0px;float: right;">
+                <a style="text-align:right; cursor: pointer;" id="pwb_toggle" class="expand">Expand all</a>
+            </div>
+        </c:if>
+    </c:if>
 
     <div class="wrap">
         <c:forEach var="topLvl" items="${topLevelNodes}">
