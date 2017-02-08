@@ -1,4 +1,4 @@
-var PWB_COOKIE="_PWBTree";
+var PWB_COOKIE="_Search_Result_PWB_Tree";
 var EXPAND = "expand";
 var COLLAPSE = "collapse"; // default value for the Location in PWB
 
