@@ -5,7 +5,6 @@ import org.reactome.server.search.domain.FacetMapping;
 import org.reactome.server.search.domain.InteractorEntry;
 import org.reactome.server.search.domain.Query;
 import org.reactome.server.search.domain.SearchResult;
-import org.reactome.server.search.exception.EnricherException;
 import org.reactome.server.search.exception.SolrSearcherException;
 import org.reactome.server.search.service.SearchService;
 import org.reactome.server.util.MailService;
@@ -126,11 +125,11 @@ class SearchController {
         if (entry != null) {
             model.addAttribute(ENTRY, entry);
             model.addAttribute(TITLE, entry.getName());
-            infoLogger.info("Search request for id: {} was ", id, "found");
+            infoLogger.info("Search request for id: {} was found", id);
             return PAGE_INTERACTOR;
         } else {
             autoFillDetailsPage(model, id);
-            infoLogger.info("Search request for id: {} was ", id, "notFound");
+            infoLogger.info("Search request for id: {} was not found", id);
             return PAGE_NO_DETAILS_FOUND;
         }
     }
@@ -185,7 +184,7 @@ class SearchController {
                 model.addAttribute(COMPARTMENTS_FACET, searchResult.getFacetMapping().getCompartmentFacet());
                 model.addAttribute(MAX_PAGE, (int) Math.ceil(searchResult.getResultCount() / searchResult.getRows()));
                 model.addAttribute(GROUPED_RESULT, searchResult.getGroupedResult());
-                infoLogger.info("Search request for query: {} was ", q, "found");
+                infoLogger.info("Search request for query: {} was found", q);
                 return PAGE_EBI_SEARCHER;
             } else {
                 // Generating spell check suggestions if no faceting information was found, while using no filters
@@ -193,7 +192,7 @@ class SearchController {
             }
         }
         autoFillContactForm(model, q);
-        infoLogger.info("Search request for query: {} was ", q, "not found");
+        infoLogger.info("Search request for query: {} was NOT found", q);
         return PAGE_NO_RESULTS_FOUND;
     }
 
