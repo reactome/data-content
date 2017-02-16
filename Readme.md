@@ -7,29 +7,119 @@ Reactome Data Content is a web-based project that offers optimized and high perf
 Fully implemented based on Spring WebMVC Application, this project consumes [search-core](http://github.com/reactome/search-core) which provides an API to query SolR documents in order to retrieve 
 optimized, faceted and grouped results. Spellcheck, suggestions and auto complete are provided to.
 
-#### Requirement
+#### Installation Guide
 
-* SolR Index - [search-indexer](http://github.com/reactome/search-indexer)
-* Reactome Graph Database - [Download](http://www.reactome.org/download/current/reactome.graphdb.tgz)
-* Maven
+* :warning: Pre-Requirement (in the given order)
+    1. Maven 3.X - [Installation Guide](http://maven.apache.org/install.html)
+    2. Reactome Graph Database - [Installation Guide](http://www.reactome.org/pages/documentation/developer-guide/graph-database/)
+    3. Interactor Database - [Installation Guide](https://github.com/reactome-pwp/interactors-core)
+    4. Search SolR Index - [search-indexer](http://github.com/reactome/search-indexer)
+        * Search Indexer queries Reactome Graph Database, so it must be set up before the SolR indexer
+        * Search Indexer guides though SolR installation, core and indexing.
+    5. Mail Server (if you don't have a valid SMTP Server, please here to [FakeSMTP](http://nilhcem.com/FakeSMTP/index.html)
+    
+##### Git Clone
 
-#### Usage
+```console
+git clone https://github.com/reactome/data-content.git
+```
 
-* Open [Reactome.org](http://reactome.org/)
+##### Configuring Maven Profile :memo:
+
+Maven Profile is a set of configuration values which can be used to set or override default values of Maven build. Using a build profile, you can customize build for different environments such as Production v/s Development environments.
+Add the following code-snippet containing all the Reactome properties inside the tag ```<profiles>``` into your ```~/.m2/settings.xml```. 
+Please refer to Maven Profile [Guideline](http://maven.apache.org/guides/introduction/introduction-to-profiles.html) if you don't have settings.xml
+
+
+```html
+<profile>
+    <id>DataContent-Local</id>
+    <properties>
+        <!-- Neo4j Configuration -->
+        <neo4j.host>localhost</neo4j.host>
+        <neo4j.port>7474</neo4j.port>
+        <neo4j.user>neo4j</neo4j.user>
+        <neo4j.password>neo4j</neo4j.password>
+        
+        <!-- SolR Configuration -->
+        <solr.host>http://localhost:8983/solr/reactome</solr.host>
+        <solr.user>solr</solr.user>
+        <solr.password>solr</solr.password>
+
+        <!-- Interators Database -->
+        <interactors.SQLite>/Users/reactome/Reactome/interactors/interactors.db</interactors.SQLite>
+
+        <!-- Logging -->
+        <logging.dir>/Users/reactome/Reactome/search</logging.dir>
+        <logging.database>${logging.dir}/search.db</logging.database>
+
+        <!-- Mail Configuration, using FakeSMTP -->
+        <!-- Properties are ready to use GMail, etc. -->
+        <mail.host>localhost</mail.host>
+        <mail.port>8081</mail.port>
+        <mail.username>username</mail.username>
+        <mail.password>password</mail.password>
+        <mail.enable.auth>false</mail.enable.auth>
+        <mail.error.dest>bug-fixing-team@mycompany.co.uk</mail.error.dest>
+        <mail.support.dest>helpdesk@mycompany.co.uk</mail.support.dest>
+            
+        <!-- Reactome Server to query header and footer -->
+        <template.server>http://reactomedev.oicr.on.ca/</template.server>
+    </properties>
+</profile>
+```
+
+##### Running Data-Content activating ```DataContent-Local``` profile
+```console
+mvn tomcat7:run -P DataContent-Local
+```
+
+in case you didn't set up the profile it is still possible to run Reactome Data Content. You may need to add all the properties into a command-line call.
+```console
+mvn tomcat7:run \ 
+    -Dneo4j.user=neo4j -Dneo4j.password=neo4j -Dneo4j.host=localhost -Dneo4j.port=7474 \
+    -Dsolr.host=http://localhost:8983/solr/reactome -Dsolr.user=solr -Dsolr.password=solr \
+    -Dinteractors.SQLite=/Users/reactome/Reactome/interactors/interactors.db \
+    -Dlogging.dir=/Users/reactome/Reactome/search \
+    -Dlogging.database=/Users/reactome/Reactome/search/search.db \
+    -Dmail.host=localhost -Dmail.port=8081 -Dmail.username=username -Dmail.password=password \ 
+    -Dmail.enable.auth=false -Dmail.error.dest=bug-fixing-team@mycompany.co.uk \
+    -Dmail.support.dest=helpdesk@mycompany.co.uk \ 
+    -Dtemplate.server=http://reactomedev.oicr.on.ca/
+```
+
+Check if Tomcat has been initialised
+```rb
+[INFO] Using existing Tomcat server configuration at /Users/reactome/data-content/target/tomcat
+INFO: Starting ProtocolHandler ["http-bio-8080"]
+```
+
+#### Usage 
+
+* :computer: Access your local [installation](http://localhost:8080/)
 * On the top right corner the search box retrieves information from SolR documents based on the search term
 and organise them in an intuitive way adding the most relevant result always on top of the list. 
-Faceting the result by Species, Type, Compartments, etc are also possible
+Faceting the result by Species, Type, Compartments, etc are also possible. The entry point for all these features is [SearchController.java](https://github.com/reactome/data-content/blob/master/src/main/java/org/reactome/server/controller/SearchController.java) 
 
-![search-result](https://cloud.githubusercontent.com/assets/6883670/22934396/b33930be-f2c6-11e6-80cb-43ef3574e856.png)
+![search-result](https://cloud.githubusercontent.com/assets/6883670/22972916/a2759ca6-f373-11e6-838f-406ecf2af610.png)
 
-* After clicking in the entry your are looking for, then another query will be executed in Reactome Graph
+* After clicking in the entry your are looking for, then another query will be executed in Reactome Graph. The entry point is the [GraphController.java](https://github.com/reactome/data-content/blob/master/src/main/java/org/reactome/server/controller/GraphController.java)
 
-![search-details](https://cloud.githubusercontent.com/assets/6883670/22936053/3cc78dee-f2cc-11e6-9b53-d4f3a9a14e1d.png)
+![search-details](https://cloud.githubusercontent.com/assets/6883670/22972918/a6dca7ee-f373-11e6-8f22-1579717a7b12.png)
+
 
 ## Reactome Data Schema
 
 #### What is the Reactome Data Schema
-[Reactome Data Schema](http://www.reactome.org/content/schema/DatabaseObject) traverses through all the classes in the Data Model and provides easy visualisation of the hierarchy Reactome classes.
+[Reactome Data Schema](http://reactome.org/content/schema/DatabaseObject) traverses through all the classes in the Data Model and provides easy visualisation of Reactome classes hierarchy.
+
+#### Installation
+
+Reactome Data Content already installed together with the Data Content. 
+
+#### Usage
+
+* :computer: Access your local [installation](http://localhost:8080/schema/DatabaseObject)
 
 * By clicking in any class the attributes, type, cardinality and the attribute origin are displayed in a table which helps developers to understand
 how Reactome classes are related each other. Referrals of the given instance are also shown.
@@ -39,3 +129,6 @@ how Reactome classes are related each other. Referrals of the given instance are
 * By clicking in one entry a query is performed in Reactome Graph Database which gives the instance. All the raw content of the given object, at this point, if details page is available in this instance a button is present in the right corner. 
 
 From the technical side, note the Reactome Data Schema is built as the page is requested as well as the data retrieval. This has been achieved by extensive usage of Java Reflection, which means every time there is an update in Reactome Data Model the changes are going to be automatically propagated to the Data Schema Page. There isn't any static content. You can find documentation for the Reactome data model [here](http://www.reactome.org/pages/documentation/data-model/).
+Also the entry point class is the [GraphController.java](https://github.com/reactome/data-content/blob/master/src/main/java/org/reactome/server/controller/GraphController.java)
+
+![content-schema](https://cloud.githubusercontent.com/assets/6883670/22972919/a9a9263c-f373-11e6-83a2-734e5b1e552f.png)
