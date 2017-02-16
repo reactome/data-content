@@ -221,7 +221,7 @@
                     <div class="instructions attributeBrowser" style="margin-top: 50px">
                         <hr/>
                         <p>You can find documentation for the Reactome data model <a
-                                href="http://www.reactome.org/pages/documentation/data-model">here</a>.
+                                href="//www.reactome.org/pages/documentation/data-model">here</a>.
                         </p>
                         <p>Sidebar on the left shows the hierarchy of Reactome classes. The number of instances
                             of this class is shown in square brackets and is hyperlinked to a page listing all instances in this
