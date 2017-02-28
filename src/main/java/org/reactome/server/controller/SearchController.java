@@ -33,10 +33,7 @@ class SearchController {
     private static final Logger errorLogger = LoggerFactory.getLogger("errorLogger");
     private static final Logger infoLogger = LoggerFactory.getLogger("infoLogger");
 
-    @Autowired
     private SearchService searchService;
-
-    @Autowired
     private MailService mailService;
 
     private static final int rowCount = 30;
@@ -224,7 +221,6 @@ class SearchController {
     }
 
     private void autoFillContactForm(ModelMap model, String search) {
-
         final String MAIL_MESSAGE_PLACEHOLDER = "Dear help desk,\n\nI've searched for \"%s\" and couldn't find it.\n\nThank you for contacting us!\nWe will try to get back to you as soon as possible.\n\nNOTE: This is an automatically generated message.\n\n";
         model.addAttribute(Q, search);
         try {
@@ -241,5 +237,15 @@ class SearchController {
     private void autoFillDetailsPage(ModelMap model, String search) {
         model.addAttribute("search", search);
         model.addAttribute(TITLE, "No details found for " + search);
+    }
+
+    @Autowired
+    public void setSearchService(SearchService searchService) {
+        this.searchService = searchService;
+    }
+
+    @Autowired
+    public void setMailService(MailService mailService) {
+        this.mailService = mailService;
     }
 }

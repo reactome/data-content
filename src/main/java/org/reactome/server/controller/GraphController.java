@@ -51,25 +51,12 @@ class GraphController {
 
     private static final int OFFSET = 55;
 
-    @Autowired
     private GeneralService generalService;
-
-    @Autowired
     private AdvancedDatabaseObjectService advancedDatabaseObjectService;
-
-    @Autowired
     private InteractionService interactionService;
-
-    @Autowired
     private DetailsService detailsService;
-
-    @Autowired
     private SchemaService schemaService;
-
-    @Autowired
     private SpeciesService speciesService;
-
-    @Autowired
     private AdvancedLinkageService advancedLinkageService;
 
     private SchemaNode classBrowserCache;
@@ -363,7 +350,7 @@ class GraphController {
                             inferredToList = new ArrayList<>();
                             inferredToList.add(inferredTo);
                         }
-                        Collections.sort(inferredToList, (pe1, pe2) -> pe1.getStId().compareTo(pe2.getStId()));
+                        inferredToList.sort(Comparator.comparing(DatabaseObject::getStId));
                         sortedMap.put(inferredTo.getSpeciesName(), inferredToList);
                     }
 
@@ -404,4 +391,38 @@ class GraphController {
         return null;
     }
 
+    @Autowired
+    public void setGeneralService(GeneralService generalService) {
+        this.generalService = generalService;
+    }
+
+    @Autowired
+    public void setAdvancedDatabaseObjectService(AdvancedDatabaseObjectService advancedDatabaseObjectService) {
+        this.advancedDatabaseObjectService = advancedDatabaseObjectService;
+    }
+
+    @Autowired
+    public void setDetailsService(DetailsService detailsService) {
+        this.detailsService = detailsService;
+    }
+
+    @Autowired
+    public void setSchemaService(SchemaService schemaService) {
+        this.schemaService = schemaService;
+    }
+
+    @Autowired
+    public void setSpeciesService(SpeciesService speciesService) {
+        this.speciesService = speciesService;
+    }
+
+    @Autowired
+    public void setAdvancedLinkageService(AdvancedLinkageService advancedLinkageService) {
+        this.advancedLinkageService = advancedLinkageService;
+    }
+
+    @Autowired
+    public void setInteractionService(InteractionService interactionService) {
+        this.interactionService = interactionService;
+    }
 }
