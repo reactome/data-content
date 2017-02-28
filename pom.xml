@@ -32,7 +32,7 @@
 
     <properties>
         <deploymentPath>/</deploymentPath>
-        <reactome.graph.core>1.0.3</reactome.graph.core>
+        <graph.core>1.0.4-SNAPSHOT</graph.core>
         <reactome.search.core>1.0.0</reactome.search.core>
         <interactors.core>1.0.7</interactors.core>
         <spring.version>4.2.4.RELEASE</spring.version>
@@ -56,7 +56,7 @@
         <dependency>
             <groupId>org.reactome.server.graph</groupId>
             <artifactId>graph-core</artifactId>
-            <version>${reactome.graph.core}</version>
+            <version>${graph.core}</version>
         </dependency>
         <!--Reactome search-->
         <dependency>
