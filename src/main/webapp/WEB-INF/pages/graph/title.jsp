@@ -61,6 +61,17 @@
             </div>
             <div class="clear"></div>
         </c:if>
+        <c:if test="${not empty relatedSpecies}">
+            <div class="label">
+                <span>Related Species</span>
+            </div>
+            <div class="field">
+                <c:forEach var="relatedSpecies" items="${relatedSpecies}" varStatus="loop">
+                    <span>${relatedSpecies.displayName}<c:if test="${not loop.last}">, </c:if></span>
+                </c:forEach>
+            </div>
+            <div class="clear"></div>
+        </c:if>
         <c:if test="${not empty databaseObject.compartment}">
             <div class="label">
                 <span>Compartment</span>
