@@ -27,6 +27,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.sql.SQLException;
 import java.util.*;
@@ -219,10 +220,10 @@ class GraphController {
                 model.addAttribute("otherFormsOfThisMolecule", contentDetails.getOtherFormsOfThisMolecule());
                 model.addAttribute("orthologousEvents", getSortedOrthologousEvent(databaseObject));
                 model.addAttribute("inferredTo", getSortedInferredTo(databaseObject));
+
                 List<DatabaseIdentifier> crossReferences = new ArrayList<>();
                 crossReferences.addAll(getCrossReference(databaseObject));
                 setClassAttributes(databaseObject, model);
-
                 if (databaseObject instanceof EntityWithAccessionedSequence) {
                     EntityWithAccessionedSequence ewas = (EntityWithAccessionedSequence) databaseObject;
                     List<Interaction> interactions = interactionService.getInteractions(ewas.getReferenceEntity().getIdentifier(), InteractorConstant.STATIC);
@@ -236,12 +237,9 @@ class GraphController {
                 }
                 model.addAttribute("crossReferences", groupCrossReferences(crossReferences));
 
-                try {
-                    ReferenceEntity re = (ReferenceEntity) databaseObject.getClass().getMethod("getReferenceEntity").invoke(databaseObject);
-                    model.addAttribute("flg", re.getIdentifier());
-                } catch (NoSuchMethodException e){
-                    // nothing here
-                }
+                // extras
+                model.addAttribute("flg", getReferenceEntityIdentifier(databaseObject));
+                model.addAttribute("relatedSpecies", getRelatedSpecies(databaseObject));
 
                 infoLogger.info("DatabaseObject for id: {} was {}", id, "found");
                 return "graph/detail";
@@ -378,4 +376,32 @@ class GraphController {
         }
         return ret;
     }
+
+    /**
+     * Return the Reference Entity Identifier. Later it will be used to build the link to the PWB in order to flag
+     * the instance.
+     *
+     * @return the identifier
+     */
+    private String getReferenceEntityIdentifier(DatabaseObject databaseObject){
+        String ret = "";
+        try {
+            ReferenceEntity re = (ReferenceEntity) databaseObject.getClass().getMethod("getReferenceEntity").invoke(databaseObject);
+            ret = re.getIdentifier();
+        } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e){
+            // nothing here
+        }
+        return ret;
+    }
+
+    @SuppressWarnings("unchecked")
+    private List<Species> getRelatedSpecies(DatabaseObject databaseObject){
+        try {
+            return  (List<Species>) databaseObject.getClass().getMethod("getRelatedSpecies").invoke(databaseObject);
+        } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e){
+            // nothing here
+        }
+        return null;
+    }
+
 }
