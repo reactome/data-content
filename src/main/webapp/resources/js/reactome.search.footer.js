@@ -135,7 +135,7 @@ $('#availableSpeciesSel').on('change', function () {
 $("#pwb_toggle").click(function () {
     var action = $("#pwb_toggle").attr("class");
     togglePwbTree(action);
-    document.cookie = PWB_COOKIE + "=" + action; // set the cookie
+    writeCookie(PWB_COOKIE, action);
 });
 
 function togglePwbTree(action){
@@ -168,4 +168,13 @@ function readCookie(name) {
         if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
     }
     return null;
+}
+
+function writeCookie(key, value) {
+    var date = new Date();
+    // Default at 365 days.
+    var days = 365;
+    // Get unix milliseconds at current time plus number of days
+    date.setTime(+ date + (days * 86400000)); //24 * 60 * 60 * 1000
+    document.cookie = key + "=" + value + "; expires=" + date.toGMTString() + ";";
 }
