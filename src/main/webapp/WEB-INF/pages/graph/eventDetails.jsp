@@ -120,7 +120,7 @@
     </fieldset>
 </c:if>
 
-<c:if test="${not empty databaseObject.negativelyRegulatedBy || not empty databaseObject.positivelyRegulatedBy || isReactionLikeEvent && not empty databaseObject.catalystActivity}">
+<c:if test="${not empty databaseObject.negativelyRegulatedBy || not empty databaseObject.positivelyRegulatedBy || not empty databaseObject.requirements || isReactionLikeEvent && not empty databaseObject.catalystActivity}">
 
     <fieldset class="fieldset-details">
         <legend>This entity is regulated by: </legend>
@@ -188,6 +188,21 @@
                         <c:forEach var="positivelyRegulatedBy" items="${databaseObject.positivelyRegulatedBy}">
                             <li>
                                 <a href="../detail/${positivelyRegulatedBy.stId}" class="" title="Show Details" rel="nofollow">${positivelyRegulatedBy.displayName}</a>
+                            </li>
+                        </c:forEach>
+                    </ul>
+                </div>
+                <div class="clear"></div>
+            </div>
+        </c:if>
+        <c:if test="${not empty databaseObject.requirements}">
+            <div class="fieldset-pair-container">
+                <div class="label">Requirements</div>
+                <div class="field">
+                    <ul class="list">
+                        <c:forEach var="requirement" items="${databaseObject.requirements}">
+                            <li>
+                                <a href="../detail/${requirement.stId}" class="" title="Show Details" rel="nofollow">${requirement.displayName}</a>
                             </li>
                         </c:forEach>
                     </ul>
