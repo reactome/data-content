@@ -24,13 +24,16 @@ import java.net.URL;
  */
 @Component
 public class HeaderFooterCacher extends Thread {
-    private static final String TITLE_OPEM = "<title>";
+    private static final String TITLE_OPEN = "<title>";
     private static final String TITLE_CLOSE = "</title>";
     private static final String TITLE_REPLACE = "<title>Reactome | ${title}</title>";
 
     private static final String SEARCH_OPEN = "<!--SearchForm-->";
     private static final String SEARCH_CLOSE = "<!--/SearchForm-->";
     private static final String SEARCH_REPLACE = "<jsp:include page=\"search/searchForm.jsp\"/>";
+
+    // Name of the template page in Joomls
+    private static final String TEMPLATE_PAGE = "template-page-v1";
 
     private static final Integer MINUTES = 15;
 
@@ -44,16 +47,20 @@ public class HeaderFooterCacher extends Thread {
 
     @Override
     public void run() {
+       String template = getTemplate();
         //noinspection InfiniteLoopStatement
-        while (true) {
-            writeFile("header.jsp", getHeader());
-            writeFile("footer.jsp", getFooter());
-            try {
-                Thread.sleep(1000 * 60 * MINUTES);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
+//        while (true) {
+//            writeFile("header.jsp", getHeader());
+//            writeFile("footer.jsp", getFooter());
+//            try {
+//                Thread.sleep(1000 * 60 * MINUTES);
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
+//        }
+
+        getHeaderAndFooter(template);
+
     }
 
     private synchronized void writeFile(String fileName, String content){
@@ -76,11 +83,53 @@ public class HeaderFooterCacher extends Thread {
         }
     }
 
+    private String getTemplate() {
+        try {
+            URL url = new URL(this.server + "/" + TEMPLATE_PAGE);
+            String rtn = IOUtils.toString(url.openConnection().getInputStream());
+
+            // Add search form
+            rtn = getReplaced(rtn, SEARCH_OPEN, SEARCH_CLOSE, SEARCH_REPLACE);
+            rtn = getReplaced(rtn, TITLE_OPEN, TITLE_CLOSE, TITLE_REPLACE);
+
+            // TODO
+            rtn = rtn.replace("<base href=\"" + this.server + "/" + TEMPLATE_PAGE + "\" />", "");
+
+            rtn = rtn.replaceAll("(http|https)://", "//");
+
+            return  rtn;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return String.format("<span style='color:red'>%s</span>", e.getMessage());
+        }
+    }
+
+    private void getHeaderAndFooter(String file) {
+        String html = "";
+        String[] lines = file.split(System.getProperty("line.separator"));
+
+        boolean isHeaderLine = true;
+        for (String line : lines) {
+            html += line + "\n";
+
+            if(isHeaderLine) {
+                if (line.contains("search-placeholder")) {
+                    isHeaderLine = false;
+                    writeFile("header-n.jsp", html);
+                    html = "";
+                }
+            }
+        }
+
+        //writeFile("header.jsp", header);
+        writeFile("footer-n.jsp", html);
+    }
+
     private String getHeader() {
         try {
             URL url = new URL(this.server + "common/header.php");
             String rtn = IOUtils.toString(url.openConnection().getInputStream());
-            rtn = getReplaced(rtn, TITLE_OPEM, TITLE_CLOSE, TITLE_REPLACE);
+            rtn = getReplaced(rtn, TITLE_OPEN, TITLE_CLOSE, TITLE_REPLACE);
             rtn = getReplaced(rtn, SEARCH_OPEN, SEARCH_CLOSE, SEARCH_REPLACE);
             rtn = rtn.replaceAll("(http|https)://", "//");
             return  rtn;

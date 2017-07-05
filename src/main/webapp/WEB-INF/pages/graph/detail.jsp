@@ -1,14 +1,10 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
-<%--@elvariable id="databaseObject" type="org.reactome.server.graph.domain.model.Pathway"--%>
-<%--@elvariable id="literature" type="org.reactome.server.graph.domain.model.LiteratureReference"--%>
+<c:import url="../header-n.jsp"/>
 
-<c:import url="../header.jsp"/>
 
-<div class="ebi-content">
-
-    <div class="grid_24">
+    <%--<div class="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-12">--%>
 
         <c:import url="title.jsp"/>
 
@@ -48,25 +44,11 @@
         <c:if test="${not empty interactions}">
             <c:import url="interactionDetails.jsp"/>
         </c:if>
-    </div>
-</div>
+    <%--</div>--%>
 
-
-<div class="clear"></div>
+<%--<div class="clear"></div>--%>
 
 <%-- Adding some fixed spaces between last content panel and footer --%>
 <div style="height: 40px;">&nbsp;</div>
 
-</div>            <%--A weird thing to avoid problems--%>
-<c:import url="../footer.jsp"/>
-
-
-<%--
-ALIGNED DIV MODEL WITH ORANGE BORDER
-
-<div class="fieldset-pair-container">
-    <div class="label"></div>
-    <div class="field"></div>
-    <div class="clear"></div>
-</div>
---%>
+<c:import url="../footer-n.jsp"/>

@@ -248,4 +248,10 @@ class SearchController {
     public void setMailService(MailService mailService) {
         this.mailService = mailService;
     }
+
+    @RequestMapping(value="/test", method = RequestMethod.GET )
+    public String startJsp(){
+        return "search/test";
+    }
+
 }
