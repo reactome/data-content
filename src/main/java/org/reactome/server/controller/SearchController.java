@@ -249,9 +249,4 @@ class SearchController {
         this.mailService = mailService;
     }
 
-    @RequestMapping(value="/test", method = RequestMethod.GET )
-    public String startJsp(){
-        return "search/test";
-    }
-
 }

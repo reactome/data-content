@@ -2,7 +2,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <c:import url="../header.jsp"/>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/schema-table.css" type="text/css">
+<link rel="stylesheet" href="/content/resources/css/schema-table.css" type="text/css">
 <div class="ebi-content" style="margin-top: 10px">
 
     <div style="font-weight: bold;font-size: larger; color:#009;margin-left: 10px;">Graph Database :: Data Schema</div>

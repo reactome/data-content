@@ -16,6 +16,7 @@ import org.reactome.server.interactors.service.InteractorResourceService;
 import org.reactome.server.interactors.util.InteractorConstant;
 import org.reactome.server.util.DataSchemaCache;
 import org.reactome.server.util.MapSet;
+import org.reactome.server.util.UAgentInfo;
 import org.reactome.server.util.WebUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,6 +28,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.sql.SQLException;
@@ -176,7 +178,10 @@ class GraphController {
     @RequestMapping(value = "/detail/{id:.*}", method = RequestMethod.GET)
     public String detail(@PathVariable String id,
                          @RequestParam(required = false, defaultValue = "") String interactor,
-                         ModelMap model) throws Exception {
+                         ModelMap model,
+                         HttpServletRequest request) throws Exception {
+
+        UAgentInfo u = new UAgentInfo(request.getHeader("User-Agent"), null);
 
         boolean interactorPage = StringUtils.isNotEmpty(interactor);
 
@@ -228,11 +233,17 @@ class GraphController {
                 model.addAttribute("flg", getReferenceEntityIdentifier(databaseObject));
                 model.addAttribute("relatedSpecies", getRelatedSpecies(databaseObject));
 
+                // responsive design, avoid loading same content twice on screen
+                // instead hiding using CSS, java will detect and the content won't be processed.
+                model.addAttribute("isMobile", u.detectMobileQuick());
+
                 infoLogger.info("DatabaseObject for id: {} was {}", id, "found");
                 return "graph/detail";
             }
         }
         infoLogger.info("DatabaseObject for id: {} was {}", id, "not found");
+        model.addAttribute("search", id);
+        model.addAttribute(TITLE, "No details found for " + id);
         return "search/noDetailsFound";
     }
 

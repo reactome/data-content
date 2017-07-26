@@ -49,18 +49,14 @@ public class HeaderFooterCacher extends Thread {
     public void run() {
        String template = getTemplate();
         //noinspection InfiniteLoopStatement
-//        while (true) {
-//            writeFile("header.jsp", getHeader());
-//            writeFile("footer.jsp", getFooter());
-//            try {
-//                Thread.sleep(1000 * 60 * MINUTES);
-//            } catch (InterruptedException e) {
-//                e.printStackTrace();
-//            }
-//        }
-
-        getHeaderAndFooter(template);
-
+        while (true) {
+            getHeaderAndFooter(template);
+            try {
+                Thread.sleep(1000 * 60 * MINUTES);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     private synchronized void writeFile(String fileName, String content){
@@ -92,10 +88,10 @@ public class HeaderFooterCacher extends Thread {
             rtn = getReplaced(rtn, SEARCH_OPEN, SEARCH_CLOSE, SEARCH_REPLACE);
             rtn = getReplaced(rtn, TITLE_OPEN, TITLE_CLOSE, TITLE_REPLACE);
 
-            // TODO
             rtn = rtn.replace("<base href=\"" + this.server + "/" + TEMPLATE_PAGE + "\" />", "");
-
             rtn = rtn.replaceAll("(http|https)://", "//");
+
+            rtn = rtn.replaceAll("favth-content-block", "");
 
             return  rtn;
         } catch (IOException e) {
@@ -107,36 +103,18 @@ public class HeaderFooterCacher extends Thread {
     private void getHeaderAndFooter(String file) {
         String html = "";
         String[] lines = file.split(System.getProperty("line.separator"));
-
         boolean isHeaderLine = true;
         for (String line : lines) {
             html += line + "\n";
-
             if(isHeaderLine) {
                 if (line.contains("search-placeholder")) {
                     isHeaderLine = false;
-                    writeFile("header-n.jsp", html);
+                    writeFile("header.jsp", html);
                     html = "";
                 }
             }
         }
-
-        //writeFile("header.jsp", header);
-        writeFile("footer-n.jsp", html);
-    }
-
-    private String getHeader() {
-        try {
-            URL url = new URL(this.server + "common/header.php");
-            String rtn = IOUtils.toString(url.openConnection().getInputStream());
-            rtn = getReplaced(rtn, TITLE_OPEN, TITLE_CLOSE, TITLE_REPLACE);
-            rtn = getReplaced(rtn, SEARCH_OPEN, SEARCH_CLOSE, SEARCH_REPLACE);
-            rtn = rtn.replaceAll("(http|https)://", "//");
-            return  rtn;
-        } catch (IOException e) {
-            e.printStackTrace();
-            return String.format("<span style='color:red'>%s</span>", e.getMessage());
-        }
+        writeFile("footer.jsp", html);
     }
 
     private String getReplaced(String target, String open, String close, String replace){
@@ -148,17 +126,4 @@ public class HeaderFooterCacher extends Thread {
             return target;
         }
     }
-
-    private String getFooter() {
-        try {
-            URL url = new URL(this.server + "common/footer.php");
-            String rtn = IOUtils.toString(url.openConnection().getInputStream());
-            rtn = rtn.replaceAll("(http|https)://", "//");
-            return rtn;
-        } catch (IOException e) {
-            e.printStackTrace();
-            return String.format("<span style='color:red'>%s</span>", e.getMessage());
-        }
-    }
-
 }

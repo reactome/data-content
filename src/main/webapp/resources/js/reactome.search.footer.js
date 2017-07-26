@@ -1,10 +1,10 @@
 var PWB_COOKIE="_Search_Result_PWB_Tree";
-var EXPAND = "expand";
-var COLLAPSE = "collapse"; // default value for the Location in PWB
+var EXPAND = "expand-all";
+var COLLAPSE = "collapse-all"; // default value for the Location in PWB
 
 jQuery(document).ready(function () {
     jQuery('#local-searchbox').autocomplete({
-        serviceUrl: '//localhost:8080/content/getTags',
+        serviceUrl: '/content/getTags',
         minChars: 2,
         deferRequestBy: 250,
         paramName: "tagName",
@@ -43,9 +43,10 @@ jQuery(document).ready(function() {
     var showChar = 200;  // How many characters are shown by default
     var ellipsestext = "... ";
     var moretext = "Read more";
-    var lesstext = "Show less";
+    var lesstext = " Show less";
 
 
+    // FIXME: highlighting is not working in the summation
     jQuery('.summation').each(function() {
         var content = jQuery(this).text();
 
@@ -53,7 +54,6 @@ jQuery(document).ready(function() {
             var c = content.substr(0, showChar);
             var h = content.substr(showChar, content.length - showChar);
             var html = jQuery.trim(c) + '<span class="moreellipses">' + ellipsestext+ '</span><span class="morecontent"><span>' + h + '</span><a href="javascript:void(0);" class="morelink">' + moretext + '</a></span>';
-
             jQuery(this).html(html);
         }
     });
@@ -100,16 +100,18 @@ jQuery(document).ready(function () {
         $treeContent = $plus.nextAll().eq(0);
         $treeContent.slideToggle(500, function () {
             if ($treeContent.is(":visible")) {
-                return $plus.find(".sprite-plus").attr("class", "sprite-resize-small sprite sprite-minus");
+                //return $plus.find(".sprite-plus").attr("class", "sprite-resize-small sprite sprite-minus");
+                return $plus.find(".fa-plus-square-o").attr("class", "fa fa-minus-square-o");
             } else {
-                return $plus.find(".sprite-minus").attr("class", "sprite-resize-small sprite sprite-plus");
+                //return $plus.find(".sprite-minus").attr("class", "sprite-resize-small sprite sprite-plus");
+                return $plus.find(".fa-minus-square-o").attr("class", "fa fa-plus-square-o");
             }
         });
     });
 });
 
 jQuery(document).ready(function () {
-    jQuery('#availableSpeciesSel').ready(function () {
+    jQuery('[id*=availableSpeciesSel]').ready(function () {
         var DEFAULT_SPECIES = 'Homo sapiens';
 
         /** Check if hash is present in the URL **/
@@ -119,11 +121,11 @@ jQuery(document).ready(function () {
             jQuery("div[class*=tplSpe_]").each(function (index, value) {
                 var item = jQuery(value).attr("class");
                 if (item == "tplSpe_" + DEFAULT_SPECIES.replace(" ", "_")) {
-                    jQuery("#availableSpeciesSel").val(DEFAULT_SPECIES.replace(" ", "_"));
+                    jQuery("[id*=availableSpeciesSel]").val(DEFAULT_SPECIES.replace(" ", "_"));
                     jQuery("." + item).show();
 
                     //change url
-                    if (jQuery("#availableSpeciesSel").val() != null) {
+                    if (jQuery("[id*=availableSpeciesSel]").val() != null) {
                         window.location.hash = "#" + encodeURIComponent(DEFAULT_SPECIES);
                     }
 
@@ -142,10 +144,10 @@ jQuery(document).ready(function () {
             // hash has been change manually into a non-existing value. Pick the first one which is human
             if (jQuery(".tplSpe_" + hash).val() == null) {
 
-                jQuery("#availableSpeciesSel > option").each(function (index, value) {
+                jQuery("[id*=availableSpeciesSel] > option").each(function (index, value) {
                     var item = jQuery(value).attr("value");
 
-                    jQuery("#availableSpeciesSel").val(item);
+                    jQuery("[id*=availableSpeciesSel]").val(item);
 
                     jQuery(".tplSpe_" + item).show();
                     window.location.hash = "#" + encodeURIComponent(item.replace("_", " "));
@@ -153,7 +155,7 @@ jQuery(document).ready(function () {
                     return false;
                 });
             } else {
-                jQuery("#availableSpeciesSel").val(hash);
+                jQuery("[id*=availableSpeciesSel]").val(hash);
                 jQuery(".tplSpe_" + hash).show();
             }
         }
@@ -161,7 +163,7 @@ jQuery(document).ready(function () {
 });
 
 jQuery(document).ready(function () {
-    jQuery('#availableSpeciesSel').on('change', function () {
+    jQuery('[id*=availableSpeciesSel]').on('change', function () {
         var selectedSpecies = this.value;
 
         // hide everything
@@ -198,11 +200,11 @@ function togglePwbTree(action){
     });
 
     if (action == COLLAPSE) {
-        jQuery(".sprite-minus").attr("class", "sprite-resize-small sprite sprite-plus");
+        jQuery(".fa-minus-square-o").attr("class", "fa fa-plus-square-o");
         jQuery("#pwb_toggle").text("Expand All");
         jQuery("#pwb_toggle").attr("class", EXPAND);
     } else {
-        jQuery(".sprite-plus").attr("class", "sprite-resize-small sprite sprite-minus");
+        jQuery(".fa-plus-square-o").attr("class", "fa fa-minus-square-o");
         jQuery("#pwb_toggle").text("Collapse All");
         jQuery("#pwb_toggle").attr("class", COLLAPSE);
     }
@@ -229,11 +231,13 @@ function writeCookie(key, value) {
 }
 
 /* Set the width of the side navigation to 250px */
-function openNav() {
-    document.getElementById("mySidenav").style.width = "250px";
+function openSideNav() {
+    jQuery("#search-filter-sidenav").css('width', '270px');
+    jQuery("#search-filter-sidenav").css('left', '0');
 }
 
 /* Set the width of the side navigation to 0 */
-function closeNav() {
-    document.getElementById("mySidenav").style.width = "0";
+function closeSideNav() {
+    jQuery("#search-filter-sidenav").css('width', '0');
+    jQuery("#search-filter-sidenav").css('left', "");
 }

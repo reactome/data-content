@@ -1,9 +1,9 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <div class="search">
-    <form id="search_form" action="${pageContext.request.contextPath}/query" method="get" class="clean-form form-inline">
+    <form action="/content/query" method="get" class="clean-form form-inline">
         <label for="mod-search-searchword" class="element-invisible">Search ...</label>
-        <input id="mod-search-searchword" type="search" class="inputbox search-query alt-searchbox" name="q" placeholder="e.g. O95631, NTN1, signaling by EGFR, glucose" value="${q}"  maxlength="200"/>
+        <input id="mod-search-searchword" type="search" class="inputbox search-query alt-searchbox" name="q" placeholder="e.g. O95631, NTN1, signaling by EGFR, glucose B:A" value="${q}"  maxlength="200"/>
         <c:choose>
             <c:when test="${not empty species}">
                 <c:forEach var="item" items="${species}">

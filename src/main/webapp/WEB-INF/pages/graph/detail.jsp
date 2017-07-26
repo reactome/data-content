@@ -1,10 +1,10 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
-<c:import url="../header-n.jsp"/>
+<c:import url="../header.jsp"/>
 
 
-    <%--<div class="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-12">--%>
+    <div class="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-12">
 
         <c:import url="title.jsp"/>
 
@@ -44,11 +44,11 @@
         <c:if test="${not empty interactions}">
             <c:import url="interactionDetails.jsp"/>
         </c:if>
-    <%--</div>--%>
+    </div>
 
 <%--<div class="clear"></div>--%>
 
 <%-- Adding some fixed spaces between last content panel and footer --%>
-<div style="height: 40px;">&nbsp;</div>
+<%--<div style="height: 40px;">&nbsp;</div>--%>
 
-<c:import url="../footer-n.jsp"/>
+<c:import url="../footer.jsp"/>

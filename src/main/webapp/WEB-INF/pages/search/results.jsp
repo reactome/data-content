@@ -1,262 +1,33 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="mytag" uri="/WEB-INF/tags/customTag.tld"%>
 
-<c:import url="../header-n.jsp"/>
-
-<%--<div class="ebi-content">--%>
+<c:import url="../header.jsp"/>
 
 <div class="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-12" id="search-headers">
     <div>
         <h2>Search results for <span class="searchterm">${q}</span></h2>
-        <p>Showing <strong>${groupedResult.rowCount}</strong>  of <strong>${groupedResult.numberOfMatches}</strong></p>
+        <p class="favth-hidden-xs favth-hidden-sm">Showing <strong>${groupedResult.rowCount}</strong>  of <strong>${groupedResult.numberOfMatches}</strong></p>
     </div>
 </div>
 
-<%-- VISIBLE ON MOBILE --%>
-<div class="favth-visible-xs">
-    <span onclick="openNav()">Filters...</span>
+<%-- MAX-WIDTH 768px --%>
+<div class="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-12 favth-visible-xs favth-visible-sm">
+    <div style="margin-top: 10px;">
+        <a><i class="fa fa-filter"></i><span onclick="openSideNav()">Filter your results (<strong>${groupedResult.rowCount}</strong>  of <strong>${groupedResult.numberOfMatches}</strong>)</span></a>
+    </div>
 </div>
-<div id="mySidenav" class="sidenav favth-visible-xs">
-    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-    <div class="filter-wrapper">
-        <form id="form_facets" action="./query" method="get">
-            <input type="hidden" name="q" value="<c:out value='${q}'/>"/>
-            <%-- SPECIES --%>
-            <div class="facet" id="species">
-                <h4>Species</h4>
-                <ul class="term-list">
-                    <c:forEach var="selected" items="${species_facet.selected}">
-                        <li class="term-item">
-                            <label><input type="checkbox" onclick="this.form.submit();" name="species" value="${selected.name}" checked></label> ${selected.name} (${selected.count})</li>
-                    </c:forEach>
-                    <c:forEach var="available" items="${species_facet.available}">
-                        <li class="term-item"><label>
-                            <input type="checkbox" onclick="this.form.submit();" name="species"
-                                   value="${available.name}">
-                        </label> ${available.name} (${available.count})</li>
-                    </c:forEach>
-                </ul>
-            </div>
-
-            <%-- TYPES --%>
-            <c:if test="${not empty type_facet.available || not empty type_facet.selected }">
-                <div class="facet" id="type">
-                    <h4>Types</h4>
-                    <ul class="term-list">
-                        <c:forEach var="selected" items="${type_facet.selected}">
-                            <li class="term-item"><label>
-                                <input type="checkbox" onclick="this.form.submit();" name="types"
-                                       value="${selected.name}" checked>
-                            </label> ${selected.name} (${selected.count})</li>
-                        </c:forEach>
-                        <c:forEach var="available" items="${type_facet.available}">
-                            <li class="term-item"><label>
-                                <input type="checkbox" onclick="this.form.submit();" name="types"
-                                       value="${available.name}">
-                            </label> ${available.name} (${available.count})</li>
-                        </c:forEach>
-                    </ul>
-                </div>
-            </c:if>
-
-            <%-- COMPARTMENT --%>
-            <c:if test="${not empty compartment_facet.available || not empty compartment_facet.selected }">
-                <div class="facet" id="compartment">
-                    <h4>Compartments</h4>
-                    <ul class="term-list">
-                        <c:forEach var="selected" items="${compartment_facet.selected}">
-                            <li class="term-item"><label>
-                                <input type="checkbox" onclick="this.form.submit();" name="compartments"
-                                       value="${selected.name}" checked>
-                            </label> ${selected.name} (${selected.count})</li>
-                        </c:forEach>
-                        <c:forEach var="available" items="${compartment_facet.available}">
-                            <li class="term-item"><label>
-                                <input type="checkbox" onclick="this.form.submit();" name="compartments"
-                                       value="${available.name}">
-                            </label> ${available.name} (${available.count})</li>
-                        </c:forEach>
-                    </ul>
-                </div>
-            </c:if>
-
-            <%-- REACTION TYPES --%>
-            <c:if test="${not empty keyword_facet.available || not empty keyword_facet.selected }">
-                <div class="facet" id="keywords">
-                    <h4>Reaction types</h4>
-                    <ul class="term-list">
-                        <c:forEach var="selected" items="${keyword_facet.selected}">
-                            <li class="term-item"><label>
-                                <input type="checkbox" onclick="this.form.submit();" name="keywords"
-                                       value="${selected.name}" checked>
-                            </label> ${selected.name} (${selected.count})</li>
-                        </c:forEach>
-                        <c:forEach var="available" items="${keyword_facet.available}">
-                            <li class="term-item"><label>
-                                <input type="checkbox" onclick="this.form.submit();" name="keywords"
-                                       value="${available.name}">
-                            </label> ${available.name} (${available.count})</li>
-                        </c:forEach>
-                    </ul>
-                </div>
-            </c:if>
-            <%-- CLUSTERED --%>
-            <div class="facet" id="cluster">
-                <h4>Search properties</h4>
-                <ul class="term-list">
-                    <c:choose>
-                        <c:when test="${cluster}">
-                            <li class="term-item"><label>
-                                <input type="checkbox" onclick="this.form.submit();" name="cluster"
-                                       value="true" checked></label> clustered Search</li>
-                        </c:when>
-                        <c:otherwise>
-                            <li class="term-item"><label>
-                                <input type="checkbox" onclick="this.form.submit();" name="cluster"
-                                       value="true" ></label> clustered Search</li>
-                        </c:otherwise>
-                    </c:choose>
-
-                </ul>
-            </div>
-        </form>
-
-        <form id="facetReset" action="./query" method="get">
-            <div class="filterButtons">
-                <input type="hidden" name="q" value="<c:out value='${q}'/>"/>
-                <input type="hidden" name="species" value="Homo sapiens"/>
-                <input type="hidden" name="species" value="Entries without species"/>
-                <input type="hidden" name="cluster" value="true"/>
-                <input type="submit" class="btn btn-info reset-filter" value="Reset filters"  />
-            </div>
-        </form>
-    </div> <%-- id="filter-wrapper"--%>
+<div id="search-filter-sidenav" class="sidenav favth-visible-xs favth-visible-sm">
+    <a href="javascript:void(0);" class="closebtn" onclick="closeSideNav()">&times;</a>
+    <c:import url="searchFilter.jsp" />
 </div>
 <%-- VISIBLE ON MOBILE --%>
-
-
-
-
 
 <%-- FILTERS --%>
-<div class="favth-col-lg-3 favth-col-md-3 favth-col-sm-3 favth-col-xs-12 favth-hidden-xs" id="search-filters">
-    <div class="filter-wrapper">
-        <form id="form_facets" action="./query" method="get">
-            <input type="hidden" name="q" value="<c:out value='${q}'/>"/>
-            <%-- SPECIES --%>
-            <div class="facet" id="species">
-                <h4>Species</h4>
-                <ul class="term-list">
-                    <c:forEach var="selected" items="${species_facet.selected}">
-                        <li class="term-item">
-                            <label><input type="checkbox" onclick="this.form.submit();"  name="species" value="${selected.name}" checked></label> ${selected.name} (${selected.count})</li>
-                    </c:forEach>
-                    <c:forEach var="available" items="${species_facet.available}">
-                        <li class="term-item"><label>
-                            <input type="checkbox" onclick="this.form.submit();" name="species"
-                                   value="${available.name}">
-                        </label> ${available.name} (${available.count})</li>
-                    </c:forEach>
-                </ul>
-            </div>
+<div class="favth-col-lg-3 favth-col-md-3 favth-col-sm-12 favth-col-xs-12 favth-hidden-xs favth-hidden-sm" id="search-filters">
+    <c:import url="searchFilter.jsp" />
+</div>
 
-            <%-- TYPES --%>
-            <c:if test="${not empty type_facet.available || not empty type_facet.selected }">
-                <div class="facet" id="type">
-                    <h4>Types</h4>
-                    <ul class="term-list">
-                        <c:forEach var="selected" items="${type_facet.selected}">
-                            <li class="term-item"><label>
-                                <input type="checkbox" onclick="this.form.submit();" name="types"
-                                       value="${selected.name}" checked>
-                            </label> ${selected.name} (${selected.count})</li>
-                        </c:forEach>
-                        <c:forEach var="available" items="${type_facet.available}">
-                            <li class="term-item"><label>
-                                <input type="checkbox" onclick="this.form.submit();" name="types"
-                                       value="${available.name}">
-                            </label> ${available.name} (${available.count})</li>
-                        </c:forEach>
-                    </ul>
-                </div>
-            </c:if>
-
-            <%-- COMPARTMENT --%>
-            <c:if test="${not empty compartment_facet.available || not empty compartment_facet.selected }">
-                <div class="facet" id="compartment">
-                    <h4>Compartments</h4>
-                    <ul class="term-list">
-                        <c:forEach var="selected" items="${compartment_facet.selected}">
-                            <li class="term-item"><label>
-                                <input type="checkbox" onclick="this.form.submit();" name="compartments"
-                                       value="${selected.name}" checked>
-                            </label> ${selected.name} (${selected.count})</li>
-                        </c:forEach>
-                        <c:forEach var="available" items="${compartment_facet.available}">
-                            <li class="term-item"><label>
-                                <input type="checkbox" onclick="this.form.submit();" name="compartments"
-                                       value="${available.name}">
-                            </label> ${available.name} (${available.count})</li>
-                        </c:forEach>
-                    </ul>
-                </div>
-            </c:if>
-
-            <%-- REACTION TYPES --%>
-            <c:if test="${not empty keyword_facet.available || not empty keyword_facet.selected }">
-                <div class="facet" id="keywords">
-                    <h4>Reaction types</h4>
-                    <ul class="term-list">
-                        <c:forEach var="selected" items="${keyword_facet.selected}">
-                            <li class="term-item"><label>
-                                <input type="checkbox" onclick="this.form.submit();" name="keywords"
-                                       value="${selected.name}" checked>
-                            </label> ${selected.name} (${selected.count})</li>
-                        </c:forEach>
-                        <c:forEach var="available" items="${keyword_facet.available}">
-                            <li class="term-item"><label>
-                                <input type="checkbox" onclick="this.form.submit();" name="keywords"
-                                       value="${available.name}">
-                            </label> ${available.name} (${available.count})</li>
-                        </c:forEach>
-                    </ul>
-                </div>
-            </c:if>
-            <%-- CLUSTERED --%>
-            <div class="facet" id="cluster">
-                <h4>Search properties</h4>
-                <ul class="term-list">
-                    <c:choose>
-                        <c:when test="${cluster}">
-                            <li class="term-item"><label>
-                                <input type="checkbox" onclick="this.form.submit();" name="cluster"
-                                       value="true" checked></label> clustered Search</li>
-                        </c:when>
-                        <c:otherwise>
-                            <li class="term-item"><label>
-                                <input type="checkbox" onclick="this.form.submit();" name="cluster"
-                                       value="true" ></label> clustered Search</li>
-                        </c:otherwise>
-                    </c:choose>
-
-                </ul>
-            </div>
-        </form>
-
-        <form id="facetReset" action="./query" method="get">
-            <div class="filterButtons">
-                <input type="hidden" name="q" value="<c:out value='${q}'/>"/>
-                <input type="hidden" name="species" value="Homo sapiens"/>
-                <input type="hidden" name="species" value="Entries without species"/>
-                <input type="hidden" name="cluster" value="true"/>
-                <input type="submit" class="btn btn-info reset-filter" value="Reset filters"  />
-            </div>
-        </form>
-    </div> <%-- id="filter-wrapper"--%>
-</div> <%-- id="favth-col-*"--%>
-
-
-<div class="favth-col-lg-9 favth-col-md-9 favth-col-sm-9 favth-col-xs-12" id="search-results">
+<div class="favth-col-lg-9 favth-col-md-9 favth-col-sm-12 favth-col-xs-12" id="search-results">
     <c:choose>
         <c:when test="${not empty groupedResult.results}">
             <div class="favth-rows groupedResult favth-clearfix">
@@ -289,20 +60,7 @@
                                                     <a href="./detail/interactor/${entry.id}" class="" title="Show Interactor Details" rel="nofollow">${entry.name}</a>
                                                 </c:when>
                                                 <c:otherwise>
-                                                    <%--<a href="./detail/${entry.id}" class="" title="Show Details" rel="nofollow">${entry.name}</a>--%>
-                                                    <%--<c:choose>--%>
-                                                    <%--<c:when test="${entry.species == 'Entries without species'}" >--%>
-                                                        <%--<a href="./detail/${entry.id}" class="" title="Show Details" rel="nofollow">${entry.name}</a>--%>
-                                                    <%--</c:when>--%>
-                                                    <%--<c:otherwise>--%>
-                                                        <%--<a href="./detail/${entry.id}" class="" title="Show Details" rel="nofollow">${entry.name}</a>--%>
-                                                    <%--</c:otherwise>--%>
-                                                    <%--</c:choose>--%>
-
-
-
                                                     <a href="./detail/${entry.id}" class="" title="Show Details" rel="nofollow">${entry.name}</a>
-
                                                 </c:otherwise>
                                         </c:choose>
                                     </h4>
@@ -321,30 +79,28 @@
                                 </c:if>
 
                                 <div class="result-detail">
-                                    <%--<div class="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-12">--%>
-                                        <c:if test="${not empty speciesList || not empty compartmentList}">
-                                            <c:if test="${not empty speciesList}">
-                                                <div class="favth-col-lg-5 favth-col-md-12 favth-col-sm-12 favth-col-xs-12"><strong>Species:</strong> ${speciesList}</div>
-                                            </c:if>
-                                            <c:if test="${not empty compartmentList}">
-                                                <div class="favth-col-lg-7 favth-col-md-12 favth-col-sm-12 favth-col-xs-12"><strong>Compartment:</strong> ${compartmentList}</div>
-                                            </c:if>
+                                    <c:if test="${not empty speciesList || not empty compartmentList}">
+                                        <c:if test="${not empty speciesList}">
+                                            <div class="favth-col-lg-5 favth-col-md-12 favth-col-sm-12 favth-col-xs-12"><strong>Species:</strong> ${speciesList}</div>
                                         </c:if>
+                                        <c:if test="${not empty compartmentList}">
+                                            <div class="favth-col-lg-7 favth-col-md-12 favth-col-sm-12 favth-col-xs-12"><strong>Compartment:</strong> ${compartmentList}</div>
+                                        </c:if>
+                                    </c:if>
 
-                                        <c:if test="${not empty entry.regulator}">
-                                            <div class="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-12"><strong>Regulator:</strong> <a href="./detail/${entry.regulatorId}" class="" title="Show Details" rel="nofollow">${entry.regulator}</a></div>
-                                        </c:if>
-                                        <c:if test="${not empty entry.regulatedEntity}">
-                                            <div class="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-12"><strong>Regulated entity:</strong> <a href="./detail/${entry.regulatedEntityId}" class="" title="Show Details" rel="nofollow">${entry.regulatedEntity}</a></div>
-                                        </c:if>
-                                        <c:if test="${not empty entry.referenceIdentifier}">
-                                            <%--<span>Primary external reference: ${entry.databaseName} <a href="${entry.referenceURL}" class="" title="show: ${entry.databaseName}" rel="nofollow">${entry.referenceName}: ${entry.referenceIdentifier}</a></span>--%>
-                                            <div class="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-12"><strong>Primary external reference:</strong> ${entry.databaseName} <a href="${entry.referenceURL}" rel="nofollow" target="_blank">${entry.referenceName}: ${entry.referenceIdentifier}</a></div>
-                                        </c:if>
-                                        <c:if test="${not empty entry.summation}">
-                                            <div class="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-12 summation">${entry.summation} </div>
-                                        </c:if>
-                                    <%--</div>--%>
+                                    <c:if test="${not empty entry.regulator}">
+                                        <div class="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-12"><strong>Regulator:</strong> <a href="./detail/${entry.regulatorId}" class="" title="Show Details" rel="nofollow">${entry.regulator}</a></div>
+                                    </c:if>
+                                    <c:if test="${not empty entry.regulatedEntity}">
+                                        <div class="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-12"><strong>Regulated entity:</strong> <a href="./detail/${entry.regulatedEntityId}" class="" title="Show Details" rel="nofollow">${entry.regulatedEntity}</a></div>
+                                    </c:if>
+                                    <c:if test="${not empty entry.referenceIdentifier}">
+                                        <%--<span>Primary external reference: ${entry.databaseName} <a href="${entry.referenceURL}" class="" title="show: ${entry.databaseName}" rel="nofollow">${entry.referenceName}: ${entry.referenceIdentifier}</a></span>--%>
+                                        <div class="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-12"><strong>Primary external reference:</strong> ${entry.databaseName} <a href="${entry.referenceURL}" rel="nofollow" target="_blank">${entry.referenceName}: ${entry.referenceIdentifier}</a></div>
+                                    </c:if>
+                                    <c:if test="${not empty entry.summation}">
+                                        <div class="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-12 summation">${entry.summation}</div>
+                                    </c:if>
                                 </div>
                             </div> <%-- result --%>
                         </c:forEach>
@@ -407,4 +163,4 @@
     </c:choose>
 </div>
 
-<c:import url="../footer-n.jsp"/>
+<c:import url="../footer.jsp"/>
