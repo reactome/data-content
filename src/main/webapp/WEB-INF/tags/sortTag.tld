@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<taglib
+        xmlns="http://java.sun.com/xml/ns/javaee"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-jsptaglibrary_2_1.xsd"
+        version="2.1">
+
+    <display-name>Database Object Functions</display-name>
+    <tlib-version>1.0</tlib-version>
+    <short-name>do</short-name>
+
+    <function>
+        <name>sortByDisplayName</name>
+        <function-class>org.reactome.server.util.DatabaseObjectSort</function-class>
+        <function-signature>java.util.List sortByDisplayName(java.util.List)</function-signature>
+    </function>
+
+    <function>
+        <name>sortList</name>
+        <function-class>org.reactome.server.util.DatabaseObjectSort</function-class>
+        <function-signature>java.util.List sortList(java.util.List)</function-signature>
+    </function>
+
+</taglib>

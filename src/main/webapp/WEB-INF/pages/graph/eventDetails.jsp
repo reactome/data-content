@@ -7,10 +7,11 @@
         <c:if test="${not empty databaseObject.hasEvent}">
 
             <div class="fieldset-pair-container">
-                <div class="label">
+                <div class="favth-col-lg-2 favth-col-md-2 favth-col-sm-3 favth-col-xs-12 details-label">
                      events
                 </div>
-                <div class="field">
+                <div class="favth-col-lg-10 favth-col-md-10 favth-col-sm-9 favth-col-xs-12 details-field">
+                    <div>
                     <ul class="list">
                         <c:forEach var="hasEvent" items="${databaseObject.hasEvent}">
                             <li>
@@ -19,8 +20,8 @@
                             </li>
                         </c:forEach>
                     </ul>
+                    </div>
                 </div>
-                <div class="clear"></div>
             </div>
         </c:if>
     </c:if>
@@ -30,10 +31,11 @@
         <c:if test="${not empty databaseObject.input || not empty databaseObject.output || not empty databaseObject.entityOnOtherCell}">
             <c:if test="${not empty databaseObject.input}">
                 <div class="fieldset-pair-container">
-                    <div class="label">
+                    <div class="favth-col-lg-2 favth-col-md-2 favth-col-sm-3 favth-col-xs-12 details-label">
                         input
                     </div>
-                    <div class="field">
+                    <div class="favth-col-lg-10 favth-col-md-10 favth-col-sm-9 favth-col-xs-12 details-field">
+                        <div>
                         <ul class="list">
                             <c:forEach var="input" items="${databaseObject.fetchInput()}">
                                 <li>
@@ -43,16 +45,17 @@
                                 </li>
                             </c:forEach>
                         </ul>
+                        </div>
                     </div>
-                    <div class="clear"></div>
                 </div>
             </c:if>
             <c:if test="${not empty databaseObject.output}">
                 <div class="fieldset-pair-container">
-                    <div class="label">
+                    <div class="favth-col-lg-2 favth-col-md-2 favth-col-sm-3 favth-col-xs-12 details-label">
                         output
                     </div>
-                    <div class="field">
+                    <div class="favth-col-lg-10 favth-col-md-10 favth-col-sm-9 favth-col-xs-12 details-field">
+                        <div>
                         <ul class="list">
                             <c:forEach var="output" items="${databaseObject.fetchOutput()}">
                                 <li>
@@ -62,16 +65,17 @@
                                 </li>
                             </c:forEach>
                         </ul>
+                        </div>
                     </div>
-                    <div class="clear"></div>
                 </div>
             </c:if>
             <c:if test="${not empty databaseObject.entityOnOtherCell}">
                 <div class="fieldset-pair-container">
-                    <div class="label">
+                    <div class="favth-col-lg-2 favth-col-md-2 favth-col-sm-3 favth-col-xs-12 details-label">
                         entityOnOtherCell
                     </div>
-                    <div class="field">
+                    <div class="favth-col-lg-10 favth-col-md-10 favth-col-sm-9 favth-col-xs-12 details-field">
+                        <div>
                         <ul class="list">
                             <c:forEach var="entityOnOtherCell" items="${databaseObject.entityOnOtherCell}">
                                 <li>
@@ -80,8 +84,8 @@
                                 </li>
                             </c:forEach>
                         </ul>
+                        </div>
                     </div>
-                    <div class="clear"></div>
                 </div>
             </c:if>
         </c:if>
@@ -97,23 +101,21 @@
         <legend>Event Information</legend>
         <div class="fieldset-pair-container">
             <c:if test="${not empty databaseObject.goBiologicalProcess}">
-                <div class="label">
+                <div class="favth-col-lg-2 favth-col-md-2 favth-col-sm-3 favth-col-xs-12 details-label">
                     Go Biological Process
                 </div>
-                <div class="field">
+                <div class="favth-col-lg-10 favth-col-md-10 favth-col-sm-9 favth-col-xs-12 details-field">
                     <span><a href="${databaseObject.goBiologicalProcess.url}" class=""  title="go to ${databaseObject.goBiologicalProcess.databaseName}" rel="nofollow">${databaseObject.goBiologicalProcess.displayName} (${databaseObject.goBiologicalProcess.accession})</a></span>
                 </div>
-                <div class="clear"></div>
             </c:if>
             <c:if test="${databaseObject.schemaClass == 'Reaction'}">
                 <c:if test="${not empty databaseObject.reverseReaction}">
-                    <div class="label">
+                    <div class="favth-col-lg-2 favth-col-md-2 favth-col-sm-3 favth-col-xs-12 details-label">
                         Reverse Reaction
                     </div>
-                    <div class="field">
+                    <div class="favth-col-lg-10 favth-col-md-10 favth-col-sm-9 favth-col-xs-12 details-field">
                         <span><a href="../detail/${databaseObject.reverseReaction.stId}" class="" title="Show Details" rel="nofollow">${databaseObject.reverseReaction.displayName} <c:if test="${not empty databaseObject.reverseReaction.speciesName}">(${databaseObject.reverseReaction.speciesName})</c:if></a></span>
                     </div>
-                    <div class="clear"></div>
                 </c:if>
             </c:if>
         </div>
@@ -167,8 +169,8 @@
             <%--<c:if test="${not empty entry.regulatedEvents}">--%>
         <c:if test="${not empty databaseObject.negativelyRegulatedBy}">
             <div class="fieldset-pair-container">
-                <div class="label">Negative Regulation</div>
-                <div class="field">
+                <div class="favth-col-lg-2 favth-col-md-2 favth-col-sm-3 favth-col-xs-12 details-label">Negative Regulation</div>
+                <div class="favth-col-lg-10 favth-col-md-10 favth-col-sm-9 favth-col-xs-12 details-field">
                     <ul class="list">
                         <c:forEach var="negativelyRegulatedBy" items="${databaseObject.negativelyRegulatedBy}">
                             <li>
@@ -177,13 +179,12 @@
                         </c:forEach>
                     </ul>
                 </div>
-                <div class="clear"></div>
             </div>
         </c:if>
         <c:if test="${not empty databaseObject.positivelyRegulatedBy}">
             <div class="fieldset-pair-container">
-                <div class="label">Positive Regulation</div>
-                <div class="field">
+                <div class="favth-col-lg-2 favth-col-md-2 favth-col-sm-3 favth-col-xs-12 details-label">Positive Regulation</div>
+                <div class="favth-col-lg-10 favth-col-md-10 favth-col-sm-9 favth-col-xs-12 details-field">
                     <ul class="list">
                         <c:forEach var="positivelyRegulatedBy" items="${databaseObject.positivelyRegulatedBy}">
                             <li>
@@ -192,13 +193,12 @@
                         </c:forEach>
                     </ul>
                 </div>
-                <div class="clear"></div>
             </div>
         </c:if>
         <c:if test="${not empty databaseObject.requirements}">
             <div class="fieldset-pair-container">
-                <div class="label">Requirements</div>
-                <div class="field">
+                <div class="favth-col-lg-2 favth-col-md-2 favth-col-sm-3 favth-col-xs-12 details-label">Requirements</div>
+                <div class="favth-col-lg-10 favth-col-md-10 favth-col-sm-9 favth-col-xs-12 details-field">
                     <ul class="list">
                         <c:forEach var="requirement" items="${databaseObject.requirements}">
                             <li>
@@ -207,7 +207,6 @@
                         </c:forEach>
                     </ul>
                 </div>
-                <div class="clear"></div>
             </div>
         </c:if>
     </fieldset>
@@ -217,26 +216,30 @@
 <c:if test="${not empty databaseObject.inferredFrom}">
     <fieldset class="fieldset-details">
         <legend>Inferred From</legend>
-        <div class="wrap overflow">
-            <ul class="list">
-                <c:forEach var="inferredFrom" items="${databaseObject.inferredFrom}">
-                    <li><a href="../detail/${inferredFrom.stId}" class="" title="Show Details" rel="nofollow">${inferredFrom.displayName} (${inferredFrom.speciesName})</a></li>
-                </c:forEach>
-            </ul>
+        <div class="wrap">
+            <div class="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-12">
+                <ul class="list">
+                    <c:forEach var="inferredFrom" items="${databaseObject.inferredFrom}">
+                        <li><a href="../detail/${inferredFrom.stId}" class="" title="Show Details" rel="nofollow">${inferredFrom.displayName} (${inferredFrom.speciesName})</a></li>
+                    </c:forEach>
+                </ul>
+            </div>
         </div>
     </fieldset>
 </c:if>
 <c:if test="${not empty orthologousEvents}">
     <fieldset class="fieldset-details">
         <legend>Orthologous Events</legend>
-        <div class="wrap overflow">
-            <ul class="list">
-                <c:forEach items="${orthologousEvents}" var="orthologousEvents">
-                    <c:forEach items="${orthologousEvents.value}" var="orthologousEvent">
-                        <li><a href="../detail/${orthologousEvent.stId}" class="" title="Show Details" rel="nofollow">${orthologousEvent.displayName} (${orthologousEvent.speciesName})</a></li>
+        <div class="wrap">
+            <div class="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-12">
+                <ul class="list">
+                    <c:forEach items="${orthologousEvents}" var="orthologousEvents">
+                        <c:forEach items="${orthologousEvents.value}" var="orthologousEvent">
+                            <li><a href="../detail/${orthologousEvent.stId}" title="Show Details" rel="nofollow">${orthologousEvent.displayName} (${orthologousEvent.speciesName})</a></li>
+                        </c:forEach>
                     </c:forEach>
-                </c:forEach>
-            </ul>
+                </ul>
+            </div>
         </div>
     </fieldset>
 </c:if>

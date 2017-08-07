@@ -2,10 +2,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <c:import url="../header.jsp"/>
-
-
-    <div class="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-12">
-
+    <div class="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-12 one">
         <c:import url="title.jsp"/>
 
         <c:if test="${not empty topLevelNodes}">
@@ -15,9 +12,9 @@
         <c:if test="${not empty databaseObject.summation}">
             <fieldset class="fieldset-details">
                 <legend>Summation</legend>
-                <div class="wrap overflow">
+                <div class="details-wrap details-summation">
                     <c:forEach var="summation" items="${databaseObject.summation}">
-                        <p style="text-align: justify; margin-right: 8px;">${summation.text}</p>
+                        <p>${summation.text}</p>
                     </c:forEach>
                 </div>
             </fieldset>
@@ -45,10 +42,4 @@
             <c:import url="interactionDetails.jsp"/>
         </c:if>
     </div>
-
-<%--<div class="clear"></div>--%>
-
-<%-- Adding some fixed spaces between last content panel and footer --%>
-<%--<div style="height: 40px;">&nbsp;</div>--%>
-
 <c:import url="../footer.jsp"/>

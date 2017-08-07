@@ -6,7 +6,7 @@
 <div class="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-12" id="search-headers">
     <div>
         <h2>Search results for <span class="searchterm">${q}</span></h2>
-        <p class="favth-hidden-xs favth-hidden-sm">Showing <strong>${groupedResult.rowCount}</strong>  of <strong>${groupedResult.numberOfMatches}</strong></p>
+        <p class="favth-hidden-xs favth-hidden-sm">Showing <strong>${groupedResult.rowCount}</strong> results out of <strong>${groupedResult.numberOfMatches}</strong></p>
     </div>
 </div>
 
@@ -17,14 +17,18 @@
     </div>
 </div>
 <div id="search-filter-sidenav" class="sidenav favth-visible-xs favth-visible-sm">
-    <a href="javascript:void(0);" class="closebtn" onclick="closeSideNav()">&times;</a>
-    <c:import url="searchFilter.jsp" />
+    <div class="sidenav-panel">
+        <a href="javascript:void(0);" class="closebtn" onclick="closeSideNav();">&times;</a>
+        <c:import url="searchFilter.jsp" />
+    </div>
+    <c:import url="resetFilter.jsp" />
 </div>
 <%-- VISIBLE ON MOBILE --%>
 
 <%-- FILTERS --%>
 <div class="favth-col-lg-3 favth-col-md-3 favth-col-sm-12 favth-col-xs-12 favth-hidden-xs favth-hidden-sm" id="search-filters">
     <c:import url="searchFilter.jsp" />
+    <c:import url="resetFilter.jsp" />
 </div>
 
 <div class="favth-col-lg-9 favth-col-md-9 favth-col-sm-12 favth-col-xs-12" id="search-results">
@@ -56,12 +60,12 @@
                                         </c:if>
 
                                         <c:choose>
-                                                <c:when test="${entry.exactType == 'Interactor'}" >
-                                                    <a href="./detail/interactor/${entry.id}" class="" title="Show Interactor Details" rel="nofollow">${entry.name}</a>
-                                                </c:when>
-                                                <c:otherwise>
-                                                    <a href="./detail/${entry.id}" class="" title="Show Details" rel="nofollow">${entry.name}</a>
-                                                </c:otherwise>
+                                            <c:when test="${entry.exactType == 'Interactor'}" >
+                                                <a href="./detail/interactor/${entry.id}" class="" title="Show Interactor Details" rel="nofollow">${entry.name}</a>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <a href="./detail/${entry.id}" class="" title="Show Details" rel="nofollow">${entry.name}</a>
+                                            </c:otherwise>
                                         </c:choose>
                                     </h4>
                                 </div>
@@ -96,7 +100,7 @@
                                     </c:if>
                                     <c:if test="${not empty entry.referenceIdentifier}">
                                         <%--<span>Primary external reference: ${entry.databaseName} <a href="${entry.referenceURL}" class="" title="show: ${entry.databaseName}" rel="nofollow">${entry.referenceName}: ${entry.referenceIdentifier}</a></span>--%>
-                                        <div class="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-12"><strong>Primary external reference:</strong> ${entry.databaseName} <a href="${entry.referenceURL}" rel="nofollow" target="_blank">${entry.referenceName}: ${entry.referenceIdentifier}</a></div>
+                                        <div class="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-12"><strong>Primary external reference:</strong> ${entry.databaseName}: <a href="${entry.referenceURL}" rel="nofollow" target="_blank"><c:if test="${not empty entry.referenceName}">${entry.referenceName}: </c:if>${entry.referenceIdentifier}</a></div>
                                     </c:if>
                                     <c:if test="${not empty entry.summation}">
                                         <div class="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-12 summation">${entry.summation}</div>

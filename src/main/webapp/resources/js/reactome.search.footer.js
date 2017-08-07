@@ -97,9 +97,9 @@ jQuery(document).ready(function () {
 jQuery(document).ready(function () {
     jQuery(".plus").click(function () {
         $plus = jQuery(this);
-        $treeContent = $plus.nextAll().eq(0);
-        $treeContent.slideToggle(500, function () {
-            if ($treeContent.is(":visible")) {
+        $treeLpwb = $plus.nextAll().eq(0);
+        $treeLpwb.slideToggle(500, function () {
+            if ($treeLpwb.is(":visible")) {
                 //return $plus.find(".sprite-plus").attr("class", "sprite-resize-small sprite sprite-minus");
                 return $plus.find(".fa-plus-square-o").attr("class", "fa fa-minus-square-o");
             } else {
@@ -190,8 +190,8 @@ jQuery(document).ready(function () {
 });
 
 function togglePwbTree(action){
-    var treeContent = jQuery("div.treeContent");
-    treeContent.each(function (index, element) {
+    var treeLpwb = jQuery("div.tree-lpwb");
+    treeLpwb.each(function (index, element) {
         if (action == EXPAND) {
             jQuery(element).show();
         } else {
@@ -230,14 +230,17 @@ function writeCookie(key, value) {
     document.cookie = key + "=" + value + "; expires=" + date.toGMTString() + ";";
 }
 
-/* Set the width of the side navigation to 250px */
 function openSideNav() {
-    jQuery("#search-filter-sidenav").css('width', '270px');
-    jQuery("#search-filter-sidenav").css('left', '0');
+    jQuery("#search-filter-sidenav").css({width: "270px", left: "0" });
+    jQuery(".sidenav-bg").css('display', 'block');
+    jQuery("html").addClass("modal-open");
+    jQuery("body").addClass("modal-open");
 }
 
 /* Set the width of the side navigation to 0 */
 function closeSideNav() {
-    jQuery("#search-filter-sidenav").css('width', '0');
-    jQuery("#search-filter-sidenav").css('left', "");
+    jQuery("#search-filter-sidenav").css({width: "0", left: "" });
+    jQuery(".sidenav-bg").css('display', 'none');
+    jQuery("html").removeClass("modal-open");
+    jQuery("body").removeClass("modal-open");
 }

@@ -29,7 +29,7 @@
     </c:choose>
 </h3>
 
-<div class="extended-header clearfix">
+<div class="extended-header favth-clearfix">
     <c:if test="${not empty databaseObject.stId}">
         <div class="details-label favth-col-lg-2 favth-col-md-2 favth-col-sm-3 favth-col-xs-12">
             <span>Stable Identifier</span>

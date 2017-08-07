@@ -20,7 +20,7 @@
                 <c:when test="${empty suggestions}">
                     <%--<p class="alert">Sorry we could not find any entry matching '${q}'</p>--%>
                     <p>Please consider refining your terms:</p>
-                    <div class="padding left30">
+                    <div class="padding0 left30">
                     <ul class="list lower-alpha">
                         <li>Make sure all words are spelled correctly</li>
                         <li>Try different keywords</li>
@@ -30,9 +30,9 @@
                     </div>
                 </c:when>
                 <c:otherwise>
-                    <div class="padding left">
+                    <div class="padding0 left">
                     <h4>Did you mean...</h4>
-                    <div class="padding left">
+                    <div class="padding0 left">
                         <ul class="list">
                             <c:forEach var="suggestion" items="${suggestions}">
                                 <c:url var="url" value="">

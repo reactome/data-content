@@ -1,27 +1,24 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
-
-<fieldset class="fieldset-details">
-    <legend>Interactors</legend>
-    <div class="wrap">
-        <table class="dt-fixed-header">
-            <thead>
-                <tr>
-                    <th style="width:60px;">Confidence Score</th>
-                    <th style="width:100px;">Interactor Accession</th>
-                    <th style="width:100px;">Interactor Name</th>
-                    <th style="width:40px;">Evidence (IntAct)</th>
-                </tr>
-            </thead>
-        </table>
-        <div class="dt-content-ovf">
+<div class="clearfix">
+    <fieldset class="fieldset-details">
+        <legend>Interactors</legend>
+        <div id="r-responsive-table" class="details-wrap interactors-table">
             <table>
+                <thead>
+                    <tr>
+                        <th scope="col">Confidence Score</th>
+                        <th scope="col">Interactor Accession</th>
+                        <th scope="col">Interactor Name</th>
+                        <th scope="col">Evidence (IntAct)</th>
+                    </tr>
+                </thead>
                 <tbody>
                 <c:forEach var="interaction" items="${interactions}">
                     <tr>
-                        <td style="width:50px;">${interaction.intactScore}</td>
-                        <td style="width:80px;">
+                        <td data-label="Confidence Score">${interaction.intactScore}</td>
+                        <td data-label="Interactor Accession">
                             <!-- Parse the Interactor URL -->
                             <c:set var="interactorResource" value="${interactorResourceMap[interaction.interactorB.interactorResourceId]}" />
                             <c:choose>
@@ -36,8 +33,8 @@
                                 </c:otherwise>
                             </c:choose>
                         </td>
-                        <td style="width:80px;">${interaction.interactorB.alias}</td>
-                        <td style="width:25px;">
+                        <td data-label="Interactor Name">${interaction.interactorB.alias}</td>
+                        <td data-label="Evidence (IntAct)">
                             <c:choose>
                                 <c:when test="${fn:length(interaction.interactionDetailsList) == 0}">
                                     ${fn:length(interaction.interactionDetailsList)}
@@ -52,5 +49,5 @@
                 </tbody>
             </table>
         </div>
-    </div>
-</fieldset>
+    </fieldset>
+</div>

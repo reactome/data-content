@@ -1,14 +1,22 @@
 @import url("sprite.css");
 @import url("table.css");
 
+html.modal-open,
+body.modal-open {
+    overflow: hidden;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+}
+
 .more {
     color: #58C3E5;
     cursor: pointer;
 }
 
-#facetReset {
-    padding-left: 5px;
-}
+/*#facetReset {*/
+    /*padding-left: 5px;*/
+/*}*/
 
 .term-list {
     list-style-type: none;
@@ -37,31 +45,37 @@
     background-color: #f1f1f1;
 }
 
-.padding {
+/** Default Paddings **/
+.margin0 {
+    margin: 0;
+}
+
+/** Default Paddings **/
+.padding0 {
     padding: 0;
 }
 
-.padding.left {
+.padding0.left {
     padding-left: 15px;
 }
 
-.padding.left30 {
+.padding0.left30 {
     padding-left: 30px;
 }
 
-.padding.right {
+.padding0.right {
     padding-top: 15px;
 }
 
-.padding.right30 {
+.padding0.right30 {
     padding-top: 30px;
 }
 
-.padding.top {
+.padding0.top {
     padding-top: 15px;
 }
 
-.padding.bottom {
+.padding0.bottom {
     padding-bottom: 15px;
 }
 
@@ -79,16 +93,22 @@
     font-size: 100%;
 }
 
-.errorList {
-    font-size: 90%;
-}
-
 .list li a {
     -webkit-transition: font-size 0.9s ease, background-color 0.9s ease;
     -moz-transition: font-size 0.9s ease, background-color 0.9s ease;
     -o-transition: font-size 0.9s ease, background-color 0.9s ease;
     -ms-transition: font-size 0.9s ease, background-color 0.9s ease;
     transition: font-size 0.9s ease, background-color 0.9s ease;
+}
+
+.errorList {
+    font-size: 90%;
+}
+
+
+.details-summation {
+    text-align: justify;
+    padding: 5px 24px;
 }
 
 /*.list li a:hover {*/
@@ -107,7 +127,7 @@
     padding: 0;
 }
 
-.treeContent {
+.tree-lpwb {
     padding-left: 4px;
     display: none;
     max-height: 300px;
@@ -191,29 +211,33 @@ ul.tree li a:visited {
 }
 
 
-.fixedTable {
-    table-layout: fixed;
-}
+/*.fixedTable {*/
+    /*table-layout: fixed;*/
+/*}*/
 
-.fixedTable td {
-    width: 20%;
-}
+/*.fixedTable td {*/
+    /*width: 20%;*/
+/*}*/
 
-.fixedTable td + td {
-    width: auto;
-}
+/*.fixedTable td + td {*/
+    /*width: auto;*/
+/*}*/
 
-.advTable {
-    width: 80%;
-    align-content: center;
-    table-layout: fixed;
-}
+/*.advTable {*/
+    /*width: 80%;*/
+    /*align-content: center;*/
+    /*table-layout: fixed;*/
+/*}*/
 
-.advTable td {
-    overflow: auto;
-}
+/*.advTable td {*/
+    /*overflow: auto;*/
+/*}*/
 
-.adv-list {
+
+
+/* ADVANCED SEARCH */
+
+#fav-container .advanced-search .adv-list {
     list-style-type: none;
     padding-left: 0;
     margin-left: 0;
@@ -223,17 +247,31 @@ ul.tree li a:visited {
     overflow-y: auto;
 }
 
-.adv-list li {
+#fav-container .advanced-search .adv-list li {
     font-size: 90%;
     padding-left: 0;
     margin-left: 0;
 }
 
-.searchBox {
-    width: 98%;
-    height: 10%;
+#fav-container .advanced-search textarea {
+    width: 100%;
 }
 
+#fav-container .advanced-search input[type="checkbox"] {
+    margin: 0;
+}
+
+#fav-container .advanced-filter {
+    border: 1px solid #F1F1F1;
+    background: #f9f9f9;
+    margin-bottom: 30px;
+}
+
+.sidenav-panel {
+    height: 87%;
+    overflow-y: scroll;
+    margin-bottom: 5%;
+}
 /*.contact-form {*/
     /*padding: 1px;*/
     /*width: 100%;*/
@@ -303,72 +341,72 @@ ul.tree li a:visited {
     /*color: #05194C !important;*/
 /*}*/
 
-.pathway_location_section {
-    padding: 6px;
-}
+/*.pathway_location_section {*/
+    /*padding: 6px;*/
+/*}*/
 
-div#one {
-    width: 34%;
-    float: left;
-}
+/*div#one {*/
+    /*width: 34%;*/
+    /*float: left;*/
+/*}*/
 
-div#two {
-    margin-top: 9px;
-    height: 28px;
-}
+/*div#two {*/
+    /*margin-top: 9px;*/
+    /*height: 28px;*/
+/*}*/
 
-.margin {
-    margin-top: 15px;
-}
+/*.margin {*/
+    /*margin-top: 15px;*/
+/*}*/
 
-.overme_3c {
-    width: 200px;
-    max-width: 200px;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    color: #1F419A;
-    border: 0;
-    padding: 0 6px 0 0;
-}
+/*.overme_3c {*/
+    /*width: 200px;*/
+    /*max-width: 200px;*/
+    /*overflow: hidden;*/
+    /*white-space: nowrap;*/
+    /*text-overflow: ellipsis;*/
+    /*color: #1F419A;*/
+    /*border: 0;*/
+    /*padding: 0 6px 0 0;*/
+/*}*/
 
-.overme_5c {
-    width: 144px;
-    max-width: 144px;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    color: #1F419A;
-    border: 0;
-    padding: 0;
-}
+/*.overme_5c {*/
+    /*width: 144px;*/
+    /*max-width: 144px;*/
+    /*overflow: hidden;*/
+    /*white-space: nowrap;*/
+    /*text-overflow: ellipsis;*/
+    /*color: #1F419A;*/
+    /*border: 0;*/
+    /*padding: 0;*/
+/*}*/
 
-.advancedFilteringParam {
-    padding-bottom: 20px;
-}
+/*.advancedFilteringParam {*/
+    /*padding-bottom: 20px;*/
+/*}*/
 
-.scrollable {
-    width: 100%;
-    height: 100%;
-    margin: 0;
-    padding: 0;
-    overflow: auto;
-}
+/*.scrollable {*/
+    /*width: 100%;*/
+    /*height: 100%;*/
+    /*margin: 0;*/
+    /*padding: 0;*/
+    /*overflow: auto;*/
+/*}*/
 
-.div-header {
-    border: none;
-    color: #1F419A;
-    font-weight: bold;
-    font-size: 13px;
-    text-shadow: 1px 1px 3px #ffffff;
-    background-color: #eeeeee;
-    background: -moz-linear-gradient(top, #eeeeee, #d8d8d8);
-    background: -o-linear-gradient(top, #eeeeee, #d8d8d8);
-    background: -webkit-linear-gradient(top, #eeeeee, #d8d8d8);
-    background: linear-gradient(top, #eeeeee, #d8d8d8);
-    border-radius: 4px 4px 0 0;
-    padding: 4px 3px 0 12px;
-}
+/*.div-header {*/
+    /*border: none;*/
+    /*color: #1F419A;*/
+    /*font-weight: bold;*/
+    /*font-size: 13px;*/
+    /*text-shadow: 1px 1px 3px #ffffff;*/
+    /*background-color: #eeeeee;*/
+    /*background: -moz-linear-gradient(top, #eeeeee, #d8d8d8);*/
+    /*background: -o-linear-gradient(top, #eeeeee, #d8d8d8);*/
+    /*background: -webkit-linear-gradient(top, #eeeeee, #d8d8d8);*/
+    /*background: linear-gradient(top, #eeeeee, #d8d8d8);*/
+    /*border-radius: 4px 4px 0 0;*/
+    /*padding: 4px 3px 0 12px;*/
+/*}*/
 
 .dataschema-tree {
     box-shadow: 2px 2px 1px #AFAFAF;
@@ -435,8 +473,14 @@ div#two {
     margin: 0 0 2px 0;
 }
 
-#fav-container div.extended-header .details-label,
-#fav-container div.fieldset-pair-container .label {
+#fav-container div.fieldset-pair-container .details-label {
+    text-align: right;
+    font-size: 13px;
+    background: none;
+    font-weight: bold;
+}
+
+#fav-container div.extended-header .details-label {
     text-align: right;
     font-size: 13px;
     background: none;
@@ -444,7 +488,7 @@ div#two {
 }
 
 #fav-container div.extended-header .details-field,
-#fav-container div.fieldset-pair-container .field {
+#fav-container div.fieldset-pair-container .details-field {
     /*float: left;*/
     padding-left: 30px;
     border-left: 1px solid orange;
@@ -460,9 +504,8 @@ div#two {
     width: 140px;
 }
 
-#fav-container div.fieldset-pair-container .field {
-    border-left: 1px solid #1F419A;
-    /*border-left: 1px solid orange;*/
+#fav-container div.fieldset-pair-container .details-field {
+    border-left: 1px solid #58C3E5;
 }
 
 /* END START DETAILS HEADER */
@@ -558,10 +601,6 @@ a.tree-highlighted-item:visited {
 .selected {
     text-decoration: none !important;
     background-color: aliceblue;
-    /*padding-right: 2px;*/
-    /*padding-bottom: 1px;*/
-    /*padding-left: 2px;*/
-    /*border-radius: 3px;*/
     box-shadow: 1px 1px 1px #AFAFB2;
 }
 
@@ -700,6 +739,15 @@ a.tree-highlighted-item:visited {
     font-weight: bold;
 }
 
+#fav-container .sidenav-bg {
+    background-color: #C5C5C5;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    z-index: 999;
+    top: 0;
+}
+
 /* Search Results - Side navigation menu */
 #fav-container .sidenav {
     height: 100%; /* 100% Full-height */
@@ -710,6 +758,7 @@ a.tree-highlighted-item:visited {
     left: -1px;
     background-color: #f5f5f5;
     overflow-x: hidden; /* Disable horizontal scroll */
+    overflow-y: hidden;
     padding-top: 20px; /* Place content 60px from the top */
     transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
     border-right: 1px dotted #d9d9d9;
@@ -737,6 +786,10 @@ a.tree-highlighted-item:visited {
     top: 0;
     right: 0;
     font-size: 30px;
+}
+
+#fav-container .sidenav h4 {
+    margin-top:0;
 }
 
 /* Style page content - use this if you want to push the page content to the right when you open the side navigation */
@@ -772,9 +825,8 @@ a.tree-highlighted-item:visited {
 }
 /******/
 
-
 /* CSS Media Queries */
-@media (max-width: 768px) {
+@media screen and (min-width: 426px) and (max-width: 768px) {
     #contact-form textarea,
     #contact-form input[type="text"],
     #contact-form input[type="email"] {
@@ -782,7 +834,7 @@ a.tree-highlighted-item:visited {
     }
 }
 
-@media (max-width: 425px) {
+@media screen and (max-width: 425px) {
 
     #fav-container .fieldset-details legend {
         font-size: 12px;
@@ -799,12 +851,12 @@ a.tree-highlighted-item:visited {
         width: 100%;
     }
 
-    #fav-container div.extended-header .details-label, #fav-container div.fieldset-pair-container .label {
+    #fav-container div.extended-header .details-label, #fav-container div.fieldset-pair-container .details-label {
         text-align: left;
     }
 
     #fav-container div.extended-header .details-field,
-    #fav-container div.fieldset-pair-container .field {
+    #fav-container div.fieldset-pair-container .details-field {
         text-align: left;
         padding-left: 30px;
         padding-bottom: 2px;
@@ -841,7 +893,7 @@ a.tree-highlighted-item:visited {
         text-overflow: ellipsis;
     }
 
-    .treeContent {
+    .tree-lpwb {
         padding-left: 0;
         display: none;
         max-height: 300px;
@@ -879,9 +931,17 @@ a.tree-highlighted-item:visited {
         font-size: 12px;
         padding-right: 0.2em;
     }
+
+    #fav-container .interactors-table table td {
+        padding-left: 45%;
+    }
+
+    #fav-container .advanced-search textarea {
+        height: 150px;
+    }
 }
 
-@media (max-width: 320px) {
+@media screen and (max-width: 320px) {
     #fav-container div#search-headers h2 {
         font-size: 22px;
     }
@@ -896,7 +956,7 @@ a.tree-highlighted-item:visited {
         font-size: 16px;
     }
 
-    #fav-container div#search-results h3 span{
+    #fav-container div#search-results h3 span {
         font-weight: 100;
         font-size: 13px;
     }

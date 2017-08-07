@@ -8,10 +8,14 @@
 */
 
 .autocomplete-suggestions {
-    border: 1px solid gray;
-    background: gainsboro;
+    border: 1px solid #58C3E5;
+    background: #f8f8f8;
     overflow-y: scroll;
-    font-size: 85%;
+    font-size: 100%;
+    border-top: none;
+    border-radius: 0 0 10px 10px;
+    padding-left: 10px;
+    opacity: .95;
 }
 .autocomplete-suggestion {
     padding: 3px 7px;
@@ -23,5 +27,5 @@
 }
 .autocomplete-suggestions strong {
     font-weight: bold;
-    color: #05194C;
+    color: #58C3E5;
 }

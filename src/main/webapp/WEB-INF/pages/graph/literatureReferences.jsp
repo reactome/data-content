@@ -1,47 +1,68 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
-<fieldset class="fieldset-details">
-    <legend>Literature References</legend>
-    <div class="wrap">
-        <table class="dt-fixed-header">
-            <thead>
-            <tr>
-                <th style="width:30px;">PubMed ID</th>
-                <th style="width:190px;">Title</th>
-                <th style="width:40px;">Journal</th>
-                <th style="width:40px;">Year</th>
-            </tr>
-            </thead>
-        </table>
-        <div class="dt-content-ovf">
+<div class="clearfix">
+    <fieldset class="fieldset-details">
+        <legend>Literature References</legend>
+        <div id="r-responsive-table" class="details-wrap">
             <table>
+                <thead>
+                <tr>
+                    <th scope="col" class="favth-col-md-2">PubMed ID</th>
+                    <th scope="col" class="favth-col-md-7">Title</th>
+                    <th scope="col" class="favth-col-md-2">Journal</th>
+                    <th scope="col" class="favth-col-md-1">Year</th>
+                </tr>
+                </thead>
                 <tbody>
-                <c:forEach var="literature" items="${databaseObject.literatureReference}">
-                    <tr>
+                    <c:forEach var="literature" items="${databaseObject.literatureReference}">
+                        <tr>
                             <%-- These are instances of Publication which has different attributes to be shown --%>
-                        <c:if test="${literature.schemaClass == 'LiteratureReference'}">
-                            <td style="width:35px;"><c:if test="${not empty literature.pubMedIdentifier}">${literature.pubMedIdentifier}</c:if></td>
-                            <td style="width:195px;"><c:if test="${not empty literature.title}"><a href="${literature.url}" class=""  title="show Pubmed" rel="nofollow"> ${literature.title}</a></c:if></td>
-                            <td style="width:45px;"><c:if test="${not empty literature.journal}">${literature.journal}</c:if></td>
-                            <td style="width:45px;"><c:if test="${not empty literature.year}">${literature.year}</c:if></td>
-                        </c:if>
-                        <c:if test="${literature.schemaClass == 'URL'}">
-                            <td style="width:35px;">&nbsp;</td>
-                            <td style="width:195px;"><c:if test="${not empty literature.title}"><a href="${literature.uniformResourceLocator}" class=""  title="show Pubmed" rel="nofollow"> ${literature.title}</a></c:if></td>
-                            <td style="width:45px;">&nbsp;</td>
-                            <td style="width:45px;">&nbsp;</td>
-                        </c:if>
-                        <c:if test="${literature.schemaClass == 'Book'}">
-                            <td style="width:35px;">&nbsp;</td>
-                            <td style="width:195px;"><c:if test="${not empty literature.title}">${literature.title}</c:if></td>
-                            <td style="width:45px;">&nbsp;</td>
-                            <td style="width:45px;"><c:if test="${not empty literature.year}">${literature.year}</c:if></td>
-                        </c:if>
-                    </tr>
-                </c:forEach>
-                </tbody>
+                            <c:if test="${literature.schemaClass == 'LiteratureReference'}">
+                                <td data-label="PubMed ID" class="favth-col-md-2"><c:if test="${not empty literature.pubMedIdentifier}">${literature.pubMedIdentifier}</c:if></td>
+                                <td data-label="Title" class="favth-col-md-7"><c:if test="${not empty literature.title}"><a href="${literature.url}" class=""  title="show Pubmed" rel="nofollow"> ${literature.title}</a></c:if></td>
+                                <td data-label="Journal" class="favth-col-md-2"><c:if test="${not empty literature.journal}">${literature.journal}</c:if></td>
+                                <td data-label="Year" class="favth-col-md-1"><c:if test="${not empty literature.year}">${literature.year}</c:if></td>
+                            </c:if>
+                            <c:if test="${literature.schemaClass == 'URL'}">
+                                <td data-label="PubMed ID" class="favth-col-md-2">&nbsp;</td>
+                                <td data-label="Title" class="favth-col-md-7"><c:if test="${not empty literature.title}"><a href="${literature.uniformResourceLocator}" class=""  title="show Pubmed" rel="nofollow"> ${literature.title}</a></c:if></td>
+                                <td data-label="Journal" class="favth-col-md-2">&nbsp;</td>
+                                <td data-label="Year" class="favth-col-md-1">&nbsp;</td>
+                            </c:if>
+                            <c:if test="${literature.schemaClass == 'Book'}">
+                                <td data-label="PubMed ID" class="favth-col-md-2">&nbsp;</td>
+                                <td data-label="Title" class="favth-col-md-7"><c:if test="${not empty literature.title}">${literature.title}</c:if></td>
+                                <td data-label="Journal" class="favth-col-md-2">&nbsp;</td>
+                                <td data-label="Year" class="favth-col-md-1"><c:if test="${not empty literature.year}">${literature.year}</c:if></td>
+                            </c:if>
+                        </tr>
+                    </c:forEach>
+                    <c:forEach var="literature" items="${databaseObject.literatureReference}">
+                        <tr>
+                                <%-- These are instances of Publication which has different attributes to be shown --%>
+                            <c:if test="${literature.schemaClass == 'LiteratureReference'}">
+                                <td data-label="PubMed ID" class="favth-col-md-2"><c:if test="${not empty literature.pubMedIdentifier}">${literature.pubMedIdentifier}</c:if></td>
+                                <td data-label="Title" class="favth-col-md-7"><c:if test="${not empty literature.title}"><a href="${literature.url}" class=""  title="show Pubmed" rel="nofollow"> ${literature.title}</a></c:if></td>
+                                <td data-label="Journal" class="favth-col-md-2"><c:if test="${not empty literature.journal}">${literature.journal}</c:if></td>
+                                <td data-label="Year" class="favth-col-md-1"><c:if test="${not empty literature.year}">${literature.year}</c:if></td>
+                            </c:if>
+                            <c:if test="${literature.schemaClass == 'URL'}">
+                                <td data-label="PubMed ID" class="favth-col-md-2">&nbsp;</td>
+                                <td data-label="Title" class="favth-col-md-7"><c:if test="${not empty literature.title}"><a href="${literature.uniformResourceLocator}" class=""  title="show Pubmed" rel="nofollow"> ${literature.title}</a></c:if></td>
+                                <td data-label="Journal" class="favth-col-md-2">&nbsp;</td>
+                                <td data-label="Year" class="favth-col-md-1">&nbsp;</td>
+                            </c:if>
+                            <c:if test="${literature.schemaClass == 'Book'}">
+                                <td data-label="PubMed ID" class="favth-col-md-2">&nbsp;</td>
+                                <td data-label="Title" class="favth-col-md-7"><c:if test="${not empty literature.title}">${literature.title}</c:if></td>
+                                <td data-label="Journal" class="favth-col-md-2">&nbsp;</td>
+                                <td data-label="Year" class="favth-col-md-1"><c:if test="${not empty literature.year}">${literature.year}</c:if></td>
+                            </c:if>
+                        </tr>
+                    </c:forEach>
+                 </tbody>
             </table>
         </div>
-    </div>
-</fieldset>
+    </fieldset>
+</div>

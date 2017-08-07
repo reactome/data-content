@@ -3,58 +3,56 @@
 
 <c:if test="${clazz != 'Regulation'}">
 
-    <c:if test="${not empty databaseObject.disease}">
+     <c:if test="${not empty databaseObject.disease}">
+     <div class="clearfix">
         <fieldset class="fieldset-details">
             <legend>Disease</legend>
-            <div class="wrap">
-                <h5>Diseases</h5>
-                <table class="dt-fixed-header">
+            <div id="r-responsive-table" class="details-wrap">
+                <table>
                     <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Identifier</th>
-                        <th>Synonyms</th>
-                    </tr>
+                        <tr>
+                            <th scope="col">Name</th>
+                            <th scope="col">Identifier</th>
+                            <th scope="col">Synonyms</th>
+                        </tr>
                     </thead>
+                    <tbody>
+                    <c:forEach var="disease" items="${databaseObject.disease}">
+                        <tr>
+                            <td data-label="Name"><a href="${diseases.database.url}" class=""  title="Show Details" rel="nofollow">${disease.displayName} </a></td>
+                            <td data-label="Identifier"><c:if test="${not empty disease.identifier}">${disease.identifier}</c:if></td>
+                            <td data-label="Synonyms">
+                                <c:forEach var="synonym" items="${disease.synonym}" varStatus="loop">
+                                    ${synonym}<c:if test="${!loop.last}">, </c:if>
+                                </c:forEach>
+                            </td>
+                        </tr>
+                    </c:forEach>
+                    </tbody>
                 </table>
-                <div class="dt-content-ovf">
-                    <table>
-                        <tbody>
-                        <c:forEach var="disease" items="${databaseObject.disease}">
-                            <tr>
-                                <td><a href="${diseases.database.url}" class=""  title="Show Details" rel="nofollow">${disease.displayName} </a></td>
-                                <td><c:if test="${not empty disease.identifier}">${disease.identifier}</c:if></td>
-                                <td>
-                                    <c:forEach var="synonym" items="${disease.synonym}" varStatus="loop">
-                                        ${synonym}<c:if test="${!loop.last}">, </c:if>
-                                    </c:forEach>
-                                </td>
-                            </tr>
-                        </c:forEach>
-                        </tbody>
-                    </table>
-                </div>
             </div>
         </fieldset>
+     </div>
     </c:if>
 
     <c:if test="${not empty crossReferences}">
+        <div class="clearfix">
         <fieldset class="fieldset-details">
             <legend>Cross References</legend>
-
             <c:forEach var="crossReference" items="${crossReferences}">
             <div class="fieldset-pair-container">
-                <div class="label">${crossReference.key}</div>
-                <div class="field">
+                <div class="favth-col-lg-2 favth-col-md-2 favth-col-sm-3 favth-col-xs-12 details-label">${crossReference.key}</div>
+                <div class="favth-col-lg-10 favth-col-md-10 favth-col-sm-9 favth-col-xs-12 details-field">
+                    <div>
                     <c:forEach var="value" items="${crossReference.value}" varStatus="loop">
                         <a href="${value.url}" title="show ${value.displayName}" rel="nofollow">${value.identifier}</a><c:if test="${!loop.last}">, </c:if>
                     </c:forEach>
+                    </div>
                 </div>
-                <div class="clear"></div>
             </div>
             </c:forEach>
-
         </fieldset>
+        </div>
     </c:if>
 
 </c:if>

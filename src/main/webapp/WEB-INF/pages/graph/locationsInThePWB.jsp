@@ -55,13 +55,12 @@
                          --%>
                         <div id="tpla_${topLvl.stId}" class="tplSpe_${fn:replace(topLvl.species, ' ', '_')}" style="display: none">
                             <span class="plus tree-root" title="click here to expand or collapse the tree">
-                                <!--sprite-resize-small sprite sprite-plus -->
                                 <i class="fa fa-plus-square-o" title="click here to expand or collapse the tree" style="vertical-align: middle"></i>
                                 <i class="sprite-resize sprite sprite-Pathway" style="vertical-align: middle"></i>
                                 <%--<a href="${topLvl.url}" class="" title="goto Reactome Pathway Browser" rel="nofollow">${topLvl.name} (${topLvl.species})</a>--%>
                                 ${topLvl.name} (${topLvl.species})
                             </span>
-                            <div class="treeContent">
+                            <div class="tree-lpwb">
                                 <ul class="tree">
                                     <c:set var="node" value="${topLvl}" scope="request"/>
                                     <li> <c:import url="node.jsp"/></li>
