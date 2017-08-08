@@ -221,12 +221,12 @@
 <c:if test="${not empty databaseObject.inferredFrom}">
     <fieldset class="fieldset-details">
         <legend>Inferred From</legend>
-        <div class="wrap">
-            <ul class="overflow list">
-                <c:forEach var="inferredFrom" items="${databaseObject.inferredFrom}">
-                    <li><a href="../detail/${inferredFrom.stId}" class="" title="Show Details" rel="nofollow">${inferredFrom.displayName} <c:if test="${not empty inferredFrom.speciesName}"> (${inferredFrom.speciesName})</c:if></a></li>
-                </c:forEach>
-            </ul>
+        <div class="wrap overflow clearfix">
+            <c:forEach var="inferredFrom" items="${databaseObject.inferredFrom}">
+                <div class="favth-col-lg-6 favth-col-md-6 favth-col-sm-12 favth-col-xs-12 text-overflow">
+                    <a href="../detail/${inferredFrom.stId}" class="" title="Show Details" rel="nofollow">${inferredFrom.displayName} <c:if test="${not empty inferredFrom.speciesName}"> (${inferredFrom.speciesName})</c:if></a>
+                </div>
+            </c:forEach>
         </div>
     </fieldset>
 </c:if>
@@ -272,7 +272,7 @@
                                     <td style="vertical-align: middle; width:25px;">${modifiedResidue.coordinate}</td>
                                     <c:choose>
                                         <c:when test="${modifiedResidue.schemaClass == 'InterChainCrosslinkedResidue' || modifiedResidue.schemaClass == 'IntraChainCrosslinkedResidue' || modifiedResidue.schemaClass == 'GroupModifiedResidue'}">
-                                            <td style="width:25px;"><c:if test="${not empty modifiedResidue.modification.displayName}"><a href="../detail/${modifiedResidue.modification.stId}" class="" title="Show Details" rel="nofollow">${modifiedResidue.modification.displayName}</a></c:if></td>
+                                            <td style="width:25px;"><c:if test="${not empty modifiedResidue.modification.displayName}"><a href="../detail/${modifiedResidue.modification.url}" class="" title="Show Details" rel="nofollow">${modifiedResidue.modification.displayName}</a></c:if></td>
                                         </c:when>
                                         <c:otherwise>
                                             <td style="width:25px;"></td>

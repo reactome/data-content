@@ -1,6 +1,6 @@
 @import url("sprite.css");
-@import url("table.css");
 
+/* prevent scrollable background when modal is opened */
 html.modal-open,
 body.modal-open {
     overflow: hidden;
@@ -13,10 +13,6 @@ body.modal-open {
     color: #58C3E5;
     cursor: pointer;
 }
-
-/*#facetReset {*/
-    /*padding-left: 5px;*/
-/*}*/
 
 .term-list {
     list-style-type: none;
@@ -32,25 +28,26 @@ body.modal-open {
     margin-left: 0;
 }
 
+.term-list label {
+    font-weight: normal;
+    font-size: 12px;
+}
+
 /*search results*/
 .summation {
     text-align: justify;
 }
 
-/*.summation:hover {*/
-    /*max-height: 999px;*/
-/*}*/
-
 .highlighting {
     background-color: #f1f1f1;
 }
 
-/** Default Paddings **/
+/** Default Margin **/
 .margin0 {
     margin: 0;
 }
 
-/** Default Paddings **/
+/** Default Padding **/
 .padding0 {
     padding: 0;
 }
@@ -97,7 +94,6 @@ body.modal-open {
     -webkit-transition: font-size 0.9s ease, background-color 0.9s ease;
     -moz-transition: font-size 0.9s ease, background-color 0.9s ease;
     -o-transition: font-size 0.9s ease, background-color 0.9s ease;
-    -ms-transition: font-size 0.9s ease, background-color 0.9s ease;
     transition: font-size 0.9s ease, background-color 0.9s ease;
 }
 
@@ -105,17 +101,6 @@ body.modal-open {
     font-size: 90%;
 }
 
-
-.details-summation {
-    text-align: justify;
-    padding: 5px 24px;
-}
-
-/*.list li a:hover {*/
-    /*background: #f6f6f6;*/
-/*}*/
-
-/*prune tree*/
 .block {
     display: block;
 }
@@ -189,19 +174,17 @@ ul.tree ul li:last-child:before {
 }
 
 ul.tree li a {
+    transition: font-size 0.5s ease, background-color 0.5s ease;
     -webkit-transition: font-size 0.5s ease, background-color 0.5s ease;
     -moz-transition: font-size 0.5s ease, background-color 0.5s ease;
     -o-transition: font-size 0.5s ease, background-color 0.5s ease;
-    -ms-transition: font-size 0.5s ease, background-color 0.5s ease;
-    transition: font-size 0.5s ease, background-color 0.5s ease;
 }
 
 ul.tree li a:visited {
+    transition: font-size 0.5s ease, background-color 0.5s ease;
     -webkit-transition: font-size 0.5s ease, background-color 0.5s ease;
     -moz-transition: font-size 0.5s ease, background-color 0.5s ease;
     -o-transition: font-size 0.5s ease, background-color 0.5s ease;
-    -ms-transition: font-size 0.5s ease, background-color 0.5s ease;
-    transition: font-size 0.5s ease, background-color 0.5s ease;
 }
 
 .tree-root i[class^="fa fa-"],
@@ -209,31 +192,6 @@ ul.tree li a:visited {
     font-size: 13px;
     padding-right: 0.3em;
 }
-
-
-/*.fixedTable {*/
-    /*table-layout: fixed;*/
-/*}*/
-
-/*.fixedTable td {*/
-    /*width: 20%;*/
-/*}*/
-
-/*.fixedTable td + td {*/
-    /*width: auto;*/
-/*}*/
-
-/*.advTable {*/
-    /*width: 80%;*/
-    /*align-content: center;*/
-    /*table-layout: fixed;*/
-/*}*/
-
-/*.advTable td {*/
-    /*overflow: auto;*/
-/*}*/
-
-
 
 /* ADVANCED SEARCH */
 
@@ -272,141 +230,6 @@ ul.tree li a:visited {
     overflow-y: scroll;
     margin-bottom: 5%;
 }
-/*.contact-form {*/
-    /*padding: 1px;*/
-    /*width: 100%;*/
-    /*margin-top: 20px;*/
-/*}*/
-
-/*.contact-form h4 {*/
-    /*color: #05194C !important;*/
-    /*padding-bottom: 15px;*/
-/*}*/
-
-/*.contact-form .fieldarea {*/
-    /*background: #fff;*/
-    /*padding-left: 20px;*/
-/*}*/
-
-/*.contact-form .fieldarea label {*/
-    /*width: 80px;*/
-    /*margin-left: 5px;*/
-/*}*/
-
-/*.contact-form .fieldarea p {*/
-    /*height: 10px;*/
-    /*margin-top: -9px;*/
-/*}*/
-
-/*.contact-form .fieldarea textarea {*/
-    /*width: 387px;*/
-/*}*/
-
-/*.contact-form .field {*/
-    /*!*padding: 4px;*!*/
-    /*margin: 1px;*/
-    /*background: #fff;*/
-    /*padding-left: 20px;*/
-/*}*/
-
-/*.contact-form .field label {*/
-    /*display: inline-block;*/
-    /*width: 80px;*/
-/*}*/
-
-/*.contact-form .button-send {*/
-    /*width: 42%;*/
-    /*text-align: right;*/
-    /*margin-top: 15px;*/
-    /*padding-left: 20px;*/
-/*}*/
-
-/*.contact-form .field input {*/
-    /*display: inline-block;*/
-    /*width: 300px;*/
-/*}*/
-
-/*.contact-msg-error {*/
-    /*color: #FF0000;*/
-    /*margin: 5px;*/
-/*}*/
-
-/*.contact-msg-success {*/
-    /*margin: 15px;*/
-    /*color: #4C4C74;*/
-    /*font-weight: bold;*/
-/*}*/
-
-/*.generic-error-div h4 {*/
-    /*color: #05194C !important;*/
-/*}*/
-
-/*.pathway_location_section {*/
-    /*padding: 6px;*/
-/*}*/
-
-/*div#one {*/
-    /*width: 34%;*/
-    /*float: left;*/
-/*}*/
-
-/*div#two {*/
-    /*margin-top: 9px;*/
-    /*height: 28px;*/
-/*}*/
-
-/*.margin {*/
-    /*margin-top: 15px;*/
-/*}*/
-
-/*.overme_3c {*/
-    /*width: 200px;*/
-    /*max-width: 200px;*/
-    /*overflow: hidden;*/
-    /*white-space: nowrap;*/
-    /*text-overflow: ellipsis;*/
-    /*color: #1F419A;*/
-    /*border: 0;*/
-    /*padding: 0 6px 0 0;*/
-/*}*/
-
-/*.overme_5c {*/
-    /*width: 144px;*/
-    /*max-width: 144px;*/
-    /*overflow: hidden;*/
-    /*white-space: nowrap;*/
-    /*text-overflow: ellipsis;*/
-    /*color: #1F419A;*/
-    /*border: 0;*/
-    /*padding: 0;*/
-/*}*/
-
-/*.advancedFilteringParam {*/
-    /*padding-bottom: 20px;*/
-/*}*/
-
-/*.scrollable {*/
-    /*width: 100%;*/
-    /*height: 100%;*/
-    /*margin: 0;*/
-    /*padding: 0;*/
-    /*overflow: auto;*/
-/*}*/
-
-/*.div-header {*/
-    /*border: none;*/
-    /*color: #1F419A;*/
-    /*font-weight: bold;*/
-    /*font-size: 13px;*/
-    /*text-shadow: 1px 1px 3px #ffffff;*/
-    /*background-color: #eeeeee;*/
-    /*background: -moz-linear-gradient(top, #eeeeee, #d8d8d8);*/
-    /*background: -o-linear-gradient(top, #eeeeee, #d8d8d8);*/
-    /*background: -webkit-linear-gradient(top, #eeeeee, #d8d8d8);*/
-    /*background: linear-gradient(top, #eeeeee, #d8d8d8);*/
-    /*border-radius: 4px 4px 0 0;*/
-    /*padding: 4px 3px 0 12px;*/
-/*}*/
 
 .dataschema-tree {
     box-shadow: 2px 2px 1px #AFAFAF;
@@ -420,15 +243,6 @@ ul.tree li a:visited {
     margin-right: 0;
     padding-right: 0;
 }
-
-/*.dataschema-tree ul.tree li span:hover {*/
-    /*background-color: aliceblue;*/
-    /*!*padding-right: 2px;*!*/
-    /*!*padding-bottom: 1px;*!*/
-    /*!*padding-left: 2px;*!*/
-    /*border-radius: 3px;*/
-    /*box-shadow: 1px 1px 1px #AFAFB2;*/
-/*}*/
 
 .dataschema-tree ul.tree li.schema-item a {
     font-size: 12px !important;
@@ -489,12 +303,9 @@ ul.tree li a:visited {
 
 #fav-container div.extended-header .details-field,
 #fav-container div.fieldset-pair-container .details-field {
-    /*float: left;*/
     padding-left: 30px;
     border-left: 1px solid orange;
     word-wrap: break-word;
-    /*width: 80%;*/
-    /*max-width: 756px;*/
     min-height: 10px;
     max-height: 150px;
     overflow: auto;
@@ -553,8 +364,6 @@ ul.tree li a:visited {
     margin-left: 5px;
     margin-right: 5px;
 }
-
-
 
 .tree-root {
     color: #58C3E5;
@@ -628,10 +437,51 @@ a.tree-highlighted-item:visited {
     padding: 1px 1px 1px 2px;
 }
 
+.wrap {
+    margin: 3px 20px 7px 25px;
+}
 
+.wrap div.text-overflow {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    padding-left: 0;
+}
+
+.wrap table {
+    width: 99%;
+    table-layout: fixed;
+}
+
+.wrap table tr:hover *{
+    background-color: #f9f9f9;
+}
+
+.declared {
+    background-color: #F5DEB3;
+}
+
+.even {
+    background-color: #f4faff;
+}
+
+.odd {
+    background-color: #ffffff;
+}
+
+.details-wrap {
+    max-height: 240px;
+    overflow-y: auto;
+    width: 99%;
+    padding: 8px;
+}
+
+.details-summation {
+    text-align: justify;
+    padding: 5px 24px;
+}
 
 /* NEW */
-
 
 #fav-container div#search-results h3 {
     background: #f8f8f8 none repeat scroll 0 0;
@@ -667,13 +517,16 @@ a.tree-highlighted-item:visited {
 
 #fav-container div#search-headers h2 span.searchterm  {
     background-color: #58C3E5;
-    /*padding: 0 5px;*/
     color: #FFF;
 }
 
 #fav-container .pagination ul > .active > a,
 #fav-container .pagination ul > .active > span {
-    background-color: #f5f5f5;
+    background: #eeeeee;
+    background: -moz-linear-gradient(top, #eeeeee 0%, #cccccc 100%);
+    background: -webkit-linear-gradient(top, #eeeeee 0%,#cccccc 100%);
+    background: linear-gradient(to bottom, #eeeeee 0%,#cccccc 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', endColorstr='#cccccc',GradientType=0 );
 }
 
 #fav-container .pagination ul>li>a,
@@ -683,6 +536,17 @@ a.tree-highlighted-item:visited {
     text-decoration: none;
     background-color: #fff;
     border: 1px solid #ddd;
+}
+
+#fav-container .pagination ul>li>a:focus,
+#fav-container .pagination ul>li>span:focus,
+#fav-container .pagination ul>li>a:hover,
+#fav-container .pagination ul>li>span:hover {
+    float: left;
+    line-height: 20px;
+    text-decoration: none;
+    background-color: #58C3E5;
+    border: 1px solid #58C3E5;
 }
 
 #fav-container .morecontent span {
@@ -748,39 +612,41 @@ a.tree-highlighted-item:visited {
     top: 0;
 }
 
-/* Search Results - Side navigation menu */
 #fav-container .sidenav {
-    height: 100%; /* 100% Full-height */
-    width: 0; /* 0 width - change this with JavaScript */
-    position: fixed; /* Stay in place */
-    z-index: 1000; /* Stay on top */
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1000;
     top: 0;
     left: -1px;
     background-color: #f5f5f5;
-    overflow-x: hidden; /* Disable horizontal scroll */
+    overflow-x: hidden;
     overflow-y: hidden;
-    padding-top: 20px; /* Place content 60px from the top */
-    transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
+    padding-top: 20px;
+    -webkit-transition: 0.5s;
+    -moz-transition: 0.5s;
+    -o-transition: 0.5s;
+    transition: 0.5s;
     border-right: 1px dotted #d9d9d9;
 }
 
-/* The navigation menu links */
 #fav-container .sidenav a {
     padding: 8px 8px 8px 32px;
     text-decoration: none;
     font-size: 25px;
     color: #818181;
     display: block;
-    transition: 0.3s
+    -webkit-transition: 0.3s;
+    -moz-transition: 0.3s;
+    -o-transition: 0.3s;
+    transition: 0.3s;
 }
 
-/* When you mouse over the navigation links, change their color */
 #fav-container .sidenav a:hover,
 #fav-container .sidenav a:focus {
     color: #f1f1f1;
 }
 
-/* Position and style the close button (top right corner) */
 #fav-container .sidenav .closebtn {
     position: absolute;
     top: 0;
@@ -792,9 +658,11 @@ a.tree-highlighted-item:visited {
     margin-top:0;
 }
 
-/* Style page content - use this if you want to push the page content to the right when you open the side navigation */
 #search-filters {
     transition: margin-left .5s;
+    -webkit-transition: margin-left .5s;
+    -moz-transition: margin-left .5s;
+    -o-transition: margin-left .5s;
 }
 
 #fav-container div#fav-lead1 {
@@ -818,6 +686,17 @@ a.tree-highlighted-item:visited {
     cursor: pointer;
 }
 
+#fav-container div.fieldset-pair-container .ca-label {
+    background: #f5f5f5;
+    text-align: left;
+    padding-right: 0;
+}
+
+#fav-container div.fieldset-pair-container .ca-field {
+    border: none;
+    padding-left: 5px;
+}
+
 /* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
 @media screen and (max-height: 450px) {
     #fav-container .sidenav {padding-top: 15px;}
@@ -826,7 +705,36 @@ a.tree-highlighted-item:visited {
 /******/
 
 /* CSS Media Queries */
-@media screen and (min-width: 426px) and (max-width: 768px) {
+
+@media only screen and (max-width:767px) {
+    #fav-container div.extended-header .details-label,
+    #fav-container div.fieldset-pair-container .details-label {
+        text-align: left;
+    }
+
+    #fav-container div.extended-header .details-field,
+    #fav-container div.fieldset-pair-container .details-field {
+        text-align: left;
+        padding-left: 30px;
+        padding-bottom: 2px;
+        border-left: none;
+        word-wrap: break-word;
+        overflow: auto;
+    }
+}
+
+@media only screen and (max-width: 768px) and (orientation: portrait) {
+    .details-wrap {
+        max-height: 240px;
+        overflow-y: auto;
+        width: 99%;
+        padding-top: 10px;
+        padding-left: 4px;
+        padding-right: 14px;
+    }
+}
+
+@media only screen and (min-width: 426px) and (max-width: 768px) and (orientation: portrait) {
     #contact-form textarea,
     #contact-form input[type="text"],
     #contact-form input[type="email"] {
@@ -834,8 +742,7 @@ a.tree-highlighted-item:visited {
     }
 }
 
-@media screen and (max-width: 425px) {
-
+@media only screen and (max-width: 425px) and (orientation: portrait) {
     #fav-container .fieldset-details legend {
         font-size: 12px;
         margin-left: 10px;
@@ -849,20 +756,6 @@ a.tree-highlighted-item:visited {
     #contact-form input[type="text"],
     #contact-form input[type="email"] {
         width: 100%;
-    }
-
-    #fav-container div.extended-header .details-label, #fav-container div.fieldset-pair-container .details-label {
-        text-align: left;
-    }
-
-    #fav-container div.extended-header .details-field,
-    #fav-container div.fieldset-pair-container .details-field {
-        text-align: left;
-        padding-left: 30px;
-        padding-bottom: 2px;
-        border-left: none;
-        word-wrap: break-word;
-        overflow: auto;
     }
 
     #fav-container .expand-all,
@@ -883,7 +776,6 @@ a.tree-highlighted-item:visited {
     .plus {
         font-size: 85%;
         cursor: pointer;
-        /*margin: 0 3px;*/
         margin: 0;
         padding: 0;
 
@@ -941,7 +833,7 @@ a.tree-highlighted-item:visited {
     }
 }
 
-@media screen and (max-width: 320px) {
+@media screen and (max-width: 320px) and (orientation: portrait) {
     #fav-container div#search-headers h2 {
         font-size: 22px;
     }

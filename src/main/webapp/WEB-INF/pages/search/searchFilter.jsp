@@ -9,13 +9,14 @@
             <ul class="term-list">
                 <c:forEach var="selected" items="${species_facet.selected}">
                     <li class="term-item">
-                        <label><input type="checkbox" onclick="this.form.submit();" name="species" value="${selected.name}" checked></label> ${selected.name} (${selected.count})</li>
+                        <label><input type="checkbox" onclick="this.form.submit();" name="species" value="${selected.name}" checked> ${selected.name} (${selected.count})</label></li>
                 </c:forEach>
                 <c:forEach var="available" items="${species_facet.available}">
-                    <li class="term-item"><label>
-                        <input type="checkbox" onclick="this.form.submit();" name="species"
-                               value="${available.name}">
-                    </label> ${available.name} (${available.count})</li>
+                    <li class="term-item">
+                        <label>
+                            <input type="checkbox" onclick="this.form.submit();" name="species" value="${available.name}"> ${available.name} (${available.count})
+                        </label>
+                    </li>
                 </c:forEach>
             </ul>
         </div>
@@ -26,16 +27,18 @@
                 <h4>Types</h4>
                 <ul class="term-list">
                     <c:forEach var="selected" items="${type_facet.selected}">
-                        <li class="term-item"><label>
-                            <input type="checkbox" onclick="this.form.submit();" name="types"
-                                   value="${selected.name}" checked>
-                        </label> ${selected.name} (${selected.count})</li>
+                        <li class="term-item">
+                            <label>
+                                <input type="checkbox" onclick="this.form.submit();" name="types" value="${selected.name}" checked> ${selected.name} (${selected.count})
+                            </label>
+                        </li>
                     </c:forEach>
                     <c:forEach var="available" items="${type_facet.available}">
-                        <li class="term-item"><label>
-                            <input type="checkbox" onclick="this.form.submit();" name="types"
-                                   value="${available.name}">
-                        </label> ${available.name} (${available.count})</li>
+                        <li class="term-item">
+                            <label>
+                                <input type="checkbox" onclick="this.form.submit();" name="types" value="${available.name}"> ${available.name} (${available.count})
+                            </label>
+                        </li>
                     </c:forEach>
                 </ul>
             </div>
@@ -47,16 +50,18 @@
                 <h4>Compartments</h4>
                 <ul class="term-list">
                     <c:forEach var="selected" items="${compartment_facet.selected}">
-                        <li class="term-item"><label>
-                            <input type="checkbox" onclick="this.form.submit();" name="compartments"
-                                   value="${selected.name}" checked>
-                        </label> ${selected.name} (${selected.count})</li>
+                        <li class="term-item">
+                            <label>
+                                <input type="checkbox" onclick="this.form.submit();" name="compartments" value="${selected.name}" checked> ${selected.name} (${selected.count})
+                            </label>
+                        </li>
                     </c:forEach>
                     <c:forEach var="available" items="${compartment_facet.available}">
-                        <li class="term-item"><label>
-                            <input type="checkbox" onclick="this.form.submit();" name="compartments"
-                                   value="${available.name}">
-                        </label> ${available.name} (${available.count})</li>
+                        <li class="term-item">
+                            <label>
+                                <input type="checkbox" onclick="this.form.submit();" name="compartments" value="${available.name}"> ${available.name} (${available.count})
+                            </label>
+                        </li>
                     </c:forEach>
                 </ul>
             </div>
@@ -68,16 +73,18 @@
                 <h4>Reaction types</h4>
                 <ul class="term-list">
                     <c:forEach var="selected" items="${keyword_facet.selected}">
-                        <li class="term-item"><label>
-                            <input type="checkbox" onclick="this.form.submit();" name="keywords"
-                                   value="${selected.name}" checked>
-                        </label> ${selected.name} (${selected.count})</li>
+                        <li class="term-item">
+                            <label>
+                                <input type="checkbox" onclick="this.form.submit();" name="keywords" value="${selected.name}" checked> ${selected.name} (${selected.count})
+                            </label>
+                        </li>
                     </c:forEach>
                     <c:forEach var="available" items="${keyword_facet.available}">
-                        <li class="term-item"><label>
-                            <input type="checkbox" onclick="this.form.submit();" name="keywords"
-                                   value="${available.name}">
-                        </label> ${available.name} (${available.count})</li>
+                        <li class="term-item">
+                            <label>
+                                <input type="checkbox" onclick="this.form.submit();" name="keywords" value="${available.name}"> ${available.name} (${available.count})
+                            </label>
+                        </li>
                     </c:forEach>
                 </ul>
             </div>

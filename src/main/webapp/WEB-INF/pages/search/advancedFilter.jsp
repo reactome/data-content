@@ -7,9 +7,8 @@
             <c:forEach var="available" items="${species_facet.available}">
                 <li class="term-item">
                     <label>
-                        <input type="checkbox" name="species" value="${available.name}">
+                        <input type="checkbox" name="species" value="${available.name}"> ${available.name} (${available.count})
                     </label>
-                        ${available.name} (${available.count})
                 </li>
             </c:forEach>
         </ul>
@@ -23,9 +22,8 @@
             <c:forEach var="available" items="${type_facet.available}">
                 <li class="term-item">
                     <label>
-                        <input type="checkbox" name="types" value="${available.name}">
+                        <input type="checkbox" name="types" value="${available.name}"> ${available.name} (${available.count})
                     </label>
-                        ${available.name} (${available.count})
                 </li>
             </c:forEach>
         </ul>
@@ -39,9 +37,8 @@
             <c:forEach var="available" items="${compartment_facet.available}">
                 <li class="term-item">
                     <label>
-                        <input type="checkbox" name="compartments" value="${available.name}">
+                        <input type="checkbox" name="compartments" value="${available.name}"> ${available.name} (${available.count})
                     </label>
-                        ${available.name} (${available.count})
                 </li>
             </c:forEach>
         </ul>
@@ -55,9 +52,8 @@
             <c:forEach var="available" items="${keyword_facet.available}">
                 <li class="term-item">
                     <label>
-                        <input type="checkbox" name="keywords" value="${available.name}">
+                        <input type="checkbox" name="keywords" value="${available.name}"> ${available.name} (${available.count})
                     </label>
-                        ${available.name} (${available.count})
                 </li>
             </c:forEach>
         </ul>

@@ -19,7 +19,7 @@
                     <tbody>
                     <c:forEach var="disease" items="${databaseObject.disease}">
                         <tr>
-                            <td data-label="Name"><a href="${diseases.database.url}" class=""  title="Show Details" rel="nofollow">${disease.displayName} </a></td>
+                            <td data-label="Name"><a href="${disease.url}" class=""  title="Show Details" rel="nofollow">${disease.displayName} </a></td>
                             <td data-label="Identifier"><c:if test="${not empty disease.identifier}">${disease.identifier}</c:if></td>
                             <td data-label="Synonyms">
                                 <c:forEach var="synonym" items="${disease.synonym}" varStatus="loop">
