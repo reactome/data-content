@@ -246,76 +246,167 @@
     </fieldset>
 </c:if>
 
-
 <c:if test="${databaseObject.schemaClass == 'EntityWithAccessionedSequence'}">
     <c:if test="${not empty databaseObject.hasModifiedResidue}">
         <fieldset class="fieldset-details">
             <legend>Modified Residues</legend>
-            <div class="wrap">
-                <table class="dt-fixed-header">
-                    <thead>
-                    <tr>
-                        <th style="width:20px;">Name</th>
-                        <th style="width:20px;">Coordinate</th>
-                        <th style="width:20px;">Modification</th>
-                        <th style="width:200px;">PsiMod</th>
-                    </tr>
-                    </thead>
-                </table>
-                <div class="dt-content-ovf">
-                    <table>
-                        <tbody>
-                        <c:forEach var="modifiedResidue" items="${databaseObject.hasModifiedResidue}">
-                            <tr>
-                                <td style="vertical-align: middle; width:25px;">${modifiedResidue.displayName}</td>
-                                <c:if test="${modifiedResidue.schemaClass != 'FragmentReplacedModification' && modifiedResidue.schemaClass != 'FragmentDeletionModification' && modifiedResidue.schemaClass != 'FragmentInsertionModification'}">
-                                    <td style="vertical-align: middle; width:25px;">${modifiedResidue.coordinate}</td>
-                                    <c:choose>
-                                        <c:when test="${modifiedResidue.schemaClass == 'InterChainCrosslinkedResidue' || modifiedResidue.schemaClass == 'IntraChainCrosslinkedResidue' || modifiedResidue.schemaClass == 'GroupModifiedResidue'}">
-                                            <td style="width:25px;"><c:if test="${not empty modifiedResidue.modification.displayName}"><a href="../detail/${modifiedResidue.modification.url}" class="" title="Show Details" rel="nofollow">${modifiedResidue.modification.displayName}</a></c:if></td>
-                                        </c:when>
-                                        <c:otherwise>
-                                            <td style="width:25px;"></td>
-                                        </c:otherwise>
-                                    </c:choose>
-                                    <td style="padding: 0px; width:225px;">
-                                        <table border="0" class="psiModTable">
-                                            <tbody>
-                                                <%-- TODO: Improve here, the question is - how ? --%>
-                                            <c:choose>
-                                                <c:when test="${modifiedResidue.psiMod.getClass().getSimpleName() == 'ArrayList'}">
-                                                    <c:forEach var="psiMod" items="${modifiedResidue.psiMod}" varStatus="loop">
-                                                        <tr>
-                                                            <td <c:if test="${loop.index % 2 == 0}">class="specialborder"</c:if>>
-                                                                <c:if test="${not empty psiMod.displayName}"><a href="${psiMod.url}" class="" title="Show Details" rel="nofollow">${psiMod.displayName}</a></c:if>
-                                                            </td>
-                                                            <td <c:if test="${loop.index % 2 == 0}">class="specialborder"</c:if>>
-                                                                <c:if test="${not empty psiMod.definition}">${psiMod.definition}</c:if>
-                                                            </td>
-                                                        </tr>
-                                                    </c:forEach>
-                                                </c:when>
-                                                <c:otherwise>
-                                                    <tr>
-                                                        <td>
-                                                            <c:if test="${not empty modifiedResidue.psiMod.displayName}"><a href="${modifiedResidue.psiMod.url}" class="" title="Show Details" rel="nofollow">${modifiedResidue.psiMod.displayName}</a></c:if>
-                                                        </td>
-                                                        <td>
-                                                            <c:if test="${not empty modifiedResidue.psiMod.definition}">${modifiedResidue.psiMod.definition}</c:if>
-                                                        </td>
-                                                    </tr>
-                                                </c:otherwise>
-                                            </c:choose>
-                                            </tbody>
-                                        </table>
-                                    </td>
+
+            <div class="fieldset-pair-container overflow300">
+
+
+                    <c:forEach var="modifiedResidue" items="${databaseObject.hasModifiedResidue}">
+                        <div class="clearfix modified-residue">
+                            <div class="favth-col-lg-2 favth-col-md-3 favth-col-sm-12 favth-col-xs-12 details-label mr-label">Name</div>
+                            <div class="favth-col-lg-10 favth-col-md-9 favth-col-sm-12 favth-col-xs-12 details-field mr-field">${modifiedResidue.displayName}</div>
+
+                            <c:if test="${modifiedResidue.schemaClass != 'FragmentReplacedModification' && modifiedResidue.schemaClass != 'FragmentDeletionModification' && modifiedResidue.schemaClass != 'FragmentInsertionModification'}">
+
+                                <c:if test="${not empty modifiedResidue.coordinate}">
+                                    <div class="favth-col-lg-2 favth-col-md-3 favth-col-sm-12 favth-col-xs-12 details-label mr-label">Coordinate</div>
+                                    <div class="favth-col-lg-10 favth-col-md-9 favth-col-sm-12 favth-col-xs-12 details-field mr-field">${modifiedResidue.coordinate}</div>
                                 </c:if>
-                            </tr>
-                        </c:forEach>
-                        </tbody>
-                    </table>
-                </div>
+
+                                <c:if test="${modifiedResidue.schemaClass == 'CrosslinkedResidue' || modifiedResidue.schemaClass == 'GroupModifiedResidue'}">
+                                    <c:if test="${not empty modifiedResidue.modification.displayName}">
+                                        <div class="favth-col-lg-2 favth-col-md-3 favth-col-sm-12 favth-col-xs-12 details-label mr-label">Modification</div>
+                                        <div class="favth-col-lg-10 favth-col-md-9 favth-col-sm-12 favth-col-xs-12 details-field mr-field">
+                                            <a href="../detail/${modifiedResidue.modification.url}" class="" title="Show Details" rel="nofollow">${modifiedResidue.modification.displayName}</a>
+                                        </div>
+                                    </c:if>
+                                </c:if>
+                            <c:choose>
+                                <c:when test="${modifiedResidue.psiMod.getClass().getSimpleName() == 'ArrayList'}">
+                                    <%--<div class="favth-col-lg-12 favth-col-md-3 favth-col-sm-12 favth-col-xs-12 details-label mr-label">PsiMod</div>--%>
+                                    <%--<c:forEach var="psiMod" items="${modifiedResidue.psiMod}" varStatus="loop">--%>
+                                            <%--<div class="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-12 details-field mr-field" style="border-top: 1px dotted #c8c8c8;">--%>
+                                                <%--<div class="favth-col-lg-4 favth-col-md-12 favth-col-sm-12 favth-col-xs-12 details-field mr-field">--%>
+                                                    <%--<c:if test="${not empty psiMod.displayName}">--%>
+                                                        <%--<a href="${psiMod.url}" class="" title="Show Details" rel="nofollow">${psiMod.displayName} just in case name is too large</a>--%>
+                                                    <%--</c:if>--%>
+                                                <%--</div>--%>
+                                                <%--<div class="favth-col-lg-8 favth-col-md-12 favth-col-sm-12 favth-col-xs-12 details-field mr-field">--%>
+                                                    <%--<c:if test="${not empty psiMod.definition}">--%>
+                                                        <%--${psiMod.definition}--%>
+                                                    <%--</c:if>--%>
+                                                <%--</div>--%>
+                                            <%--</div>--%>
+                                    <%--</c:forEach>--%>
+
+
+                                    <div class="favth-col-lg-2 favth-col-md-3 favth-col-sm-12 favth-col-xs-12 details-label mr-label">PsiMod</div>
+                                    <div class="favth-col-lg-10 favth-col-md-9 favth-col-sm-12 favth-col-xs-12 details-field mr-field">
+                                    <c:forEach var="psiMod" items="${modifiedResidue.psiMod}" varStatus="loop">
+                                        <div class="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-12 details-field mr-field mr-psi-field" style="border-top: 1px dotted #c8c8c8;">
+                                            <div class="favth-col-lg-4 favth-col-md-12 favth-col-sm-12 favth-col-xs-12 details-field mr-field  mr-psi-field">
+                                                <c:if test="${not empty psiMod.displayName}">
+                                                    <a href="${psiMod.url}" class="" title="Show Details" rel="nofollow">${psiMod.displayName}</a>
+                                                </c:if>
+                                            </div>
+                                            <div class="favth-col-lg-8 favth-col-md-12 favth-col-sm-12 favth-col-xs-12 details-field mr-field  mr-psi-field">
+                                                <c:if test="${not empty psiMod.definition}">
+                                                    ${psiMod.definition}
+                                                </c:if>
+                                            </div>
+                                        </div>
+                                    </c:forEach>
+                                    </div>
+
+                                </c:when>
+                                <c:otherwise>
+                                        <div class="favth-row favth-clearfix">
+                                            <div class="favth-col-lg-2 favth-col-md-3 favth-col-sm-12 favth-col-xs-12 details-label mr-label">PsiMod Name</div>
+                                            <div class="favth-col-lg-10 favth-col-md-12 favth-col-sm-12 favth-col-xs-12 details-field mr-field">
+                                                <c:if test="${not empty modifiedResidue.psiMod.displayName}">
+                                                    <a href="${modifiedResidue.psiMod.url}" class="" title="Show Details" rel="nofollow">${modifiedResidue.psiMod.displayName}</a>
+                                                </c:if>
+                                            </div>
+                                            <div class="favth-col-lg-2 favth-col-md-3 favth-col-sm-12 favth-col-xs-12 details-label mr-label">PsiMod Definition</div>
+                                            <div class="favth-col-lg-10 favth-col-md-12 favth-col-sm-12 favth-col-xs-12 details-field mr-field">
+                                                <c:if test="${not empty modifiedResidue.psiMod.definition}">
+                                                    ${modifiedResidue.psiMod.definition}
+                                                </c:if>
+                                            </div>
+                                        </div>
+                                </c:otherwise>
+                             </c:choose>
+
+
+
+                            </c:if>
+
+                            <c:if test="${modifiedResidue.schemaClass == 'FragmentInsertionModification'}">
+                                <c:if test="${not empty modifiedResidue.coordinate}">
+                                    <div class="favth-col-lg-2 favth-col-md-3 favth-col-sm-12 favth-col-xs-12 details-label mr-label">Coordinate</div>
+                                    <div class="favth-col-lg-10 favth-col-md-9 favth-col-sm-12 favth-col-xs-12 details-field mr-field">${modifiedResidue.coordinate}</div>
+                                </c:if>
+                            </c:if>
+
+                        </div>
+                    </c:forEach>
+
             </div>
+
+            <%--<div class="wrap"><!--overflow-->--%>
+                <%--<table>--%>
+                    <%--<thead>--%>
+                    <%--<tr>--%>
+                        <%--<th>Name</th>--%>
+                        <%--<th>Coordinate</th>--%>
+                        <%--<th>Modification</th>--%>
+                        <%--<th>PsiMod</th>--%>
+                    <%--</tr>--%>
+                    <%--</thead>--%>
+                    <%--<tbody>--%>
+                        <%--<c:forEach var="modifiedResidue" items="${databaseObject.hasModifiedResidue}">--%>
+                            <%--<tr>--%>
+                                <%--<td style="vertical-align: middle;">${modifiedResidue.displayName}</td>--%>
+                                <%--<c:if test="${modifiedResidue.schemaClass != 'FragmentReplacedModification' && modifiedResidue.schemaClass != 'FragmentDeletionModification' && modifiedResidue.schemaClass != 'FragmentInsertionModification'}">--%>
+                                    <%--<td style="vertical-align: middle; ">${modifiedResidue.coordinate}</td>--%>
+                                    <%--<c:choose>--%>
+                                        <%--&lt;%&ndash;<c:when test="${modifiedResidue.schemaClass == 'InterChainCrosslinkedResidue' || modifiedResidue.schemaClass == 'IntraChainCrosslinkedResidue' || modifiedResidue.schemaClass == 'GroupModifiedResidue'}">&ndash;%&gt;--%>
+                                        <%--<c:when test="${modifiedResidue.schemaClass == 'CrosslinkedResidue' || modifiedResidue.schemaClass == 'GroupModifiedResidue'}">--%>
+                                            <%--<td><c:if test="${not empty modifiedResidue.modification.displayName}"><a href="../detail/${modifiedResidue.modification.url}" class="" title="Show Details" rel="nofollow">${modifiedResidue.modification.displayName}</a></c:if></td>--%>
+                                        <%--</c:when>--%>
+                                        <%--<c:otherwise>--%>
+                                            <%--<td></td>--%>
+                                        <%--</c:otherwise>--%>
+                                    <%--</c:choose>--%>
+                                    <%--<td style="padding: 0; width:225px;">--%>
+                                        <%--<table border="0" class="psiModTable">--%>
+                                            <%--<tbody>--%>
+                                            <%--<c:choose>--%>
+                                                <%--<c:when test="${modifiedResidue.psiMod.getClass().getSimpleName() == 'ArrayList'}">--%>
+                                                    <%--<c:forEach var="psiMod" items="${modifiedResidue.psiMod}" varStatus="loop">--%>
+                                                        <%--<tr>--%>
+                                                            <%--<td <c:if test="${loop.index % 2 == 0}">class="specialborder"</c:if>>--%>
+                                                                <%--<c:if test="${not empty psiMod.displayName}"><a href="${psiMod.url}" class="" title="Show Details" rel="nofollow">${psiMod.displayName}</a></c:if>--%>
+                                                            <%--</td>--%>
+                                                            <%--<td <c:if test="${loop.index % 2 == 0}">class="specialborder"</c:if>>--%>
+                                                                <%--<c:if test="${not empty psiMod.definition}">${psiMod.definition}</c:if>--%>
+                                                            <%--</td>--%>
+                                                        <%--</tr>--%>
+                                                    <%--</c:forEach>--%>
+                                                <%--</c:when>--%>
+                                                <%--<c:otherwise>--%>
+                                                    <%--<tr>--%>
+                                                        <%--<td>--%>
+                                                            <%--<c:if test="${not empty modifiedResidue.psiMod.displayName}"><a href="${modifiedResidue.psiMod.url}" class="" title="Show Details" rel="nofollow">${modifiedResidue.psiMod.displayName}</a></c:if>--%>
+                                                        <%--</td>--%>
+                                                        <%--<td>--%>
+                                                            <%--<c:if test="${not empty modifiedResidue.psiMod.definition}">${modifiedResidue.psiMod.definition}</c:if>--%>
+                                                        <%--</td>--%>
+                                                    <%--</tr>--%>
+                                                <%--</c:otherwise>--%>
+                                            <%--</c:choose>--%>
+                                            <%--</tbody>--%>
+                                        <%--</table>--%>
+                                    <%--</td>--%>
+                                <%--</c:if>--%>
+                            <%--</tr>--%>
+                        <%--</c:forEach>--%>
+                    <%--</tbody>--%>
+                <%--</table>--%>
+            <%--</div>--%>
         </fieldset>
     </c:if>
 </c:if>

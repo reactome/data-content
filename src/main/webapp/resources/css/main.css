@@ -124,6 +124,11 @@ body.modal-open {
     overflow-y: auto;
 }
 
+.overflow300 {
+    max-height: 300px;
+    overflow-y: auto;
+}
+
 ul.tree,
 ul.tree ul {
     list-style: none;
@@ -285,6 +290,11 @@ ul.tree li a:visited {
 
 #fav-container div.fieldset-pair-container div {
     margin: 0 0 2px 0;
+}
+
+#fav-container div.fieldset-pair-container div[class*="mr-"]{
+    margin: 0 0 0 0;
+    max-height: none;
 }
 
 #fav-container div.fieldset-pair-container .details-label {
@@ -538,16 +548,16 @@ a.tree-highlighted-item:visited {
     border: 1px solid #ddd;
 }
 
-#fav-container .pagination ul>li>a:focus,
-#fav-container .pagination ul>li>span:focus,
-#fav-container .pagination ul>li>a:hover,
-#fav-container .pagination ul>li>span:hover {
-    float: left;
-    line-height: 20px;
-    text-decoration: none;
-    background-color: #58C3E5;
-    border: 1px solid #58C3E5;
-}
+/*#fav-container .pagination ul>li>a:focus,*/
+/*#fav-container .pagination ul>li>span:focus,*/
+/*#fav-container .pagination ul>li>a:hover,*/
+/*#fav-container .pagination ul>li>span:hover {*/
+    /*float: left;*/
+    /*line-height: 20px;*/
+    /*text-decoration: none;*/
+    /*background-color: #58C3E5;*/
+    /*border: 1px solid #58C3E5;*/
+/*}*/
 
 #fav-container .morecontent span {
     display: none;
@@ -686,15 +696,23 @@ a.tree-highlighted-item:visited {
     cursor: pointer;
 }
 
-#fav-container div.fieldset-pair-container .ca-label {
+#fav-container div.fieldset-pair-container .ca-label,
+#fav-container div.fieldset-pair-container .mr-label {
     background: #f5f5f5;
     text-align: left;
     padding-right: 0;
 }
 
-#fav-container div.fieldset-pair-container .ca-field {
+#fav-container div.fieldset-pair-container .ca-field,
+#fav-container div.fieldset-pair-container .mr-field {
     border: none;
     padding-left: 5px;
+}
+
+#fav-container div.fieldset-pair-container .modified-residue {
+    border: 1px solid #d8d8d8;
+    box-shadow: 3px 3px 2px #f1f1f1;
+    margin: 8px 10px 15px 10px;
 }
 
 /* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
@@ -706,7 +724,62 @@ a.tree-highlighted-item:visited {
 
 /* CSS Media Queries */
 
-@media only screen and (max-width:767px) {
+/*@media only screen and (max-width:767px) {*/
+    /*#fav-container div.extended-header .details-label,*/
+    /*#fav-container div.fieldset-pair-container .details-label {*/
+        /*text-align: left;*/
+    /*}*/
+
+    /*#fav-container div.extended-header .details-field,*/
+    /*#fav-container div.fieldset-pair-container .details-field {*/
+        /*text-align: left;*/
+        /*padding-left: 30px;*/
+        /*padding-bottom: 2px;*/
+        /*border-left: none;*/
+        /*word-wrap: break-word;*/
+        /*overflow: auto;*/
+    /*}*/
+    /*#contact-form textarea,*/
+    /*#contact-form input[type="text"],*/
+    /*#contact-form input[type="email"] {*/
+        /*width: 85%;*/
+    /*}*/
+/*}*/
+@media only screen and (max-width: 1024px) {
+    #contact-form textarea,
+    #contact-form input[type="text"],
+    #contact-form input[type="email"] {
+        width: 85%;
+    }
+}
+
+@media only screen and (max-width: 768px) and (orientation: portrait) {
+    .details-wrap {
+        max-height: 240px;
+        overflow-y: auto;
+        width: 99%;
+        padding-top: 10px;
+        padding-left: 4px;
+        padding-right: 14px;
+    }
+
+    #fav-container div.fieldset-pair-container .mr-field {
+        border: none;
+        padding-left: 30px;
+    }
+
+    #fav-container div.fieldset-pair-container .mr-psi-field {
+        text-align: left;
+        padding-left: 0;
+        padding-bottom: 2px;
+        border-left: none;
+        word-wrap: break-word;
+        overflow: auto;
+    }
+}
+
+@media only screen and (min-width: 426px) and (max-width: 767px) {
+
     #fav-container div.extended-header .details-label,
     #fav-container div.fieldset-pair-container .details-label {
         text-align: left;
@@ -721,25 +794,7 @@ a.tree-highlighted-item:visited {
         word-wrap: break-word;
         overflow: auto;
     }
-}
 
-@media only screen and (max-width: 768px) and (orientation: portrait) {
-    .details-wrap {
-        max-height: 240px;
-        overflow-y: auto;
-        width: 99%;
-        padding-top: 10px;
-        padding-left: 4px;
-        padding-right: 14px;
-    }
-}
-
-@media only screen and (min-width: 426px) and (max-width: 768px) and (orientation: portrait) {
-    #contact-form textarea,
-    #contact-form input[type="text"],
-    #contact-form input[type="email"] {
-        width: 85%;
-    }
 }
 
 @media only screen and (max-width: 425px) and (orientation: portrait) {
@@ -770,6 +825,15 @@ a.tree-highlighted-item:visited {
     #fav-container .collapse-all:focus {
         color: #58C3E5 !important;
         outline: none;
+    }
+
+    #fav-container div.fieldset-pair-container .mr-psi-field {
+        text-align: left;
+        padding-left: 2px;
+        padding-bottom: 2px;
+        border-left: none;
+        word-wrap: break-word;
+        overflow: auto;
     }
 
     /* Locations in the PWB Tree */
