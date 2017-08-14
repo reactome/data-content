@@ -7,7 +7,7 @@
         <h3>${entry.name}</h3>
 
         <div id="r-responsive-table" class="interactors-table">
-            <table>
+            <table class="reactome">
                 <thead>
                     <tr>
                         <th scope="col">Confidence Score</th>

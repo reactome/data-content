@@ -32,8 +32,11 @@ public class HeaderFooterCacher extends Thread {
     private static final String SEARCH_CLOSE = "<!--/SearchForm-->";
     private static final String SEARCH_REPLACE = "<jsp:include page=\"search/searchForm.jsp\"/>";
 
-    // Name of the template page in Joomls
-    private static final String TEMPLATE_PAGE = "template-page-v1";
+    private static final String SCRIPT_FOOTER_CLOSE = "</body>";
+    private static final String SCRIPT_FOOTER_REPLACE = "<script type=\"text/javascript\" src=\"/content/resources/js/data-content.js?v=3.2\"></script>\n</body>";
+
+    // Name of the template page in Joomla
+    private static final String TEMPLATE_PAGE = "template-datacontent";
 
     private static final Integer MINUTES = 15;
 
@@ -87,6 +90,7 @@ public class HeaderFooterCacher extends Thread {
             // Add search form
             rtn = getReplaced(rtn, SEARCH_OPEN, SEARCH_CLOSE, SEARCH_REPLACE);
             rtn = getReplaced(rtn, TITLE_OPEN, TITLE_CLOSE, TITLE_REPLACE);
+            rtn = getReplaced(rtn, SCRIPT_FOOTER_CLOSE, SCRIPT_FOOTER_CLOSE, SCRIPT_FOOTER_REPLACE);
 
             rtn = rtn.replace("<base href=\"" + this.server + "/" + TEMPLATE_PAGE + "\" />", "");
             rtn = rtn.replaceAll("(http|https)://", "//");
@@ -107,7 +111,7 @@ public class HeaderFooterCacher extends Thread {
         for (String line : lines) {
             html += line + "\n";
             if(isHeaderLine) {
-                if (line.contains("search-placeholder")) {
+                if (line.contains("template-placeholder")) {
                     isHeaderLine = false;
                     writeFile("header.jsp", html);
                     html = "";

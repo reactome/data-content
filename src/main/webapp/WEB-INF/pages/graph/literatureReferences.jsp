@@ -5,7 +5,7 @@
     <fieldset class="fieldset-details">
         <legend>Literature References</legend>
         <div id="r-responsive-table" class="details-wrap">
-            <table>
+            <table class="reactome">
                 <thead>
                 <tr>
                     <th scope="col" class="favth-col-md-2">PubMed ID</th>

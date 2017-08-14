@@ -8,7 +8,7 @@
         <fieldset class="fieldset-details">
             <legend>Disease</legend>
             <div id="r-responsive-table" class="details-wrap">
-                <table>
+                <table class="reactome">
                     <thead>
                         <tr>
                             <th scope="col">Name</th>

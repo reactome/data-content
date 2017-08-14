@@ -3,31 +3,6 @@ var EXPAND = "expand-all";
 var COLLAPSE = "collapse-all"; // default value for the Location in PWB
 
 jQuery(document).ready(function () {
-    jQuery('#local-searchbox').autocomplete({
-        serviceUrl: '/content/getTags',
-        minChars: 2,
-        deferRequestBy: 250,
-        paramName: "tagName",
-        delimiter: ",",
-        transformResult: function (response) {
-            return {
-                suggestions: jQuery.map(jQuery.parseJSON(response), function (item) {
-                    return {value: item};
-                })
-            };
-        },
-        onSelect: function (value, data) {
-            jQuery("#search_form").submit()
-        }
-    });
-
-    // read cookie when loading page for the first time
-    var pwb_cookie = readCookie(PWB_COOKIE);
-    // PWB Tree always collapse if cookie not set.
-    togglePwbTree(pwb_cookie == null ? COLLAPSE : pwb_cookie);
-});
-
-jQuery(document).ready(function () {
     jQuery('ul.term-list').each(function () {
         var LiN = jQuery(this).find('li').length;
         if (LiN > 6) {

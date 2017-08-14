@@ -458,12 +458,12 @@ a.tree-highlighted-item:visited {
     padding-left: 0;
 }
 
-.wrap table {
+.wrap table.reactome {
     width: 99%;
     table-layout: fixed;
 }
 
-.wrap table tr:hover *{
+.wrap table.reactome tr:hover *{
     background-color: #f9f9f9;
 }
 
@@ -888,7 +888,7 @@ a.tree-highlighted-item:visited {
         padding-right: 0.2em;
     }
 
-    #fav-container .interactors-table table td {
+    #fav-container .interactors-table table.reactome td {
         padding-left: 45%;
     }
 

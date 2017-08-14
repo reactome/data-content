@@ -5,7 +5,7 @@
     <fieldset class="fieldset-details">
         <legend>Interactors</legend>
         <div id="r-responsive-table" class="details-wrap interactors-table">
-            <table>
+            <table class="reactome">
                 <thead>
                     <tr>
                         <th scope="col">Confidence Score</th>
