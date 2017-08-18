@@ -1,5 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
+<%-- called by locationsInThePWB.jsp --%>
 <ul class="tree">
     <c:forEach var="node" items="${node.children}">
         <li>

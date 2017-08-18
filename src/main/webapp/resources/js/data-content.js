@@ -20,7 +20,6 @@ jQuery(document).ready(function() {
     var moretext = "Read more";
     var lesstext = " Show less";
 
-
     // FIXME: highlighting is not working in the summation
     jQuery('.summation').each(function() {
         var content = jQuery(this).text();
@@ -86,21 +85,23 @@ jQuery(document).ready(function () {
 });
 
 jQuery(document).ready(function () {
-    jQuery('[id*=availableSpeciesSel]').ready(function () {
+    var availableSpeciesSel = jQuery('[id*=availableSpeciesSel]');
+    availableSpeciesSel.ready(function () {
         var DEFAULT_SPECIES = 'Homo sapiens';
 
         /** Check if hash is present in the URL **/
         var hash = decodeURIComponent(window.location.hash);
         var defaulLoaded = false;
+        var tplSpecies = jQuery("div[class*=tplSpe_]");
         if (hash == "") {
-            jQuery("div[class*=tplSpe_]").each(function (index, value) {
+            tplSpecies.each(function (index, value) {
                 var item = jQuery(value).attr("class");
                 if (item == "tplSpe_" + DEFAULT_SPECIES.replace(" ", "_")) {
-                    jQuery("[id*=availableSpeciesSel]").val(DEFAULT_SPECIES.replace(" ", "_"));
+                    availableSpeciesSel.val(DEFAULT_SPECIES.replace(" ", "_"));
                     jQuery("." + item).show();
 
                     //change url
-                    if (jQuery("[id*=availableSpeciesSel]").val() != null) {
+                    if (availableSpeciesSel.val() != null) {
                         window.location.hash = "#" + encodeURIComponent(DEFAULT_SPECIES);
                     }
 
@@ -111,18 +112,19 @@ jQuery(document).ready(function () {
             });
 
             if (!defaulLoaded) {
-                jQuery("div[class*=tplSpe_]").css("display", "block");
+                tplSpecies.css("display", "block");
             }
         } else {
             hash = hash.replace("#", "").replace(" ", "_");
 
+            var tplSelected = jQuery(".tplSpe_" + hash);
             // hash has been change manually into a non-existing value. Pick the first one which is human
-            if (jQuery(".tplSpe_" + hash).val() == null) {
+            if (tplSelected.val() == null) {
 
                 jQuery("[id*=availableSpeciesSel] > option").each(function (index, value) {
                     var item = jQuery(value).attr("value");
 
-                    jQuery("[id*=availableSpeciesSel]").val(item);
+                    tplSpecies.val(item);
 
                     jQuery(".tplSpe_" + item).show();
                     window.location.hash = "#" + encodeURIComponent(item.replace("_", " "));
@@ -130,8 +132,8 @@ jQuery(document).ready(function () {
                     return false;
                 });
             } else {
-                jQuery("[id*=availableSpeciesSel]").val(hash);
-                jQuery(".tplSpe_" + hash).show();
+                tplSpecies.val(hash);
+                tplSelected.show();
             }
         }
     });
@@ -174,14 +176,15 @@ function togglePwbTree(action){
         }
     });
 
+    var pwbToggle = jQuery("#pwb_toggle");
     if (action == COLLAPSE) {
         jQuery(".fa-minus-square-o").attr("class", "fa fa-plus-square-o");
-        jQuery("#pwb_toggle").text("Expand All");
-        jQuery("#pwb_toggle").attr("class", EXPAND);
+        pwbToggle.text("Expand All");
+        pwbToggle.attr("class", EXPAND);
     } else {
         jQuery(".fa-plus-square-o").attr("class", "fa fa-minus-square-o");
-        jQuery("#pwb_toggle").text("Collapse All");
-        jQuery("#pwb_toggle").attr("class", COLLAPSE);
+        pwbToggle.text("Collapse All");
+        pwbToggle.attr("class", COLLAPSE);
     }
 }
 
@@ -208,14 +211,41 @@ function writeCookie(key, value) {
 function openSideNav() {
     jQuery("#search-filter-sidenav").css({width: "270px", left: "0" });
     jQuery(".sidenav-bg").css('display', 'block');
-    jQuery("html").addClass("modal-open");
-    jQuery("body").addClass("modal-open");
+    lockBackground()
 }
 
 /* Set the width of the side navigation to 0 */
 function closeSideNav() {
     jQuery("#search-filter-sidenav").css({width: "0", left: "" });
     jQuery(".sidenav-bg").css('display', 'none');
+    releaseBackground();
+}
+
+function openSchemaSideNav() {
+    var width="350px";
+    if (window.matchMedia('screen and (max-width: 500px)').matches) {
+        width="100%";
+    }
+    jQuery(".schema-tree-mobile").html(jQuery(".schema-tree-ph").html());
+    jQuery("#schema-sidenav").css({width: width, left: "0" });
+    jQuery(".sidenav-bg").css('display', 'block');
+    lockBackground()
+}
+
+/* Set the width of the side navigation to 0 */
+function closeSchemaSideNav() {
+    jQuery("#schema-sidenav").css({width: "0", left: "" });
+    jQuery(".sidenav-bg").css('display', 'none');
+    releaseBackground();
+}
+
+/* Lock background while scrolling in a popup or modal */
+function lockBackground() {
+    jQuery("html").addClass("modal-open");
+    jQuery("body").addClass("modal-open");
+}
+
+function releaseBackground() {
     jQuery("html").removeClass("modal-open");
     jQuery("body").removeClass("modal-open");
 }

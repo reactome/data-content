@@ -43,37 +43,45 @@ body.modal-open {
 }
 
 /** Default Margin **/
-.margin0 {
+#fav-container .margin0 {
     margin: 0;
 }
 
 /** Default Padding **/
-.padding0 {
+#fav-container .padding0 {
     padding: 0;
 }
 
-.padding0.left {
+#fav-container .padding0.left {
     padding-left: 15px;
 }
 
-.padding0.left30 {
+#fav-container .padding0.left30 {
     padding-left: 30px;
 }
 
-.padding0.right {
+#fav-container .padding0.right {
+    padding-right: 15px;
+}
+
+#fav-container .padding0.right30 {
+    padding-right: 30px;
+}
+
+#fav-container .padding0.top {
     padding-top: 15px;
 }
 
-.padding0.right30 {
+#fav-container .padding0.top30 {
     padding-top: 30px;
 }
 
-.padding0.top {
-    padding-top: 15px;
+#fav-container .padding0.bottom {
+    padding-bottom: 15px;
 }
 
-.padding0.bottom {
-    padding-bottom: 15px;
+#fav-container .padding0.bottom30 {
+    padding-bottom: 30px;
 }
 
 /*detail page list */
@@ -236,40 +244,6 @@ ul.tree li a:visited {
     margin-bottom: 5%;
 }
 
-.dataschema-tree {
-    box-shadow: 2px 2px 1px #AFAFAF;
-    width: 100%;
-    background-color: #B0C4DE;
-    margin: 9px auto;
-    border-radius: 5px 5px 0 0;
-}
-
-.dataschema-tree ul.tree li {
-    margin-right: 0;
-    padding-right: 0;
-}
-
-.dataschema-tree ul.tree li.schema-item a {
-    font-size: 12px !important;
-    color: #009;
-}
-
-.dataschema-tree ul.tree li.schema-item a:visited {
-    font-size: 12px !important;
-    color: #009;
-}
-
-.dataschema-tree ul.tree li.schema-item {
-    padding-left: 11px;
-}
-
-.dataschema-tree ul.tree ul li:last-child:before {
-    background: #B0C4DE;
-    height: auto;
-    top: 10px;
-    bottom: 0;
-}
-
 /******************/
 /* DETAILS HEADER */
 /******************/
@@ -353,9 +327,6 @@ ul.tree li a:visited {
 #fav-container .species-selector {
     margin: 10px 0;
 }
-/*#fav-container .fieldset-details table.something tr:hover {*/
-    /*background-color: #f9f9f9;*/
-/*}*/
 
 #fav-container .fieldset-details > .padding {
     padding-left: 25px;
@@ -380,7 +351,7 @@ ul.tree li a:visited {
 }
 
 a.tree-root:visited {
-    color: #1F419A;
+    color: #58C3E5;
 }
 
 .tree-highlighted-item {
@@ -392,59 +363,7 @@ a.tree-root:visited {
 }
 
 a.tree-highlighted-item:visited {
-    color: #1F419A;
-}
-
-.schema-attr-header {
-    background-color: #B0C4DE;
-    text-align: center;
-    margin: 10px 0;
-    border-radius: 5px 5px 0 0;
-    box-shadow: 2px 2px 1px #AFAFB2;
-    padding: 3px 0;
-    text-shadow: 1px 1px 1px darkgray;
-}
-
-.no-margin {
-    margin: 0;
-}
-
-.attributeBrowser {
-    margin-left: 10px;
-}
-
-.instructions {
-    margin-top: 20px;
-}
-
-.selected {
-    text-decoration: none !important;
-    background-color: aliceblue;
-    box-shadow: 1px 1px 1px #AFAFB2;
-}
-
-.node-item {
-    margin-right: 4px;
-    padding-bottom: 1px;
-    padding-left: 2px;
-    border-radius: 3px;
-}
-
-.node-item a:hover, .node-count a:hover {
-    text-decoration: underline;
-}
-
-.breadcrumbs {
-    margin: 12px 0 -15px 2px;
-}
-
-.breadcrumbs a, .breadcrumbs a:visited{
-    color: #1F419A;
-}
-
-.own {
-    background-color: #F5DEB3;
-    padding: 1px 1px 1px 2px;
+    color: #58C3E5;
 }
 
 .wrap {
@@ -465,18 +384,6 @@ a.tree-highlighted-item:visited {
 
 .wrap table.reactome tr:hover *{
     background-color: #f9f9f9;
-}
-
-.declared {
-    background-color: #F5DEB3;
-}
-
-.even {
-    background-color: #f4faff;
-}
-
-.odd {
-    background-color: #ffffff;
 }
 
 .details-wrap {
@@ -532,11 +439,8 @@ a.tree-highlighted-item:visited {
 
 #fav-container .pagination ul > .active > a,
 #fav-container .pagination ul > .active > span {
-    background: #eeeeee;
-    background: -moz-linear-gradient(top, #eeeeee 0%, #cccccc 100%);
-    background: -webkit-linear-gradient(top, #eeeeee 0%,#cccccc 100%);
-    background: linear-gradient(to bottom, #eeeeee 0%,#cccccc 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', endColorstr='#cccccc',GradientType=0 );
+    background: #58C3E5;
+    color:white;
 }
 
 #fav-container .pagination ul>li>a,
@@ -723,28 +627,6 @@ a.tree-highlighted-item:visited {
 /******/
 
 /* CSS Media Queries */
-
-/*@media only screen and (max-width:767px) {*/
-    /*#fav-container div.extended-header .details-label,*/
-    /*#fav-container div.fieldset-pair-container .details-label {*/
-        /*text-align: left;*/
-    /*}*/
-
-    /*#fav-container div.extended-header .details-field,*/
-    /*#fav-container div.fieldset-pair-container .details-field {*/
-        /*text-align: left;*/
-        /*padding-left: 30px;*/
-        /*padding-bottom: 2px;*/
-        /*border-left: none;*/
-        /*word-wrap: break-word;*/
-        /*overflow: auto;*/
-    /*}*/
-    /*#contact-form textarea,*/
-    /*#contact-form input[type="text"],*/
-    /*#contact-form input[type="email"] {*/
-        /*width: 85%;*/
-    /*}*/
-/*}*/
 @media only screen and (max-width: 1024px) {
     #contact-form textarea,
     #contact-form input[type="text"],
@@ -797,7 +679,22 @@ a.tree-highlighted-item:visited {
 
 }
 
-@media only screen and (max-width: 425px) and (orientation: portrait) {
+@media only screen and (max-width: 425px) {
+    #fav-container div.extended-header .details-label,
+    #fav-container div.fieldset-pair-container .details-label {
+        text-align: left;
+    }
+
+    #fav-container div.extended-header .details-field,
+    #fav-container div.fieldset-pair-container .details-field {
+        text-align: left;
+        padding-left: 30px;
+        padding-bottom: 2px;
+        border-left: none;
+        word-wrap: break-word;
+        overflow: auto;
+    }
+
     #fav-container .fieldset-details legend {
         font-size: 12px;
         margin-left: 10px;
@@ -895,9 +792,14 @@ a.tree-highlighted-item:visited {
     #fav-container .advanced-search textarea {
         height: 150px;
     }
+
+    input#mod-search-searchword,
+    input#local-searchbox {
+        width: 85%;
+    }
 }
 
-@media screen and (max-width: 320px) and (orientation: portrait) {
+@media screen and (max-width: 320px) {
     #fav-container div#search-headers h2 {
         font-size: 22px;
     }
@@ -915,5 +817,10 @@ a.tree-highlighted-item:visited {
     #fav-container div#search-results h3 span {
         font-weight: 100;
         font-size: 13px;
+    }
+
+    input#mod-search-searchword,
+    input#local-searchbox {
+        width: 75%;
     }
 }

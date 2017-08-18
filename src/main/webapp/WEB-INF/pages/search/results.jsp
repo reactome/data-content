@@ -111,6 +111,8 @@
                     </div>
                 </c:forEach>
             </div>
+
+            <c:if test="${maxpage>1}">
             <div id="pagination" class="pagination">
                 <ul class="pagination-list">
                 <c:choose>
@@ -160,6 +162,7 @@
                 </c:choose>
                 </ul>
             </div>
+            </c:if>
         </c:when>
         <c:otherwise>
             <p class="alert">Sorry we could not find any entry matching "${q}" with the currently selected filters</p>

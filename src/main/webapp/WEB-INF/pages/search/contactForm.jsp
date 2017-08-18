@@ -103,6 +103,7 @@
                 jQuery(".mail-required").removeClass("favth-has-error");
 
                 jQuery('#send').prop("disabled", true);
+                var msg = jQuery("#msg");
                 var formData = jQuery("#contact-form");
 
                 jQuery.ajax({
@@ -112,13 +113,13 @@
                     success: function (data, textStatus, jqXHR) {
                         formData.remove();
 
-                        jQuery("#msg").replaceWith("<p id='msg'><h5>Thank you for contacting us.&nbsp;We will get back to you shortly.</h5></p>");
-                        jQuery("#msg").addClass("alert alert-info");
+                        msg.replaceWith("<p id='msg'><h5>Thank you for contacting us.&nbsp;We will get back to you shortly.</h5></p>")
+                        msg.addClass("alert alert-info");
                     },
                     error: function (jqXHR, textStatus, errorThrown) {
                         jQuery('#send').prop("disabled", false);
-                        jQuery("#msg").replaceWith("<p id='msg'>Could not send your email. Try again or Please email us at <a href='mailto:help@reactome.org'>help@reactome.org</a></p>");
-                        jQuery("#msg").addClass("alert alert-danger");
+                        msg.replaceWith("<p id='msg'>Could not send your email. Try again or please email us at <a href='mailto:help@reactome.org'>help@reactome.org</a></p>");
+                        msg.addClass("alert alert-danger");
                     }
                 });
             }
