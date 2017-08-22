@@ -1,7 +1,10 @@
 package org.reactome.server.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.lang.StringUtils;
 import org.reactome.server.graph.domain.model.*;
+import org.reactome.server.graph.domain.schema.SchemaDataSet;
 import org.reactome.server.graph.service.*;
 import org.reactome.server.graph.service.helper.ContentDetails;
 import org.reactome.server.graph.service.helper.PathwayBrowserNode;
@@ -227,6 +230,7 @@ class GraphController {
                 // extras
                 model.addAttribute("flg", getReferenceEntityIdentifier(databaseObject));
                 model.addAttribute("relatedSpecies", getRelatedSpecies(databaseObject));
+                model.addAttribute("jsonLd", eventDiscovery(contentDetails.getDatabaseObject()));
 
                 infoLogger.info("DatabaseObject for id: {} was {}", id, "found");
                 return "graph/detail";
@@ -387,6 +391,19 @@ class GraphController {
             return  (List<Species>) databaseObject.getClass().getMethod("getRelatedSpecies").invoke(databaseObject);
         } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e){
             // nothing here
+        }
+        return null;
+    }
+
+    public String eventDiscovery(DatabaseObject databaseObject) {
+        if(databaseObject instanceof Event) {
+            SchemaDataSet aux = new SchemaDataSet((Event) databaseObject, generalService.getDBVersion());
+            try {
+                ObjectMapper objectMapper = new ObjectMapper();
+                return objectMapper.writeValueAsString(aux);
+            } catch (JsonProcessingException e) {
+                //Nothing here
+            }
         }
         return null;
     }

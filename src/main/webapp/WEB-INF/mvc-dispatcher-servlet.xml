@@ -51,11 +51,4 @@
     <bean id="interactionService" class="org.reactome.server.interactors.service.InteractionService">
         <constructor-arg name="database" ref="interactorsDB"/>
     </bean>
-
-    <!-- Disabling the LazyLoading feature -->
-    <bean class="org.reactome.server.graph.aop.LazyFetchAspect" factory-method="aspectOf">
-        <!--suppress SpringModelInspection -->
-        <property name="enableAOP" value="false"/>
-    </bean>
-
 </beans>

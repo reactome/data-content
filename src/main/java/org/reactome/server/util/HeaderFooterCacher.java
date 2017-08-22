@@ -32,6 +32,9 @@ public class HeaderFooterCacher extends Thread {
     private static final String SEARCH_CLOSE = "<!--/SearchForm-->";
     private static final String SEARCH_REPLACE = "<jsp:include page=\"search/searchForm.jsp\"/>";
 
+    private static final String HEADER_CLOSE = "</head>";
+    private static final String HEADER_CLOSE_REPLACE = "<jsp:include page=\"graph/json-ld.jsp\"/>\n</head>";
+
     private static final Integer MINUTES = 15;
 
     private final String server;
@@ -82,6 +85,7 @@ public class HeaderFooterCacher extends Thread {
             String rtn = IOUtils.toString(url.openConnection().getInputStream());
             rtn = getReplaced(rtn, TITLE_OPEM, TITLE_CLOSE, TITLE_REPLACE);
             rtn = getReplaced(rtn, SEARCH_OPEN, SEARCH_CLOSE, SEARCH_REPLACE);
+            rtn = getReplaced(rtn, HEADER_CLOSE, HEADER_CLOSE, HEADER_CLOSE_REPLACE);
             rtn = rtn.replaceAll("(http|https)://", "//");
             return  rtn;
         } catch (IOException e) {
