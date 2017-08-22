@@ -38,6 +38,9 @@ public class HeaderFooterCacher extends Thread {
     // Name of the template page in Joomla
     private static final String TEMPLATE_PAGE = "template-datacontent";
 
+    private static final String HEADER_CLOSE = "</head>";
+    private static final String HEADER_CLOSE_REPLACE = "<jsp:include page=\"graph/json-ld.jsp\"/>\n</head>";
+
     private static final Integer MINUTES = 15;
 
     private final String server;
@@ -93,6 +96,7 @@ public class HeaderFooterCacher extends Thread {
             rtn = getReplaced(rtn, SCRIPT_FOOTER_CLOSE, SCRIPT_FOOTER_CLOSE, SCRIPT_FOOTER_REPLACE);
 
             rtn = rtn.replace("<base href=\"" + this.server + "/" + TEMPLATE_PAGE + "\" />", "");
+            rtn = getReplaced(rtn, HEADER_CLOSE, HEADER_CLOSE, HEADER_CLOSE_REPLACE);
             rtn = rtn.replaceAll("(http|https)://", "//");
 
             rtn = rtn.replaceAll("favth-content-block", "");

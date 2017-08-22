@@ -32,9 +32,9 @@
 
     <properties>
         <deploymentPath>/</deploymentPath>
-        <graph.core>1.0.6</graph.core>
-        <reactome.search.core>1.0.1-SNAPSHOT</reactome.search.core>
-        <interactors.core>1.0.8-SNAPSHOT</interactors.core>
+        <graph.core>1.0.8</graph.core>
+        <reactome.search.core>1.0.1</reactome.search.core>
+        <interactors.core>1.0.8</interactors.core>
         <spring.version>4.2.4.RELEASE</spring.version>
         <javax.servlet.version>4.0.0-b01</javax.servlet.version>
         <jackson.version>2.7.3</jackson.version>
