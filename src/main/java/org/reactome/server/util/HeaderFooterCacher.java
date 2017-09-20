@@ -33,6 +33,13 @@ public class HeaderFooterCacher extends Thread {
     private static final String TITLE_CLOSE = "</title>";
     private static final String TITLE_REPLACE = "<title>Reactome | ${title}</title>";
 
+    private static final String SEARCH_OPEN = "<!--SearchForm-->";
+    private static final String SEARCH_CLOSE = "<!--/SearchForm-->";
+    private static final String SEARCH_REPLACE = "<jsp:include page=\"search/searchForm.jsp\"/>";
+
+    private static final String SCRIPT_FOOTER_CLOSE = "</body>";
+    private static final String SCRIPT_FOOTER_REPLACE = "<script type=\"text/javascript\" src=\"/content/resources/js/data-content.js?v=3.2\"></script>\n</body>";
+
     private static final String HEADER_CLOSE = "</head>";
     private static final String HEADER_CLOSE_REPLACE = "<jsp:include page=\"graph/json-ld.jsp\"/>\n</head>";
 
@@ -78,7 +85,7 @@ public class HeaderFooterCacher extends Thread {
             FileOutputStream out = new FileOutputStream(file);
             out.write(content.getBytes());
             out.close();
-            logger.debug(file + " updated succesfully");
+            logger.debug(file + " updated successfully");
         } catch (NullPointerException | IOException e) {
             logger.error("Error updating " + fileName, e);
         }
@@ -89,7 +96,11 @@ public class HeaderFooterCacher extends Thread {
             URL url = new URL(this.server + TEMPLATE_PAGE);
             String rtn = IOUtils.toString(url.openConnection().getInputStream());
 
+            // Add search form
+            rtn = getReplaced(rtn, SEARCH_OPEN, SEARCH_CLOSE, SEARCH_REPLACE);
             rtn = getReplaced(rtn, TITLE_OPEN, TITLE_CLOSE, TITLE_REPLACE);
+            rtn = getReplaced(rtn, SCRIPT_FOOTER_CLOSE, SCRIPT_FOOTER_CLOSE, SCRIPT_FOOTER_REPLACE);
+
             rtn = getReplaced(rtn, HEADER_CLOSE, HEADER_CLOSE, HEADER_CLOSE_REPLACE);
 
             rtn = rtn.replaceFirst("<base.*/>", "");
