@@ -786,7 +786,8 @@ a.tree-highlighted-item:visited {
     }
 
     #fav-container .interactors-table table.reactome td {
-        padding-left: 45%;
+        padding-left: 50%;
+        font-size: 12px;
     }
 
     #fav-container .advanced-search textarea {
