@@ -1,6 +1,8 @@
 package org.reactome.server.util;
 
 import org.apache.commons.io.IOUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -24,6 +26,8 @@ import java.net.URL;
  */
 @Component
 public class HeaderFooterCacher extends Thread {
+    private static final Logger logger = LoggerFactory.getLogger("templateLogger");
+
     private static final String TITLE_OPEM = "<title>";
     private static final String TITLE_CLOSE = "</title>";
     private static final String TITLE_REPLACE = "<title>Reactome | ${title}</title>";
@@ -54,7 +58,7 @@ public class HeaderFooterCacher extends Thread {
             try {
                 Thread.sleep(1000 * 60 * MINUTES);
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                logger.warn("The header/footer updater has been stop for the data-content");
             }
         }
     }
@@ -75,7 +79,8 @@ public class HeaderFooterCacher extends Thread {
             out.write(content.getBytes());
             out.close();
         } catch (NullPointerException | IOException e){
-            e.printStackTrace();
+            logger.error(e.getMessage());
+            interrupt();
         }
     }
 
@@ -89,7 +94,7 @@ public class HeaderFooterCacher extends Thread {
             rtn = rtn.replaceAll("(http|https)://", "//");
             return  rtn;
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
             return String.format("<span style='color:red'>%s</span>", e.getMessage());
         }
     }
@@ -111,7 +116,7 @@ public class HeaderFooterCacher extends Thread {
             rtn = rtn.replaceAll("(http|https)://", "//");
             return rtn;
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
             return String.format("<span style='color:red'>%s</span>", e.getMessage());
         }
     }
