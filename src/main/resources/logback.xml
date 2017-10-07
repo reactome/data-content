@@ -7,22 +7,6 @@
         </encoder>
     </appender>
 
-    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>${logging.dir}/content.log</file>
-        <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
-            <fileNamePattern>${logging.dir}/content-%i-log.zip</fileNamePattern>
-            <minIndex>1</minIndex>
-            <maxIndex>3</maxIndex>
-        </rollingPolicy>
-        <triggeringPolicy
-                class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
-            <maxFileSize>10MB</maxFileSize>
-        </triggeringPolicy>
-        <encoder>
-            <pattern>%d %-5level [%thread] %logger{0}: %msg%n</pattern>
-        </encoder>
-    </appender>
-
     <appender name="EMAIL" class="org.reactome.server.util.ScheduledSMTPAppender">
 
         <filter class="ch.qos.logback.classic.filter.LevelFilter">
@@ -44,19 +28,6 @@
         <asynchronousSending>false</asynchronousSending>
     </appender>
 
-    <appender name="DB" class="ch.qos.logback.classic.db.DBAppender">
-        <connectionSource class="ch.qos.logback.core.db.DriverManagerConnectionSource">
-            <driverClass>org.sqlite.JDBC</driverClass>
-            <url>jdbc:sqlite:${logging.database}</url>
-        </connectionSource>
-    </appender>
-
-    <!--Async appender, will add 10 ms per request if not used-->
-    <appender name="ASYNC" class="ch.qos.logback.classic.AsyncAppender">
-        <appender-ref ref="DB"/>
-        <includeCallerData>true</includeCallerData>
-    </appender>
-
     <logger name="org.neo4j" level="ERROR"/>
     <!--
         Leave it as an error then we ignore the warning message Neo4jPersistentProperty: No identity field found for class of type X
@@ -65,18 +36,12 @@
     <logger name="org.springframework" level="ERROR"/>
     <logger name="org.reflections" level="WARN"/>
 
-    <logger name="infoLogger" level="INFO">
-        <appender-ref ref="ASYNC"/>
-    </logger>
-
     <logger name="errorLogger" level="WARN">
-        <appender-ref ref="FILE"/>
         <appender-ref ref="EMAIL"/>
         <appender-ref ref="STDOUT"/>
     </logger>
 
-    <root level="INFO">
-        <appender-ref ref="FILE"/>
+    <root level="${logging.level}">
         <appender-ref ref="STDOUT"/>
     </root>
 </configuration>
