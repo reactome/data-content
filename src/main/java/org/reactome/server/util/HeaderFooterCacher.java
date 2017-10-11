@@ -52,13 +52,14 @@ public class HeaderFooterCacher extends Thread {
     @Override
     public void run() {
         //noinspection InfiniteLoopStatement
-        while (true) {
+        while (isAlive()) {
             writeFile("header.jsp", getHeader());
             writeFile("footer.jsp", getFooter());
             try {
                 Thread.sleep(1000 * 60 * MINUTES);
             } catch (InterruptedException e) {
                 logger.warn("The header/footer updater has been stop for the data-content");
+                interrupt();
             }
         }
     }
