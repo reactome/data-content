@@ -10,7 +10,7 @@ body.modal-open {
 }
 
 .more {
-    color: #58C3E5;
+    color: #2F9EC2;
     cursor: pointer;
 }
 
@@ -206,7 +206,7 @@ ul.tree li a:visited {
 /* DETAILS HEADER */
 /******************/
 #fav-container h3.details-title {
-    border-bottom: 2px solid #58C3E5;
+    border-bottom: 2px solid #2F9EC2;
     margin-top: 15px;
     padding-bottom: 1px;
     word-wrap: break-word;
@@ -258,7 +258,7 @@ ul.tree li a:visited {
 }
 
 #fav-container div.fieldset-pair-container .details-field {
-    border-left: 1px solid #58C3E5;
+    border-left: 1px solid #2F9EC2;
 }
 
 /* END START DETAILS HEADER */
@@ -273,7 +273,7 @@ ul.tree li a:visited {
 }
 
 #fav-container .fieldset-details legend {
-    /*color: #58C3E5;*/
+    /*color: #2F9EC2;*/
     font-size: 18px;
     margin-left: 15px;
     margin-bottom: 5px;
@@ -305,11 +305,11 @@ ul.tree li a:visited {
 }
 
 .tree-root {
-    color: #58C3E5;
+    color: #2F9EC2;
 }
 
 a.tree-root:visited {
-    color: #58C3E5;
+    color: #2F9EC2;
 }
 
 .tree-highlighted-item {
@@ -321,7 +321,7 @@ a.tree-root:visited {
 }
 
 a.tree-highlighted-item:visited {
-    color: #58C3E5;
+    color: #2F9EC2;
 }
 
 .wrap {
@@ -372,13 +372,13 @@ a.tree-highlighted-item:visited {
 }
 
 #fav-container div#search-results h3 a {
-    color: #58C3E5;
+    color: #2F9EC2;
     border-bottom: 1px dotted lightgray;
 }
 
 #fav-container div#search-results h3 a:hover,
 #fav-container div#search-results h3 a:focus{
-    border-bottom: 1px solid #58C3E5;
+    border-bottom: 1px solid #2F9EC2;
 }
 
 #fav-container div#search-headers div{
@@ -387,17 +387,17 @@ a.tree-highlighted-item:visited {
 
 #fav-container div#search-headers h2  {
     margin-top: 5px;
-    color: #58c3e5;
+    color: #2F9EC2;
 }
 
 #fav-container div#search-headers h2 span.searchterm  {
-    background-color: #58C3E5;
+    background-color: #2F9EC2;
     color: #FFF;
 }
 
 #fav-container .pagination ul > .active > a,
 #fav-container .pagination ul > .active > span {
-    background: #58C3E5;
+    background: #2F9EC2;
     color:white;
 }
 
@@ -417,8 +417,8 @@ a.tree-highlighted-item:visited {
     /*float: left;*/
     /*line-height: 20px;*/
     /*text-decoration: none;*/
-    /*background-color: #58C3E5;*/
-    /*border: 1px solid #58C3E5;*/
+    /*background-color: #2F9EC2;*/
+    /*border: 1px solid #2F9EC2;*/
 /*}*/
 
 #fav-container .morecontent span {
@@ -429,7 +429,7 @@ a.tree-highlighted-item:visited {
 #fav-container .morelink:focus,
 #fav-container .morelink:hover{
     display: inline;
-    color: #58C3E5;
+    color: #2F9EC2;
 }
 
 #fav-container .filter-wrapper {
@@ -471,7 +471,7 @@ a.tree-highlighted-item:visited {
 #fav-container h4 a,
 #fav-container h5 a,
 #fav-container h6 a {
-    color: #58C3E5;
+    color: #2F9EC2;
     font-weight: bold;
 }
 
@@ -678,7 +678,7 @@ a.tree-highlighted-item:visited {
     #fav-container .expand-all:focus,
     #fav-container .collapse-all:hover,
     #fav-container .collapse-all:focus {
-        color: #58C3E5 !important;
+        color: #2F9EC2 !important;
         outline: none;
     }
 
