@@ -47,18 +47,17 @@
         <asynchronousSending>false</asynchronousSending>
     </appender>
 
-    <logger name="org.neo4j" level="ERROR" /> <!-- Remove neo4j info logging. It prints user credentials -->
-    <logger name="org.springframework" level="ERROR" />
-    <logger name="org.reflections" level="WARN" />
-    <logger name="springfox.documentation" level="WARN" />
+    <logger name="org.neo4j" level="ERROR"/>
+    <logger name="org.springframework" level="ERROR"/>
+    <logger name="org.reflections" level="WARN"/>
+
+    <logger name="threadLogger" level="${logging.level}" additivity="false">
+        <appender-ref ref="INFO_STDOUT"/>
+    </logger>
 
     <logger name="errorLogger" level="WARN">
         <appender-ref ref="EMAIL"/>
         <appender-ref ref="STDOUT"/>
-    </logger>
-
-    <logger name="threadLogger" level="${logging.level}" additivity="false">
-        <appender-ref ref="INFO_STDOUT"/>
     </logger>
 
     <!--Root logger will log all messages to file that are not caught by other loggers-->
