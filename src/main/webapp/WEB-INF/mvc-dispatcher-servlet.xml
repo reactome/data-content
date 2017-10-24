@@ -38,7 +38,7 @@
     </bean>
 
     <!-- Configuration for the Interactors-Core components -->
-    <bean id="interactorsDB" class="org.reactome.server.interactors.database.InteractorsDatabase">
+    <bean id="interactorsDB" class="org.reactome.server.interactors.database.InteractorsDatabase" destroy-method="closeConnection">
         <constructor-arg name="fileName" value="${interactors.static.db}"/>
     </bean>
 
