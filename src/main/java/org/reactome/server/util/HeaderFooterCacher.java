@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
+import javax.annotation.PreDestroy;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
@@ -145,6 +146,7 @@ public class HeaderFooterCacher extends Thread {
         }
     }
 
+    @PreDestroy
     @Override
     public void interrupt() {
         active = false;
