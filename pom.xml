@@ -5,7 +5,7 @@
     <artifactId>data-content</artifactId>
 
     <packaging>war</packaging>
-    <version>1.0.0</version>
+    <version>2.0.0</version>
     <name>content</name>
 
     <description>
