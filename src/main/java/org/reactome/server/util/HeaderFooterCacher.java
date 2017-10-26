@@ -9,9 +9,19 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
 import javax.annotation.PreDestroy;
+import javax.net.ssl.*;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLConnection;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
+import java.security.Security;
+import java.security.cert.CertificateException;
+import java.security.cert.X509Certificate;
 
 /**
  * Generates the header and the footer every MINUTES defined below.
@@ -101,8 +111,7 @@ public class HeaderFooterCacher extends Thread {
     private String getTemplate() {
         String templateURL = this.server + TEMPLATE_PAGE;
         try {
-            URL url = new URL(templateURL);
-            String rtn = IOUtils.toString(url.openConnection().getInputStream());
+            String rtn = IOUtils.toString(getTemplateInputStream(templateURL));
 
             // Add search form
             rtn = getReplaced(rtn, SEARCH_OPEN, SEARCH_CLOSE, SEARCH_REPLACE);
@@ -144,6 +153,54 @@ public class HeaderFooterCacher extends Thread {
         } catch (StringIndexOutOfBoundsException e) {
             return target;
         }
+    }
+
+    private InputStream getTemplateInputStream(String url){
+        try {
+            HttpURLConnection conn;
+            URL aux = new URL(url);
+            if(aux.getProtocol().contains("https")){
+                doTrustToCertificates(); //accepting the certificate by default
+                conn = (HttpsURLConnection) aux.openConnection();
+                conn.setInstanceFollowRedirects(true);  //you still need to handle redirect manully.
+                HttpURLConnection.setFollowRedirects(true);
+            }else{
+                URLConnection tmpConn = aux.openConnection();
+                conn = (HttpURLConnection) tmpConn;
+            }
+            return conn.getInputStream();
+        } catch (IOException | NoSuchAlgorithmException | KeyManagementException e) {
+            interrupt();
+            throw new RuntimeException();
+        }
+    }
+
+    // trusting all certificate
+    @SuppressWarnings("Duplicates")
+    private void doTrustToCertificates() throws NoSuchAlgorithmException, KeyManagementException {
+        Security.addProvider(new com.sun.net.ssl.internal.ssl.Provider());
+        TrustManager[] trustAllCerts = new TrustManager[]{
+                new X509TrustManager() {
+                    public X509Certificate[] getAcceptedIssuers() {
+                        return null;
+                    }
+
+                    public void checkServerTrusted(X509Certificate[] certs, String authType) throws CertificateException {}
+
+                    public void checkClientTrusted(X509Certificate[] certs, String authType) throws CertificateException {}
+                }
+        };
+
+        SSLContext sc = SSLContext.getInstance("SSL");
+        sc.init(null, trustAllCerts, new SecureRandom());
+        HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
+        HostnameVerifier hv = (urlHostName, session) -> {
+            if (!urlHostName.equalsIgnoreCase(session.getPeerHost())) {
+                logger.warn("Warning: URL host '" + urlHostName + "' is different to SSLSession host '" + session.getPeerHost() + "'.");
+            }
+            return true;
+        };
+        HttpsURLConnection.setDefaultHostnameVerifier(hv);
     }
 
     @PreDestroy
