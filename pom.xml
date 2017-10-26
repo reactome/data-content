@@ -198,7 +198,7 @@
                 <version>2.2</version>
                 <configuration>
                     <path>${deploymentPath}</path>
-                    <port>8080</port>
+                    <port>8484</port>
                 </configuration>
             </plugin>
             <plugin>
