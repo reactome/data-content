@@ -13,7 +13,6 @@
             <a href="${pageContext.request.contextPath}/schema/${breadcrumbSchemaClass}">${breadcrumbSchemaClass}</a> &gt;
             <a href="${pageContext.request.contextPath}/schema/objects/${breadcrumbSchemaClass}">Entries</a>
         </div>
-
     </div>
 
     <h3 class="details-title padding0 top">

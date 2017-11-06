@@ -4,7 +4,7 @@
 <c:if test="${clazz != 'Regulation'}">
 
      <c:if test="${not empty databaseObject.disease}">
-     <div class="clearfix">
+     <div class="favth-clearfix">
         <fieldset class="fieldset-details">
             <legend>Disease</legend>
             <div id="r-responsive-table" class="details-wrap">
@@ -36,22 +36,24 @@
     </c:if>
 
     <c:if test="${not empty crossReferences}">
-        <div class="clearfix">
-        <fieldset class="fieldset-details">
-            <legend>Cross References</legend>
-            <c:forEach var="crossReference" items="${crossReferences}">
-            <div class="fieldset-pair-container">
-                <div class="favth-col-lg-2 favth-col-md-2 favth-col-sm-3 favth-col-xs-12 details-label">${crossReference.key}</div>
-                <div class="favth-col-lg-10 favth-col-md-10 favth-col-sm-9 favth-col-xs-12 details-field">
-                    <div>
-                    <c:forEach var="value" items="${crossReference.value}" varStatus="loop">
-                        <a href="${value.url}" title="show ${value.displayName}" rel="nofollow">${value.identifier}</a><c:if test="${!loop.last}">, </c:if>
-                    </c:forEach>
+        <div class="favth-clearfix">
+            <fieldset class="fieldset-details">
+                <legend>Cross References</legend>
+                <c:forEach var="crossReference" items="${crossReferences}">
+                    <div class="fieldset-pair-container">
+                        <div class="favth-clearfix">
+                            <div class="favth-col-lg-2 favth-col-md-2 favth-col-sm-3 favth-col-xs-12 details-label">${crossReference.key}</div>
+                            <div class="favth-col-lg-10 favth-col-md-10 favth-col-sm-9 favth-col-xs-12 details-field">
+                                <div>
+                                <c:forEach var="value" items="${crossReference.value}" varStatus="loop">
+                                    <a href="${value.url}" title="show ${value.displayName}" rel="nofollow">${value.identifier}</a><c:if test="${!loop.last}">, </c:if>
+                                </c:forEach>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </div>
-            </c:forEach>
-        </fieldset>
+                </c:forEach>
+            </fieldset>
         </div>
     </c:if>
 
