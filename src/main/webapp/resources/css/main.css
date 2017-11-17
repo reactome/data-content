@@ -577,6 +577,10 @@ a.tree-highlighted-item:visited {
     margin: 8px 10px 15px 10px;
 }
 
+.ehld {
+    height: 300px;
+}
+
 /* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
 @media screen and (max-height: 450px) {
     #fav-container .sidenav {padding-top: 15px;}
@@ -755,6 +759,10 @@ a.tree-highlighted-item:visited {
     input#mod-search-searchword,
     input#local-searchbox {
         width: 85%;
+    }
+
+    img.ehld {
+        height: auto;
     }
 }
 

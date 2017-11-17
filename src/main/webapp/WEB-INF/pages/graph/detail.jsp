@@ -9,6 +9,17 @@
             <c:import url="locationsInThePWB.jsp"/>
         </c:if>
 
+        <c:if test="${hasEHLD}">
+            <fieldset class="fieldset-details">
+                <legend>Diagram preview</legend>
+                <div class="text-center">
+                    <a href="/PathwayBrowser/#/${databaseObject.stId}">
+                        <img src="/download/current/ehld/${databaseObject.stId}.svg" alt="${databaseObject.displayName}" class="ehld">
+                    </a>
+                </div>
+            </fieldset>
+        </c:if>
+
         <c:if test="${not empty databaseObject.summation}">
             <fieldset class="fieldset-details">
                 <legend>Summation</legend>

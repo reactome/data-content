@@ -2,6 +2,7 @@ package org.reactome.server.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.reactome.server.graph.domain.model.*;
 import org.reactome.server.graph.domain.schema.SchemaDataSet;
@@ -24,6 +25,7 @@ import org.reactome.server.util.WebUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,8 +34,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.nio.charset.Charset;
 import java.sql.SQLException;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -68,17 +73,26 @@ class GraphController {
 
     private Map<Long, InteractorResource> interactorResourceMap = new HashMap<>();
 
+    private final Set<String> ehlds = new HashSet<>();
+
     /**
      * These resources are the same all the time.
      * In order to speed up the query result and less memory usage, I decided to keep the resource out of the query
      * and keep a cache with them. Thus we avoid having the same information for all results.
      */
     @Autowired
-    public GraphController(InteractorResourceService interactorResourceService) {
+    public GraphController(InteractorResourceService interactorResourceService,
+                           @Value("${svg.summary.file}") String svgSummaryFile) {
         try {
             interactorResourceMap = interactorResourceService.getAllMappedById();
         } catch (SQLException e) {
             errorLogger.error("An error has occurred while querying InteractorResource: " + e.getMessage(), e);
+        }
+
+        try {
+            ehlds.addAll(IOUtils.readLines(new FileInputStream(svgSummaryFile), Charset.defaultCharset()));
+        } catch (IOException e) {
+            errorLogger.error("EHLD summary file cannot be loaded: " + e.getMessage(), e);
         }
     }
 
@@ -215,6 +229,7 @@ class GraphController {
                 model.addAttribute("otherFormsOfThisMolecule", contentDetails.getOtherFormsOfThisMolecule());
                 model.addAttribute("orthologousEvents", getSortedOrthologousEvent(databaseObject));
                 model.addAttribute("inferredTo", getSortedInferredTo(databaseObject));
+                model.addAttribute("hasEHLD", ehlds.contains(databaseObject.getStId()));
 
                 List<DatabaseIdentifier> crossReferences = new ArrayList<>();
                 crossReferences.addAll(getCrossReference(databaseObject));
