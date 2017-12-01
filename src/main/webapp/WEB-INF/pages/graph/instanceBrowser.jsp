@@ -35,6 +35,7 @@
                         <c:choose>
                             <c:when test="${entry.value.getClass().getSimpleName() == 'String'        ||
                                                 entry.value.getClass().getSimpleName() == 'Double'    ||
+                                                entry.value.getClass().getSimpleName() == 'Float'     ||
                                                 entry.value.getClass().getSimpleName() == 'Long'      ||
                                                 entry.value.getClass().getSimpleName() == 'Integer'   ||
                                                 entry.value.getClass().getSimpleName() == 'Date'      ||
@@ -65,6 +66,7 @@
                                             <c:choose>
                                                 <c:when test="${list.getClass().getSimpleName() == 'String'       ||
                                                                     list.getClass().getSimpleName() == 'Double'   ||
+                                                                    list.getClass().getSimpleName() == 'Float'    ||
                                                                     list.getClass().getSimpleName() == 'Long'     ||
                                                                     list.getClass().getSimpleName() == 'Integer'  ||
                                                                     list.getClass().getSimpleName() == 'Date'     ||
