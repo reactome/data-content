@@ -33,10 +33,11 @@
                     <td class="favth-col-lg-2 favth-col-md-2 favth-col-sm-2">${entry.key}</td>
                     <td class="favth-col-lg-10 favth-col-md-10 favth-col-sm-10">
                         <c:choose>
-                            <c:when test="${entry.value.getClass().getSimpleName() == 'String' ||
-                                                entry.value.getClass().getSimpleName() == 'Long'   ||
+                            <c:when test="${entry.value.getClass().getSimpleName() == 'String'        ||
+                                                entry.value.getClass().getSimpleName() == 'Double'    ||
+                                                entry.value.getClass().getSimpleName() == 'Long'      ||
                                                 entry.value.getClass().getSimpleName() == 'Integer'   ||
-                                                entry.value.getClass().getSimpleName() == 'Date'   ||
+                                                entry.value.getClass().getSimpleName() == 'Date'      ||
                                                 entry.value.getClass().getSimpleName() == 'Boolean'}">
                                 <c:choose>
                                     <%-- add value into an anchor tag just to show as a link. it's generic we need this check --%>
@@ -62,10 +63,11 @@
                                     <c:forEach var="list" items="${entry.value}">
                                         <li>
                                             <c:choose>
-                                                <c:when test="${list.getClass().getSimpleName() == 'String' ||
-                                                                    list.getClass().getSimpleName() == 'Long'   ||
-                                                                    list.getClass().getSimpleName() == 'Integer'   ||
-                                                                    list.getClass().getSimpleName() == 'Date'   ||
+                                                <c:when test="${list.getClass().getSimpleName() == 'String'       ||
+                                                                    list.getClass().getSimpleName() == 'Double'   ||
+                                                                    list.getClass().getSimpleName() == 'Long'     ||
+                                                                    list.getClass().getSimpleName() == 'Integer'  ||
+                                                                    list.getClass().getSimpleName() == 'Date'     ||
                                                                     list.getClass().getSimpleName() == 'Boolean'}">
                                                     <span style="color:black"> ${list} </span>
                                                 </c:when>
