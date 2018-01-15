@@ -15,13 +15,17 @@ jQuery(document).ready(function () {
 // Show summation up to 200 chars.
 jQuery(document).ready(function() {
     // Configure/customize these variables.
-    var showChar = 200;  // How many characters are shown by default
     var ellipsestext = "... ";
     var moretext = "Read more";
     var lesstext = " Show less";
 
     // FIXME: highlighting is not working in the summation
     jQuery('.summation').each(function() {
+        var showChar = 200;
+        // check if show-char exists, apply 200 otherwise
+        if (jQuery('#show-char').length > 0) {
+            showChar = jQuery(this).children("input[name='show-char']").val();
+        }
         var content = jQuery(this).text();
 
         if(content.length > showChar) {
