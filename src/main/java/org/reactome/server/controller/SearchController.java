@@ -103,7 +103,7 @@ class SearchController {
         model.addAttribute(TYPES_FACET, facetMapping.getTypeFacet());
         model.addAttribute(KEYWORDS_FACET, facetMapping.getKeywordFacet());
         model.addAttribute(COMPARTMENTS_FACET, facetMapping.getCompartmentFacet());
-        model.addAttribute(TITLE, "advanced Search");
+        model.addAttribute(TITLE, "Advanced Search");
         return PAGE_EBI_ADVANCED;
     }
 
@@ -167,7 +167,6 @@ class SearchController {
             model.addAttribute(TYPES, types);
             model.addAttribute(COMPARTMENTS, compartments);
             model.addAttribute(KEYWORDS, keywords);
-            model.addAttribute(CLUSTER, cluster);
             model.addAttribute(CLUSTER, cluster);
             model.addAttribute(PAGE, page);
 
