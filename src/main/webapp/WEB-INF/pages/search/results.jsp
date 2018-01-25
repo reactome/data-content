@@ -38,6 +38,7 @@
                 <c:forEach var="result" items="${groupedResult.results}">
                     <div class="result-category">
                         <div class="favth-rows">
+                            <input type="hidden" id="js_search-term" name="js_search-term" value="${q}" />
                             <c:url var="url" value="">
                                 <c:param name="q" value="${q}"/>
                             </c:url>

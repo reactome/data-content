@@ -23,8 +23,7 @@
         <c:if test="${not empty databaseObject.summation}">
             <fieldset class="fieldset-details">
                 <legend>Summation</legend>
-                <div class="summation details-summation">
-                    <input type="hidden" name="show-char" id="show-char" value="1000" />
+                <div class="details-summation">
                     <c:forEach var="summation" items="${databaseObject.summation}">
                         <p>${summation.text}</p>
                     </c:forEach>

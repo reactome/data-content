@@ -12,6 +12,11 @@ jQuery(document).ready(function () {
     });
 });
 
+// Shortening a sentence without breaking a word.
+function shorten(sentence, chars) {
+    return (sentence.match(new RegExp(".{" + chars + "}\\S*"))||[sentence])[0];
+}
+
 // Show summation up to 200 chars.
 jQuery(document).ready(function() {
     // Configure/customize these variables.
@@ -19,19 +24,32 @@ jQuery(document).ready(function() {
     var moretext = "Read more";
     var lesstext = " Show less";
 
-    // FIXME: highlighting is not working in the summation
     jQuery('.summation').each(function() {
-        var showChar = 200;
-        // check if show-char exists, apply 200 otherwise
-        if (jQuery('#show-char').length > 0) {
-            showChar = jQuery(this).children("input[name='show-char']").val();
-        }
+        var showCharNumber = 200;
         var content = jQuery(this).text();
 
-        if(content.length > showChar) {
-            var c = content.substr(0, showChar);
-            var h = content.substr(showChar, content.length - showChar);
-            var html = jQuery.trim(c) + '<span class="moreellipses">' + ellipsestext+ '</span><span class="morecontent"><span>' + h + '</span><a href="javascript:void(0);" class="morelink">' + moretext + '</a></span>';
+        if(content.length > showCharNumber) {
+            var showing = shorten(content, showCharNumber);
+            var hiding = content.substr(showing.length, content.length - showing.length);
+            var html = jQuery.trim(showing) + '<span class="moreellipses">' + ellipsestext + '</span><span class="morecontent"><span>' + hiding + '</span><a href="javascript:void(0);" class="morelink">' + moretext + '</a></span>';
+
+            // highlight term
+            var term = jQuery("#js_search-term").val();
+            html = highlighter(term, html);
+
+            jQuery(this).html(html);
+        }
+    });
+
+    jQuery('.details-summation').each(function() {
+        var showCharNumber = 1000;
+        var content = jQuery.trim(jQuery(this).text());
+
+        if(content.length > showCharNumber) {
+            var showing = shorten(content, showCharNumber);
+            var hiding = content.substr(showing.length, content.length - showing.length);
+
+            var html = jQuery.trim(showing) + '<span class="moreellipses">' + ellipsestext+ '</span><span class="morecontent"><span>' + hiding + '</span><a href="javascript:void(0);" class="morelink">' + moretext + '</a></span>';
             jQuery(this).html(html);
         }
     });
@@ -51,6 +69,16 @@ jQuery(document).ready(function() {
     });
 });
 
+function highlighter(word, text) {
+    try {
+        var rgxp = new RegExp("(\\b" + word + "\\b)", "gim");
+        var repl = '<span class="highlighting">' + word + '</span>';
+        return text.replace(rgxp, repl);
+    } catch(err) {
+        return text;
+    }
+}
+
 jQuery(document).ready(function () {
     jQuery('ul.term-list').on('click', '.more', function () {
         if (jQuery(this).hasClass('less')) {
@@ -64,9 +92,10 @@ jQuery(document).ready(function () {
 
 jQuery(document).ready(function () {
     jQuery('#search_form').submit(function (e) {
-        if (!jQuery('#local-searchbox').val()) {
+        var localsearchbox = jQuery('#local-searchbox').val();
+        if (!localsearchbox) {
             e.preventDefault();
-        } else if (jQuery('#local-searchbox').val().match(/^\s*jQuery/)) {
+        } else if (localsearchbox.match(/^\s*jQuery/)) {
             e.preventDefault();
         }
     });
