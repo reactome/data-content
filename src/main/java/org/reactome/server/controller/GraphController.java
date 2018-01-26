@@ -13,15 +13,9 @@ import org.reactome.server.graph.service.helper.RelationshipDirection;
 import org.reactome.server.graph.service.helper.SchemaNode;
 import org.reactome.server.graph.service.util.DatabaseObjectUtils;
 import org.reactome.server.graph.service.util.PathwayBrowserLocationsUtils;
-import org.reactome.server.interactors.model.Interaction;
-import org.reactome.server.interactors.model.InteractorResource;
-import org.reactome.server.interactors.service.InteractionService;
-import org.reactome.server.interactors.service.InteractorResourceService;
-import org.reactome.server.interactors.util.InteractorConstant;
 import org.reactome.server.util.DataSchemaCache;
 import org.reactome.server.util.MapSet;
 import org.reactome.server.util.UAgentInfo;
-import org.reactome.server.util.WebUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +33,6 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.nio.charset.Charset;
-import java.sql.SQLException;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -63,15 +56,13 @@ class GraphController {
 
     private GeneralService generalService;
     private AdvancedDatabaseObjectService advancedDatabaseObjectService;
-    private InteractionService interactionService;
+    private InteractionsService interactionsService;
     private DetailsService detailsService;
     private SchemaService schemaService;
     private SpeciesService speciesService;
     private AdvancedLinkageService advancedLinkageService;
 
     private SchemaNode classBrowserCache;
-
-    private Map<Long, InteractorResource> interactorResourceMap = new HashMap<>();
 
     private final Set<String> ehlds = new HashSet<>();
 
@@ -81,14 +72,7 @@ class GraphController {
      * and keep a cache with them. Thus we avoid having the same information for all results.
      */
     @Autowired
-    public GraphController(InteractorResourceService interactorResourceService,
-                           @Value("${svg.summary.file}") String svgSummaryFile) {
-        try {
-            interactorResourceMap = interactorResourceService.getAllMappedById();
-        } catch (SQLException e) {
-            errorLogger.error("An error has occurred while querying InteractorResource: " + e.getMessage(), e);
-        }
-
+    public GraphController(@Value("${svg.summary.file}") String svgSummaryFile) {
         try {
             ehlds.addAll(IOUtils.readLines(new FileInputStream(svgSummaryFile), Charset.defaultCharset()));
         } catch (IOException e) {
@@ -236,10 +220,8 @@ class GraphController {
                 setClassAttributes(databaseObject, model);
                 if (databaseObject instanceof EntityWithAccessionedSequence) {
                     EntityWithAccessionedSequence ewas = (EntityWithAccessionedSequence) databaseObject;
-                    List<Interaction> interactions = interactionService.getInteractions(ewas.getReferenceEntity().getIdentifier(), InteractorConstant.STATIC);
+                    List<Interaction> interactions = interactionsService.getInteractions(ewas.getReferenceEntity().getIdentifier());
                     model.addAttribute("interactions", interactions);
-                    model.addAttribute(INTERACTOR_RESOURCES_MAP, interactorResourceMap); // interactor URL
-                    model.addAttribute(EVIDENCES_URL_MAP, WebUtils.prepareEvidencesURLs(interactions)); // evidencesURL
                     crossReferences.addAll(getCrossReference(ewas.getReferenceEntity()));
                     if (ewas.getReferenceEntity() instanceof ReferenceSequence) {
                         model.addAttribute("isReferenceSequence", true);
@@ -465,7 +447,7 @@ class GraphController {
     }
 
     @Autowired
-    public void setInteractionService(InteractionService interactionService) {
-        this.interactionService = interactionService;
+    public void setInteractionsService(InteractionsService interactionsService) {
+        this.interactionsService = interactionsService;
     }
 }

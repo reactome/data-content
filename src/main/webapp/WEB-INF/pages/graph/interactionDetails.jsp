@@ -16,31 +16,38 @@
                 </thead>
                 <tbody>
                 <c:forEach var="interaction" items="${interactions}">
+                    <c:set var="interactor" value="${interaction.interactor[0]}" />
                     <tr>
-                        <td data-label="Confidence Score">${interaction.intactScore}</td>
+                        <td data-label="Confidence Score">${interaction.score}</td>
                         <td data-label="Interactor Accession">
                             <!-- Parse the Interactor URL -->
-                            <c:set var="interactorResource" value="${interactorResourceMap[interaction.interactorB.interactorResourceId]}" />
-                            <c:choose>
-                                <%-- Accessions do not have resource (even in intact portal) --%>
-                                <c:when test="${interactorResource.name == 'undefined'}">
-                                    ${interaction.interactorB.acc}
-                                </c:when>
-                                <c:otherwise>
-                                    <a href="${fn:replace(interactorResource.url, '##ID##', interaction.interactorB.acc)}"
-                                       title="Show ${interaction.interactorB.acc}"
-                                       rel="nofollow">${interaction.interactorB.acc}</a>
-                                </c:otherwise>
-                            </c:choose>
+                            <a href="${interactor.url}"
+                               title="Show ${interactor.identifier}"
+                               rel="nofollow">${interactor.displayName}</a>
                         </td>
-                        <td data-label="Interactor Name">${interaction.interactorB.alias}</td>
+
+                        <c:choose>
+                            <c:when test="${interactor.schemaClass == 'ReferenceMolecule'}">
+                                <td data-label="Interactor Name">${interactor.name[0]}</td>
+                            </c:when>
+                            <c:when test="${interactor.schemaClass == 'ReferenceDNASequence' ||
+                                            interactor.schemaClass == 'ReferenceGeneProduct' ||
+                                            interactor.schemaClass == 'ReferenceIsoform'     ||
+                                            interactor.schemaClass == 'ReferenceRNASequence'}">
+                                <td data-label="Interactor Name">${interactor.geneName[0]}</td>
+                            </c:when>
+                            <c:otherwise>
+                                <td data-label="Interactor Name">&nbsp;</td>
+                            </c:otherwise>
+                        </c:choose>
+
                         <td data-label="Evidence (IntAct)">
                             <c:choose>
-                                <c:when test="${fn:length(interaction.interactionDetailsList) == 0}">
-                                    ${fn:length(interaction.interactionDetailsList)}
+                                <c:when test="${fn:length(interaction.accession) == 0}">
+                                    <c:out value="0"/>
                                 </c:when>
                                 <c:otherwise>
-                                    <a href="${evidencesUrlMap[interaction.interactorB.acc]}" title="Open evidence" rel="nofollow" target="_blank">${fn:length(interaction.interactionDetailsList)}</a>
+                                    <a href="${interaction.url}" title="Open evidence" rel="nofollow" target="_blank">${fn:length(interaction.accession)}</a>
                                 </c:otherwise>
                             </c:choose>
                         </td>
