@@ -11,7 +11,7 @@ import java.util.*;
 @SuppressWarnings("UnusedDeclaration")
 public class MapSet<S,T> implements Serializable {
 
-    protected Map<S, Set<T>> map = new TreeMap<>();
+    private Map<S, Set<T>> map = new TreeMap<>();
 
     public void add(S identifier, T elem){
         Set<T> aux = getOrCreate(identifier);
@@ -28,12 +28,6 @@ public class MapSet<S,T> implements Serializable {
         aux.addAll(list);
     }
 
-    public void addAll(org.reactome.server.interactors.util.MapSet<S,T> map){
-        for (S s : map.keySet()) {
-            this.add(s, map.getElements(s));
-        }
-    }
-
     public void clear(){
         map.clear();
     }
@@ -43,12 +37,7 @@ public class MapSet<S,T> implements Serializable {
     }
 
     private Set<T> getOrCreate(S identifier){
-        Set<T> set = map.get(identifier);
-        if(set==null){
-            set = new TreeSet<>();
-            map.put(identifier, set);
-        }
-        return set;
+        return map.computeIfAbsent(identifier, k -> new TreeSet<>());
     }
 
     public boolean isEmpty(){
@@ -68,10 +57,8 @@ public class MapSet<S,T> implements Serializable {
     }
 
     public Set<T> values(){
-        /**
-         * The Original implementation implements HashSet.
-         * Please keep this as a TreeSet.
-         */
+        // The Original implementation implements HashSet.
+        // Please keep this as a TreeSet.
         Set<T> rtn = new TreeSet<>();
         for (S s : map.keySet()) {
             rtn.addAll(map.get(s));
