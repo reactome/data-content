@@ -293,7 +293,17 @@
                                 <c:if test="${not empty modifiedResidue.modification.displayName}">
                                     <div class="favth-col-lg-2 favth-col-md-3 favth-col-sm-12 favth-col-xs-12 details-label mr-label">Modification</div>
                                     <div class="favth-col-lg-10 favth-col-md-9 favth-col-sm-12 favth-col-xs-12 details-field mr-field">
-                                        <a href="../detail/${modifiedResidue.modification.url}" class="" title="Show Details" rel="nofollow">${modifiedResidue.modification.displayName}</a>
+                                        <c:catch var="hasUrl">
+                                            <c:set value="${modifiedResidue.modification.url}" var="url" />
+                                        </c:catch>
+                                        <c:choose>
+                                            <c:when test="${empty hasUrl}">
+                                                <a href="../detail/${url}" class="" title="Show Details" rel="nofollow">${modifiedResidue.modification.displayName}</a>
+                                            </c:when>
+                                            <c:otherwise>
+                                                ${modifiedResidue.modification.displayName}
+                                            </c:otherwise>
+                                        </c:choose>
                                     </div>
                                 </c:if>
                             </c:if>
