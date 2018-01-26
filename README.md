@@ -5,19 +5,18 @@
 #### What is the Reactome Data Content Project
 Reactome Data Content is a web-based project that offers optimized and high performance results based on Apache SolR and also provides detailed results querying Reactome Graph Database. 
 
-Fully implemented based on Spring WebMVC Application, this project consumes [search-core](http://github.com/reactome/search-core) which provides an API to query SolR documents in order to retrieve 
+Fully implemented based on Spring WebMVC Application, this project consumes [search-core](https://github.com/reactome/search-core) which provides an API to query SolR documents in order to retrieve
 optimized, faceted and grouped results. Spellcheck, suggestions and auto complete are provided to.
 
 #### Installation Guide
 
 * :warning: Pre-Requirement (in the given order)
     1. Maven 3.X - [Installation Guide](http://maven.apache.org/install.html)
-    2. Reactome Graph Database - [Installation Guide](http://www.reactome.org/pages/documentation/developer-guide/graph-database/)
-    3. Interactor Database - [Installation Guide](https://github.com/reactome-pwp/interactors-core)
-    4. Search SolR Index - [search-indexer](http://github.com/reactome/search-indexer)
+    2. Reactome Graph Database - [Installation Guide](https://reactome.org/dev/graph-database/)
+    3. Search SolR Index - [search-indexer](https://github.com/reactome/search-indexer)
         * Search Indexer queries Reactome Graph Database, so it must be set up before the SolR indexer
         * Search Indexer guides though SolR installation, core and indexing.
-    5. Mail Server (if you don't have a valid SMTP Server, please here to [FakeSMTP](http://nilhcem.com/FakeSMTP/index.html)
+    4. Mail Server (if you don't have a valid SMTP Server, please here to [FakeSMTP](http://nilhcem.com/FakeSMTP/index.html)
     
 ##### Git Clone
 
@@ -47,12 +46,9 @@ Please refer to Maven Profile [Guideline](http://maven.apache.org/guides/introdu
         <solr.user>solr</solr.user>
         <solr.password>solr</solr.password>
 
-        <!-- Interators Database -->
-        <interactors.SQLite>/Users/reactome/Reactome/interactors/interactors.db</interactors.SQLite>
-
         <!-- Logging -->
         <logging.dir>/Users/reactome/Reactome/search</logging.dir>
-        <logging.database>${logging.dir}/search.db</logging.database>
+        <logging.level>INFO</logging.level>
 
         <!-- Mail Configuration, using FakeSMTP -->
         <!-- Properties are ready to use GMail, etc. -->
@@ -65,7 +61,7 @@ Please refer to Maven Profile [Guideline](http://maven.apache.org/guides/introdu
         <mail.support.dest>helpdesk@mycompany.co.uk</mail.support.dest>
             
         <!-- Reactome Server to query header and footer -->
-        <template.server>http://reactomedev.oicr.on.ca/</template.server>
+        <template.server>https://reactomedev.oicr.on.ca/</template.server>
     </properties>
 </profile>
 ```
@@ -80,13 +76,12 @@ in case you didn't set up the profile it is still possible to run Reactome Data 
 mvn tomcat7:run \ 
     -Dneo4j.user=neo4j -Dneo4j.password=neo4j -Dneo4j.host=localhost -Dneo4j.port=7474 \
     -Dsolr.host=http://localhost:8983/solr/reactome -Dsolr.user=solr -Dsolr.password=solr \
-    -Dinteractors.SQLite=/Users/reactome/Reactome/interactors/interactors.db \
     -Dlogging.dir=/Users/reactome/Reactome/search \
-    -Dlogging.database=/Users/reactome/Reactome/search/search.db \
+    -Dlogging.level=INFO \
     -Dmail.host=localhost -Dmail.port=8081 -Dmail.username=username -Dmail.password=password \ 
     -Dmail.enable.auth=false -Dmail.error.dest=bug-fixing-team@mycompany.co.uk \
     -Dmail.support.dest=helpdesk@mycompany.co.uk \ 
-    -Dtemplate.server=http://reactomedev.oicr.on.ca/
+    -Dtemplate.server=https://reactomedev.oicr.on.ca/
 ```
 
 Check if Tomcat has been initialised
@@ -102,17 +97,17 @@ INFO: Starting ProtocolHandler ["http-bio-8080"]
 and organise them in an intuitive way adding the most relevant result always on top of the list. 
 Faceting the result by Species, Type, Compartments, etc are also possible. The entry point for all these features is [SearchController.java](https://github.com/reactome/data-content/blob/master/src/main/java/org/reactome/server/controller/SearchController.java) 
 
-![search-result](https://cloud.githubusercontent.com/assets/6883670/22972916/a2759ca6-f373-11e6-838f-406ecf2af610.png)
+![search-result](https://user-images.githubusercontent.com/6883670/35401987-1343df86-01f3-11e8-9f67-28cb32415eba.png)
 
 * After clicking in the entry your are looking for, then another query will be executed in Reactome Graph. The entry point is the [GraphController.java](https://github.com/reactome/data-content/blob/master/src/main/java/org/reactome/server/controller/GraphController.java)
 
-![search-details](https://cloud.githubusercontent.com/assets/6883670/22972918/a6dca7ee-f373-11e6-8f22-1579717a7b12.png)
+![search-details](https://user-images.githubusercontent.com/6883670/35402019-28fbd22a-01f3-11e8-949a-e4ae2acbb5b2.png)
 
 
 ## Reactome Data Schema
 
 #### What is the Reactome Data Schema
-[Reactome Data Schema](http://reactome.org/content/schema/DatabaseObject) traverses through all the classes in the Data Model and provides easy visualisation of Reactome classes hierarchy.
+[Reactome Data Schema](https://reactome.org/content/schema/DatabaseObject) traverses through all the classes in the Data Model and provides easy visualisation of Reactome classes hierarchy.
 
 #### Installation
 
@@ -129,7 +124,7 @@ how Reactome classes are related each other. Referrals of the given instance are
 
 * By clicking in one entry a query is performed in Reactome Graph Database which gives the instance. All the raw content of the given object, at this point, if details page is available in this instance a button is present in the right corner. 
 
-From the technical side, note the Reactome Data Schema is built as the page is requested as well as the data retrieval. This has been achieved by extensive usage of Java Reflection, which means every time there is an update in Reactome Data Model the changes are going to be automatically propagated to the Data Schema Page. There isn't any static content. You can find documentation for the Reactome data model [here](http://www.reactome.org/pages/documentation/data-model/).
+From the technical side, note the Reactome Data Schema is built as the page is requested as well as the data retrieval. This has been achieved by extensive usage of Java Reflection, which means every time there is an update in Reactome Data Model the changes are going to be automatically propagated to the Data Schema Page. There isn't any static content. You can find documentation for the Reactome data model [here](https://reactome.org/documentation/data-model/).
 Also the entry point class is the [GraphController.java](https://github.com/reactome/data-content/blob/master/src/main/java/org/reactome/server/controller/GraphController.java)
 
-![content-schema](https://cloud.githubusercontent.com/assets/6883670/22972919/a9a9263c-f373-11e6-83a2-734e5b1e552f.png)
+![content-schema](https://user-images.githubusercontent.com/6883670/35402055-3dae5648-01f3-11e8-9bb9-869db7f48628.png)
