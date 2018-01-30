@@ -37,7 +37,6 @@ class SearchController {
     private MailService mailService;
 
     private static final int rowCount = 30;
-   // private Map<Long, InteractorResource> interactorResourceMap = new HashMap<>();
 
     private static final String SPECIES_FACET = "species_facet";
     private static final String TYPES_FACET = "type_facet";
@@ -215,7 +214,7 @@ class SearchController {
             message = message.concat("--\n").concat(contactName.trim());
         }
         // Call email service.
-        mailService.send(to, mailAddress, subject, message, sendEmailCopy, contactName);
+        mailService.send(contactName, mailAddress, to, subject, message, sendEmailCopy);
         return "success";
     }
 
