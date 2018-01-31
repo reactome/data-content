@@ -80,7 +80,7 @@ class SearchController {
      *
      * @param tagName query snippet to be autocompleted
      * @return List of Suggestions
-     * @throws SolrSearcherException
+     * @throws SolrSearcherException could not query SolR
      */
     @RequestMapping(value = "/getTags", method = RequestMethod.GET)
     @ResponseBody
@@ -93,7 +93,7 @@ class SearchController {
      *
      * @param model SpringModel
      * @return Advanced view
-     * @throws SolrSearcherException
+     * @throws SolrSearcherException could not query SolR
      */
     @RequestMapping(value = "/advanced", method = RequestMethod.GET)
     public String gotoAdv(ModelMap model) throws SolrSearcherException {
@@ -112,7 +112,7 @@ class SearchController {
      * @param id    StId or DbId
      * @param model SpringModel
      * @return Detailed page
-     * @throws SolrSearcherException
+     * @throws SolrSearcherException could not query SolR
      */
     @RequestMapping(value = "/detail/interactor/{id:.*}", method = RequestMethod.GET)
     public String interactorDetail(@PathVariable String id, ModelMap model) throws SolrSearcherException {
@@ -137,7 +137,7 @@ class SearchController {
      * @param page                                  page number
      * @param model                                 SpringModel
      * @return main search result page
-     * @throws SolrSearcherException
+     * @throws SolrSearcherException could not query SolR
      */
     @RequestMapping(value = "/query", method = RequestMethod.GET)
     public String search(@RequestParam String q,
@@ -200,7 +200,7 @@ class SearchController {
                           @RequestParam String exception,
                           @RequestParam String url,
                           @RequestParam String subject,
-                          @RequestParam String source) throws Exception {
+                          @RequestParam String source) {
 
         String to = mailSupportDest;
         if (source.equals("E")) {

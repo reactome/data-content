@@ -2,7 +2,6 @@
 
 <h4>Please report to us and we will get back shortly.</h4>
 
-<%-- ${pageContext.request.contextPath}/ --%>
 <form class="favth-form-horizontal" id="contact-form" action="/content/contact">
     <p>&nbsp;</p>
     <input type="hidden" name="source" id="source" value="${param.source}"/>
@@ -12,13 +11,13 @@
     <div class="favth-form-group">
         <label for="contactName" class="favth-col-lg-2 favth-col-md-2 favth-col-sm-2 favth-col-xs-12 favth-control-label">Name </label>
         <div class="favth-col-lg-10 favth-col-md-10 favth-col-sm-10 favth-col-xs-12">
-            <input type="text" class="favth-form-control" id="contactName" placeholder="your name">
+            <input type="text" class="favth-form-control" name="contactName" id="contactName" placeholder="your name">
         </div>
     </div>
     <div class="favth-form-group mail-required">
         <label for="mailAddress" class="favth-col-lg-2 favth-col-md-2 favth-col-sm-2 favth-col-xs-12 favth-control-label">From* </label>
         <div class="favth-col-lg-10 favth-col-md-10 favth-col-sm-10 favth-col-xs-12">
-            <input type="email" class="favth-form-control" id="mailAddress" placeholder="your-mail@domain.com">
+            <input type="email" class="favth-form-control" name="mailAddress" id="mailAddress" placeholder="your-mail@domain.com">
         </div>
     </div>
     <div class="favth-form-group">
@@ -44,7 +43,6 @@
         <label for="message" class="favth-col-lg-2 favth-col-md-2 favth-col-sm-2 favth-col-xs-12 favth-control-label">Message* </label>
         <div class="favth-col-lg-10 favth-col-md-10 favth-col-sm-10 favth-col-xs-12">
             <c:choose>
-
                 <c:when test="${not empty message}">
                     <textarea id="message" name="message" class="favth-form-control" rows="5">${message}</textarea>
                 </c:when>
@@ -112,14 +110,11 @@
                     data: formData.serialize(),
                     success: function (data, textStatus, jqXHR) {
                         formData.remove();
-
-                        msg.replaceWith("<p id='msg'><h5>Thank you for contacting us.&nbsp;We will get back to you shortly.</h5></p>")
-                        msg.addClass("alert alert-info");
+                        msg.replaceWith("<p id='msg' class='alert alert-info'><span style='color:#3a87ad;'><strong>Thank you</strong> for contacting us.&nbsp;We will get back to you shortly.</span></p>");
                     },
                     error: function (jqXHR, textStatus, errorThrown) {
                         jQuery('#send').prop("disabled", false);
-                        msg.replaceWith("<p id='msg'>Could not send your email. Try again or please email us at <a href='mailto:help@reactome.org'>help@reactome.org</a></p>");
-                        msg.addClass("alert alert-danger");
+                        msg.replaceWith("<p id='msg' class='alert alert-danger'><span style='color:#b94a48;'>Could not send your email. Try again or please email us at <a href='mailto:help@reactome.org'>help@reactome.org</a></p>");
                     }
                 });
             }
