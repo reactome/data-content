@@ -71,26 +71,26 @@
                                     </h4>
                                 </div>
 
-                                <%-- Preparing comparment and species list --%>
-                                <c:if test="${not empty entry.species && entry.species[0] != 'Entries without species'}">
-                                    <c:forEach var="species" items="${entry.species}" varStatus="loop">
-                                        <c:set var="speciesList" value="${loop.first ? '' : speciesList.concat(',')} ${species}" />
-                                    </c:forEach>
-                                </c:if>
-                                <c:if test="${not empty entry.compartmentNames}">
-                                    <c:forEach var="compartment" items="${entry.compartmentNames}" varStatus="loop">
-                                        <c:set var="compartmentList" value="${loop.first ? '' : compartmentList.concat(',')} ${compartment}" />
-                                    </c:forEach>
-                                </c:if>
-
                                 <div class="result-detail">
-                                    <c:if test="${not empty speciesList || not empty compartmentList}">
-                                        <c:if test="${not empty speciesList}">
-                                            <div class="favth-col-lg-5 favth-col-md-12 favth-col-sm-12 favth-col-xs-12"><strong>Species:</strong> ${speciesList}</div>
-                                        </c:if>
-                                        <c:if test="${not empty compartmentList}">
-                                            <div class="favth-col-lg-7 favth-col-md-12 favth-col-sm-12 favth-col-xs-12"><strong>Compartment:</strong> ${compartmentList}</div>
-                                        </c:if>
+                                    <c:if test="${not empty entry.species && entry.species[0] != 'Entries without species'}">
+                                        <div class="favth-col-lg-5 favth-col-md-12 favth-col-sm-12 favth-col-xs-12">
+                                            <div>
+                                                <strong>Species: </strong>
+                                                <c:forEach var="species" items="${entry.species}" varStatus="loop">
+                                                    ${species}<c:if test="${!loop.last}">,</c:if>
+                                                </c:forEach>
+                                            </div>
+                                        </div>
+                                    </c:if>
+                                    <c:if test="${not empty entry.compartmentNames}">
+                                        <div class="favth-col-lg-7 favth-col-md-12 favth-col-sm-12 favth-col-xs-12">
+                                            <div>
+                                                <strong>Compartment: </strong>
+                                                <c:forEach var="compartment" items="${entry.compartmentNames}" varStatus="loop">
+                                                    ${compartment}<c:if test="${!loop.last}">,</c:if>
+                                                </c:forEach>
+                                            </div>
+                                        </div>
                                     </c:if>
 
                                     <c:if test="${not empty entry.regulator}">
