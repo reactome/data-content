@@ -581,6 +581,18 @@ a.tree-highlighted-item:visited {
     height: 300px;
 }
 
+#fav-container table.interactor-detail-table {
+    width: 99%;
+    margin: 6px;
+}
+
+span.secondary-identifiers {
+    color: #333;
+    font-size: smaller;
+    font-style: italic;
+    margin-left: 20px;
+}
+
 /* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
 @media screen and (max-height: 450px) {
     #fav-container .sidenav {padding-top: 15px;}
@@ -619,6 +631,15 @@ a.tree-highlighted-item:visited {
         border-left: none;
         word-wrap: break-word;
         overflow: auto;
+    }
+
+    span.secondary-identifiers {
+        margin-left: 0;
+    }
+
+    #fav-container table.interactor-detail-table {
+        width: 99%;
+        margin: 4px;
     }
 }
 
@@ -748,8 +769,14 @@ a.tree-highlighted-item:visited {
     }
 
     #fav-container .interactors-table table.reactome td {
-        padding-left: 50%;
+        padding-left: 32%;
         font-size: 12px;
+    }
+
+    #fav-container table.interactor-detail-table {
+        width: 99%;
+        padding: 7px 7px 7px 0;
+        margin: 0 6px;
     }
 
     #fav-container .advanced-search textarea {
@@ -789,5 +816,10 @@ a.tree-highlighted-item:visited {
     input#mod-search-searchword,
     input#local-searchbox {
         width: 75%;
+    }
+
+    #fav-container .interactors-table table.reactome td {
+        padding-left: 42%;
+        font-size: 12px;
     }
 }

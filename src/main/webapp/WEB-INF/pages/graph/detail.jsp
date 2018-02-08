@@ -2,7 +2,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <c:import url="../header.jsp"/>
-    <div class="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-12 one">
+    <div class="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-12">
         <c:import url="title.jsp"/>
 
         <c:if test="${not empty topLevelNodes}">
@@ -49,6 +49,7 @@
             <c:import url="regulationDetails.jsp"/>
         </c:if>
 
+        <%--For those that ARE in Reactome, for those that ARE NOT in Reactome, check graph/interactors.jsp--%>
         <c:if test="${not empty interactions}">
             <c:import url="interactionDetails.jsp"/>
         </c:if>

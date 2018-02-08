@@ -1,5 +1,7 @@
 package org.reactome.server.controller;
 
+import org.reactome.server.graph.domain.model.DatabaseObject;
+import org.reactome.server.graph.domain.model.ReferenceEntity;
 import org.reactome.server.graph.exception.CustomQueryException;
 import org.reactome.server.graph.service.AdvancedDatabaseObjectService;
 import org.reactome.server.result.CustomInteraction;
@@ -7,38 +9,74 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
+import java.lang.reflect.InvocationTargetException;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
- * @author Åntonio Fabregat (fabregat@ebi.ac.uk)
+ * @author Antonio Fabregat (fabregat@ebi.ac.uk)
  */
 @Controller
 public class InteractionsController {
-
+    private static final Logger infoLogger = LoggerFactory.getLogger("infoLogger");
     private static final Logger errorLogger = LoggerFactory.getLogger("errorLogger");
 
+    private static final String RE = "referenceEntity";
+    private static final String RE_SYNONYMS = "referenceEntitySynonym";
+    private static final String RE_TYPE = "referenceEntityType";
+    private static final String RE_TITLE = "title";
+    private static final String INTERACTIONS = "interactions";
+    private static final String SEARCH = "search";
 
     @Autowired
     private AdvancedDatabaseObjectService advancedDatabaseObjectService;
 
-    public Collection<CustomInteraction> getCustomInteractions(String accession){
+    @RequestMapping(value = "/detail/interactor/{id:.*}", method = RequestMethod.GET)
+    public String interactorDetail(@PathVariable String id, ModelMap model) {
+        Collection<CustomInteraction> customInteractions = getCustomInteractions(id);
+        if (customInteractions != null && !customInteractions.isEmpty()) {
+            model.addAttribute(INTERACTIONS, customInteractions);
+            ReferenceEntity re = getReferenceEntity(id);
+            if (re != null) {
+                // ReferenceEntity is the INTERACTOR we are searching for ...
+                model.addAttribute(RE, re);
+                model.addAttribute(RE_TITLE, re.getDisplayName());
+                model.addAttribute(RE_SYNONYMS, getSynonym(re));
+                model.addAttribute(RE_TYPE, getType(re));
+            }
+            infoLogger.info("Search request for id: {} was found", id);
+            return "graph/interactors";
+        } else {
+            autoFillDetailsPage(model, id);
+            infoLogger.info("Search request for id: {} was not found", id);
+            return "search/noDetailsFound";
+        }
+    }
+
+    private Collection<CustomInteraction> getCustomInteractions(String accession) {
         Collection<CustomInteraction> rtn;
 
         String query = "" +
-                "MATCH (:ReferenceEntity{identifier:{accession}})<-[:interactor]-(it:Interaction), " +
-                "      (it)-[ir:interactor]->(in:ReferenceEntity)<-[re:referenceEntity]-(pe:PhysicalEntity) " +
-                "RETURN DISTINCT it.score AS score, in.identifier AS accession, " +
-                "                COLLECT({dbId: pe.dbId, " +
+                "MATCH (s:ReferenceEntity)<-[:interactor]-(it:Interaction), " +
+                "      (it)-[ir:interactor]->(in:ReferenceEntity)<-[re:referenceEntity]-(pe:PhysicalEntity), " +
+                "      (:ReactionLikeEvent)-[:input|output|catalystActivity|entityFunctionalStatus|physicalEntity|regulatedBy|regulator*]->(pe) " +
+                "WHERE s.identifier = {accession} OR s.variantIdentifier = {accession} " +
+                "RETURN DISTINCT it.score AS score, in.identifier AS accession, in.url AS accessionURL, " +
+                "                COLLECT(DISTINCT{ " +
+                "                         dbId: pe.dbId, " +
                 "                         stId: pe.stId, " +
                 "                         displayName: pe.displayName, " +
-                "                         schemaClass: pe.schemaClass}) AS physicalEntity, " +
+                "                         schemaClass: pe.schemaClass " +
+                "                }) AS physicalEntity, " +
                 "                SIZE(it.accession) AS evidences, " +
                 "                it.url AS url " +
-                "ORDER BY Score DESC";
+                "ORDER BY score DESC, accession";
+
         Map<String, Object> param = new HashMap<>();
         param.put("accession", accession);
 
@@ -52,5 +90,53 @@ public class InteractionsController {
         return rtn;
     }
 
+    private ReferenceEntity getReferenceEntity(String id) {
+        String where;
+        if (id.contains("-") && !id.startsWith("EBI-")) {
+            where = "re.variantIdentifier = {accession}";
+        } else {
+            where = "re.variantIdentifier IS NULL AND re.identifier = {accession}";
+        }
+        String query = "MATCH (re:ReferenceEntity) WHERE " + where + " RETURN re";
+        Map<String, Object> params = new HashMap<>();
+        params.put("accession", id);
+        ReferenceEntity re = null;
+        try {
+            re = advancedDatabaseObjectService.customQueryForDatabaseObject(ReferenceEntity.class, query, params);
+        } catch (CustomQueryException e) {
+            errorLogger.error(e.getMessage(), e);
+        }
+        return re;
+    }
 
+    @SuppressWarnings("unchecked")
+    private List<String> getSynonym(DatabaseObject databaseObject) {
+        try {
+            // even though we are getting synonyms (alternative names in Uniprot), this field is called SecondaryIdentifier in the domain model.
+            List<String> secIds = (List<String>)databaseObject.getClass().getMethod("getSecondaryIdentifier").invoke(databaseObject);
+            return secIds.stream().distinct().collect(Collectors.toList());
+        } catch (NullPointerException | NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
+            // Nothing here
+        }
+        return null;
+    }
+
+    private String getType(ReferenceEntity re) {
+        switch (re.getSchemaClass()) {
+            case ("ReferenceGeneProduct"):
+            case ("ReferenceIsoform"):
+                return "Protein";
+            case ("ReferenceDNASequence"):
+                return "DNA Sequence";
+            case ("ReferenceRNASequence"):
+                return "RNA Sequence";
+            default:
+                return re.getSchemaClass();
+        }
+    }
+
+    private void autoFillDetailsPage(ModelMap model, String search) {
+        model.addAttribute(SEARCH, search);
+        model.addAttribute(RE_TITLE, "No details found for " + search);
+    }
 }
