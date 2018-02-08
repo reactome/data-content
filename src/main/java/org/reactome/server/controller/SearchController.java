@@ -2,7 +2,6 @@ package org.reactome.server.controller;
 
 import org.apache.commons.lang.StringUtils;
 import org.reactome.server.search.domain.FacetMapping;
-import org.reactome.server.search.domain.InteractorEntry;
 import org.reactome.server.search.domain.Query;
 import org.reactome.server.search.domain.SearchResult;
 import org.reactome.server.search.exception.SolrSearcherException;
@@ -14,7 +13,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 
@@ -50,7 +52,6 @@ class SearchController {
     private static final String COMPARTMENTS = "compartments";
 
     private static final String TITLE = "title";
-    private static final String ENTRY = "entry";
     private static final String GROUPED_RESULT = "groupedResult";
     private static final String SUGGESTIONS = "suggestions";
     private static final String PAGE = "page";
@@ -61,10 +62,6 @@ class SearchController {
     private static final String MAIL_SUBJECT_PLACEHOLDER = "[SEARCH] No results found for ";
     private static final String MAIL_MESSAGE = "message";
 
-    // PAGES REDIRECT
-    private static final String PAGE_INTERACTOR = "search/interactors";
-
-    private static final String PAGE_NO_DETAILS_FOUND = "search/noDetailsFound";
     private static final String PAGE_NO_RESULTS_FOUND = "search/noResultsFound";
     private static final String PAGE_EBI_ADVANCED = "search/advanced";
     private static final String PAGE_EBI_SEARCHER = "search/results";
@@ -104,30 +101,6 @@ class SearchController {
         model.addAttribute(COMPARTMENTS_FACET, facetMapping.getCompartmentFacet());
         model.addAttribute(TITLE, "Advanced Search");
         return PAGE_EBI_ADVANCED;
-    }
-
-    /**
-     * Shows detailed information of an entry
-     *
-     * @param id    StId or DbId
-     * @param model SpringModel
-     * @return Detailed page
-     * @throws SolrSearcherException could not query SolR
-     */
-    @RequestMapping(value = "/detail/interactor/{id:.*}", method = RequestMethod.GET)
-    public String interactorDetail(@PathVariable String id, ModelMap model) throws SolrSearcherException {
-
-        InteractorEntry entry = searchService.getInteractionDetail(id);
-        if (entry != null) {
-            model.addAttribute(ENTRY, entry);
-            model.addAttribute(TITLE, entry.getName());
-            infoLogger.info("Search request for id: {} was found", id);
-            return PAGE_INTERACTOR;
-        } else {
-            autoFillDetailsPage(model, id);
-            infoLogger.info("Search request for id: {} was not found", id);
-            return PAGE_NO_DETAILS_FOUND;
-        }
     }
 
     /**
@@ -230,11 +203,6 @@ class SearchController {
         model.addAttribute(MAIL_SUBJECT, MAIL_SUBJECT_PLACEHOLDER + search);
         model.addAttribute(MAIL_MESSAGE, String.format(MAIL_MESSAGE_PLACEHOLDER, search));
         model.addAttribute(TITLE, "No results found for " + search);
-    }
-
-    private void autoFillDetailsPage(ModelMap model, String search) {
-        model.addAttribute("search", search);
-        model.addAttribute(TITLE, "No details found for " + search);
     }
 
     @Autowired
