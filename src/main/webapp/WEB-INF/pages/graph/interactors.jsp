@@ -9,16 +9,16 @@
             ${referenceEntity.displayName}
         </h3>
         <div class="extended-header favth-clearfix">
-            <c:catch var="hasSpeciesException">
-                <c:set value="${referenceEntity.species.displayName}" var="species" scope="request"/>
-            </c:catch>
             <div class="details-label favth-col-lg-2 favth-col-md-2 favth-col-sm-3 favth-col-xs-12">
                 <span>Type</span>
             </div>
             <div class="details-field favth-col-lg-10 favth-col-md-10 favth-col-sm-9 favth-col-xs-12">
                 <span>Interactor (${referenceEntityType})</span>
             </div>
-            <c:if test="${empty hasSpeciesException}">
+            <c:catch var="hasSpeciesException">
+                <c:set value="${referenceEntity.species.displayName}" var="species" scope="request"/>
+            </c:catch>
+            <c:if test="${empty hasSpeciesException && not empty referenceEntity.species}">
                 <div class="details-label favth-col-lg-2 favth-col-md-2 favth-col-sm-3 favth-col-xs-12">
                     <span>Species</span>
                 </div>
@@ -26,16 +26,18 @@
                     <span>${species}</span>
                 </div>
             </c:if>
-            <div class="details-label favth-col-lg-2 favth-col-md-2 favth-col-sm-3 favth-col-xs-12">
-                <span>Synonyms</span>
-            </div>
-            <div class="details-field favth-col-lg-10 favth-col-md-10 favth-col-sm-9 favth-col-xs-12">
-                <div>
-                    <c:forEach var="synonym" items="${referenceEntitySynonym}" varStatus="loop">
-                        ${synonym}<c:if test="${!loop.last}">,</c:if>
-                    </c:forEach>
+            <c:if test="${not empty referenceEntitySynonym}">
+                <div class="details-label favth-col-lg-2 favth-col-md-2 favth-col-sm-3 favth-col-xs-12">
+                    <span>Synonyms</span>
                 </div>
-            </div>
+                <div class="details-field favth-col-lg-10 favth-col-md-10 favth-col-sm-9 favth-col-xs-12">
+                    <div>
+                        <c:forEach var="synonym" items="${referenceEntitySynonym}" varStatus="loop">
+                            ${synonym}<c:if test="${!loop.last}">,</c:if>
+                        </c:forEach>
+                    </div>
+                </div>
+            </c:if>
         </div>
 
         <fieldset class="fieldset-details">

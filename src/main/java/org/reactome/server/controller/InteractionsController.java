@@ -130,6 +130,8 @@ public class InteractionsController {
                 return "DNA Sequence";
             case ("ReferenceRNASequence"):
                 return "RNA Sequence";
+            case ("ReferenceMolecule"):
+                return "Chemical Compound";
             default:
                 return re.getSchemaClass();
         }

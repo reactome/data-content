@@ -15,4 +15,4 @@ Please select the correct MAVEN profile and execute the project and you will see
 NOTE:
 In your profile you should have a line like the following in order to ensure you access to the server for these files:
 
-<template.server>http://dev2.reactome.org/</template.server>
+<template.server>https://reactomedev.oicr.on.ca/</template.server>
