@@ -1,16 +1,18 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
+<%-- Interactors in the Details Page--%>
 <div class="clearfix">
     <fieldset class="fieldset-details">
-        <legend>Interactors</legend>
-        <div id="r-responsive-table" class="details-wrap interactors-table">
+        <legend>Interactors (${fn:length(interactions)})</legend>
+        <div id="r-responsive-table" class="details-wrap interactors-table enlarge-table">
             <table class="reactome">
                 <thead>
                     <tr>
+                        <th scope="col">Accession</th>
+                        <th scope="col">#Entities</th>
+                        <th scope="col">Entities</th>
                         <th scope="col">Confidence Score</th>
-                        <th scope="col">Interactor Accession</th>
-                        <th scope="col">Interactor Name</th>
                         <th scope="col">Evidence (IntAct)</th>
                     </tr>
                 </thead>
@@ -18,29 +20,41 @@
                 <c:forEach var="interaction" items="${interactions}">
                     <c:set var="interactor" value="${interaction.interactor[0]}" />
                     <tr>
-                        <td data-label="Confidence Score">${interaction.score}</td>
-                        <td data-label="Interactor Accession">
-                            <!-- Parse the Interactor URL -->
+                        <td data-label="Accession">
+                            <a href="./interactor/${interactor.identifier}" class="" title="Show Interactor Details" rel="nofollow"><i class="sprite sprite-Interactor"></i>&nbsp;${interactor.displayName}&nbsp;</a>
                             <a href="${interactor.url}"
-                               title="Show ${interactor.identifier}"
-                               rel="nofollow">${interactor.displayName}</a>
+                               title="Go to ${interactor.displayName}"
+                               rel="nofollow"><i class="fa fa-external-link" style="font-size: 13px;"></i></a>
+                        </td>
+                        <td data-label="#Entities">
+                            <c:choose>
+                                <c:when test="${not empty interactor.physicalEntity}">
+                                    <c:out value="${fn:length(interactor.physicalEntity)}" />
+                                </c:when>
+                                <c:otherwise>
+                                    &nbsp;
+                                </c:otherwise>
+                            </c:choose>
+                        </td>
+                        <td data-label="Entities">
+                            <c:choose>
+                                <c:when test="${not empty interactor.physicalEntity}">
+                                    <ul class="list">
+                                        <c:forEach var="pe" items="${interactor.physicalEntity}">
+                                            <li>
+                                                <i class="sprite sprite-${pe.schemaClass}" title="${pe.schemaClass}"></i>
+                                                <a href="/content/detail/${pe.stId}?interactor=${referenceEntity.displayName}" title="Show Details" target="_blank" rel="nofollow">${pe.displayName}<span> (${pe.stId})</span></a>
+                                            </li>
+                                        </c:forEach>
+                                    </ul>
+                                </c:when>
+                                <c:otherwise>
+                                    &nbsp;
+                                </c:otherwise>
+                            </c:choose>
                         </td>
 
-                        <c:choose>
-                            <c:when test="${interactor.schemaClass == 'ReferenceMolecule'}">
-                                <td data-label="Interactor Name">${interactor.name[0]}</td>
-                            </c:when>
-                            <c:when test="${interactor.schemaClass == 'ReferenceDNASequence' ||
-                                            interactor.schemaClass == 'ReferenceGeneProduct' ||
-                                            interactor.schemaClass == 'ReferenceIsoform'     ||
-                                            interactor.schemaClass == 'ReferenceRNASequence'}">
-                                <td data-label="Interactor Name">${interactor.geneName[0]}</td>
-                            </c:when>
-                            <c:otherwise>
-                                <td data-label="Interactor Name">&nbsp;</td>
-                            </c:otherwise>
-                        </c:choose>
-
+                        <td data-label="Confidence Score">${interaction.score}</td>
                         <td data-label="Evidence (IntAct)">
                             <c:choose>
                                 <c:when test="${fn:length(interaction.accession) == 0}">

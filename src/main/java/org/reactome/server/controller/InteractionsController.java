@@ -58,6 +58,12 @@ public class InteractionsController {
         }
     }
 
+    /**
+     * Retrieve interactions of a given accession that are NOT in Reactome
+     * but interacts with something in Reactome
+     *
+     * @param accession
+     */
     private Collection<CustomInteraction> getCustomInteractions(String accession) {
         Collection<CustomInteraction> rtn;
 
@@ -65,7 +71,8 @@ public class InteractionsController {
                 "MATCH (s:ReferenceEntity)<-[:interactor]-(it:Interaction), " +
                 "      (it)-[ir:interactor]->(in:ReferenceEntity)<-[re:referenceEntity]-(pe:PhysicalEntity), " +
                 "      (:ReactionLikeEvent)-[:input|output|catalystActivity|entityFunctionalStatus|physicalEntity|regulatedBy|regulator*]->(pe) " +
-                "WHERE s.identifier = {accession} OR s.variantIdentifier = {accession} " +
+                "WHERE s.variantIdentifier = {accession} OR (s.variantIdentifier IS NULL AND s.identifier = {accession}) " +
+//                "      AND NOT ()-[:referenceEntity]->(s) " +
                 "RETURN DISTINCT it.score AS score, in.identifier AS accession, in.url AS accessionURL, " +
                 "                COLLECT(DISTINCT{ " +
                 "                         dbId: pe.dbId, " +
@@ -91,13 +98,10 @@ public class InteractionsController {
     }
 
     private ReferenceEntity getReferenceEntity(String id) {
-        String where;
-        if (id.contains("-") && !id.startsWith("EBI-")) {
-            where = "re.variantIdentifier = {accession}";
-        } else {
-            where = "re.variantIdentifier IS NULL AND re.identifier = {accession}";
-        }
-        String query = "MATCH (re:ReferenceEntity) WHERE " + where + " RETURN re";
+        String query = "" +
+                "MATCH (s:ReferenceEntity)<-[:interactor]-() " +
+                "WHERE s.variantIdentifier = {accession} OR (s.variantIdentifier IS NULL AND s.identifier = {accession}) " +
+                "RETURN s";
         Map<String, Object> params = new HashMap<>();
         params.put("accession", id);
         ReferenceEntity re = null;

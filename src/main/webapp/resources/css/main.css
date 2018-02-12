@@ -581,6 +581,10 @@ a.tree-highlighted-item:visited {
     height: 300px;
 }
 
+.enlarge-table {
+    max-height: 600px;
+}
+
 #fav-container table.interactor-detail-table {
     width: 99%;
     margin: 6px;
