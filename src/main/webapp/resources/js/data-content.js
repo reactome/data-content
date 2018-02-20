@@ -2,28 +2,17 @@ var PWB_COOKIE="_Search_Result_PWB_Tree";
 var EXPAND = "expand-all";
 var COLLAPSE = "collapse-all"; // default value for the Location in PWB
 
-jQuery(document).ready(function () {
-    jQuery('ul.term-list').each(function () {
-        var LiN = jQuery(this).find('li').length;
-        if (LiN > 6) {
-            jQuery('li', this).eq(5).nextAll().hide().addClass('toggleable');
-            jQuery(this).append('<li class="more">More...</li>');
-        }
-    });
+jQuery(document).ready(function() {
+    togglePwbTree(readCookie(PWB_COOKIE));
 });
 
-// Shortening a sentence without breaking a word.
-function shorten(sentence, chars) {
-    return (sentence.match(new RegExp(".{" + chars + "}\\S*"))||[sentence])[0];
-}
-
-// Show summation up to 200 chars.
 jQuery(document).ready(function() {
     // Configure/customize these variables.
     var ellipsestext = "... ";
     var moretext = "Read more";
     var lesstext = " Show less";
 
+    // Show summation up to 200 chars.
     jQuery('.summation').each(function() {
         var showCharNumber = 200;
         var content = jQuery(this).text();
@@ -62,25 +51,16 @@ jQuery(document).ready(function() {
             jQuery(this).addClass("less");
             jQuery(this).html(lesstext);
         }
-
         jQuery(this).parent().prev().toggle();
         jQuery(this).prev().toggle();
         return false;
     });
 });
 
-function highlighter(word, text) {
-    try {
-        var rgxp = new RegExp("(\\b" + word + "\\b)", "gim");
-        var repl = '<span class="highlighting">' + word + '</span>';
-        return text.replace(rgxp, repl);
-    } catch(err) {
-        return text;
-    }
-}
-
 jQuery(document).ready(function () {
-    jQuery('ul.term-list').on('click', '.more', function () {
+
+    var termList = jQuery('ul.term-list');
+    termList.on('click', '.more', function () {
         if (jQuery(this).hasClass('less')) {
             jQuery(this).text('More...').removeClass('less');
         } else {
@@ -88,9 +68,15 @@ jQuery(document).ready(function () {
         }
         jQuery(this).siblings('li.toggleable').slideToggle();
     });
-});
 
-jQuery(document).ready(function () {
+    termList.each(function () {
+        var LiN = jQuery(this).find('li').length;
+        if (LiN > 6) {
+            jQuery('li', this).eq(5).nextAll().hide().addClass('toggleable');
+            jQuery(this).append('<li class="more">More...</li>');
+        }
+    });
+
     jQuery('#search_form').submit(function (e) {
         var localsearchbox = jQuery('#local-searchbox').val();
         if (!localsearchbox) {
@@ -99,9 +85,7 @@ jQuery(document).ready(function () {
             e.preventDefault();
         }
     });
-});
 
-jQuery(document).ready(function () {
     jQuery(".plus").click(function () {
         $plus = jQuery(this);
         $treeLpwb = $plus.nextAll().eq(0);
@@ -115,9 +99,14 @@ jQuery(document).ready(function () {
             }
         });
     });
-});
 
-jQuery(document).ready(function () {
+    // expand and collapse all feature
+    jQuery("#pwb_toggle").click(function () {
+        var action = jQuery("#pwb_toggle").attr("class");
+        togglePwbTree(action);
+        writeCookie(PWB_COOKIE, action);
+    });
+
     var availableSpeciesSel = jQuery('[id*=availableSpeciesSel]');
     availableSpeciesSel.ready(function () {
         var DEFAULT_SPECIES = 'Homo sapiens';
@@ -126,18 +115,16 @@ jQuery(document).ready(function () {
         var hash = decodeURIComponent(window.location.hash);
         var defaulLoaded = false;
         var tplSpecies = jQuery("div[class*=tplSpe_]");
-        if (hash == "") {
+        if (hash === "") {
             tplSpecies.each(function (index, value) {
                 var item = jQuery(value).attr("class");
-                if (item == "tplSpe_" + DEFAULT_SPECIES.replace(" ", "_")) {
+                if (item === "tplSpe_" + DEFAULT_SPECIES.replace(" ", "_")) {
                     availableSpeciesSel.val(DEFAULT_SPECIES.replace(" ", "_"));
                     jQuery("." + item).show();
-
                     //change url
                     if (availableSpeciesSel.val() != null) {
                         window.location.hash = "#" + encodeURIComponent(DEFAULT_SPECIES);
                     }
-
                     defaulLoaded = true;
                 } else {
                     jQuery("." + item).css("display", "none");
@@ -149,19 +136,14 @@ jQuery(document).ready(function () {
             }
         } else {
             hash = hash.replace("#", "").replace(" ", "_");
-
             var tplSelected = jQuery(".tplSpe_" + hash);
             // hash has been change manually into a non-existing value. Pick the first one which is human
             if (tplSelected.val() == null) {
-
                 jQuery("[id*=availableSpeciesSel] > option").each(function (index, value) {
                     var item = jQuery(value).attr("value");
-
                     tplSpecies.val(item);
-
                     jQuery(".tplSpe_" + item).show();
                     window.location.hash = "#" + encodeURIComponent(item.replace("_", " "));
-
                     return false;
                 });
             } else {
@@ -170,39 +152,42 @@ jQuery(document).ready(function () {
             }
         }
     });
-});
 
-jQuery(document).ready(function () {
-    jQuery('[id*=availableSpeciesSel]').on('change', function () {
+    availableSpeciesSel.on('change', function () {
         var selectedSpecies = this.value;
-
         // hide everything
         jQuery("div[class*=tplSpe_]").each(function (index, element) {
             jQuery(element).hide();
         });
-
         // show div related to the species
         jQuery(".tplSpe_" + selectedSpecies).show();
-
         // change anchor in the URL
         window.location.hash = "#" + encodeURIComponent(selectedSpecies.replace("_", " "));
-
     });
 });
 
-jQuery(document).ready(function () {
-    // expand and collapse all feature
-    jQuery("#pwb_toggle").click(function () {
-        var action = jQuery("#pwb_toggle").attr("class");
-        togglePwbTree(action);
-        writeCookie(PWB_COOKIE, action);
-    });
-});
+/*----------------------*/
+/* JAVASCRIPT FUNCTIONS */
+/*----------------------*/
+function shorten(sentence, chars) {
+    // Shortening a sentence without breaking a word.
+    return (sentence.match(new RegExp(".{" + chars + "}\\S*"))||[sentence])[0];
+}
+
+function highlighter(word, text) {
+    try {
+        var rgxp = new RegExp("(\\b" + word + "\\b)", "gim");
+        var repl = '<span class="highlighting">' + word + '</span>';
+        return text.replace(rgxp, repl);
+    } catch(err) {
+        return text;
+    }
+}
 
 function togglePwbTree(action){
     var treeLpwb = jQuery("div.tree-lpwb");
     treeLpwb.each(function (index, element) {
-        if (action == EXPAND) {
+        if (action === EXPAND) {
             jQuery(element).show();
         } else {
             jQuery(element).hide(100);
@@ -210,7 +195,7 @@ function togglePwbTree(action){
     });
 
     var pwbToggle = jQuery("#pwb_toggle");
-    if (action == COLLAPSE) {
+    if (action === COLLAPSE || action == null) {
         jQuery(".fa-minus-square-o").attr("class", "fa fa-plus-square-o");
         pwbToggle.text("Expand All");
         pwbToggle.attr("class", EXPAND);
@@ -224,10 +209,10 @@ function togglePwbTree(action){
 function readCookie(name) {
     var nameEQ = name + "=";
     var ca = document.cookie.split(';');
-    for(var i=0;i < ca.length;i++) {
+    for (var i = 0; i < ca.length; i++) {
         var c = ca[i];
-        while (c.charAt(0)==' ') c = c.substring(1,c.length);
-        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+        while (c.charAt(0) === ' ') c = c.substring(1,c.length);
+        if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length,c.length);
     }
     return null;
 }
@@ -244,7 +229,7 @@ function writeCookie(key, value) {
 function openSideNav() {
     jQuery("#search-filter-sidenav").css({width: "270px", left: "0" });
     jQuery(".sidenav-bg").css('display', 'block');
-    lockBackground()
+    lockBackground();
 }
 
 /* Set the width of the side navigation to 0 */
@@ -262,7 +247,7 @@ function openSchemaSideNav() {
     jQuery(".schema-tree-mobile").html(jQuery(".schema-tree-ph").html());
     jQuery("#schema-sidenav").css({width: width, left: "0" });
     jQuery(".sidenav-bg").css('display', 'block');
-    lockBackground()
+    lockBackground();
 }
 
 /* Set the width of the side navigation to 0 */
