@@ -45,7 +45,7 @@
                 <c:choose>
                     <c:when test="${empty topLvl.children}">
                         <span style="font-size:13px"><i class="sprite-resize sprite sprite-Pathway" title="${topLvl.type}"></i></span>
-                        <a href="${topLvl.url}" <c:if test="${topLvl.highlighted}">class="tree-highlighted-item"</c:if> title="goto Reactome Pathway Browser" rel="nofollow">${topLvl.name} (${topLvl.species})</a>
+                        <a href="${topLvl.url}" <c:if test="${topLvl.highlighted}">class="tree-highlighted-item"</c:if> title="goto Reactome Pathway Browser" >${topLvl.name} (${topLvl.species})</a>
                     </c:when>
                     <c:otherwise>
                         <%--
@@ -57,7 +57,7 @@
                             <span class="plus tree-root" title="click here to expand or collapse the tree">
                                 <i class="fa fa-plus-square-o" title="click here to expand or collapse the tree" style="vertical-align: middle"></i>
                                 <i class="sprite-resize sprite sprite-Pathway" style="vertical-align: middle"></i>
-                                <%--<a href="${topLvl.url}" class="" title="goto Reactome Pathway Browser" rel="nofollow">${topLvl.name} (${topLvl.species})</a>--%>
+                                <%--<a href="${topLvl.url}" class="" title="goto Reactome Pathway Browser" >${topLvl.name} (${topLvl.species})</a>--%>
                                 ${topLvl.name} (${topLvl.species})
                             </span>
                             <div class="tree-lpwb">

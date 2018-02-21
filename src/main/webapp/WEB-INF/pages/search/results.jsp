@@ -44,7 +44,7 @@
                             </c:url>
                             <c:choose>
                                 <c:when test="${cluster}">
-                                    <h3><a href="./query${url}<mytag:linkEscape name="species" value="${species}"/>&amp;types=${result.typeName}<mytag:linkEscape name="compartments" value="${compartments}"/><mytag:linkEscape name="keywords" value="${keywords}"/>&amp;cluster=${cluster}" title="show all ${result.typeName}" rel="nofollow">${result.typeName}</a> <span>(${result.rowCount} results from a total of ${result.entriesCount})</span></h3>
+                                    <h3><a href="./query${url}<mytag:linkEscape name="species" value="${species}"/>&amp;types=${result.typeName}<mytag:linkEscape name="compartments" value="${compartments}"/><mytag:linkEscape name="keywords" value="${keywords}"/>&amp;cluster=${cluster}" title="show all ${result.typeName}" >${result.typeName}</a> <span>(${result.rowCount} results from a total of ${result.entriesCount})</span></h3>
                                 </c:when>
                                 <c:otherwise>
                                     <h3>${result.typeName} <span>(${result.rowCount} results from a total of ${result.entriesCount})</span></h3>
@@ -62,10 +62,10 @@
 
                                         <c:choose>
                                             <c:when test="${entry.exactType == 'Interactor'}" >
-                                                <a href="./detail/interactor/${entry.id}" class="" title="Show Interactor Details" rel="nofollow">${entry.name}</a>
+                                                <a href="./detail/interactor/${entry.id}" class="" title="Show Interactor Details" >${entry.name}</a>
                                             </c:when>
                                             <c:otherwise>
-                                                <a href="./detail/${entry.id}" class="" title="Show Details" rel="nofollow">${entry.name}</a>
+                                                <a href="./detail/${entry.id}" class="" title="Show Details" >${entry.name}</a>
                                             </c:otherwise>
                                         </c:choose>
                                     </h4>
@@ -94,14 +94,14 @@
                                     </c:if>
 
                                     <c:if test="${not empty entry.regulator}">
-                                        <div class="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-12"><strong>Regulator:</strong> <a href="./detail/${entry.regulatorId}" class="" title="Show Details" rel="nofollow">${entry.regulator}</a></div>
+                                        <div class="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-12"><strong>Regulator:</strong> <a href="./detail/${entry.regulatorId}" class="" title="Show Details" >${entry.regulator}</a></div>
                                     </c:if>
                                     <c:if test="${not empty entry.regulatedEntity}">
-                                        <div class="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-12"><strong>Regulated entity:</strong> <a href="./detail/${entry.regulatedEntityId}" class="" title="Show Details" rel="nofollow">${entry.regulatedEntity}</a></div>
+                                        <div class="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-12"><strong>Regulated entity:</strong> <a href="./detail/${entry.regulatedEntityId}" class="" title="Show Details" >${entry.regulatedEntity}</a></div>
                                     </c:if>
                                     <c:if test="${not empty entry.referenceIdentifier}">
-                                        <%--<span>Primary external reference: ${entry.databaseName} <a href="${entry.referenceURL}" class="" title="show: ${entry.databaseName}" rel="nofollow">${entry.referenceName}: ${entry.referenceIdentifier}</a></span>--%>
-                                        <div class="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-12"><strong>Primary external reference:</strong> ${entry.databaseName}: <a href="${entry.referenceURL}" rel="nofollow" target="_blank"><c:if test="${not empty entry.referenceName}">${entry.referenceName}: </c:if>${entry.referenceIdentifier}</a></div>
+                                        <%--<span>Primary external reference: ${entry.databaseName} <a href="${entry.referenceURL}" class="" title="show: ${entry.databaseName}" >${entry.referenceName}: ${entry.referenceIdentifier}</a></span>--%>
+                                        <div class="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-12"><strong>Primary external reference:</strong> ${entry.databaseName}: <a href="${entry.referenceURL}"  target="_blank"><c:if test="${not empty entry.referenceName}">${entry.referenceName}: </c:if>${entry.referenceIdentifier}</a></div>
                                     </c:if>
                                     <c:if test="${not empty entry.summation}">
                                         <div class="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-12 summation">${entry.summation}</div>

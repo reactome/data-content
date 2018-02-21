@@ -21,10 +21,10 @@
                     <c:set var="interactor" value="${interaction.interactor[0]}" />
                     <tr>
                         <td data-label="Accession">
-                            <a href="./interactor/${interactor.identifier}" class="" title="Show Interactor Details" rel="nofollow"><i class="sprite sprite-Interactor"></i>&nbsp;${interactor.displayName}&nbsp;</a>
+                            <a href="./interactor/${interactor.identifier}" class="" title="Show Interactor Details" ><i class="sprite sprite-Interactor"></i>&nbsp;${interactor.displayName}&nbsp;</a>
                             <a href="${interactor.url}"
                                title="Go to ${interactor.displayName}"
-                               rel="nofollow"><i class="fa fa-external-link" style="font-size: 13px;"></i></a>
+                               ><i class="fa fa-external-link" style="font-size: 13px;"></i></a>
                         </td>
                         <td data-label="#Entities">
                             <c:choose>
@@ -43,7 +43,7 @@
                                         <c:forEach var="pe" items="${interactor.physicalEntity}">
                                             <li>
                                                 <i class="sprite sprite-${pe.schemaClass}" title="${pe.schemaClass}"></i>
-                                                <a href="/content/detail/${pe.stId}" title="Show Details" target="_blank" rel="nofollow">${pe.displayName}<span> (${pe.stId})</span></a>
+                                                <a href="/content/detail/${pe.stId}" title="Show Details" target="_blank" >${pe.displayName}<span> (${pe.stId})</span></a>
                                             </li>
                                         </c:forEach>
                                     </ul>
@@ -61,7 +61,7 @@
                                     <c:out value="0"/>
                                 </c:when>
                                 <c:otherwise>
-                                    <a href="${interaction.url}" title="Open evidence" rel="nofollow" target="_blank">${fn:length(interaction.accession)}</a>
+                                    <a href="${interaction.url}" title="Open evidence"  target="_blank">${fn:length(interaction.accession)}</a>
                                 </c:otherwise>
                             </c:choose>
                         </td>

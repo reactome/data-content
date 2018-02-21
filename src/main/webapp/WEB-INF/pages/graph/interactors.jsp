@@ -62,7 +62,7 @@
                     <c:forEach var="interaction" items="${interactions}">
                         <tr>
                             <td data-label="Accession">
-                                <a href="${interaction.accessionURL}" class="" title="Show ${interaction.accession}" rel="nofollow">${interaction.accession}</a>
+                                <a href="${interaction.accessionURL}" class="" title="Show ${interaction.accession}" >${interaction.accession}</a>
                             </td>
                             <td data-label="#Entities" style="text-align: right;">
                                 ${fn:length(interaction.physicalEntity)}
@@ -72,14 +72,14 @@
                                     <c:forEach var="interactor" items="${interaction.physicalEntity}">
                                         <li>
                                             <i class="sprite sprite-${interactor.schemaClass}" title="${interactor.schemaClass}"></i>
-                                            <a href="/content/detail/${interactor.stId}?interactor=${referenceEntity.displayName}" title="Show Details" target="_blank" rel="nofollow">${interactor.displayName}<span> (${interactor.stId})</span></a>
+                                            <a href="/content/detail/${interactor.stId}?interactor=${referenceEntity.displayName}" title="Show Details" target="_blank" >${interactor.displayName}<span> (${interactor.stId})</span></a>
                                         </li>
                                     </c:forEach>
                                 </ul>
                             </td>
                             <td data-label="Confidence Score">${interaction.score}</td>
                             <td data-label="Evidence (IntAct)">
-                                <a href="${interaction.url}" title="Open evidence in IntAct" rel="nofollow"
+                                <a href="${interaction.url}" title="Open evidence in IntAct"
                                    target="_blank">${interaction.evidences}</a>
                             </td>
                         </tr>

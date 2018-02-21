@@ -73,7 +73,7 @@
             </div>
             <div class="details-field favth-col-lg-10 favth-col-md-10 favth-col-sm-9 favth-col-xs-12">
                 <c:forEach var="compartment" items="${databaseObject.compartment}" varStatus="loop">
-                    <span><a href="${compartment.url}" target="_blank" rel="nofollow" title="Show ${compartment.name}">${compartment.name}</a><c:if test="${not loop.last}">, </c:if></span>
+                    <span><a href="${compartment.url}" target="_blank"  title="Show ${compartment.name}">${compartment.name}</a><c:if test="${not loop.last}">, </c:if></span>
                 </c:forEach>
             </div>
         </c:if>
@@ -95,7 +95,7 @@
                     <span>GO Cellular Component</span>
                 </div>
                 <div class="details-field favth-col-lg-10 favth-col-md-10 favth-col-sm-9 favth-col-xs-12">
-                    <a href="${databaseObject.goCellularComponent.url}" class="" title="show ${databaseObject.goCellularComponent.name}" rel="nofollow">${databaseObject.goCellularComponent.name}</a> (${databaseObject.goCellularComponent.accession})
+                    <a href="${databaseObject.goCellularComponent.url}" class="" title="show ${databaseObject.goCellularComponent.name}" >${databaseObject.goCellularComponent.name}</a> (${databaseObject.goCellularComponent.accession})
                 </div>
             </c:if>
         </c:if>

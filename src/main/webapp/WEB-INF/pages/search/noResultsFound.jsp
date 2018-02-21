@@ -38,7 +38,7 @@
                                 <c:url var="url" value="">
                                     <c:param name="q" value="${suggestion}"/>
                                 </c:url>
-                                <li><a href="./query${url}<mytag:linkEscape name="species" value="${species}"/><mytag:linkEscape name="types" value="${types}"/><mytag:linkEscape name="compartments" value="${compartments}"/><mytag:linkEscape name="keywords" value="${keywords}"/>&amp;cluster=${cluster}" title="search for ${suggestion}" rel="nofollow">${suggestion}</a></li>
+                                <li><a href="./query${url}<mytag:linkEscape name="species" value="${species}"/><mytag:linkEscape name="types" value="${types}"/><mytag:linkEscape name="compartments" value="${compartments}"/><mytag:linkEscape name="keywords" value="${keywords}"/>&amp;cluster=${cluster}" title="search for ${suggestion}" >${suggestion}</a></li>
                             </c:forEach>
                         </ul>
                     </div>

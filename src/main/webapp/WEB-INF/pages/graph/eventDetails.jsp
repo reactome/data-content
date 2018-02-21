@@ -16,7 +16,7 @@
                         <c:forEach var="hasEvent" items="${databaseObject.hasEvent}">
                             <li>
                                 <i class="sprite sprite-resize sprite-${hasEvent.schemaClass} sprite-position" title="${hasEvent.schemaClass}"></i>
-                                <a href="../detail/${hasEvent.stId}" class="" title="Show Details" rel="nofollow">${hasEvent.displayName} <c:if test="${not empty hasEvent.speciesName}">(${hasEvent.speciesName})</c:if></a>
+                                <a href="../detail/${hasEvent.stId}" class="" title="Show Details" >${hasEvent.displayName} <c:if test="${not empty hasEvent.speciesName}">(${hasEvent.speciesName})</c:if></a>
                             </li>
                         </c:forEach>
                     </ul>
@@ -41,7 +41,7 @@
                                 <li>
                                     <i class="sprite sprite-resize sprite-${input.object.schemaClass} sprite-position" title="${input.object.schemaClass}"></i>
                                     <c:if test="${input.stoichiometry gt 1}">${input.stoichiometry} x </c:if>
-                                    <a href="../detail/${input.object.stId}" class="" title="Show Details" rel="nofollow">${input.object.displayName} <c:if test="${not empty input.object.speciesName}">(${input.object.speciesName})</c:if></a>
+                                    <a href="../detail/${input.object.stId}" class="" title="Show Details" >${input.object.displayName} <c:if test="${not empty input.object.speciesName}">(${input.object.speciesName})</c:if></a>
                                 </li>
                             </c:forEach>
                         </ul>
@@ -61,7 +61,7 @@
                                 <li>
                                     <i class="sprite sprite-resize sprite-${output.object.schemaClass} sprite-position" title="${output.object.schemaClass}"></i>
                                     <c:if test="${output.stoichiometry gt 1}">${output.stoichiometry} x </c:if>
-                                    <a href="../detail/${output.object.stId}" class="" title="Show Details" rel="nofollow">${output.object.displayName} <c:if test="${not empty output.object.speciesName}">(${output.object.speciesName})</c:if></a>
+                                    <a href="../detail/${output.object.stId}" class="" title="Show Details" >${output.object.displayName} <c:if test="${not empty output.object.speciesName}">(${output.object.speciesName})</c:if></a>
                                 </li>
                             </c:forEach>
                         </ul>
@@ -81,7 +81,7 @@
                                     <c:forEach var="entityOnOtherCell" items="${databaseObject.entityOnOtherCell}">
                                         <li>
                                             <i class="sprite sprite-resize sprite-${entityOnOtherCell.schemaClass} sprite-position" title="${entityOnOtherCell.schemaClass}"></i>
-                                            <a href="../detail/${entityOnOtherCell.stId}" class="" title="Show Details" rel="nofollow">${entityOnOtherCell.displayName} <c:if test="${not empty entityOnOtherCell.speciesName}">(${entityOnOtherCell.speciesName})</c:if></a>
+                                            <a href="../detail/${entityOnOtherCell.stId}" class="" title="Show Details" >${entityOnOtherCell.displayName} <c:if test="${not empty entityOnOtherCell.speciesName}">(${entityOnOtherCell.speciesName})</c:if></a>
                                         </li>
                                     </c:forEach>
                                 </ul>
@@ -107,7 +107,7 @@
                     Go Biological Process
                 </div>
                 <div class="favth-col-lg-10 favth-col-md-10 favth-col-sm-9 favth-col-xs-12 details-field">
-                    <span><a href="${databaseObject.goBiologicalProcess.url}" class=""  title="go to ${databaseObject.goBiologicalProcess.databaseName}" rel="nofollow">${databaseObject.goBiologicalProcess.displayName} (${databaseObject.goBiologicalProcess.accession})</a></span>
+                    <span><a href="${databaseObject.goBiologicalProcess.url}" class=""  title="go to ${databaseObject.goBiologicalProcess.databaseName}" >${databaseObject.goBiologicalProcess.displayName} (${databaseObject.goBiologicalProcess.accession})</a></span>
                 </div>
             </c:if>
             <c:if test="${databaseObject.schemaClass == 'Reaction'}">
@@ -116,7 +116,7 @@
                         Reverse Reaction
                     </div>
                     <div class="favth-col-lg-10 favth-col-md-10 favth-col-sm-9 favth-col-xs-12 details-field">
-                        <span><a href="../detail/${databaseObject.reverseReaction.stId}" class="" title="Show Details" rel="nofollow">${databaseObject.reverseReaction.displayName} <c:if test="${not empty databaseObject.reverseReaction.speciesName}">(${databaseObject.reverseReaction.speciesName})</c:if></a></span>
+                        <span><a href="../detail/${databaseObject.reverseReaction.stId}" class="" title="Show Details" >${databaseObject.reverseReaction.displayName} <c:if test="${not empty databaseObject.reverseReaction.speciesName}">(${databaseObject.reverseReaction.speciesName})</c:if></a></span>
                     </div>
                 </c:if>
             </c:if>
@@ -146,7 +146,7 @@
                                 </div>
                                 <div class="favth-col-lg-10 favth-col-md-9 favth-col-sm-12 favth-col-xs-12 details-field ca-field">
                                     <i class="sprite sprite-resize sprite-${catalystActivity.physicalEntity.schemaClass} sprite-position" title="${catalystActivity.physicalEntity.schemaClass}"></i>
-                                    <a href="../detail/${catalystActivity.physicalEntity.stId}" class="" title="show Reactome ${catalystActivity.physicalEntity.stId}" rel="nofollow">${catalystActivity.physicalEntity.displayName}</a>
+                                    <a href="../detail/${catalystActivity.physicalEntity.stId}" class="" title="show Reactome ${catalystActivity.physicalEntity.stId}" >${catalystActivity.physicalEntity.displayName}</a>
                                 </div>
                             </c:if>
 
@@ -155,7 +155,7 @@
                                     Activity
                                 </div>
                                 <div class="favth-col-lg-10 favth-col-md-9 favth-col-sm-12 favth-col-xs-12 details-field ca-field">
-                                    <a href="${catalystActivity.activity.url}" class="" title="show ${catalystActivity.activity.databaseName}" rel="nofollow">${catalystActivity.activity.displayName} (${catalystActivity.activity.accession})</a>
+                                    <a href="${catalystActivity.activity.url}" class="" title="show ${catalystActivity.activity.databaseName}" >${catalystActivity.activity.displayName} (${catalystActivity.activity.accession})</a>
                                 </div>
                             </c:if>
                         </div>
@@ -177,7 +177,7 @@
                         <ul class="list">
                             <c:forEach var="negativelyRegulatedBy" items="${databaseObject.negativelyRegulatedBy}">
                                 <li>
-                                    <a href="../detail/${negativelyRegulatedBy.stId}" class="" title="Show Details" rel="nofollow">${negativelyRegulatedBy.displayName}</a>
+                                    <a href="../detail/${negativelyRegulatedBy.stId}" class="" title="Show Details" >${negativelyRegulatedBy.displayName}</a>
                                 </li>
                             </c:forEach>
                         </ul>
@@ -193,7 +193,7 @@
                         <ul class="list">
                             <c:forEach var="positivelyRegulatedBy" items="${databaseObject.positivelyRegulatedBy}">
                                 <li>
-                                    <a href="../detail/${positivelyRegulatedBy.stId}" class="" title="Show Details" rel="nofollow">${positivelyRegulatedBy.displayName}</a>
+                                    <a href="../detail/${positivelyRegulatedBy.stId}" class="" title="Show Details" >${positivelyRegulatedBy.displayName}</a>
                                 </li>
                             </c:forEach>
                         </ul>
@@ -209,7 +209,7 @@
                         <ul class="list">
                             <c:forEach var="requirement" items="${databaseObject.requirements}">
                                 <li>
-                                    <a href="../detail/${requirement.stId}" class="" title="Show Details" rel="nofollow">${requirement.displayName}</a>
+                                    <a href="../detail/${requirement.stId}" class="" title="Show Details" >${requirement.displayName}</a>
                                 </li>
                             </c:forEach>
                         </ul>
@@ -220,14 +220,13 @@
     </fieldset>
 </c:if>
 
-
 <c:if test="${not empty databaseObject.inferredFrom}">
     <fieldset class="fieldset-details">
         <legend>Inferred From</legend>
         <div class="wrap overflow">
             <c:forEach var="inferredFrom" items="${databaseObject.inferredFrom}">
                 <div class="favth-col-lg-6 favth-col-md-6 favth-col-sm-12 favth-col-xs-12 text-overflow">
-                    <a href="../detail/${inferredFrom.stId}" class="" title="${inferredFrom.displayName} (${inferredFrom.speciesName})" rel="nofollow">${inferredFrom.displayName} (${inferredFrom.speciesName})</a>
+                    <a href="../detail/${inferredFrom.stId}" class="" title="${inferredFrom.displayName} (${inferredFrom.speciesName})" >${inferredFrom.displayName} (${inferredFrom.speciesName})</a>
                 </div>
             </c:forEach>
         </div>
@@ -241,11 +240,10 @@
             <c:forEach items="${orthologousEvents}" var="orthologousEvents">
                 <c:forEach items="${orthologousEvents.value}" var="orthologousEvent">
                     <div class="favth-col-lg-6 favth-col-md-6 favth-col-sm-12 favth-col-xs-12 text-overflow">
-                        <a href="../detail/${orthologousEvent.stId}" title="${orthologousEvent.displayName} (${orthologousEvent.speciesName})" rel="nofollow">${orthologousEvent.displayName} (${orthologousEvent.speciesName})</a>
+                        <a href="../detail/${orthologousEvent.stId}" title="${orthologousEvent.displayName} (${orthologousEvent.speciesName})" >${orthologousEvent.displayName} (${orthologousEvent.speciesName})</a>
                     </div>
                 </c:forEach>
             </c:forEach>
-            </div>
         </div>
     </fieldset>
 </c:if>
