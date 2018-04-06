@@ -277,7 +277,7 @@ class GraphController {
         try {
             crossReferences = (List<DatabaseIdentifier>) databaseObject.getClass().getMethod("getCrossReference").invoke(databaseObject);
             ReferenceEntity re = (ReferenceEntity) databaseObject.getClass().getMethod("getReferenceEntity").invoke(databaseObject);
-            crossReferences.addAll(re.getCrossReference());
+            if (re.getCrossReference() != null) crossReferences.addAll(re.getCrossReference());
         } catch (Exception e) { /* Nothing here*/ }
         return crossReferences != null ? crossReferences : Collections.EMPTY_LIST;
     }
