@@ -190,7 +190,7 @@ class GraphController {
 
         if (contentDetails != null && contentDetails.getDatabaseObject() != null) {
             DatabaseObject databaseObject = contentDetails.getDatabaseObject();
-            String superClass = getClazz(databaseObject);
+            String superClass = getSuperClass(databaseObject);
             if (superClass == null) {
                 /*
                  * The database object contains already all outgoing relationships.
@@ -282,7 +282,7 @@ class GraphController {
         return crossReferences != null ? crossReferences : Collections.EMPTY_LIST;
     }
 
-    private String getClazz(DatabaseObject databaseObject) {
+    private String getSuperClass(DatabaseObject databaseObject) {
         if (databaseObject != null) {
             if (databaseObject instanceof Event) {
                 return Event.class.getSimpleName();
