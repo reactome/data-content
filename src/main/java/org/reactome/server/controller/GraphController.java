@@ -262,24 +262,23 @@ class GraphController {
             }
     }
 
-    private Map<String, List<DatabaseIdentifier>> groupCrossReferences(List<DatabaseIdentifier> databaseIdentifiers) {
+    private Map<String, Set<DatabaseIdentifier>> groupCrossReferences(List<DatabaseIdentifier> databaseIdentifiers) {
         if (databaseIdentifiers == null) return null;
-        Map<String, List<DatabaseIdentifier>> groupedCrossReferences = new HashMap<>();
+        Map<String, Set<DatabaseIdentifier>> groupedCrossReferences = new HashMap<>();
         for (DatabaseIdentifier databaseIdentifier : databaseIdentifiers) {
-            groupedCrossReferences.computeIfAbsent(databaseIdentifier.getDatabaseName(), crossRef -> new ArrayList<>()).add(databaseIdentifier);
+            groupedCrossReferences.computeIfAbsent(databaseIdentifier.getDatabaseName(), crossRef -> new HashSet<>()).add(databaseIdentifier);
         }
         return groupedCrossReferences;
     }
 
+    @SuppressWarnings("unchecked")
     private List<DatabaseIdentifier> getCrossReference(DatabaseObject databaseObject) {
         List<DatabaseIdentifier> crossReferences = null;
-        if (databaseObject instanceof PhysicalEntity) {
-            crossReferences = ((PhysicalEntity) databaseObject).getCrossReference();
-        } else if (databaseObject instanceof Event) {
-            crossReferences = ((Event) databaseObject).getCrossReference();
-        } else if (databaseObject instanceof ReferenceEntity) {
-            crossReferences = ((ReferenceEntity) databaseObject).getCrossReference();
-        }
+        try {
+            crossReferences = (List<DatabaseIdentifier>) databaseObject.getClass().getMethod("getCrossReference").invoke(databaseObject);
+            ReferenceEntity re = (ReferenceEntity) databaseObject.getClass().getMethod("getReferenceEntity").invoke(databaseObject);
+            crossReferences.addAll(re.getCrossReference());
+        } catch (Exception e) { /* Nothing here*/ }
         return crossReferences != null ? crossReferences : Collections.EMPTY_LIST;
     }
 
