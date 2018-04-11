@@ -12,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.mail.MailException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -188,8 +189,14 @@ class SearchController {
             if (!targetTerms.isEmpty()) {
                 String subject = TARGET_MAIL_SUBJECT.replace("##ID##", targetTerms.toString());
                 String body = TARGET_MAIL_BODY.replace("##QUERY##", q) + StringUtils.join(targetTerms, "\n");
-                mailService.send(TARGET_FROM, TARGET_FROM_MAIL, mailSupportDest, subject, body);
+                try {
+                    mailService.send(TARGET_FROM, TARGET_FROM_MAIL, mailSupportDest, subject, body);
+                } catch (MailException e) {
+                    // nothing here ?!
+                }
+
                 model.addAttribute(TARGETS, targetTerms);
+                infoLogger.info("Search performed and targets found: {}", targetTerms.toString());
             }
         }
 
