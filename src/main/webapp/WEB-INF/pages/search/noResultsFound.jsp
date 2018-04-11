@@ -16,9 +16,30 @@
         </c:when>
         <c:otherwise>
             <h3>No results found for ${q}</h3>
+
+            <%-- Show potential targets --%>
+            <c:if test="${not empty targets}">
+                <div class="alert alert-info">
+                    <c:choose>
+                        <c:when test="${fn:length(targets) eq 1}">
+                            <h4 class="margin0 bottom"><i class="fa fa-info-circle"></i>There are no annotations found for ${targets.iterator().next()}, although it appears to be in our scope.</h4>
+                        </c:when>
+                        <c:otherwise>
+                            <h4 class="margin0"><i class="fa fa-info-circle"></i>There are no annotations found for the following terms, although they appear to be in our scope:</h4>
+                            <div class="padding0 left30">
+                                <ul class="list">
+                                    <c:forEach var="target" items="${targets}">
+                                        <li>${target}</li>
+                                    </c:forEach>
+                                </ul>
+                            </div>
+                        </c:otherwise>
+                    </c:choose>
+                    <span><small>A notification has been sent to us. Thank you for your interest in Reactome.</small></span>
+                </div>
+            </c:if>
             <c:choose>
                 <c:when test="${empty suggestions}">
-                    <%--<p class="alert">Sorry we could not find any entry matching '${q}'</p>--%>
                     <p>Please consider refining your terms:</p>
                     <div class="padding0 left30">
                     <ul class="list lower-alpha">

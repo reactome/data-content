@@ -4,6 +4,7 @@ import org.apache.commons.lang.StringUtils;
 import org.reactome.server.search.domain.FacetMapping;
 import org.reactome.server.search.domain.Query;
 import org.reactome.server.search.domain.SearchResult;
+import org.reactome.server.search.domain.TargetEntry;
 import org.reactome.server.search.exception.SolrSearcherException;
 import org.reactome.server.search.service.SearchService;
 import org.reactome.server.util.MailService;
@@ -18,7 +19,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import static org.reactome.server.util.WebUtils.cleanReceivedParameter;
 import static org.reactome.server.util.WebUtils.cleanReceivedParameters;
@@ -65,6 +68,13 @@ class SearchController {
     private static final String PAGE_NO_RESULTS_FOUND = "search/noResultsFound";
     private static final String PAGE_EBI_ADVANCED = "search/advanced";
     private static final String PAGE_EBI_SEARCHER = "search/results";
+
+    // Target
+    private static final String TARGETS = "targets";
+    private static final String TARGET_FROM = "Reactome Helpdesk";
+    private static final String TARGET_FROM_MAIL = "no-reply@reactome.org";
+    private static final String TARGET_MAIL_SUBJECT = "[search-target] Term(s) in our scope of annotation: ##ID##";
+    private static final String TARGET_MAIL_BODY = "A user performed a search [##QUERY##] and the following term(s) has/have been identified in our scope: \n\n";
 
     @Value("${mail.error.dest}")
     private String mailErrorDest; // E
@@ -144,7 +154,6 @@ class SearchController {
 
             Query queryObject = new Query(q, species, types, compartments, keywords);
             SearchResult searchResult = searchService.getSearchResult(queryObject, rowCount, page, cluster);
-
             if (searchResult != null) {
                 model.addAttribute(SPECIES_FACET, searchResult.getFacetMapping().getSpeciesFacet());
                 model.addAttribute(TYPES_FACET, searchResult.getFacetMapping().getTypeFacet());
@@ -153,12 +162,37 @@ class SearchController {
                 model.addAttribute(MAX_PAGE, (int) Math.ceil(searchResult.getResultCount() / searchResult.getRows()));
                 model.addAttribute(GROUPED_RESULT, searchResult.getGroupedResult());
                 infoLogger.info("Search request for query: {} was found", q);
+
                 return PAGE_EBI_SEARCHER;
             } else {
                 // Generating spell check suggestions if no faceting information was found, while using no filters
                 model.addAttribute(SUGGESTIONS, searchService.getSpellcheckSuggestions(q));
             }
+
+            // Not found in reactome, let's see if it is in our scope for annotation
+            Query query = new Query(q, null, null,null,null);
+            List<TargetEntry> targets = searchService.getTargets(query);
+            Set<String> targetTerms = new HashSet<>();
+            for (TargetEntry targetEntry : targets) {
+                String[] terms = q.split("\\s+");
+                for (String singleTerm : terms) {
+                    if (targetEntry.getIdentifier().equalsIgnoreCase(singleTerm) ||
+                        targetEntry.getAccessions().stream().anyMatch(singleTerm::equalsIgnoreCase) ||
+                        (targetEntry.getGeneNames() != null && targetEntry.getGeneNames().stream().anyMatch(singleTerm::equalsIgnoreCase)) ||
+                        (targetEntry.getSynonyms() != null && targetEntry.getSynonyms().stream().anyMatch(singleTerm::equalsIgnoreCase))) {
+                        targetTerms.add(singleTerm);
+                    }
+                }
+            }
+
+            if (!targetTerms.isEmpty()) {
+                String subject = TARGET_MAIL_SUBJECT.replace("##ID##", targetTerms.toString());
+                String body = TARGET_MAIL_BODY.replace("##QUERY##", q) + StringUtils.join(targetTerms, "\n");
+                mailService.send(TARGET_FROM, TARGET_FROM_MAIL, mailSupportDest, subject, body);
+                model.addAttribute(TARGETS, targetTerms);
+            }
         }
+
         autoFillContactForm(model, q);
         infoLogger.info("Search request for query: {} was NOT found", q);
         return PAGE_NO_RESULTS_FOUND;

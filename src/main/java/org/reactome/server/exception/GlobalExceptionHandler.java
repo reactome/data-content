@@ -1,6 +1,5 @@
 package org.reactome.server.exception;
 
-import org.reactome.server.search.exception.EnricherException;
 import org.reactome.server.search.exception.SolrSearcherException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,8 +40,8 @@ class GlobalExceptionHandler {
 
     @ResponseStatus(value = HttpStatus.NOT_FOUND, reason = "IOException occurred")
     @ExceptionHandler(IOException.class)
-    public void handleIOException() {
-        errorLogger.error("IOException handler executed");  //returning 404 error code
+    public void handleIOException(IOException e) {
+        errorLogger.error("IOException handler executed", e);  //returning 404 error code
     }
 
     private ModelAndView buildModelView(HttpServletRequest request, Exception e) {
@@ -68,7 +67,7 @@ class GlobalExceptionHandler {
         model.addObject(MESSAGE, sb.toString());
 
         model.addObject(TITLE, "Unexpected error occurred.");
-       
+
         return model;
     }
 }
