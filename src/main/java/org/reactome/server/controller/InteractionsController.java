@@ -88,7 +88,7 @@ public class InteractionsController {
         param.put("accession", accession);
 
         try {
-            rtn = advancedDatabaseObjectService.customQueryForObjects(CustomInteraction.class, query, param);
+            rtn = advancedDatabaseObjectService.getCustomQueryResults(CustomInteraction.class, query, param);
         } catch (CustomQueryException e) {
             errorLogger.error(e.getMessage(), e);
             rtn = new ArrayList<>();
@@ -106,7 +106,7 @@ public class InteractionsController {
         params.put("accession", id);
         ReferenceEntity re = null;
         try {
-            re = advancedDatabaseObjectService.customQueryForDatabaseObject(ReferenceEntity.class, query, params);
+            re = advancedDatabaseObjectService.getCustomQueryResult(ReferenceEntity.class, query, params);
         } catch (CustomQueryException e) {
             errorLogger.error(e.getMessage(), e);
         }
