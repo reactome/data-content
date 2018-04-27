@@ -122,7 +122,8 @@ public class HeaderFooterCacher extends Thread {
             rtn = getReplaced(rtn, HEADER_CLOSE, HEADER_CLOSE, HEADER_CLOSE_REPLACE);
 
             rtn = rtn.replaceFirst("<base.*/>", "");
-            rtn = rtn.replaceAll("(http|https)://", "//");
+            // Avoid replacing the protocol inside script tag. Google Structured Data reports as invalid schema.
+            rtn = rtn.replaceAll("(?!<script[^>]*?>)(http|https)://(?![^<]*?</script>)", "//");
 
             // remove joomla template default class
             rtn = rtn.replaceAll("favth-content-block", "");
