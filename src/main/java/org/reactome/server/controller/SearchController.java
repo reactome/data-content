@@ -1,10 +1,11 @@
 package org.reactome.server.controller;
 
 import org.apache.commons.lang.StringUtils;
+import org.reactome.server.graph.service.GeneralService;
 import org.reactome.server.search.domain.FacetMapping;
 import org.reactome.server.search.domain.Query;
 import org.reactome.server.search.domain.SearchResult;
-import org.reactome.server.search.domain.TargetEntry;
+import org.reactome.server.search.domain.TargetResult;
 import org.reactome.server.search.exception.SolrSearcherException;
 import org.reactome.server.search.service.SearchService;
 import org.reactome.server.util.MailService;
@@ -12,7 +13,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.mail.MailException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,9 +20,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.HashSet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.HashMap;
 import java.util.List;
-import java.util.Set;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import static org.reactome.server.util.WebUtils.cleanReceivedParameter;
 import static org.reactome.server.util.WebUtils.cleanReceivedParameters;
@@ -38,50 +41,44 @@ class SearchController {
 
     private static final Logger errorLogger = LoggerFactory.getLogger("errorLogger");
     private static final Logger infoLogger = LoggerFactory.getLogger("infoLogger");
-
-    private SearchService searchService;
-    private MailService mailService;
-
     private static final int rowCount = 30;
-
     private static final String SPECIES_FACET = "species_facet";
     private static final String TYPES_FACET = "type_facet";
     private static final String KEYWORDS_FACET = "keyword_facet";
     private static final String COMPARTMENTS_FACET = "compartment_facet";
-
     private static final String Q = "q";
     private static final String SPECIES = "species";
     private static final String TYPES = "types";
     private static final String KEYWORDS = "keywords";
     private static final String COMPARTMENTS = "compartments";
-
     private static final String TITLE = "title";
     private static final String GROUPED_RESULT = "groupedResult";
     private static final String SUGGESTIONS = "suggestions";
     private static final String PAGE = "page";
     private static final String MAX_PAGE = "maxpage";
     private static final String CLUSTER = "cluster";
-
     private static final String MAIL_SUBJECT = "subject";
     private static final String MAIL_SUBJECT_PLACEHOLDER = "[SEARCH] No results found for ";
     private static final String MAIL_MESSAGE = "message";
-
     private static final String PAGE_NO_RESULTS_FOUND = "search/noResultsFound";
     private static final String PAGE_EBI_ADVANCED = "search/advanced";
     private static final String PAGE_EBI_SEARCHER = "search/results";
-
-    // Target
     private static final String TARGETS = "targets";
-    private static final String TARGET_FROM = "Reactome Helpdesk";
-    private static final String TARGET_FROM_MAIL = "no-reply@reactome.org";
-    private static final String TARGET_MAIL_SUBJECT = "[search-target] Term(s) in our scope of annotation: ##ID##";
-    private static final String TARGET_MAIL_BODY = "A user performed a search [##QUERY##] and the following term(s) has/have been identified in our scope: \n\n";
+    private final Integer releaseNumber;
+
+    private SearchService searchService;
+    private MailService mailService;
 
     @Value("${mail.error.dest}")
     private String mailErrorDest; // E
 
     @Value("${mail.support.dest}")
     private String mailSupportDest; // W
+
+    @Autowired
+    public SearchController(GeneralService generalService) {
+        releaseNumber = generalService.getDBVersion();
+    }
 
     /**
      * Method for autocompletion
@@ -131,7 +128,9 @@ class SearchController {
                          @RequestParam(required = false) List<String> compartments,
                          @RequestParam(required = false) Boolean cluster,
                          @RequestParam(required = false) Integer page,
-                         ModelMap model) throws SolrSearcherException {
+                         ModelMap model,
+                         HttpServletRequest request,
+                         HttpServletResponse response) throws SolrSearcherException {
 
         if (q != null && !q.isEmpty()) {
 
@@ -153,9 +152,9 @@ class SearchController {
             model.addAttribute(CLUSTER, cluster);
             model.addAttribute(PAGE, page);
 
-            Query queryObject = new Query(q, species, types, compartments, keywords);
+            Query queryObject = new Query(q, species, types, compartments, keywords, getReportInformation(request));
             SearchResult searchResult = searchService.getSearchResult(queryObject, rowCount, page, cluster);
-            if (searchResult != null) {
+            if (searchResult != null && (searchResult.getTargetResults() == null || searchResult.getTargetResults().isEmpty())) {
                 model.addAttribute(SPECIES_FACET, searchResult.getFacetMapping().getSpeciesFacet());
                 model.addAttribute(TYPES_FACET, searchResult.getFacetMapping().getTypeFacet());
                 model.addAttribute(KEYWORDS_FACET, searchResult.getFacetMapping().getKeywordFacet());
@@ -170,38 +169,14 @@ class SearchController {
                 model.addAttribute(SUGGESTIONS, searchService.getSpellcheckSuggestions(q));
             }
 
-            // Not found in reactome, let's see if it is in our scope for annotation
-            Query query = new Query(q, null, null,null,null);
-            List<TargetEntry> targets = searchService.getTargets(query);
-            Set<String> targetTerms = new HashSet<>();
-            for (TargetEntry targetEntry : targets) {
-                String[] terms = q.split("\\s+");
-                for (String singleTerm : terms) {
-                    if (targetEntry.getIdentifier().equalsIgnoreCase(singleTerm) ||
-                        targetEntry.getAccessions().stream().anyMatch(singleTerm::equalsIgnoreCase) ||
-                        (targetEntry.getGeneNames() != null && targetEntry.getGeneNames().stream().anyMatch(singleTerm::equalsIgnoreCase)) ||
-                        (targetEntry.getSynonyms() != null && targetEntry.getSynonyms().stream().anyMatch(singleTerm::equalsIgnoreCase))) {
-                        targetTerms.add(singleTerm);
-                    }
-                }
-            }
-
-            if (!targetTerms.isEmpty()) {
-                String subject = TARGET_MAIL_SUBJECT.replace("##ID##", targetTerms.toString());
-                String body = TARGET_MAIL_BODY.replace("##QUERY##", q) + StringUtils.join(targetTerms, "\n");
-                try {
-                    mailService.send(TARGET_FROM, TARGET_FROM_MAIL, mailSupportDest, subject, body);
-                } catch (MailException e) {
-                    // nothing here ?!
-                }
-
-                model.addAttribute(TARGETS, targetTerms);
-                infoLogger.info("Search performed and targets found: {}", targetTerms.toString());
+            if (searchResult != null && !searchResult.getTargetResults().isEmpty()) {
+                model.addAttribute(TARGETS, searchResult.getTargetResults().stream().filter(TargetResult::isTarget).map(TargetResult::getTerm).collect(Collectors.toList()));
             }
         }
 
         autoFillContactForm(model, q);
         infoLogger.info("Search request for query: {} was NOT found", q);
+        response.setStatus(HttpServletResponse.SC_NOT_FOUND);
         return PAGE_NO_RESULTS_FOUND;
     }
 
@@ -223,7 +198,7 @@ class SearchController {
             message = message.concat("\n\n Exception: " + exception);
             subject = "Unexpected error occurred.";
         }
-        if(StringUtils.isNotBlank(contactName)) {
+        if (StringUtils.isNotBlank(contactName)) {
             contactName = contactName.trim();
             message = message.concat("--\n").concat(contactName.trim());
         }
@@ -256,4 +231,20 @@ class SearchController {
         this.mailService = mailService;
     }
 
+    /**
+     * Extra information to be sent to report service in order to store potential target
+     */
+    private Map<String, String> getReportInformation(HttpServletRequest request) {
+        if (request == null) return null;
+
+        Map<String, String> result = new HashMap<>();
+        result.put("user-agent", request.getHeader("User-Agent"));
+        String remoteAddr = request.getHeader("X-FORWARDED-FOR"); // Client IP
+        if (remoteAddr == null || "".equals(remoteAddr)) {
+            result.put("ip-address", request.getRemoteAddr());
+        }
+        result.put("release-version", releaseNumber.toString());
+
+        return result;
+    }
 }
