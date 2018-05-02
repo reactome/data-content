@@ -435,20 +435,6 @@ class GraphController {
         return null;
     }
 
-    private <T extends Regulation> List<T> getRegulations(Class<T> clazz, DatabaseObject databaseObject){
-        List<T> rtn = new ArrayList<>();
-        if(databaseObject instanceof ReactionLikeEvent){
-            ReactionLikeEvent rle = (ReactionLikeEvent) databaseObject;
-            for (Regulation regulation : rle.getRegulatedBy()) {
-                if(clazz.isAssignableFrom(regulation.getClass())){
-                    //noinspection unchecked
-                    rtn.add((T) regulation);
-                }
-            }
-        }
-        return rtn;
-    }
-
     @Autowired
     public void setGeneralService(GeneralService generalService) {
         this.generalService = generalService;
