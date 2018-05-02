@@ -166,10 +166,10 @@
     </fieldset>
 </c:if>
 
-<c:if test="${not empty databaseObject.negativelyRegulatedBy || not empty databaseObject.positivelyRegulatedBy || not empty databaseObject.requirements}">
+<c:if test="${not empty negativelyRegulatedBy || not empty positivelyRegulatedBy || not empty requirements}">
     <fieldset class="fieldset-details">
         <legend>This entity is regulated by</legend>
-        <c:if test="${not empty databaseObject.negativelyRegulatedBy}">
+        <c:if test="${not empty negativelyRegulatedBy}">
             <div class="fieldset-pair-container">
                 <div class="favth-clearfix">
                     <div class="favth-col-lg-2 favth-col-md-2 favth-col-sm-3 favth-col-xs-12 details-label">Negative Regulation</div>
@@ -185,13 +185,13 @@
                 </div>
             </div>
         </c:if>
-        <c:if test="${not empty databaseObject.positivelyRegulatedBy}">
+        <c:if test="${not empty positivelyRegulatedBy}">
             <div class="fieldset-pair-container">
                 <div class="favth-clearfix">
                     <div class="favth-col-lg-2 favth-col-md-2 favth-col-sm-3 favth-col-xs-12 details-label">Positive Regulation</div>
                     <div class="favth-col-lg-10 favth-col-md-10 favth-col-sm-9 favth-col-xs-12 details-field">
                         <ul class="list">
-                            <c:forEach var="positivelyRegulatedBy" items="${databaseObject.positivelyRegulatedBy}">
+                            <c:forEach var="positivelyRegulatedBy" items="${positivelyRegulatedBy}">
                                 <li>
                                     <a href="../detail/${positivelyRegulatedBy.stId}" class="" title="Show Details" >${positivelyRegulatedBy.displayName}</a>
                                 </li>
@@ -201,13 +201,13 @@
                 </div>
             </div>
         </c:if>
-        <c:if test="${not empty databaseObject.requirements}">
+        <c:if test="${not empty requirements}">
             <div class="fieldset-pair-container">
                 <div class="favth-clearfix">
                     <div class="favth-col-lg-2 favth-col-md-2 favth-col-sm-3 favth-col-xs-12 details-label">Requirements</div>
                     <div class="favth-col-lg-10 favth-col-md-10 favth-col-sm-9 favth-col-xs-12 details-field">
                         <ul class="list">
-                            <c:forEach var="requirement" items="${databaseObject.requirements}">
+                            <c:forEach var="requirement" items="${requirements}">
                                 <li>
                                     <a href="../detail/${requirement.stId}" class="" title="Show Details" >${requirement.displayName}</a>
                                 </li>

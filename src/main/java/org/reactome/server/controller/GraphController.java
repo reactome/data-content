@@ -215,6 +215,26 @@ class GraphController {
                 model.addAttribute("inferredTo", getSortedInferredTo(databaseObject));
                 model.addAttribute("hasEHLD", ehlds.contains(databaseObject.getStId()));
 
+                //RegulatedBy moved to RLE without distinction in the types (now it needs to be done here)
+                List<NegativeRegulation> negativeRegulations = new ArrayList<>();
+                List<PositiveRegulation> positiveRegulations = new ArrayList<>();
+                List<Requirement> requirements = new ArrayList<>();
+                if(databaseObject instanceof ReactionLikeEvent) {
+                    ReactionLikeEvent rle = (ReactionLikeEvent) databaseObject;
+                    for (Regulation regulation : rle.getRegulatedBy()) {
+                        if(regulation instanceof NegativeRegulation){
+                            negativeRegulations.add((NegativeRegulation) regulation);
+                        } else if (regulation instanceof Requirement) {
+                            requirements.add((Requirement) regulation);
+                        } else {
+                            positiveRegulations.add((PositiveRegulation) regulation);
+                        }
+                    }
+                }
+                model.addAttribute("negativelyRegulatedBy", negativeRegulations);
+                model.addAttribute("requirements", requirements);
+                model.addAttribute("positivelyRegulatedBy", positiveRegulations);
+
                 List<DatabaseIdentifier> crossReferences = new ArrayList<>();
                 crossReferences.addAll(getCrossReference(databaseObject));
                 setClassAttributes(databaseObject, model);
@@ -413,6 +433,20 @@ class GraphController {
             }
         }
         return null;
+    }
+
+    private <T extends Regulation> List<T> getRegulations(Class<T> clazz, DatabaseObject databaseObject){
+        List<T> rtn = new ArrayList<>();
+        if(databaseObject instanceof ReactionLikeEvent){
+            ReactionLikeEvent rle = (ReactionLikeEvent) databaseObject;
+            for (Regulation regulation : rle.getRegulatedBy()) {
+                if(clazz.isAssignableFrom(regulation.getClass())){
+                    //noinspection unchecked
+                    rtn.add((T) regulation);
+                }
+            }
+        }
+        return rtn;
     }
 
     @Autowired
