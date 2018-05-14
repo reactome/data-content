@@ -294,13 +294,13 @@ class GraphController {
 
     @SuppressWarnings("unchecked")
     private List<DatabaseIdentifier> getCrossReference(DatabaseObject databaseObject) {
-        List<DatabaseIdentifier> crossReferences = new ArrayList<>();
+        List<DatabaseIdentifier> crossReferences = null;
         try {
             crossReferences = (List<DatabaseIdentifier>) databaseObject.getClass().getMethod("getCrossReference").invoke(databaseObject);
             ReferenceEntity re = (ReferenceEntity) databaseObject.getClass().getMethod("getReferenceEntity").invoke(databaseObject);
             if (re.getCrossReference() != null) crossReferences.addAll(re.getCrossReference());
         } catch (Exception e) { /* Nothing here*/ }
-        return crossReferences;
+        return crossReferences == null ? new ArrayList<>() : crossReferences;
     }
 
     private String getSuperClass(DatabaseObject databaseObject) {
