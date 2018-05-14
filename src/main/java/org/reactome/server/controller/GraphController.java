@@ -219,15 +219,17 @@ class GraphController {
                 List<NegativeRegulation> negativeRegulations = new ArrayList<>();
                 List<PositiveRegulation> positiveRegulations = new ArrayList<>();
                 List<Requirement> requirements = new ArrayList<>();
-                if(databaseObject instanceof ReactionLikeEvent) {
+                if (databaseObject instanceof ReactionLikeEvent) {
                     ReactionLikeEvent rle = (ReactionLikeEvent) databaseObject;
-                    for (Regulation regulation : rle.getRegulatedBy()) {
-                        if(regulation instanceof NegativeRegulation){
-                            negativeRegulations.add((NegativeRegulation) regulation);
-                        } else if (regulation instanceof Requirement) {
-                            requirements.add((Requirement) regulation);
-                        } else {
-                            positiveRegulations.add((PositiveRegulation) regulation);
+                    if (rle.getRegulatedBy() != null) {
+                        for (Regulation regulation : rle.getRegulatedBy()) {
+                            if (regulation instanceof NegativeRegulation) {
+                                negativeRegulations.add((NegativeRegulation) regulation);
+                            } else if (regulation instanceof Requirement) {
+                                requirements.add((Requirement) regulation);
+                            } else {
+                                positiveRegulations.add((PositiveRegulation) regulation);
+                            }
                         }
                     }
                 }
@@ -235,8 +237,7 @@ class GraphController {
                 model.addAttribute("requirements", requirements);
                 model.addAttribute("positivelyRegulatedBy", positiveRegulations);
 
-                List<DatabaseIdentifier> crossReferences = new ArrayList<>();
-                crossReferences.addAll(getCrossReference(databaseObject));
+                List<DatabaseIdentifier> crossReferences = getCrossReference(databaseObject);
                 setClassAttributes(databaseObject, model);
                 if (databaseObject instanceof EntityWithAccessionedSequence) {
                     EntityWithAccessionedSequence ewas = (EntityWithAccessionedSequence) databaseObject;
@@ -293,13 +294,13 @@ class GraphController {
 
     @SuppressWarnings("unchecked")
     private List<DatabaseIdentifier> getCrossReference(DatabaseObject databaseObject) {
-        List<DatabaseIdentifier> crossReferences = null;
+        List<DatabaseIdentifier> crossReferences = new ArrayList<>();
         try {
             crossReferences = (List<DatabaseIdentifier>) databaseObject.getClass().getMethod("getCrossReference").invoke(databaseObject);
             ReferenceEntity re = (ReferenceEntity) databaseObject.getClass().getMethod("getReferenceEntity").invoke(databaseObject);
             if (re.getCrossReference() != null) crossReferences.addAll(re.getCrossReference());
         } catch (Exception e) { /* Nothing here*/ }
-        return crossReferences != null ? crossReferences : Collections.EMPTY_LIST;
+        return crossReferences;
     }
 
     private String getSuperClass(DatabaseObject databaseObject) {
