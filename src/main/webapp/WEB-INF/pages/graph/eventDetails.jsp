@@ -175,7 +175,7 @@
                     <div class="favth-col-lg-2 favth-col-md-2 favth-col-sm-3 favth-col-xs-12 details-label">Negative Regulation</div>
                     <div class="favth-col-lg-10 favth-col-md-10 favth-col-sm-9 favth-col-xs-12 details-field">
                         <ul class="list">
-                            <c:forEach var="negativelyRegulatedBy" items="${databaseObject.negativelyRegulatedBy}">
+                            <c:forEach var="negativelyRegulatedBy" items="${negativelyRegulatedBy}">
                                 <li>
                                     <a href="../detail/${negativelyRegulatedBy.stId}" class="" title="Show Details" >${negativelyRegulatedBy.displayName}</a>
                                 </li>
