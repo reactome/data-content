@@ -32,21 +32,21 @@
     <error-page>
         <error-code>404</error-code>
         <!--suppress WebProperties -->
-        <location>/wordpress/404.php</location>
+        <location>/WEB-INF/pages/common/404.jsp</location>
     </error-page>
     <error-page>
         <error-code>500</error-code>
-        <location>/WEB-INF/pages/search/errorPage.jsp</location>
+        <location>/WEB-INF/pages/common/errorPage.jsp</location>
     </error-page>
     <error-page>
         <exception-type>org.springframework.web.bind.MissingServletRequestParameterException</exception-type>
         <!--suppress WebProperties -->
-        <location>/wordpress/404.php</location>
+        <location>/WEB-INF/pages/common/404.jsp</location>
     </error-page>
     <error-page>
         <error-code>400</error-code>
         <!--suppress WebProperties -->
-        <location>/wordpress/404.php</location>
+        <location>/WEB-INF/pages/common/400.jsp</location>
     </error-page>
 
     <servlet>

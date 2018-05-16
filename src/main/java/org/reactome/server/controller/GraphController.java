@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
+import org.reactome.server.exception.ViewException;
 import org.reactome.server.graph.domain.model.*;
 import org.reactome.server.graph.domain.schema.SchemaDataSet;
 import org.reactome.server.graph.service.*;
@@ -28,6 +29,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
@@ -35,6 +37,8 @@ import java.lang.reflect.Method;
 import java.nio.charset.Charset;
 import java.util.*;
 import java.util.stream.Collectors;
+
+import static org.reactome.server.util.WebUtils.noDetailsFound;
 
 /**
  * @author Florian Korninger (florian.korninger@ebi.ac.uk)
@@ -81,89 +85,106 @@ class GraphController {
     }
 
     @RequestMapping(value = "/schema/instance/browser/{id}", method = RequestMethod.GET)
-    public String objectDetail(@PathVariable String id, ModelMap model) {
+    public String objectDetail(@PathVariable String id,
+                               ModelMap model,
+                               HttpServletResponse response) throws ViewException {
+        try {
+            DatabaseObject databaseObject = advancedDatabaseObjectService.findById(id, 1000);
+            if (databaseObject == null) {
+                infoLogger.info("DatabaseObject for id: {} was not found", id);
+                return noDetailsFound(model, response, id);
+            }
+            model.addAttribute(TITLE, databaseObject.getDisplayName());
+            model.addAttribute("breadcrumbSchemaClass", databaseObject.getSchemaClass());
+            model.addAttribute("map", DatabaseObjectUtils.getAllFields(databaseObject));
+            model.addAttribute("referrals", advancedLinkageService.getReferralsTo(id));
 
-        DatabaseObject databaseObject = advancedDatabaseObjectService.findById(id, 1000);
-        if (databaseObject == null) {
-            infoLogger.info("DatabaseObject for id: {} was {}", id, "not found");
-            return "search/noDetailsFound";
+            if (databaseObject instanceof PhysicalEntity || databaseObject instanceof Event || databaseObject instanceof Regulation) {
+                model.addAttribute("linkToDetailsPage", true);
+                model.addAttribute("id", StringUtils.isNotEmpty(databaseObject.getStId()) ? databaseObject.getStId() : databaseObject.getDbId());
+            }
+
+            infoLogger.info("DatabaseObject for id: {} was found", id);
+            return "graph/instanceBrowser";
+        } catch (Throwable t) {
+            // Catch any exception that could happen in the schema page and pass it to the GlobalExceptionHandler
+            throw new ViewException(t);
         }
-        model.addAttribute(TITLE, databaseObject.getDisplayName());
-        model.addAttribute("breadcrumbSchemaClass", databaseObject.getSchemaClass());
-        model.addAttribute("map", DatabaseObjectUtils.getAllFields(databaseObject));
-        model.addAttribute("referrals", advancedLinkageService.getReferralsTo(id));
-
-        if (databaseObject instanceof PhysicalEntity || databaseObject instanceof Event || databaseObject instanceof Regulation) {
-            model.addAttribute("linkToDetailsPage", true);
-            model.addAttribute("id", StringUtils.isNotEmpty(databaseObject.getStId()) ? databaseObject.getStId() : databaseObject.getDbId());
-        }
-
-        infoLogger.info("DatabaseObject for id: {} was {}", id, "found");
-        return "graph/instanceBrowser";
     }
 
     @RequestMapping(value = "/schema/objects/{className}", method = RequestMethod.GET)
     public String getClassBrowserInstances(@PathVariable String className,
                                            @RequestParam(defaultValue = "9606") String speciesTaxId, //default Human
                                            @RequestParam(defaultValue = "1") Integer page,
-                                           ModelMap model) throws ClassNotFoundException {
+                                           ModelMap model,
+                                           HttpServletResponse response) throws ViewException {
 
-        classBrowserCache = DataSchemaCache.getClassBrowserCache();
-        if (classBrowserCache == null) {
-            classBrowserCache = DatabaseObjectUtils.getGraphModelTree(generalService.getSchemaClassCounts());
-        }
-        model.addAttribute(TITLE, className);
-        model.addAttribute("type", "list");
-        model.addAttribute("node", classBrowserCache);
-        model.addAttribute("className", className);
-        model.addAttribute("page", page);
-
-        Class clazz = DatabaseObjectUtils.getClassForName(className);
-        Collection<DatabaseObject> databaseObjects;
         try {
-            if (clazz.equals(SimpleEntity.class)) throw new Exception("No species available for simple entity");
-            //noinspection unchecked,unused
-            Method m = clazz.getMethod("getSpecies");
-            databaseObjects = schemaService.getByClassName(className, speciesTaxId, page, OFFSET);
-            Integer num = schemaService.countByClassAndSpecies(className, speciesTaxId);
-            model.addAttribute("maxpage", (int) Math.ceil(num / (double) OFFSET));
-
-            //Only keep information related to species when it makes sense
-            model.addAttribute("speciesList", speciesService.getSpecies());
-            if (!speciesTaxId.equals("9606")) {
-                model.addAttribute("selectedSpecies", speciesTaxId);
+            classBrowserCache = DataSchemaCache.getClassBrowserCache();
+            if (classBrowserCache == null) {
+                classBrowserCache = DatabaseObjectUtils.getGraphModelTree(generalService.getSchemaClassCounts());
             }
-        } catch (Exception e) {
-            databaseObjects = schemaService.getByClassName(className, page, OFFSET);
-            model.addAttribute("maxpage", classBrowserCache.findMaxPage(className, OFFSET));
-        }
+            model.addAttribute(TITLE, className);
+            model.addAttribute("type", "list");
+            model.addAttribute("node", classBrowserCache);
+            model.addAttribute("className", className);
+            model.addAttribute("page", page);
 
-        if (databaseObjects == null) { // || databaseObjects.isEmpty()) {
-            infoLogger.info("DatabaseObjects for class: {} were {}", className, "not found");
-            return "search/noDetailsFound";
-        }
+            Class clazz = DatabaseObjectUtils.getClassForName(className);
+            Collection<DatabaseObject> databaseObjects;
+            try {
+                if (clazz.equals(SimpleEntity.class)) throw new Exception("No species available for simple entity");
+                //noinspection unchecked,unused
+                Method m = clazz.getMethod("getSpecies");
+                databaseObjects = schemaService.getByClassName(className, speciesTaxId, page, OFFSET);
+                Integer num = schemaService.countByClassAndSpecies(className, speciesTaxId);
+                model.addAttribute("maxpage", (int) Math.ceil(num / (double) OFFSET));
 
-        model.addAttribute("objects", databaseObjects);
-        infoLogger.info("DatabaseObjects for class: {} were {}", className, "found");
-        return "graph/schema";
+                //Only keep information related to species when it makes sense
+                model.addAttribute("speciesList", speciesService.getSpecies());
+                if (!speciesTaxId.equals("9606")) {
+                    model.addAttribute("selectedSpecies", speciesTaxId);
+                }
+            } catch (Exception e) {
+                databaseObjects = schemaService.getByClassName(className, page, OFFSET);
+                model.addAttribute("maxpage", classBrowserCache.findMaxPage(className, OFFSET));
+            }
+
+            if (databaseObjects == null) { // || databaseObjects.isEmpty()) {
+                infoLogger.info("DatabaseObjects for class: {} were not found", className);
+                return noDetailsFound(model, response, className);
+            }
+
+            model.addAttribute("objects", databaseObjects);
+            infoLogger.info("DatabaseObjects for class: {} were found", className);
+            return "graph/schema";
+        } catch (Throwable t) {
+            // Catch any exception that could happen in the schema page and pass it to the GlobalExceptionHandler
+            throw new ViewException(t);
+        }
     }
 
     @RequestMapping(value = "/schema/{className}", method = RequestMethod.GET)
-    public String getClassBrowserDetails(@PathVariable String className, ModelMap model) throws ClassNotFoundException {
-        classBrowserCache = DataSchemaCache.getClassBrowserCache();
-        if (classBrowserCache == null) {
-            classBrowserCache = DatabaseObjectUtils.getGraphModelTree(generalService.getSchemaClassCounts());
+    public String getClassBrowserDetails(@PathVariable String className, ModelMap model) {
+        try {
+            classBrowserCache = DataSchemaCache.getClassBrowserCache();
+            if (classBrowserCache == null) {
+                classBrowserCache = DatabaseObjectUtils.getGraphModelTree(generalService.getSchemaClassCounts());
+            }
+            model.addAttribute(TITLE, className);
+            model.addAttribute("node", classBrowserCache);
+            model.addAttribute("properties", DatabaseObjectUtils.getAttributeTable(className));
+            model.addAttribute("referrals", DatabaseObjectUtils.getReferrals(className));
+            model.addAttribute("className", className);
+            return "graph/schema";
+        } catch (Throwable t) {
+            // Catch any exception that could happen in the schema page and pass it to the GlobalExceptionHandler
+            throw new ViewException(t);
         }
-        model.addAttribute(TITLE, className);
-        model.addAttribute("node", classBrowserCache);
-        model.addAttribute("properties", DatabaseObjectUtils.getAttributeTable(className));
-        model.addAttribute("referrals", DatabaseObjectUtils.getReferrals(className));
-        model.addAttribute("className", className);
-        return "graph/schema";
     }
 
     @RequestMapping(value = "/schema", method = RequestMethod.GET)
-    public String getClassBrowser() throws ClassNotFoundException {
+    public String getClassBrowser() {
         // When we load the schema page, DatabaseObject is loaded by default, then we redirect to it
         return "redirect:/schema/DatabaseObject";
     }
@@ -174,113 +195,116 @@ class GraphController {
      * @param id    StId or DbId
      * @param model SpringModel
      * @return Detailed page
-     * @throws Exception Either a EnricherException or SolrSearcherException
+     * @throws ViewException Runtime exception when building the details page
      */
     @RequestMapping(value = "/detail/{id:.*}", method = RequestMethod.GET)
     public String detail(@PathVariable String id,
                          @RequestParam(required = false, defaultValue = "") String interactor,
                          ModelMap model,
-                         HttpServletRequest request) throws Exception {
+                         HttpServletRequest request,
+                         HttpServletResponse response) {
 
-        UAgentInfo u = new UAgentInfo(request.getHeader("User-Agent"), null);
+        try {
+            UAgentInfo u = new UAgentInfo(request.getHeader("User-Agent"), null);
 
-        boolean interactorPage = StringUtils.isNotEmpty(interactor);
+            boolean interactorPage = StringUtils.isNotEmpty(interactor);
 
-        ContentDetails contentDetails = detailsService.getContentDetails(id, interactorPage);
+            ContentDetails contentDetails = detailsService.getContentDetails(id, interactorPage);
 
-        if (contentDetails != null && contentDetails.getDatabaseObject() != null) {
-            DatabaseObject databaseObject = contentDetails.getDatabaseObject();
-            String superClass = getSuperClass(databaseObject);
-            if (superClass == null) {
-                /*
-                 * The database object contains already all outgoing relationships.
-                 * To complete the object for the instance/browser view all incoming relationships have to be loaded.
-                 * The Mapping will be done automatically by Spring.
-                 */
-                advancedDatabaseObjectService.findById(databaseObject.getDbId(), RelationshipDirection.INCOMING);
-                model.addAttribute("map", DatabaseObjectUtils.getAllFields(databaseObject));
-                return "redirect:/schema/instance/browser/" + id;
-            } else {
-                Set<PathwayBrowserNode> topLevelNodes = contentDetails.getNodes();
+            if (contentDetails != null && contentDetails.getDatabaseObject() != null) {
+                DatabaseObject databaseObject = contentDetails.getDatabaseObject();
+                String superClass = getSuperClass(databaseObject);
+                if (superClass == null) {
+                    /*
+                     * The database object contains already all outgoing relationships.
+                     * To complete the object for the instance/browser view all incoming relationships have to be loaded.
+                     * The Mapping will be done automatically by Spring.
+                     */
+                    advancedDatabaseObjectService.findById(databaseObject.getDbId(), RelationshipDirection.INCOMING);
+                    model.addAttribute("map", DatabaseObjectUtils.getAllFields(databaseObject));
+                    return "redirect:/schema/instance/browser/" + id;
+                } else {
+                    Set<PathwayBrowserNode> topLevelNodes = contentDetails.getNodes();
 
-                model.addAttribute(TITLE, databaseObject.getDisplayName());
+                    model.addAttribute(TITLE, databaseObject.getDisplayName());
 
-                model.addAttribute("databaseObject", databaseObject);
-                model.addAttribute("clazz", superClass);
-                model.addAttribute("topLevelNodes", topLevelNodes);
-                model.addAttribute("availableSpecies", PathwayBrowserLocationsUtils.getAvailableSpecies(topLevelNodes));
-                model.addAttribute("componentOf", contentDetails.getComponentOf());
-                model.addAttribute("otherFormsOfThisMolecule", contentDetails.getOtherFormsOfThisMolecule());
-                model.addAttribute("orthologousEvents", getSortedOrthologousEvent(databaseObject));
-                model.addAttribute("inferredTo", getSortedInferredTo(databaseObject));
-                model.addAttribute("hasEHLD", ehlds.contains(databaseObject.getStId()));
+                    model.addAttribute("databaseObject", databaseObject);
+                    model.addAttribute("clazz", superClass);
+                    model.addAttribute("topLevelNodes", topLevelNodes);
+                    model.addAttribute("availableSpecies", PathwayBrowserLocationsUtils.getAvailableSpecies(topLevelNodes));
+                    model.addAttribute("componentOf", contentDetails.getComponentOf());
+                    model.addAttribute("otherFormsOfThisMolecule", contentDetails.getOtherFormsOfThisMolecule());
+                    model.addAttribute("orthologousEvents", getSortedOrthologousEvent(databaseObject));
+                    model.addAttribute("inferredTo", getSortedInferredTo(databaseObject));
+                    model.addAttribute("hasEHLD", ehlds.contains(databaseObject.getStId()));
 
-                //RegulatedBy moved to RLE without distinction in the types (now it needs to be done here)
-                List<NegativeRegulation> negativeRegulations = new ArrayList<>();
-                List<PositiveRegulation> positiveRegulations = new ArrayList<>();
-                List<Requirement> requirements = new ArrayList<>();
-                if (databaseObject instanceof ReactionLikeEvent) {
-                    ReactionLikeEvent rle = (ReactionLikeEvent) databaseObject;
-                    if (rle.getRegulatedBy() != null) {
-                        for (Regulation regulation : rle.getRegulatedBy()) {
-                            if (regulation instanceof NegativeRegulation) {
-                                negativeRegulations.add((NegativeRegulation) regulation);
-                            } else if (regulation instanceof Requirement) {
-                                requirements.add((Requirement) regulation);
-                            } else {
-                                positiveRegulations.add((PositiveRegulation) regulation);
+                    //RegulatedBy moved to RLE without distinction in the types (now it needs to be done here)
+                    List<NegativeRegulation> negativeRegulations = new ArrayList<>();
+                    List<PositiveRegulation> positiveRegulations = new ArrayList<>();
+                    List<Requirement> requirements = new ArrayList<>();
+                    if (databaseObject instanceof ReactionLikeEvent) {
+                        ReactionLikeEvent rle = (ReactionLikeEvent) databaseObject;
+                        if (rle.getRegulatedBy() != null) {
+                            for (Regulation regulation : rle.getRegulatedBy()) {
+                                if (regulation instanceof NegativeRegulation) {
+                                    negativeRegulations.add((NegativeRegulation) regulation);
+                                } else if (regulation instanceof Requirement) {
+                                    requirements.add((Requirement) regulation);
+                                } else {
+                                    positiveRegulations.add((PositiveRegulation) regulation);
+                                }
                             }
                         }
                     }
-                }
-                model.addAttribute("negativelyRegulatedBy", negativeRegulations);
-                model.addAttribute("requirements", requirements);
-                model.addAttribute("positivelyRegulatedBy", positiveRegulations);
+                    model.addAttribute("negativelyRegulatedBy", negativeRegulations);
+                    model.addAttribute("requirements", requirements);
+                    model.addAttribute("positivelyRegulatedBy", positiveRegulations);
 
-                List<DatabaseIdentifier> crossReferences = getCrossReference(databaseObject);
-                setClassAttributes(databaseObject, model);
-                if (databaseObject instanceof EntityWithAccessionedSequence) {
-                    EntityWithAccessionedSequence ewas = (EntityWithAccessionedSequence) databaseObject;
-                    List<Interaction> interactions = interactionsService.getInteractions(ewas.getReferenceEntity().getIdentifier());
-                    model.addAttribute("interactions", interactions);
-                    crossReferences.addAll(getCrossReference(ewas.getReferenceEntity()));
-                    if (ewas.getReferenceEntity() instanceof ReferenceSequence) {
-                        model.addAttribute("isReferenceSequence", true);
+                    List<DatabaseIdentifier> crossReferences = getCrossReference(databaseObject);
+                    setClassAttributes(databaseObject, model);
+                    if (databaseObject instanceof EntityWithAccessionedSequence) {
+                        EntityWithAccessionedSequence ewas = (EntityWithAccessionedSequence) databaseObject;
+                        List<Interaction> interactions = interactionsService.getInteractions(ewas.getReferenceEntity().getIdentifier());
+                        model.addAttribute("interactions", interactions);
+                        crossReferences.addAll(getCrossReference(ewas.getReferenceEntity()));
+                        if (ewas.getReferenceEntity() instanceof ReferenceSequence) {
+                            model.addAttribute("isReferenceSequence", true);
+                        }
                     }
+                    model.addAttribute("crossReferences", groupCrossReferences(crossReferences));
+
+                    // extras
+                    model.addAttribute("flg", getReferenceEntityIdentifier(databaseObject));
+                    model.addAttribute("relatedSpecies", getRelatedSpecies(databaseObject));
+                    model.addAttribute("jsonLd", eventDiscovery(contentDetails.getDatabaseObject()));
+
+                    // responsive design, avoid loading same content twice on screen
+                    // instead hiding using CSS, java will detect and the content won't be processed.
+                    model.addAttribute("isMobile", u.detectMobileQuick());
+
+                    infoLogger.info("DatabaseObject for id: {} was found", id);
+                    return "graph/detail";
                 }
-                model.addAttribute("crossReferences", groupCrossReferences(crossReferences));
-
-                // extras
-                model.addAttribute("flg", getReferenceEntityIdentifier(databaseObject));
-                model.addAttribute("relatedSpecies", getRelatedSpecies(databaseObject));
-                model.addAttribute("jsonLd", eventDiscovery(contentDetails.getDatabaseObject()));
-
-                // responsive design, avoid loading same content twice on screen
-                // instead hiding using CSS, java will detect and the content won't be processed.
-                model.addAttribute("isMobile", u.detectMobileQuick());
-
-                infoLogger.info("DatabaseObject for id: {} was {}", id, "found");
-                return "graph/detail";
             }
+            infoLogger.info("DatabaseObject for id: {} was not found", id);
+            return noDetailsFound(model, response, id);
+        } catch (Throwable t) {
+            // Catch any exception that could happen in the details page and pass it to the  GlobalExceptionHandler
+            throw new ViewException(t);
         }
-        infoLogger.info("DatabaseObject for id: {} was {}", id, "not found");
-        model.addAttribute("search", id);
-        model.addAttribute(TITLE, "No details found for " + id);
-        return "search/noDetailsFound";
     }
-
 
     private void setClassAttributes(DatabaseObject databaseObject, ModelMap model) {
         if (databaseObject instanceof ReactionLikeEvent) {
             model.addAttribute("isReactionLikeEvent", true);
         } else if (databaseObject instanceof EntitySet) {
             model.addAttribute("isEntitySet", true);
-        }
-        // Cant explain why warning appears here, should be correct
-        else //noinspection ConstantConditions
-            if (databaseObject instanceof OpenSet || databaseObject instanceof EntityWithAccessionedSequence || databaseObject instanceof SimpleEntity) {
+            if (databaseObject instanceof OpenSet) {
                 model.addAttribute("hasReferenceEntity", true);
             }
+        } else if (databaseObject instanceof EntityWithAccessionedSequence || databaseObject instanceof SimpleEntity) {
+            model.addAttribute("hasReferenceEntity", true);
+        }
     }
 
     private Map<String, Set<DatabaseIdentifier>> groupCrossReferences(List<DatabaseIdentifier> databaseIdentifiers) {
@@ -423,7 +447,7 @@ class GraphController {
         return null;
     }
 
-    public String eventDiscovery(DatabaseObject databaseObject) {
+    private String eventDiscovery(DatabaseObject databaseObject) {
         if(databaseObject instanceof Event) {
             SchemaDataSet aux = new SchemaDataSet((Event) databaseObject, generalService.getDBVersion());
             try {

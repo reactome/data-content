@@ -31,10 +31,15 @@ class GlobalExceptionHandler {
     private static final String MESSAGE = "message";
     private static final String TITLE = "title";
 
-    private static final String PAGE = "search/errorPage";
+    private static final String PAGE = "common/errorPage";
 
     @ExceptionHandler(SolrSearcherException.class)
     public ModelAndView handleSolrSearcherException(HttpServletRequest request, SolrSearcherException e) {
+        return buildModelView(request, e);
+    }
+
+    @ExceptionHandler(ViewException.class)
+    public ModelAndView handleViewException(HttpServletRequest request, ViewException e) {
         return buildModelView(request, e);
     }
 
@@ -45,19 +50,20 @@ class GlobalExceptionHandler {
     }
 
     private ModelAndView buildModelView(HttpServletRequest request, Exception e) {
-        errorLogger.error("Exception occurred:: URL=" + request.getRequestURL(), e);
+        String finalUrl = (request.getQueryString() != null) ? String.join("", request.getRequestURL(),"?" , request.getQueryString()) : request.getRequestURL().toString();
+
+        errorLogger.error("Exception occurred when requesting the URL [" + finalUrl + "]", e);
 
         ModelAndView model = new ModelAndView(PAGE);
         model.addObject(EXCEPTION, e);
-        model.addObject(URL, request.getRequestURL());
-
+        model.addObject(URL, finalUrl);
         model.addObject(SUBJECT, "Unexpected error occurred.");
 
         @SuppressWarnings("StringBufferReplaceableByString")
         StringBuilder sb = new StringBuilder();
         sb.append("Dear help desk,");
         sb.append("\n\n");
-        sb.append("An unexpected error has occurred during my search.");
+        sb.append("An unexpected error has occurred");
         sb.append("\n\n");
         sb.append("<< Please add more information >>");
         sb.append("\n\n");
@@ -66,7 +72,7 @@ class GlobalExceptionHandler {
 
         model.addObject(MESSAGE, sb.toString());
 
-        model.addObject(TITLE, "Unexpected error occurred.");
+        model.addObject(TITLE, "Unexpected error occurred");
 
         return model;
     }

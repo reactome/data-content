@@ -5,7 +5,7 @@
 <form class="favth-form-horizontal" id="contact-form" action="/content/contact">
     <p>&nbsp;</p>
     <input type="hidden" name="source" id="source" value="${param.source}"/>
-    <input type="hidden" name="exception" id="exception" value="${exception}"/>
+    <input type="hidden" name="exception" id="exception" value="${param.exception}"/>
     <input type="hidden" name="url" id="url" value="${url}"/>
 
     <div class="favth-form-group">

@@ -14,9 +14,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import javax.servlet.http.HttpServletResponse;
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 import java.util.stream.Collectors;
+
+import static org.reactome.server.util.WebUtils.noDetailsFound;
 
 /**
  * @author Antonio Fabregat (fabregat@ebi.ac.uk)
@@ -33,11 +36,10 @@ public class InteractionsController {
     private static final String INTERACTIONS = "interactions";
     private static final String SEARCH = "search";
 
-    @Autowired
     private AdvancedDatabaseObjectService advancedDatabaseObjectService;
 
     @RequestMapping(value = "/detail/interactor/{id:.*}", method = RequestMethod.GET)
-    public String interactorDetail(@PathVariable String id, ModelMap model) {
+    public String interactorDetail(@PathVariable String id, ModelMap model, HttpServletResponse response) {
         Collection<CustomInteraction> customInteractions = getCustomInteractions(id);
         if (customInteractions != null && !customInteractions.isEmpty()) {
             model.addAttribute(INTERACTIONS, customInteractions);
@@ -54,15 +56,13 @@ public class InteractionsController {
         } else {
             autoFillDetailsPage(model, id);
             infoLogger.info("Search request for id: {} was not found", id);
-            return "search/noDetailsFound";
+            return noDetailsFound(model, response, id);
         }
     }
 
     /**
      * Retrieve interactions of a given accession that are NOT in Reactome
      * but interacts with something in Reactome
-     *
-     * @param accession
      */
     private Collection<CustomInteraction> getCustomInteractions(String accession) {
         Collection<CustomInteraction> rtn;
@@ -144,5 +144,10 @@ public class InteractionsController {
     private void autoFillDetailsPage(ModelMap model, String search) {
         model.addAttribute(SEARCH, search);
         model.addAttribute(RE_TITLE, "No details found for " + search);
+    }
+
+    @Autowired
+    public void setAdvancedDatabaseObjectService(AdvancedDatabaseObjectService advancedDatabaseObjectService) {
+        this.advancedDatabaseObjectService = advancedDatabaseObjectService;
     }
 }

@@ -71,7 +71,7 @@
 
     <%-- Only shows the contact us form if q is not empty or greater than 1 --%>
     <c:if test="${not empty q && fn:length(q) gt 1}">
-        <c:import url="contactForm.jsp">
+        <c:import url="../common/contactForm.jsp">
             <c:param name="source" value="W"/>
         </c:import>
     </c:if>

@@ -2,7 +2,9 @@ package org.reactome.server.util;
 
 import org.jsoup.Jsoup;
 import org.jsoup.safety.Whitelist;
+import org.springframework.ui.ModelMap;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,5 +30,12 @@ public class WebUtils {
             return checkedList;
         }
         return null;
+    }
+
+    public static String noDetailsFound(ModelMap model, HttpServletResponse response, String term) {
+        model.addAttribute("term", term);
+        model.addAttribute("title", "No details found for " + term);
+        response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+        return "graph/noDetailsFound";
     }
 }

@@ -190,17 +190,16 @@ class SearchController {
                           @RequestParam String url,
                           @RequestParam String subject,
                           @RequestParam String source) {
-
+        if (StringUtils.isNotBlank(contactName)) {
+            contactName = contactName.trim();
+            message = message.concat("\n\n--\n").concat(contactName.trim());
+        }
         String to = mailSupportDest;
         if (source.equals("E")) {
             to = mailErrorDest;
-            message = message.concat("\n\n URL: " + url);
-            message = message.concat("\n\n Exception: " + exception);
-            subject = "Unexpected error occurred.";
-        }
-        if (StringUtils.isNotBlank(contactName)) {
-            contactName = contactName.trim();
-            message = message.concat("--\n").concat(contactName.trim());
+            subject = "Unexpected error occurred [" + url + "]";
+            message = message.concat("\nFailed URL: " + url);
+            message = message.concat("\nException: " + exception.replaceAll("##C##","\n\t\t").replaceAll("#", "\n\t"));
         }
         // Call email service.
         mailService.send(contactName, mailAddress, to, subject, message, sendEmailCopy);
