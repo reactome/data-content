@@ -18,7 +18,8 @@
                         <h2>The requested page can't be found.</h2>
                         <hr>
                         <p>If difficulties persist, please contact the <a href="mailto:help@reactome.org">help@reactome.org</a> and report the error below.</p>
-                        <p><span class="favth-label favth-label-default">404</span>Page ${reqURL} not Found!</p>
+                        <p><span class="favth-label favth-label-default">404</span>Page not Found!</p>
+                        <pre><code>${reqURL}</code></pre>
                         <br>
                         <a href="/" class="btn"><span class="icon-home"></span>Home Page</a>
                     </div>

@@ -8,7 +8,6 @@
     <c:set var="reqURL" value="${reqURL}?${requestScope['javax.servlet.forward.query_string']}" />
 </c:if>
 <c:import url="../header.jsp"/>
-<script>document.title = "Reactome | (404) Not found";</script>
 <div class="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-12">
     <div class="moduletable">
         <div class="custom">
@@ -18,13 +17,16 @@
                         <h2>Bad Request. Your browser sent a request that this server could not understand.</h2>
                         <hr>
                         <p>If difficulties persist, please contact the <a href="mailto:help@reactome.org">help@reactome.org</a> and report the error below.</p>
-                        <p><span class="favth-label favth-label-default">400</span>Bad Request - Invalid URL ${reqURL}</p>
+                        <p><span class="favth-label favth-label-default">400</span>Bad Request - Invalid URL</p>
+                        <pre><code>${reqURL}</code></pre>
                         <br>
                         <a href="/" class="btn"><span class="icon-home"></span>Home Page</a>
                     </div>
                 </div>
             </div>
-            <p>&nbsp;</p></div>
+            <p>&nbsp;</p>
+        </div>
     </div>
 </div>
+<script>document.title = "Reactome | (404) Not found";</script>
 <c:import url="../footer.jsp"/>
