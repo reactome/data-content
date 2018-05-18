@@ -238,9 +238,9 @@ class SearchController {
 
         Map<String, String> result = new HashMap<>();
         result.put("user-agent", request.getHeader("User-Agent"));
-        String remoteAddr = request.getHeader("X-FORWARDED-FOR"); // Client IP
-        if (remoteAddr == null || "".equals(remoteAddr)) {
-            remoteAddr = request.getRemoteAddr();
+        String remoteAddr = request.getRemoteAddr();
+        if (StringUtils.isEmpty(remoteAddr)) {
+            remoteAddr = request.getHeader("X-FORWARDED-FOR"); // Client IP
         }
         result.put("ip-address", remoteAddr);
         result.put("release-version", releaseNumber.toString());
