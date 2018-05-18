@@ -3,7 +3,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <c:set var="req" value="${pageContext.request}" />
 <c:set var="baseURL" value="${fn:replace(req.requestURL, req.requestURI, req.contextPath)}" />
-<c:set var="reqURL" value="${baseURL}${requestScope['javax.servlet.forward.request_uri']}" />
+<c:set var="forwardReqURI" value="${fn:replace(requestScope['javax.servlet.forward.request_uri'],req.contextPath, '')}" />
+<c:set var="reqURL" value="${baseURL}${forwardReqURI}" />
 <c:if test="${not empty requestScope['javax.servlet.forward.query_string']}">
     <c:set var="reqURL" value="${reqURL}?${requestScope['javax.servlet.forward.query_string']}" />
 </c:if>
@@ -28,5 +29,5 @@
         </div>
     </div>
 </div>
-<script>document.title = "Reactome | (404) Not found";</script>
+<script>document.title = "Reactome | (400) Bad Request - Invalid URL";</script>
 <c:import url="../footer.jsp"/>
