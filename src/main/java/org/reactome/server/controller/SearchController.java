@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -235,6 +236,17 @@ class SearchController {
      */
     private Map<String, String> getReportInformation(HttpServletRequest request) {
         if (request == null) return null;
+
+
+        Map<String, String> toLog = new HashMap<>();
+        Enumeration<String> headerNames = request.getHeaderNames();
+        while (headerNames.hasMoreElements()) {
+            String key = headerNames.nextElement();
+            String value = request.getHeader(key);
+            toLog.put(key, value);
+        }
+        infoLogger.info("[ZYK861] " + toLog.toString());
+        toLog.clear();
 
         Map<String, String> result = new HashMap<>();
         result.put("user-agent", request.getHeader("User-Agent"));
