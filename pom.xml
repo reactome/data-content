@@ -40,8 +40,8 @@
 
     <properties>
         <deploymentPath>/</deploymentPath>
-        <graph.core>1.1.10-SNAPSHOT</graph.core>
-        <reactome.search.core>1.0.3-SNAPSHOT</reactome.search.core>
+        <graph.core>1.1.10</graph.core>
+        <reactome.search.core>1.1.0</reactome.search.core>
         <spring.version>4.3.10.RELEASE</spring.version>
         <javax.servlet.version>4.0.0-b01</javax.servlet.version>
         <jackson.version>2.7.3</jackson.version>
