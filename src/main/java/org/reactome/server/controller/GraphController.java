@@ -430,8 +430,11 @@ class GraphController {
         String ret = "";
         try {
             ReferenceEntity re = (ReferenceEntity) databaseObject.getClass().getMethod("getReferenceEntity").invoke(databaseObject);
+            if (re == null) { //Check referenceTherapeutic slot for ProteinDrug
+                re = (ReferenceEntity) databaseObject.getClass().getMethod("getReferenceTherapeutic").invoke(databaseObject);
+            }
             ret = re.getIdentifier();
-        } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e){
+        } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException | NullPointerException e){
             // nothing here
         }
         return ret;
