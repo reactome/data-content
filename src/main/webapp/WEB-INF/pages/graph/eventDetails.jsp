@@ -247,3 +247,45 @@
         </div>
     </fieldset>
 </c:if>
+
+<c:if test="${not empty databaseObject.authored}">
+    <fieldset class="fieldset-details">
+        <legend>Authored</legend>
+        <div class="wrap overflow">
+            <c:forEach var="authored" items="${databaseObject.authored}">
+                <c:forEach var="person" items="${authored.author}">
+                    <c:choose>
+                        <c:when test="${not empty person.orcidId}">
+                            <a href="../detail/person/${person.orcidId}" class="" title="${authored.displayName}" >${authored.displayName}</a>
+                        </c:when>
+                        <c:otherwise>
+                            <a href="../detail/person/${person.dbId}" class="" title="${authored.displayName}" >${authored.displayName}</a>
+                        </c:otherwise>
+                    </c:choose>
+                </c:forEach>
+            </c:forEach>
+        </div>
+    </fieldset>
+</c:if>
+
+<c:if test="${not empty databaseObject.reviewed}">
+    <fieldset class="fieldset-details">
+        <legend>Reviewed</legend>
+        <div class="wrap overflow">
+            <c:forEach var="reviewed" items="${databaseObject.reviewed}">
+                <c:forEach var="person" items="${reviewed.author}">
+                    <div class="favth-col-lg-6 favth-col-md-6 favth-col-sm-12 favth-col-xs-12 text-overflow">
+                        <c:choose>
+                            <c:when test="${not empty person.orcidId}">
+                                <a href="../detail/person/${person.orcidId}" class="" title="${reviewed.displayName}" >${reviewed.displayName}</a>
+                            </c:when>
+                            <c:otherwise>
+                                <a href="../detail/person/${person.dbId}" class="" title="${reviewed.displayName}" >${reviewed.displayName}</a>
+                            </c:otherwise>
+                        </c:choose>
+                    </div>
+                </c:forEach>
+            </c:forEach>
+        </div>
+    </fieldset>
+</c:if>
