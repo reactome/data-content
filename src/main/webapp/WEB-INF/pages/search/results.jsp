@@ -64,6 +64,9 @@
                                             <c:when test="${entry.exactType == 'Interactor'}" >
                                                 <a href="./detail/interactor/${entry.id}" class="" title="Show Interactor Details" >${entry.name}</a>
                                             </c:when>
+                                            <c:when test="${entry.exactType == 'Person'}" >
+                                                <a href="./detail/person/${entry.id}" class="" title="Show Person Details" >${entry.name}</a>
+                                            </c:when>
                                             <c:otherwise>
                                                 <a href="./detail/${entry.id}" class="" title="Show Details" >${entry.name}</a>
                                             </c:otherwise>
@@ -91,6 +94,18 @@
                                                 </c:forEach>
                                             </div>
                                         </div>
+                                    </c:if>
+
+                                    <c:if test="${not empty entry.authored}">
+                                        <div class="favth-col-lg-5 favth-col-md-12 favth-col-sm-12 favth-col-xs-12"><strong>Authored:</strong> ${entry.authored}</div>
+                                    </c:if>
+
+                                    <c:if test="${not empty entry.orcidId}">
+                                        <div class="favth-col-lg-7 favth-col-md-12 favth-col-sm-12 favth-col-xs-12"><strong>OrcidID:</strong> <a href="https://orcid.org/${entry.orcidId}" rel="nofollow noindex" target="_blank">${entry.orcidId}</a></div>
+                                    </c:if>
+
+                                    <c:if test="${not empty entry.reviewed}">
+                                        <div class="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-12"><strong>Reviewed:</strong> ${entry.reviewed}</div>
                                     </c:if>
 
                                     <c:if test="${not empty entry.regulator}">
