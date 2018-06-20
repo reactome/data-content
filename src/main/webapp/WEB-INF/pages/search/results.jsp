@@ -65,7 +65,14 @@
                                                 <a href="./detail/interactor/${entry.id}" class="" title="Show Interactor Details" >${entry.name}</a>
                                             </c:when>
                                             <c:when test="${entry.exactType == 'Person'}" >
-                                                <a href="./detail/person/${entry.id}" class="" title="Show Person Details" >${entry.name}</a>
+                                                <c:choose>
+                                                    <c:when test="${not empty entry.orcidId}">
+                                                        <a href="./detail/person/${entry.orcidId}" class="" title="Show Person Details" >${entry.name}</a>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <a href="./detail/person/${entry.id}" class="" title="Show Person Details" >${entry.name}</a>
+                                                    </c:otherwise>
+                                                </c:choose>
                                             </c:when>
                                             <c:otherwise>
                                                 <a href="./detail/${entry.id}" class="" title="Show Details" >${entry.name}</a>
