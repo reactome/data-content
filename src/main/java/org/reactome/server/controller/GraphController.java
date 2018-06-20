@@ -14,6 +14,7 @@ import org.reactome.server.graph.service.helper.RelationshipDirection;
 import org.reactome.server.graph.service.helper.SchemaNode;
 import org.reactome.server.graph.service.util.DatabaseObjectUtils;
 import org.reactome.server.graph.service.util.PathwayBrowserLocationsUtils;
+import org.reactome.server.util.BibTexExporter;
 import org.reactome.server.util.DataSchemaCache;
 import org.reactome.server.util.MapSet;
 import org.reactome.server.util.UAgentInfo;
@@ -57,7 +58,7 @@ class GraphController {
     private static final String EVIDENCES_URL_MAP = "evidencesUrlMap";
 
     private static final int OFFSET = 55;
-
+    private final Set<String> ehlds = new HashSet<>();
     private GeneralService generalService;
     private AdvancedDatabaseObjectService advancedDatabaseObjectService;
     private InteractionsService interactionsService;
@@ -65,10 +66,10 @@ class GraphController {
     private SchemaService schemaService;
     private SpeciesService speciesService;
     private AdvancedLinkageService advancedLinkageService;
-
+    private PersonService personService;
     private SchemaNode classBrowserCache;
 
-    private final Set<String> ehlds = new HashSet<>();
+    private BibTexExporter bibTexExporter;
 
     /**
      * These resources are the same all the time.
@@ -294,6 +295,37 @@ class GraphController {
         }
     }
 
+    @RequestMapping(value = "/detail/person/{id:.*}", method = RequestMethod.GET)
+    public String personDetail(@PathVariable String id, ModelMap model, HttpServletResponse response) {
+        Person person = personService.findPerson(id);
+
+        if (person != null) {
+            model.addAttribute(TITLE, person.getDisplayName());
+            model.addAttribute("person", person);
+            model.addAttribute("authored", personService.getAuthoredPathways(id).stream().sorted(Comparator.comparing(DatabaseObject::getDisplayName)).collect(Collectors.toList()));
+            model.addAttribute("reviewed", personService.getReviewedPathways(id).stream().sorted(Comparator.comparing(DatabaseObject::getDisplayName)).collect(Collectors.toList()));
+            infoLogger.info("Search request for id: {} was found", id);
+            return "graph/person";
+        } else {
+            infoLogger.info("Search request for id: {} was not found", id);
+            return noDetailsFound(model, response, id);
+        }
+    }
+
+    @RequestMapping(value = "/bibtex/{id:.*}/{pathway:.*}", method = RequestMethod.GET)
+    public String bibtex(@PathVariable String id, @PathVariable String pathway, ModelMap model, HttpServletResponse response) {
+        Person person = personService.findPerson(id);
+        if (person != null) {
+            bibTexExporter.run(id, pathway);
+
+            model.addAttribute(TITLE, person.getDisplayName());
+            model.addAttribute("person", person);
+            infoLogger.info("Search request for id: {} was found", id);
+            return "graph/person";
+        }
+        return "";
+    }
+
     private void setClassAttributes(DatabaseObject databaseObject, ModelMap model) {
         if (databaseObject instanceof ReactionLikeEvent) {
             model.addAttribute("isReactionLikeEvent", true);
@@ -426,29 +458,29 @@ class GraphController {
      *
      * @return the identifier
      */
-    private String getReferenceEntityIdentifier(DatabaseObject databaseObject){
+    private String getReferenceEntityIdentifier(DatabaseObject databaseObject) {
         String ret = "";
         try {
             ReferenceEntity re = (ReferenceEntity) databaseObject.getClass().getMethod("getReferenceEntity").invoke(databaseObject);
             ret = re.getIdentifier();
-        } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e){
+        } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException | NullPointerException e) {
             // nothing here
         }
         return ret;
     }
 
     @SuppressWarnings("unchecked")
-    private List<Species> getRelatedSpecies(DatabaseObject databaseObject){
+    private List<Species> getRelatedSpecies(DatabaseObject databaseObject) {
         try {
-            return  (List<Species>) databaseObject.getClass().getMethod("getRelatedSpecies").invoke(databaseObject);
-        } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e){
+            return (List<Species>) databaseObject.getClass().getMethod("getRelatedSpecies").invoke(databaseObject);
+        } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException | NullPointerException e) {
             // nothing here
         }
         return null;
     }
 
     private String eventDiscovery(DatabaseObject databaseObject) {
-        if(databaseObject instanceof Event) {
+        if (databaseObject instanceof Event) {
             SchemaDataSet aux = new SchemaDataSet((Event) databaseObject, generalService.getDBVersion());
             try {
                 ObjectMapper objectMapper = new ObjectMapper();
@@ -493,5 +525,15 @@ class GraphController {
     @Autowired
     public void setInteractionsService(InteractionsService interactionsService) {
         this.interactionsService = interactionsService;
+    }
+
+    @Autowired
+    public void setPersonService(PersonService personService) {
+        this.personService = personService;
+    }
+
+    @Autowired
+    public void setBibTexExporter(BibTexExporter bibTexExporter) {
+        this.bibTexExporter = bibTexExporter;
     }
 }
