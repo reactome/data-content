@@ -19,7 +19,7 @@
                     <tbody>
                     <c:forEach var="disease" items="${databaseObject.disease}">
                         <tr>
-                            <td data-label="Name"><a href="${disease.url}" class=""  title="Show Details" >${disease.displayName} </a></td>
+                            <td data-label="Name"><a href="${disease.url}" class="" target="_blank" title="Show Details" >${disease.displayName} </a></td>
                             <td data-label="Identifier"><c:if test="${not empty disease.identifier}">${disease.identifier}</c:if></td>
                             <td data-label="Synonyms">
                                 <c:forEach var="synonym" items="${disease.synonym}" varStatus="loop">
@@ -46,7 +46,7 @@
                             <div class="favth-col-lg-10 favth-col-md-10 favth-col-sm-9 favth-col-xs-12 details-field">
                                 <div>
                                 <c:forEach var="value" items="${crossReference.value}" varStatus="loop">
-                                    <a href="${value.url}" title="show ${value.displayName}" >${value.identifier}</a><c:if test="${!loop.last}">, </c:if>
+                                    <a href="${value.url}" target="_blank" title="show ${value.displayName}" >${value.identifier}</a><c:if test="${!loop.last}">, </c:if>
                                 </c:forEach>
                                 </div>
                             </div>

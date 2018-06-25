@@ -62,7 +62,7 @@
                     <c:forEach var="interaction" items="${interactions}">
                         <tr>
                             <td data-label="Accession">
-                                <a href="${interaction.accessionURL}" class="" title="Show ${interaction.accession}" >${interaction.accession}</a>
+                                <a href="${interaction.accessionURL}" class="" target="_blank" title="Show ${interaction.accession}" >${interaction.accession}</a>
                             </td>
                             <td data-label="#Entities" style="text-align: right;">
                                 ${fn:length(interaction.physicalEntity)}

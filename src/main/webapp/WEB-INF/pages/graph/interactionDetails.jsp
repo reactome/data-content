@@ -24,7 +24,7 @@
                             <a href="./interactor/${interactor.identifier}" class="" title="Show Interactor Details" ><i class="sprite sprite-Interactor"></i>&nbsp;${interactor.displayName}&nbsp;</a>
                             <a href="${interactor.url}"
                                title="Go to ${interactor.displayName}"
-                               ><i class="fa fa-external-link" style="font-size: 13px;"></i></a>
+                               target="_blank"><i class="fa fa-external-link" style="font-size: 13px;"></i></a>
                         </td>
                         <td data-label="#Entities">
                             <c:choose>
