@@ -20,19 +20,46 @@
                             <%-- These are instances of Publication which has different attributes to be shown --%>
                             <c:if test="${literature.schemaClass == 'LiteratureReference'}">
                                 <td data-label="PubMed ID" class="favth-col-md-2"><c:if test="${not empty literature.pubMedIdentifier}">${literature.pubMedIdentifier}</c:if></td>
-                                <td data-label="Title" class="favth-col-md-7"><c:if test="${not empty literature.title}"><a href="${literature.url}" class=""  title="show Pubmed" > ${literature.title}</a></c:if></td>
+                                <td data-label="Title" class="favth-col-md-7">
+                                    <c:if test="${not empty literature.title}"><a href="${literature.url}" class="" target="_blank" title="show Pubmed" > ${literature.title}</a></c:if>
+                                    <c:if test="${not empty literature.author}">
+                                        <p style="font-style: italic; font-size: small; margin: 0; padding-left: 5px;">
+                                            <c:forEach var="author" items="${literature.author}" varStatus="loop">
+                                                <span style="text-decoration-style: dotted;">${author.displayName}</span><c:if test="${!loop.last}">, </c:if>
+                                            </c:forEach>
+                                        </p>
+                                    </c:if>
+                                </td>
                                 <td data-label="Journal" class="favth-col-md-2"><c:if test="${not empty literature.journal}">${literature.journal}</c:if></td>
                                 <td data-label="Year" class="favth-col-md-1"><c:if test="${not empty literature.year}">${literature.year}</c:if></td>
                             </c:if>
                             <c:if test="${literature.schemaClass == 'URL'}">
                                 <td data-label="PubMed ID" class="favth-col-md-2">&nbsp;</td>
-                                <td data-label="Title" class="favth-col-md-7"><c:if test="${not empty literature.title}"><a href="${literature.uniformResourceLocator}" class=""  title="show Pubmed" > ${literature.title}</a></c:if></td>
+                                <td data-label="Title" class="favth-col-md-7">
+                                    <c:if test="${not empty literature.title}"><a href="${literature.uniformResourceLocator}" class="" target="_blank" title="show Pubmed" > ${literature.title}</a></c:if>
+                                    <c:if test="${not empty literature.author}">
+                                        <p style="font-style: italic; font-size: small; margin: 0; padding-left: 5px;">
+                                            <c:forEach var="author" items="${literature.author}" varStatus="loop">
+                                                <span style="text-decoration-style: dotted;">${author.displayName}</span><c:if test="${!loop.last}">, </c:if>
+                                            </c:forEach>
+                                        </p>
+                                    </c:if>
+                                </td>
                                 <td data-label="Journal" class="favth-col-md-2">&nbsp;</td>
                                 <td data-label="Year" class="favth-col-md-1">&nbsp;</td>
                             </c:if>
                             <c:if test="${literature.schemaClass == 'Book'}">
                                 <td data-label="PubMed ID" class="favth-col-md-2">&nbsp;</td>
-                                <td data-label="Title" class="favth-col-md-7"><c:if test="${not empty literature.title}">${literature.title}</c:if></td>
+                                <td data-label="Title" class="favth-col-md-7">
+                                    <c:if test="${not empty literature.title}">${literature.title}</c:if>
+                                    <c:if test="${not empty literature.author}">
+                                        <p style="font-style: italic; font-size: small; margin: 0; padding-left: 5px;">
+                                            <c:forEach var="author" items="${literature.author}" varStatus="loop">
+                                                <span style="text-decoration-style: dotted;">${author.displayName}</span><c:if test="${!loop.last}">, </c:if>
+                                            </c:forEach>
+                                        </p>
+                                    </c:if>
+                                </td>
                                 <td data-label="Journal" class="favth-col-md-2">&nbsp;</td>
                                 <td data-label="Year" class="favth-col-md-1"><c:if test="${not empty literature.year}">${literature.year}</c:if></td>
                             </c:if>
