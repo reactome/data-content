@@ -159,6 +159,8 @@ class GraphController {
             model.addAttribute("objects", databaseObjects);
             infoLogger.info("DatabaseObjects for class: {} were found", className);
             return "graph/schema";
+        } catch (ClassNotFoundException ex) {
+            return "noDetailsFound";
         } catch (Throwable t) {
             // Catch any exception that could happen in the schema page and pass it to the GlobalExceptionHandler
             throw new ViewException(t);
@@ -178,6 +180,8 @@ class GraphController {
             model.addAttribute("referrals", DatabaseObjectUtils.getReferrals(className));
             model.addAttribute("className", className);
             return "graph/schema";
+        } catch (ClassNotFoundException ex) {
+            return "noDetailsFound";
         } catch (Throwable t) {
             // Catch any exception that could happen in the schema page and pass it to the GlobalExceptionHandler
             throw new ViewException(t);
