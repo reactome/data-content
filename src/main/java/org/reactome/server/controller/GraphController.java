@@ -14,7 +14,6 @@ import org.reactome.server.graph.service.helper.RelationshipDirection;
 import org.reactome.server.graph.service.helper.SchemaNode;
 import org.reactome.server.graph.service.util.DatabaseObjectUtils;
 import org.reactome.server.graph.service.util.PathwayBrowserLocationsUtils;
-import org.reactome.server.util.BibTexExporter;
 import org.reactome.server.util.DataSchemaCache;
 import org.reactome.server.util.MapSet;
 import org.reactome.server.util.UAgentInfo;
@@ -68,8 +67,6 @@ class GraphController {
     private AdvancedLinkageService advancedLinkageService;
     private PersonService personService;
     private SchemaNode classBrowserCache;
-
-    private BibTexExporter bibTexExporter;
 
     /**
      * These resources are the same all the time.
@@ -312,19 +309,12 @@ class GraphController {
         }
     }
 
-    @RequestMapping(value = "/bibtex/{id:.*}/{pathway:.*}", method = RequestMethod.GET)
-    public String bibtex(@PathVariable String id, @PathVariable String pathway, ModelMap model, HttpServletResponse response) {
-        Person person = personService.findPerson(id);
-        if (person != null) {
-            bibTexExporter.run(id, pathway);
-
-            model.addAttribute(TITLE, person.getDisplayName());
-            model.addAttribute("person", person);
-            infoLogger.info("Search request for id: {} was found", id);
-            return "graph/person";
-        }
-        return "";
-    }
+    // ### KEEP IT FOR THE MOMENT ###
+    //    @RequestMapping(value = "/bibtex/{id:.*}/{pathway:.*}", method = RequestMethod.GET, produces = MediaType.TEXT_PLAIN_VALUE)
+    //    @ResponseBody
+    //    public String bibtex(@PathVariable String id, @PathVariable String pathway, ModelMap model, HttpServletResponse response) {
+    //        return bibTexExporter.run(id, pathway);
+    //    }
 
     private void setClassAttributes(DatabaseObject databaseObject, ModelMap model) {
         if (databaseObject instanceof ReactionLikeEvent) {
@@ -466,7 +456,7 @@ class GraphController {
                 re = (ReferenceEntity) databaseObject.getClass().getMethod("getReferenceTherapeutic").invoke(databaseObject);
             }
             ret = re.getIdentifier();
-        } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException | NullPointerException e){
+        } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException | NullPointerException e) {
             // nothing here
         }
         return ret;
@@ -535,8 +525,4 @@ class GraphController {
         this.personService = personService;
     }
 
-    @Autowired
-    public void setBibTexExporter(BibTexExporter bibTexExporter) {
-        this.bibTexExporter = bibTexExporter;
-    }
 }
