@@ -56,7 +56,8 @@
                         <thead>
                             <tr>
                                 <th scope="col" style="width:15%;">Identifier</th>
-                                <th scope="col" style="width:85%;">Pathway</th>
+                                <th scope="col" style="width:80%;">Pathway</th>
+                                <th scope="col" style="width:5%;">Reference</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -66,7 +67,10 @@
                                     <a href="./../${authoredPathway.stId}" title="Go to Pathway ${authoredPathway.stId}"> ${authoredPathway.stId}</a>
                                 </td>
                                 <td data-label="Pathway">
-                                    <a href="/cgi-bin/bibtex?DB_ID=${authoredPathway.dbId};personId=${person.dbId}" title="Export to BibTex" target="_blank"> <i class="fa fa-file-code-o"></i></a><span>${authoredPathway.displayName}</span>
+                                    <span>${authoredPathway.displayName}</span>
+                                </td>
+                                <td data-label="Reference" class="padding0" style="text-align: center;">
+                                    <a href="/cgi-bin/bibtex?DB_ID=${authoredPathway.dbId};personId=${person.dbId}" title="Export to BibTex" target="_blank">BibTex</a>
                                 </td>
                             </tr>
                         </c:forEach>
@@ -84,7 +88,8 @@
                         <thead>
                         <tr>
                             <th scope="col" style="width:15%;">Identifier</th>
-                            <th scope="col" style="width:85%;">Pathway</th>
+                            <th scope="col" style="width:80%;">Pathway</th>
+                            <th scope="col" style="width:5%;">Reference</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -94,7 +99,10 @@
                                     <a href="./../${reviewedPathway.stId}" title="Go to Pathway ${reviewedPathway.stId}" >${reviewedPathway.stId}</a>
                                 </td>
                                 <td data-label="Pathway">
-                                    <a href="/cgi-bin/bibtex?DB_ID=${reviewedPathway.dbId};personId=${person.dbId}" title="Export to BibTex" target="_blank"> <i class="fa fa-file-code-o"></i></a><span>${reviewedPathway.displayName}</span>
+                                    <span>${reviewedPathway.displayName}</span>
+                                </td>
+                                <td data-label="Reference" class="padding0" style="text-align: center;">
+                                    <a href="/cgi-bin/bibtex?DB_ID=${reviewedPathway.dbId};personId=${person.dbId}" title="Export to BibTex" target="_blank">BibTex</a>
                                 </td>
                             </tr>
                         </c:forEach>
