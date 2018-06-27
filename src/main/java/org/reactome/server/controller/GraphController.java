@@ -314,11 +314,11 @@ class GraphController {
         }
     }
 
-    protected Function<Pathway, String> getAuthored(){
+    private Function<Pathway, String> getAuthored(){
         return pathway -> pathway.getAuthored().get(0).getDateTime();
     }
 
-    protected Function<Pathway, String> getReviewed(){
+    private Function<Pathway, String> getReviewed(){
         return pathway -> pathway.getReviewed().get(0).getDateTime();
     }
 
