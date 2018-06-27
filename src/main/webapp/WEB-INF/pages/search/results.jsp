@@ -85,7 +85,7 @@
                                     <c:if test="${not empty entry.stId}">
                                         <div class="favth-col-lg-6 favth-col-md-12 favth-col-sm-12 favth-col-xs-12">
                                             <div>
-                                                <strong>Stable Identifier: </strong>${entry.stId}
+                                                <strong>Identifier: </strong>${entry.stId}
                                             </div>
                                         </div>
                                     </c:if>
