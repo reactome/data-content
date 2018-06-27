@@ -36,6 +36,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.nio.charset.Charset;
 import java.util.*;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import static org.reactome.server.util.WebUtils.noDetailsFound;
@@ -303,14 +304,22 @@ class GraphController {
         if (person != null) {
             model.addAttribute(TITLE, person.getDisplayName());
             model.addAttribute("person", person);
-            model.addAttribute("authored", personService.getAuthoredPathways(id).stream().sorted(Comparator.comparing(DatabaseObject::getDisplayName)).collect(Collectors.toList()));
-            model.addAttribute("reviewed", personService.getReviewedPathways(id).stream().sorted(Comparator.comparing(DatabaseObject::getDisplayName)).collect(Collectors.toList()));
+            model.addAttribute("authored",  personService.getAuthoredPathways(id).stream().sorted(Comparator.comparing(getAuthored()).reversed()).collect(Collectors.toList()));
+            model.addAttribute("reviewed", personService.getReviewedPathways(id).stream().sorted(Comparator.comparing(getReviewed()).reversed()).collect(Collectors.toList()));
             infoLogger.info("Search request for id: {} was found", id);
             return "graph/person";
         } else {
             infoLogger.info("Search request for id: {} was not found", id);
             return noDetailsFound(model, response, id);
         }
+    }
+
+    protected Function<Pathway, String> getAuthored(){
+        return pathway -> pathway.getAuthored().get(0).getDateTime();
+    }
+
+    protected Function<Pathway, String> getReviewed(){
+        return pathway -> pathway.getReviewed().get(0).getDateTime();
     }
 
     // ### KEEP IT FOR THE MOMENT ###
