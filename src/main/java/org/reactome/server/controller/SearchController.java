@@ -161,6 +161,9 @@ class SearchController {
                 model.addAttribute(COMPARTMENTS_FACET, searchResult.getFacetMapping().getCompartmentFacet());
                 model.addAttribute(MAX_PAGE, (int) Math.ceil(searchResult.getResultCount() / searchResult.getRows()));
                 model.addAttribute(GROUPED_RESULT, searchResult.getGroupedResult());
+                if(searchResult.getGroupedResult() == null || searchResult.getGroupedResult().getRowCount() == 0) {
+                    response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+                }
                 infoLogger.info("Search request for query: {} was found", q);
 
                 return PAGE_EBI_SEARCHER;
