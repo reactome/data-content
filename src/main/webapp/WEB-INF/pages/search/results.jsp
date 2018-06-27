@@ -82,8 +82,15 @@
                                 </div>
 
                                 <div class="result-detail">
+                                    <c:if test="${not empty entry.stId}">
+                                        <div class="favth-col-lg-6 favth-col-md-12 favth-col-sm-12 favth-col-xs-12">
+                                            <div>
+                                                <strong>Stable Identifier: </strong>${entry.stId}
+                                            </div>
+                                        </div>
+                                    </c:if>
                                     <c:if test="${not empty entry.species && entry.species[0] != 'Entries without species'}">
-                                        <div class="favth-col-lg-5 favth-col-md-12 favth-col-sm-12 favth-col-xs-12">
+                                        <div class="favth-col-lg-6 favth-col-md-12 favth-col-sm-12 favth-col-xs-12">
                                             <div>
                                                 <strong>Species: </strong>
                                                 <c:forEach var="species" items="${entry.species}" varStatus="loop">
@@ -93,7 +100,7 @@
                                         </div>
                                     </c:if>
                                     <c:if test="${not empty entry.compartmentNames}">
-                                        <div class="favth-col-lg-7 favth-col-md-12 favth-col-sm-12 favth-col-xs-12">
+                                        <div class="favth-col-lg-6 favth-col-md-12 favth-col-sm-12 favth-col-xs-12">
                                             <div>
                                                 <strong>Compartment: </strong>
                                                 <c:forEach var="compartment" items="${entry.compartmentNames}" varStatus="loop">
@@ -102,29 +109,30 @@
                                             </div>
                                         </div>
                                     </c:if>
-
-                                    <c:if test="${not empty entry.authored}">
-                                        <div class="favth-col-lg-5 favth-col-md-12 favth-col-sm-12 favth-col-xs-12"><strong>Authored:</strong> ${entry.authored}</div>
+                                    <c:if test="${not empty entry.referenceIdentifier}">
+                                        <div class="favth-col-lg-6 favth-col-md-12 favth-col-sm-12 favth-col-xs-12"><strong>Primary external reference:</strong> ${entry.databaseName}: <a href="${entry.referenceURL}"  target="_blank"><c:if test="${not empty entry.referenceName}">${entry.referenceName}: </c:if>${entry.referenceIdentifier}</a></div>
                                     </c:if>
 
-                                    <c:if test="${not empty entry.orcidId}">
-                                        <div class="favth-col-lg-7 favth-col-md-12 favth-col-sm-12 favth-col-xs-12"><strong>OrcidID:</strong> <a href="https://orcid.org/${entry.orcidId}" rel="nofollow noindex" target="_blank">${entry.orcidId}</a></div>
-                                    </c:if>
-
-                                    <c:if test="${not empty entry.reviewed}">
-                                        <div class="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-12"><strong>Reviewed:</strong> ${entry.reviewed}</div>
-                                    </c:if>
-
+                                    <%-- REGULATION --%>
                                     <c:if test="${not empty entry.regulator}">
                                         <div class="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-12"><strong>Regulator:</strong> <a href="./detail/${entry.regulatorId}" class="" title="Show Details" >${entry.regulator}</a></div>
                                     </c:if>
                                     <c:if test="${not empty entry.regulatedEntity}">
                                         <div class="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-12"><strong>Regulated entity:</strong> <a href="./detail/${entry.regulatedEntityId}" class="" title="Show Details" >${entry.regulatedEntity}</a></div>
                                     </c:if>
-                                    <c:if test="${not empty entry.referenceIdentifier}">
-                                        <%--<span>Primary external reference: ${entry.databaseName} <a href="${entry.referenceURL}" class="" title="show: ${entry.databaseName}" >${entry.referenceName}: ${entry.referenceIdentifier}</a></span>--%>
-                                        <div class="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-12"><strong>Primary external reference:</strong> ${entry.databaseName}: <a href="${entry.referenceURL}"  target="_blank"><c:if test="${not empty entry.referenceName}">${entry.referenceName}: </c:if>${entry.referenceIdentifier}</a></div>
+
+                                    <%-- PERSON --%>
+                                    <c:if test="${not empty entry.authored}">
+                                        <div class="favth-col-lg-5 favth-col-md-12 favth-col-sm-12 favth-col-xs-12"><strong>Authored:</strong> ${entry.authored}</div>
                                     </c:if>
+                                    <c:if test="${not empty entry.orcidId}">
+                                        <div class="favth-col-lg-7 favth-col-md-12 favth-col-sm-12 favth-col-xs-12"><strong>OrcidID:</strong> <a href="https://orcid.org/${entry.orcidId}" rel="nofollow noindex" target="_blank">${entry.orcidId}</a></div>
+                                    </c:if>
+                                    <c:if test="${not empty entry.reviewed}">
+                                        <div class="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-12"><strong>Reviewed:</strong> ${entry.reviewed}</div>
+                                    </c:if>
+
+
                                     <c:if test="${not empty entry.summation}">
                                         <div class="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-12 summation">${entry.summation}</div>
                                     </c:if>
