@@ -75,7 +75,7 @@
                                 <td data-label="Pathway">
                                     <span>${authoredPathway.displayName}</span>
                                 </td>
-                                <td data-label="Reference" class="padding0" style="text-align: center;">
+                                <td data-label="Reference">
                                     <a href="/cgi-bin/bibtex?DB_ID=${authoredPathway.dbId};personId=${person.dbId}" title="Export to BibTex" target="_blank">BibTex</a>
                                 </td>
                             </tr>
@@ -112,7 +112,7 @@
                                 <td data-label="Pathway">
                                     <span>${reviewedPathway.displayName}</span>
                                 </td>
-                                <td data-label="Reference" class="padding0" style="text-align: center;">
+                                <td data-label="Reference">
                                     <a href="/cgi-bin/bibtex?DB_ID=${reviewedPathway.dbId};personId=${person.dbId}" title="Export to BibTex" target="_blank">BibTex</a>
                                 </td>
                             </tr>
