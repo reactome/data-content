@@ -1,5 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 
 <c:if test="${clazz != 'Regulation'}">
 
@@ -64,15 +65,16 @@
         <legend>Authored</legend>
         <div class="wrap overflow">
             <c:forEach var="authored" items="${databaseObject.authored}">
+                <fmt:parseDate pattern = "yyyy-MM-dd H:m:s.S" value = "${authored.dateTime}" var="date"/>
                 <ul class="list">
                     <c:forEach var="person" items="${authored.author}">
                         <li>
                             <c:choose>
                                 <c:when test="${not empty person.orcidId}">
-                                    <a href="../detail/person/${person.orcidId}" class="" title="${person.displayName}" >${person.displayName}</a>
+                                    <a href="../detail/person/${person.orcidId}" class="" title="${person.displayName}" >${person.displayName} &nbsp;(<fmt:formatDate pattern = "yyyy-MM-dd" value = "${date}"/>)</a>
                                 </c:when>
                                 <c:otherwise>
-                                    <a href="../detail/person/${person.dbId}" class="" title="${person.displayName}" >${person.displayName}</a>
+                                    <a href="../detail/person/${person.dbId}" class="" title="${person.displayName}" >${person.displayName} &nbsp;(<fmt:formatDate pattern = "yyyy-MM-dd" value = "${date}"/>)</a>
                                 </c:otherwise>
                             </c:choose>
                         </li>
@@ -88,15 +90,16 @@
         <legend>Reviewed</legend>
         <div class="wrap overflow">
             <c:forEach var="reviewed" items="${databaseObject.reviewed}">
+                <fmt:parseDate pattern = "yyyy-MM-dd H:m:s.S" value = "${reviewed.dateTime}" var="date"/>
                 <ul class="list">
                     <c:forEach var="person" items="${reviewed.author}">
                         <li>
                             <c:choose>
                                 <c:when test="${not empty person.orcidId}">
-                                    <a href="../detail/person/${person.orcidId}" class="" title="${person.displayName}" >${person.displayName}</a>
+                                    <a href="../detail/person/${person.orcidId}" class="" title="${person.displayName}" >${person.displayName} &nbsp;(<fmt:formatDate pattern = "yyyy-MM-dd" value = "${date}"/>)</a>
                                 </c:when>
                                 <c:otherwise>
-                                    <a href="../detail/person/${person.dbId}" class="" title="${person.displayName}" >${person.displayName}</a>
+                                    <a href="../detail/person/${person.dbId}" class="" title="${person.displayName}" >${person.displayName} &nbsp;(<fmt:formatDate pattern = "yyyy-MM-dd" value = "${date}"/>)</a>
                                 </c:otherwise>
                             </c:choose>
                         </li>
