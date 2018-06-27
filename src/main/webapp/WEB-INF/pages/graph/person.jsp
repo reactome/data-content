@@ -1,5 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 
 <c:import url="../header.jsp"/>
 
@@ -55,14 +56,19 @@
                     <table class="reactome">
                         <thead>
                             <tr>
+                                <th scope="col" style="width:10%;">Date</th>
                                 <th scope="col" style="width:15%;">Identifier</th>
-                                <th scope="col" style="width:80%;">Pathway</th>
+                                <th scope="col" style="width:70%;">Pathway</th>
                                 <th scope="col" style="width:5%;">Reference</th>
                             </tr>
                         </thead>
                         <tbody>
                         <c:forEach var="authoredPathway" items="${authored}">
                             <tr>
+                                <td data-label="Date">
+                                    <fmt:parseDate pattern = "yyyy-MM-dd H:m:s.S" value = "${authoredPathway.authored[0].dateTime}" var="date"/>
+                                    <span><fmt:formatDate pattern = "yyyy-MM-dd" value = "${date}"/></span>
+                                </td>
                                 <td data-label="Identifier">
                                     <a href="./../${authoredPathway.stId}" title="Go to Pathway ${authoredPathway.stId}"> ${authoredPathway.stId}</a>
                                 </td>
@@ -87,14 +93,19 @@
                     <table class="reactome">
                         <thead>
                         <tr>
+                            <th scope="col" style="width:10%;">Date</th>
                             <th scope="col" style="width:15%;">Identifier</th>
-                            <th scope="col" style="width:80%;">Pathway</th>
+                            <th scope="col" style="width:70%;">Pathway</th>
                             <th scope="col" style="width:5%;">Reference</th>
                         </tr>
                         </thead>
                         <tbody>
                         <c:forEach var="reviewedPathway" items="${reviewed}">
                             <tr>
+                                <td data-label="Date">
+                                    <fmt:parseDate pattern = "yyyy-MM-dd H:m:s.S" value = "${reviewedPathway.reviewed[0].dateTime}" var="date"/>
+                                    <span><fmt:formatDate pattern = "yyyy-MM-dd" value = "${date}"/></span>
+                                </td>
                                 <td data-label="Identifier">
                                     <a href="./../${reviewedPathway.stId}" title="Go to Pathway ${reviewedPathway.stId}" >${reviewedPathway.stId}</a>
                                 </td>
