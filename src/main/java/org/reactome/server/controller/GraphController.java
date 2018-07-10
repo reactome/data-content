@@ -304,8 +304,10 @@ class GraphController {
         if (person != null) {
             model.addAttribute(TITLE, person.getDisplayName());
             model.addAttribute("person", person);
-            model.addAttribute("authored",  personService.getAuthoredPathways(id).stream().sorted(Comparator.comparing(getAuthored()).reversed()).collect(Collectors.toList()));
-            model.addAttribute("reviewed", personService.getReviewedPathways(id).stream().sorted(Comparator.comparing(getReviewed()).reversed()).collect(Collectors.toList()));
+            model.addAttribute("authoredPathways",  personService.getAuthoredPathways(id).stream().sorted(Comparator.comparing(getAuthoredPathways()).reversed()).collect(Collectors.toList()));
+            model.addAttribute("authoredReactions",  personService.getAuthoredReactions(id).stream().sorted(Comparator.comparing(getAuthoredReactions()).reversed()).collect(Collectors.toList()));
+            model.addAttribute("reviewedPathways", personService.getReviewedPathways(id).stream().sorted(Comparator.comparing(getReviewedPathways()).reversed()).collect(Collectors.toList()));
+            model.addAttribute("reviewedReactions", personService.getReviewedReactions(id).stream().sorted(Comparator.comparing(getReviewedReactions()).reversed()).collect(Collectors.toList()));
             infoLogger.info("Search request for id: {} was found", id);
             return "graph/person";
         } else {
@@ -314,12 +316,20 @@ class GraphController {
         }
     }
 
-    private Function<Pathway, String> getAuthored(){
+    private Function<Pathway, String> getAuthoredPathways(){
         return pathway -> pathway.getAuthored().get(0).getDateTime();
     }
 
-    private Function<Pathway, String> getReviewed(){
+    private Function<ReactionLikeEvent, String> getAuthoredReactions(){
+        return reaction -> reaction.getAuthored().get(0).getDateTime();
+    }
+
+    private Function<Pathway, String> getReviewedPathways(){
         return pathway -> pathway.getReviewed().get(0).getDateTime();
+    }
+
+    private Function<ReactionLikeEvent, String> getReviewedReactions(){
+        return reaction -> reaction.getReviewed().get(0).getDateTime();
     }
 
     // ### KEEP IT FOR THE MOMENT ###

@@ -122,16 +122,38 @@
                                     </c:if>
 
                                     <%-- PERSON --%>
-                                    <c:if test="${not empty entry.authored}">
-                                        <div class="favth-col-lg-5 favth-col-md-12 favth-col-sm-12 favth-col-xs-12"><strong>Authored:</strong> ${entry.authored}</div>
-                                    </c:if>
-                                    <c:if test="${not empty entry.orcidId}">
-                                        <div class="favth-col-lg-7 favth-col-md-12 favth-col-sm-12 favth-col-xs-12"><strong>OrcidID:</strong> <a href="https://orcid.org/${entry.orcidId}" rel="nofollow noindex" target="_blank">${entry.orcidId}</a></div>
-                                    </c:if>
-                                    <c:if test="${not empty entry.reviewed}">
-                                        <div class="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-12"><strong>Reviewed:</strong> ${entry.reviewed}</div>
+                                    <c:if test="${entry.exactType == 'Person'}">
+                                        <div class="favth-col-lg-6 favth-col-md-12 favth-col-sm-12 favth-col-xs-12">
+                                            <strong>Authored Pathways:</strong> <c:choose><c:when test="${not empty entry.authoredPathways}">${entry.authoredPathways}</c:when><c:otherwise>0</c:otherwise></c:choose>
+                                        </div>
+                                        <div class="favth-col-lg-6 favth-col-md-12 favth-col-sm-12 favth-col-xs-12">
+                                            <strong>Reviewed Pathways:</strong> <c:choose><c:when test="${not empty entry.reviewedPathways}">${entry.reviewedPathways}</c:when><c:otherwise>0</c:otherwise></c:choose>
+                                        </div>
+                                        <div class="favth-col-lg-6 favth-col-md-12 favth-col-sm-12 favth-col-xs-12">
+                                            <strong>Authored Reactions:</strong> <c:choose><c:when test="${not empty entry.authoredReactions}">${entry.authoredReactions}</c:when><c:otherwise>0</c:otherwise></c:choose>
+                                        </div>
+                                        <div class="favth-col-lg-6 favth-col-md-12 favth-col-sm-12 favth-col-xs-12">
+                                            <strong>Reviewed Reactions:</strong> <c:choose><c:when test="${not empty entry.reviewedReactions}">${entry.reviewedReactions}</c:when><c:otherwise>0</c:otherwise></c:choose>
+                                        </div>
                                     </c:if>
 
+                                    <%--<c:if test="${not empty entry.authoredPathways}">--%>
+                                        <%--<div class="favth-col-lg-6 favth-col-md-12 favth-col-sm-12 favth-col-xs-12"><strong>Authored Pathways:</strong> ${entry.authoredPathways}</div>--%>
+                                    <%--</c:if>--%>
+                                    <%--<c:if test="${not empty entry.reviewedPathways}">--%>
+                                        <%--<div class="favth-col-lg-6 favth-col-md-12 favth-col-sm-12 favth-col-xs-12"><strong>Reviewed Pathways:</strong> ${entry.reviewedPathways}</div>--%>
+                                    <%--</c:if>--%>
+
+                                    <%--<c:if test="${not empty entry.authoredReactions}">--%>
+                                        <%--<div class="favth-col-lg-6 favth-col-md-12 favth-col-sm-12 favth-col-xs-12"><strong>Authored Reactions:</strong> ${entry.authoredReactions}</div>--%>
+                                    <%--</c:if>--%>
+                                    <%--<c:if test="${not empty entry.reviewedReactions}">--%>
+                                        <%--<div class="favth-col-lg-6 favth-col-md-12 favth-col-sm-12 favth-col-xs-12"><strong>Reviewed Reactions:</strong> ${entry.reviewedReactions}</div>--%>
+                                    <%--</c:if>--%>
+
+                                    <c:if test="${not empty entry.orcidId}">
+                                        <div class="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-12"><strong>OrcidID:</strong> <a href="https://orcid.org/${entry.orcidId}" rel="nofollow noindex" target="_blank">${entry.orcidId}</a></div>
+                                    </c:if>
 
                                     <c:if test="${not empty entry.summation}">
                                         <div class="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-12 summation">${entry.summation}</div>

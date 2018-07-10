@@ -49,10 +49,10 @@
             </c:if>
         </div>
 
-        <c:if test="${not empty authored}">
+        <c:if test="${not empty authoredPathways}">
             <fieldset class="fieldset-details">
-                <legend>Authored (${fn:length(authored)})</legend>
-                <div id="r-responsive-table" class="details-wrap enlarge-table">
+                <legend>Authored Pathways (${fn:length(authoredPathways)})</legend>
+                <div id="r-responsive-table-ap" class="details-wrap enlarge-table">
                     <table class="reactome">
                         <thead>
                             <tr>
@@ -63,7 +63,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                        <c:forEach var="authoredPathway" items="${authored}">
+                        <c:forEach var="authoredPathway" items="${authoredPathways}">
                             <tr>
                                 <td data-label="Date">
                                     <fmt:parseDate pattern = "yyyy-MM-dd H:m:s.S" value = "${authoredPathway.authored[0].dateTime}" var="date"/>
@@ -86,10 +86,47 @@
             </fieldset>
         </c:if>
 
-        <c:if test="${not empty reviewed}">
+        <c:if test="${not empty authoredReactions}">
             <fieldset class="fieldset-details">
-                <legend>Reviewed (${fn:length(reviewed)})</legend>
-                <div id="r-responsive-table-reviewed" class="details-wrap enlarge-table">
+                <legend>Authored Reactions (${fn:length(authoredReactions)})</legend>
+                <div id="r-responsive-table-ar" class="details-wrap enlarge-table">
+                    <table class="reactome">
+                        <thead>
+                        <tr>
+                            <th scope="col" style="width:10%;">Date</th>
+                            <th scope="col" style="width:15%;">Identifier</th>
+                            <th scope="col" style="width:70%;">Reaction</th>
+                            <th scope="col" style="width:5%;">Reference</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <c:forEach var="authoredReaction" items="${authoredReactions}">
+                            <tr>
+                                <td data-label="Date">
+                                    <fmt:parseDate pattern = "yyyy-MM-dd H:m:s.S" value = "${authoredReaction.authored[0].dateTime}" var="date"/>
+                                    <span><fmt:formatDate pattern = "yyyy-MM-dd" value = "${date}"/></span>
+                                </td>
+                                <td data-label="Identifier">
+                                    <a href="./../${authoredReaction.stId}" title="Go to Pathway ${authoredReaction.stId}"> ${authoredReaction.stId}</a>
+                                </td>
+                                <td data-label="Pathway">
+                                    <span>${authoredReaction.displayName}</span>
+                                </td>
+                                <td data-label="Reference">
+                                    <a href="/cgi-bin/bibtex?DB_ID=${authoredReaction.dbId};personId=${person.dbId}" title="Export to BibTex" target="_blank">BibTex</a>
+                                </td>
+                            </tr>
+                        </c:forEach>
+                        </tbody>
+                    </table>
+                </div>
+            </fieldset>
+        </c:if>
+
+        <c:if test="${not empty reviewedPathways}">
+            <fieldset class="fieldset-details">
+                <legend>Reviewed Pathways (${fn:length(reviewedPathways)})</legend>
+                <div id="r-responsive-table-reviewed-rp" class="details-wrap enlarge-table">
                     <table class="reactome">
                         <thead>
                         <tr>
@@ -100,7 +137,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <c:forEach var="reviewedPathway" items="${reviewed}">
+                        <c:forEach var="reviewedPathway" items="${reviewedPathways}">
                             <tr>
                                 <td data-label="Date">
                                     <fmt:parseDate pattern = "yyyy-MM-dd H:m:s.S" value = "${reviewedPathway.reviewed[0].dateTime}" var="date"/>
@@ -114,6 +151,43 @@
                                 </td>
                                 <td data-label="Reference">
                                     <a href="/cgi-bin/bibtex?DB_ID=${reviewedPathway.dbId};personId=${person.dbId}" title="Export to BibTex" target="_blank">BibTex</a>
+                                </td>
+                            </tr>
+                        </c:forEach>
+                        </tbody>
+                    </table>
+                </div>
+            </fieldset>
+        </c:if>
+
+        <c:if test="${not empty reviewedReactions}">
+            <fieldset class="fieldset-details">
+                <legend>Reviewed Reactions (${fn:length(reviewedReactions)})</legend>
+                <div id="r-responsive-table-reviewed-rr" class="details-wrap enlarge-table">
+                    <table class="reactome">
+                        <thead>
+                        <tr>
+                            <th scope="col" style="width:10%;">Date</th>
+                            <th scope="col" style="width:15%;">Identifier</th>
+                            <th scope="col" style="width:70%;">Reaction</th>
+                            <th scope="col" style="width:5%;">Reference</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <c:forEach var="reviewedReaction" items="${reviewedReactions}">
+                            <tr>
+                                <td data-label="Date">
+                                    <fmt:parseDate pattern = "yyyy-MM-dd H:m:s.S" value = "${reviewedReaction.reviewed[0].dateTime}" var="date"/>
+                                    <span><fmt:formatDate pattern = "yyyy-MM-dd" value = "${date}"/></span>
+                                </td>
+                                <td data-label="Identifier">
+                                    <a href="./../${reviewedReaction.stId}" title="Go to Pathway ${reviewedReaction.stId}" >${reviewedReaction.stId}</a>
+                                </td>
+                                <td data-label="Pathway">
+                                    <span>${reviewedReaction.displayName}</span>
+                                </td>
+                                <td data-label="Reference">
+                                    <a href="/cgi-bin/bibtex?DB_ID=${reviewedReaction.dbId};personId=${person.dbId}" title="Export to BibTex" target="_blank">BibTex</a>
                                 </td>
                             </tr>
                         </c:forEach>
