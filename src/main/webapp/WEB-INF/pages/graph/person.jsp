@@ -19,19 +19,6 @@
             </c:choose>
         </h3>
 
-        <c:choose>
-            <c:when test="${param['showAll']}">
-                <div>
-                    <a href="?" class="btn btn-info person-switch-btn">Show Summary</a>
-                </div>
-            </c:when>
-            <c:otherwise>
-                <div>
-                    <a href="?showAll=true" class="btn btn-info person-switch-btn">Expand All</a>
-                </div>
-            </c:otherwise>
-        </c:choose>
-
         <div class="extended-header favth-clearfix">
             <c:if test="${not empty person.orcidId}">
                 <div class="details-label favth-col-lg-2 favth-col-md-2 favth-col-sm-3 favth-col-xs-12">
@@ -62,6 +49,19 @@
                 </div>
             </c:if>
         </div>
+
+        <c:choose>
+            <c:when test="${param['showAll']}">
+                <div>
+                    <a href="?" class="btn btn-info person-switch-btn">Show Summary</a>
+                </div>
+            </c:when>
+            <c:otherwise>
+                <div>
+                    <a href="?showAll=true" class="btn btn-info person-switch-btn">Expand All</a>
+                </div>
+            </c:otherwise>
+        </c:choose>
 
         <c:if test="${not empty authoredPathways}">
             <fieldset class="fieldset-details">
