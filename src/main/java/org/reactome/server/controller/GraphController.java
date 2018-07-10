@@ -36,7 +36,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.nio.charset.Charset;
 import java.util.*;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import static org.reactome.server.util.WebUtils.noDetailsFound;
@@ -66,7 +65,6 @@ class GraphController {
     private SchemaService schemaService;
     private SpeciesService speciesService;
     private AdvancedLinkageService advancedLinkageService;
-    private PersonService personService;
     private SchemaNode classBrowserCache;
 
     /**
@@ -297,48 +295,6 @@ class GraphController {
         }
     }
 
-    @RequestMapping(value = "/detail/person/{id:.*}", method = RequestMethod.GET)
-    public String personDetail(@PathVariable String id, ModelMap model, HttpServletResponse response) {
-        Person person = personService.findPerson(id);
-
-        if (person != null) {
-            model.addAttribute(TITLE, person.getDisplayName());
-            model.addAttribute("person", person);
-            model.addAttribute("authoredPathways",  personService.getAuthoredPathways(id).stream().sorted(Comparator.comparing(getAuthoredPathways()).reversed()).collect(Collectors.toList()));
-            model.addAttribute("authoredReactions",  personService.getAuthoredReactions(id).stream().sorted(Comparator.comparing(getAuthoredReactions()).reversed()).collect(Collectors.toList()));
-            model.addAttribute("reviewedPathways", personService.getReviewedPathways(id).stream().sorted(Comparator.comparing(getReviewedPathways()).reversed()).collect(Collectors.toList()));
-            model.addAttribute("reviewedReactions", personService.getReviewedReactions(id).stream().sorted(Comparator.comparing(getReviewedReactions()).reversed()).collect(Collectors.toList()));
-            infoLogger.info("Search request for id: {} was found", id);
-            return "graph/person";
-        } else {
-            infoLogger.info("Search request for id: {} was not found", id);
-            return noDetailsFound(model, response, id);
-        }
-    }
-
-    private Function<Pathway, String> getAuthoredPathways(){
-        return pathway -> pathway.getAuthored().get(0).getDateTime();
-    }
-
-    private Function<ReactionLikeEvent, String> getAuthoredReactions(){
-        return reaction -> reaction.getAuthored().get(0).getDateTime();
-    }
-
-    private Function<Pathway, String> getReviewedPathways(){
-        return pathway -> pathway.getReviewed().get(0).getDateTime();
-    }
-
-    private Function<ReactionLikeEvent, String> getReviewedReactions(){
-        return reaction -> reaction.getReviewed().get(0).getDateTime();
-    }
-
-    // ### KEEP IT FOR THE MOMENT ###
-    //    @RequestMapping(value = "/bibtex/{id:.*}/{pathway:.*}", method = RequestMethod.GET, produces = MediaType.TEXT_PLAIN_VALUE)
-    //    @ResponseBody
-    //    public String bibtex(@PathVariable String id, @PathVariable String pathway, ModelMap model, HttpServletResponse response) {
-    //        return bibTexExporter.run(id, pathway);
-    //    }
-
     private void setClassAttributes(DatabaseObject databaseObject, ModelMap model) {
         if (databaseObject instanceof ReactionLikeEvent) {
             model.addAttribute("isReactionLikeEvent", true);
@@ -542,10 +498,4 @@ class GraphController {
     public void setInteractionsService(InteractionsService interactionsService) {
         this.interactionsService = interactionsService;
     }
-
-    @Autowired
-    public void setPersonService(PersonService personService) {
-        this.personService = personService;
-    }
-
 }

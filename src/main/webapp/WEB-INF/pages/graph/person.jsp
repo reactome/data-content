@@ -51,7 +51,7 @@
 
         <c:if test="${not empty authoredPathways}">
             <fieldset class="fieldset-details">
-                <legend>Authored Pathways (${fn:length(authoredPathways)})</legend>
+                <legend>Authored Pathways (${fn:length(authoredPathways)}/${authoredPathwaysSize})</legend>
                 <div id="r-responsive-table-ap" class="details-wrap enlarge-table">
                     <table class="reactome">
                         <thead>
@@ -63,32 +63,42 @@
                             </tr>
                         </thead>
                         <tbody>
-                        <c:forEach var="authoredPathway" items="${authoredPathways}">
+                        <c:forEach var="item" items="${authoredPathways}">
                             <tr>
                                 <td data-label="Date">
-                                    <fmt:parseDate pattern = "yyyy-MM-dd H:m:s.S" value = "${authoredPathway.authored[0].dateTime}" var="date"/>
+                                    <fmt:parseDate pattern = "yyyy-MM-dd H:m:s.S" value = "${item.authored[0].dateTime}" var="date"/>
                                     <span><fmt:formatDate pattern = "yyyy-MM-dd" value = "${date}"/></span>
                                 </td>
                                 <td data-label="Identifier">
-                                    <a href="./../${authoredPathway.stId}" title="Go to Pathway ${authoredPathway.stId}"> ${authoredPathway.stId}</a>
+                                    <a href="./../${item.stId}" title="Go to Pathway ${item.stId}"> ${item.stId}</a>
                                 </td>
                                 <td data-label="Pathway">
-                                    <span>${authoredPathway.displayName}</span>
+                                    <span>${item.displayName}</span>
                                 </td>
                                 <td data-label="Reference">
-                                    <a href="/cgi-bin/bibtex?DB_ID=${authoredPathway.dbId};personId=${person.dbId}" title="Export to BibTex" target="_blank">BibTex</a>
+                                    <a href="/cgi-bin/bibtex?DB_ID=${item.dbId};personId=${person.dbId}" title="Export to BibTex" target="_blank">BibTex</a>
                                 </td>
                             </tr>
                         </c:forEach>
                         </tbody>
                     </table>
                 </div>
+                <div style="padding: 5px 0 0 14px;">
+                    <c:choose>
+                        <c:when test="${not empty person.orcidId}">
+                            <a href="./${person.orcidId}/pathways/authored" class="" title="Show all" >Show all authored pathways...</a>
+                        </c:when>
+                        <c:otherwise>
+                            <a href="./${person.id}/pathways/authored" class="" title="Show all" >Show all authored pathways...</a>
+                        </c:otherwise>
+                    </c:choose>
+                </div>
             </fieldset>
         </c:if>
 
         <c:if test="${not empty authoredReactions}">
             <fieldset class="fieldset-details">
-                <legend>Authored Reactions (${fn:length(authoredReactions)})</legend>
+                <legend>Authored Reactions (${fn:length(authoredReactions)}/${authoredReactionsSize})</legend>
                 <div id="r-responsive-table-ar" class="details-wrap enlarge-table">
                     <table class="reactome">
                         <thead>
@@ -109,7 +119,7 @@
                                 <td data-label="Identifier">
                                     <a href="./../${authoredReaction.stId}" title="Go to Pathway ${authoredReaction.stId}"> ${authoredReaction.stId}</a>
                                 </td>
-                                <td data-label="Pathway">
+                                <td data-label="Reaction">
                                     <span>${authoredReaction.displayName}</span>
                                 </td>
                                 <td data-label="Reference">
@@ -120,12 +130,22 @@
                         </tbody>
                     </table>
                 </div>
+                <div style="padding: 5px 0 0 14px;">
+                    <c:choose>
+                        <c:when test="${not empty person.orcidId}">
+                            <a href="./${person.orcidId}/pathways/reviewed" class="" title="Show all" >Show all reviewed pathways...</a>
+                        </c:when>
+                        <c:otherwise>
+                            <a href="./${person.id}/pathways/reviewed" class="" title="Show all" >Show all reviewed pathways...</a>
+                        </c:otherwise>
+                    </c:choose>
+                </div>
             </fieldset>
         </c:if>
 
         <c:if test="${not empty reviewedPathways}">
             <fieldset class="fieldset-details">
-                <legend>Reviewed Pathways (${fn:length(reviewedPathways)})</legend>
+                <legend>Reviewed Pathways (${fn:length(reviewedPathways)}/${reviewedPathwaysSize})</legend>
                 <div id="r-responsive-table-reviewed-rp" class="details-wrap enlarge-table">
                     <table class="reactome">
                         <thead>
@@ -157,12 +177,22 @@
                         </tbody>
                     </table>
                 </div>
+                <div style="padding: 5px 0 0 14px;">
+                    <c:choose>
+                        <c:when test="${not empty person.orcidId}">
+                            <a href="./${person.orcidId}/reactions/authored" class="" title="Show all" >Show all authored reactions...</a>
+                        </c:when>
+                        <c:otherwise>
+                            <a href="./${person.id}/reactions/authored" class="" title="Show all" >Show all authored reactions...</a>
+                        </c:otherwise>
+                    </c:choose>
+                </div>
             </fieldset>
         </c:if>
 
         <c:if test="${not empty reviewedReactions}">
             <fieldset class="fieldset-details">
-                <legend>Reviewed Reactions (${fn:length(reviewedReactions)})</legend>
+                <legend>Reviewed Reactions (${fn:length(reviewedReactions)}/${reviewedReactionsSize})</legend>
                 <div id="r-responsive-table-reviewed-rr" class="details-wrap enlarge-table">
                     <table class="reactome">
                         <thead>
@@ -183,7 +213,7 @@
                                 <td data-label="Identifier">
                                     <a href="./../${reviewedReaction.stId}" title="Go to Pathway ${reviewedReaction.stId}" >${reviewedReaction.stId}</a>
                                 </td>
-                                <td data-label="Pathway">
+                                <td data-label="Reaction">
                                     <span>${reviewedReaction.displayName}</span>
                                 </td>
                                 <td data-label="Reference">
@@ -193,6 +223,16 @@
                         </c:forEach>
                         </tbody>
                     </table>
+                </div>
+                <div style="padding: 5px 0 0 14px;">
+                    <c:choose>
+                        <c:when test="${not empty person.orcidId}">
+                            <a href="./${person.orcidId}/reactions/reviewed" class="" title="Show all" >Show all reviewed reactions...</a>
+                        </c:when>
+                        <c:otherwise>
+                            <a href="./${person.id}/reactions/reviewed" class="" title="Show all" >Show all reviewed reactions...</a>
+                        </c:otherwise>
+                    </c:choose>
                 </div>
             </fieldset>
         </c:if>
