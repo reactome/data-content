@@ -97,16 +97,18 @@
                         </tbody>
                     </table>
                 </div>
-                <div style="padding: 5px 0 0 14px;">
-                    <c:choose>
-                        <c:when test="${not empty person.orcidId}">
-                            <a href="./${person.orcidId}/pathways/authored" class="" title="Show all" >Show all authored pathways...</a>
-                        </c:when>
-                        <c:otherwise>
-                            <a href="./${person.id}/pathways/authored" class="" title="Show all" >Show all authored pathways...</a>
-                        </c:otherwise>
-                    </c:choose>
-                </div>
+                <c:if test="${not param['showAll']}">
+                    <div style="padding: 5px 0 0 14px;">
+                        <c:choose>
+                            <c:when test="${not empty person.orcidId}">
+                                <a href="./${person.orcidId}/pathways/authored" class="" title="Show all">Show all authored pathways...</a>
+                            </c:when>
+                            <c:otherwise>
+                                <a href="./${person.id}/pathways/authored" class="" title="Show all">Show all authored pathways...</a>
+                            </c:otherwise>
+                        </c:choose>
+                    </div>
+                </c:if>
             </fieldset>
         </c:if>
 
@@ -144,16 +146,18 @@
                         </tbody>
                     </table>
                 </div>
-                <div style="padding: 5px 0 0 14px;">
-                    <c:choose>
-                        <c:when test="${not empty person.orcidId}">
-                            <a href="./${person.orcidId}/pathways/reviewed" class="" title="Show all" >Show all reviewed pathways...</a>
-                        </c:when>
-                        <c:otherwise>
-                            <a href="./${person.id}/pathways/reviewed" class="" title="Show all" >Show all reviewed pathways...</a>
-                        </c:otherwise>
-                    </c:choose>
-                </div>
+                <c:if test="${not param['showAll']}">
+                    <div style="padding: 5px 0 0 14px;">
+                        <c:choose>
+                            <c:when test="${not empty person.orcidId}">
+                                <a href="./${person.orcidId}/pathways/reviewed" class="" title="Show all" >Show all reviewed pathways...</a>
+                            </c:when>
+                            <c:otherwise>
+                                <a href="./${person.id}/pathways/reviewed" class="" title="Show all" >Show all reviewed pathways...</a>
+                            </c:otherwise>
+                        </c:choose>
+                    </div>
+                </c:if>
             </fieldset>
         </c:if>
 
@@ -191,16 +195,18 @@
                         </tbody>
                     </table>
                 </div>
-                <div style="padding: 5px 0 0 14px;">
-                    <c:choose>
-                        <c:when test="${not empty person.orcidId}">
-                            <a href="./${person.orcidId}/reactions/authored" class="" title="Show all" >Show all authored reactions...</a>
-                        </c:when>
-                        <c:otherwise>
-                            <a href="./${person.id}/reactions/authored" class="" title="Show all" >Show all authored reactions...</a>
-                        </c:otherwise>
-                    </c:choose>
-                </div>
+                <c:if test="${not param['showAll']}">
+                    <div style="padding: 5px 0 0 14px;">
+                        <c:choose>
+                            <c:when test="${not empty person.orcidId}">
+                                <a href="./${person.orcidId}/reactions/authored" class="" title="Show all" >Show all authored reactions...</a>
+                            </c:when>
+                            <c:otherwise>
+                                <a href="./${person.id}/reactions/authored" class="" title="Show all" >Show all authored reactions...</a>
+                            </c:otherwise>
+                        </c:choose>
+                    </div>
+                </c:if>
             </fieldset>
         </c:if>
 
@@ -238,16 +244,18 @@
                         </tbody>
                     </table>
                 </div>
-                <div style="padding: 5px 0 0 14px;">
-                    <c:choose>
-                        <c:when test="${not empty person.orcidId}">
-                            <a href="./${person.orcidId}/reactions/reviewed" class="" title="Show all" >Show all reviewed reactions...</a>
-                        </c:when>
-                        <c:otherwise>
-                            <a href="./${person.id}/reactions/reviewed" class="" title="Show all" >Show all reviewed reactions...</a>
-                        </c:otherwise>
-                    </c:choose>
-                </div>
+                <c:if test="${not param['showAll']}">
+                    <div style="padding: 5px 0 0 14px;">
+                        <c:choose>
+                            <c:when test="${not empty person.orcidId}">
+                                <a href="./${person.orcidId}/reactions/reviewed" class="" title="Show all" >Show all reviewed reactions...</a>
+                            </c:when>
+                            <c:otherwise>
+                                <a href="./${person.id}/reactions/reviewed" class="" title="Show all" >Show all reviewed reactions...</a>
+                            </c:otherwise>
+                        </c:choose>
+                    </div>
+                </c:if>
             </fieldset>
         </c:if>
     </div>
