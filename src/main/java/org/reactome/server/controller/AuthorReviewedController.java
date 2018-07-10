@@ -12,11 +12,10 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.Collection;
-import java.util.Comparator;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import static org.reactome.server.util.WebUtils.noDetailsFound;
@@ -39,28 +38,28 @@ class AuthorReviewedController {
     private PersonService personService;
 
     @RequestMapping(value = "/detail/person/{id:.*}", method = RequestMethod.GET)
-    public String personDetail(@PathVariable String id, ModelMap model, HttpServletResponse response) {
+    public String personDetail(@PathVariable String id, ModelMap model, HttpServletResponse response,
+                               @RequestParam(defaultValue = "false") Boolean showAll) {
         Person person = personService.findPerson(id);
-
         if (person != null) {
             model.addAttribute(TITLE, person.getDisplayName());
             model.addAttribute("person", person);
 
-            Collection<Pathway> authoredPathways = personService.getAuthoredPathways(id).stream().sorted(Comparator.comparing(getAuthoredPathways()).reversed()).collect(Collectors.toList());
+            Collection<Pathway> authoredPathways = personService.getAuthoredPathways(id);
             model.addAttribute("authoredPathwaysSize", authoredPathways.size());
-            model.addAttribute("authoredPathways", authoredPathways.stream().limit(MAX).collect(Collectors.toList()));
+            model.addAttribute("authoredPathways", showAll ? authoredPathways : authoredPathways.stream().limit(MAX).collect(Collectors.toList()));
 
-            Collection<ReactionLikeEvent> authoredReactions = personService.getAuthoredReactions(id).stream().sorted(Comparator.comparing(getAuthoredReactions()).reversed()).collect(Collectors.toList());
+            Collection<ReactionLikeEvent> authoredReactions = personService.getAuthoredReactions(id);
             model.addAttribute("authoredReactionsSize", authoredReactions.size());
-            model.addAttribute("authoredReactions", authoredReactions.stream().limit(MAX).collect(Collectors.toList()));
+            model.addAttribute("authoredReactions", showAll ? authoredReactions : authoredReactions.stream().limit(MAX).collect(Collectors.toList()));
 
-            Collection<Pathway> reviewedPathways = personService.getReviewedPathways(id).stream().sorted(Comparator.comparing(getReviewedPathways()).reversed()).collect(Collectors.toList());
+            Collection<Pathway> reviewedPathways = personService.getReviewedPathways(id);
             model.addAttribute("reviewedPathwaysSize", reviewedPathways.size());
-            model.addAttribute("reviewedPathways", reviewedPathways.stream().limit(MAX).collect(Collectors.toList()));
+            model.addAttribute("reviewedPathways", showAll ? reviewedPathways : reviewedPathways.stream().limit(MAX).collect(Collectors.toList()));
 
-            Collection<ReactionLikeEvent> reviewedReactions = personService.getReviewedReactions(id).stream().sorted(Comparator.comparing(getReviewedReactions()).reversed()).collect(Collectors.toList());
+            Collection<ReactionLikeEvent> reviewedReactions = personService.getReviewedReactions(id);
             model.addAttribute("reviewedReactionsSize", reviewedReactions.size());
-            model.addAttribute("reviewedReactions", reviewedReactions.stream().limit(MAX).collect(Collectors.toList()));
+            model.addAttribute("reviewedReactions", showAll ? reviewedReactions : reviewedReactions.stream().limit(MAX).collect(Collectors.toList()));
 
             infoLogger.info("Search request for id: {} was found", id);
             return "graph/person";
@@ -79,7 +78,7 @@ class AuthorReviewedController {
             model.addAttribute("person", person);
             model.addAttribute("label", "Authored Pathways");
             model.addAttribute("type", "Pathway");
-            model.addAttribute("list", personService.getAuthoredPathways(id).stream().sorted(Comparator.comparing(getAuthoredPathways()).reversed()).collect(Collectors.toList()));
+            model.addAttribute("list", personService.getAuthoredPathways(id));
             return "graph/personShowAll";
         } else {
             infoLogger.info("Search request for id: {} was not found", id);
@@ -96,7 +95,7 @@ class AuthorReviewedController {
             model.addAttribute("person", person);
             model.addAttribute("label", "Reviewed Pathways");
             model.addAttribute("type", "Pathway");
-            model.addAttribute("list", personService.getAuthoredReactions(id).stream().sorted(Comparator.comparing(getAuthoredReactions()).reversed()).collect(Collectors.toList()));
+            model.addAttribute("list", personService.getAuthoredReactions(id));
             return "graph/personShowAll";
         } else {
             infoLogger.info("Search request for id: {} was not found", id);
@@ -113,7 +112,7 @@ class AuthorReviewedController {
             model.addAttribute("person", person);
             model.addAttribute("label", "Authored Reactions");
             model.addAttribute("type", "Reaction");
-            model.addAttribute("list", personService.getReviewedPathways(id).stream().sorted(Comparator.comparing(getReviewedPathways()).reversed()).collect(Collectors.toList()));
+            model.addAttribute("list", personService.getReviewedPathways(id));
             return "graph/personShowAll";
         } else {
             infoLogger.info("Search request for id: {} was not found", id);
@@ -130,28 +129,12 @@ class AuthorReviewedController {
             model.addAttribute("person", person);
             model.addAttribute("label", "Reviewed Reactions");
             model.addAttribute("type", "Reaction");
-            model.addAttribute("list", personService.getReviewedReactions(id).stream().sorted(Comparator.comparing(getReviewedReactions()).reversed()).collect(Collectors.toList()));
+            model.addAttribute("list", personService.getReviewedReactions(id));
             return "graph/personShowAll";
         } else {
             infoLogger.info("Search request for id: {} was not found", id);
             return noDetailsFound(model, response, id);
         }
-    }
-
-    private Function<Pathway, String> getAuthoredPathways() {
-        return pathway -> pathway.getAuthored().get(0).getDateTime();
-    }
-
-    private Function<ReactionLikeEvent, String> getAuthoredReactions() {
-        return reaction -> reaction.getAuthored().get(0).getDateTime();
-    }
-
-    private Function<Pathway, String> getReviewedPathways() {
-        return pathway -> pathway.getReviewed().get(0).getDateTime();
-    }
-
-    private Function<ReactionLikeEvent, String> getReviewedReactions() {
-        return reaction -> reaction.getReviewed().get(0).getDateTime();
     }
 
     // ### KEEP IT FOR THE MOMENT ###

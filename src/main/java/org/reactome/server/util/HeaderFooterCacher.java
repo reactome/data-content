@@ -52,7 +52,7 @@ public class HeaderFooterCacher extends Thread {
     private static final String SCRIPT_FOOTER_CLOSE = "</body>";
     private static final String SCRIPT_FOOTER_REPLACE = "<script type=\"text/javascript\" src=\"/content/resources/js/data-content.js?v=3.2\"></script>\n</body>";
 
-    private static final String MAIN_CSS = "<link rel=\"stylesheet\" href=\"/content/resources/css/main.css\" type=\"text/css\" />";
+    private static final String MAIN_CSS = "<link rel=\"stylesheet\" href=\"/content/resources/css/main.css?v=20180710\" type=\"text/css\" />";
 
     private static final String HEADER_CLOSE = "</head>";
     private static final String HEADER_CLOSE_REPLACE = MAIN_CSS + "\n" + "<jsp:include page=\"graph/json-ld.jsp\"/>\n</head>";

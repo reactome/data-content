@@ -577,6 +577,13 @@ a.tree-highlighted-item:visited {
     margin: 8px 10px 15px 10px;
 }
 
+#fav-container .person-switch-btn{
+    padding: 3px 20px;
+    position: absolute;
+    top: 7px;
+    right: 15px;
+}
+
 .ehld {
     height: 300px;
 }
@@ -644,6 +651,12 @@ span.secondary-identifiers {
     #fav-container table.interactor-detail-table {
         width: 99%;
         margin: 4px;
+    }
+
+    #fav-container .person-switch-btn {
+        padding: 3px 20px;
+        position: static;
+        width: 100%;
     }
 }
 

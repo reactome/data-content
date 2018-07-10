@@ -1,6 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
-<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib uri = "http://java.sun.com/jsp/jstl/fmt" prefix = "fmt" %>
 
 <c:import url="../header.jsp"/>
 
@@ -18,6 +18,20 @@
                 </c:otherwise>
             </c:choose>
         </h3>
+
+        <c:choose>
+            <c:when test="${param['showAll']}">
+                <div>
+                    <a href="?" class="btn btn-info person-switch-btn">Show Summary</a>
+                </div>
+            </c:when>
+            <c:otherwise>
+                <div>
+                    <a href="?showAll=true" class="btn btn-info person-switch-btn">Expand All</a>
+                </div>
+            </c:otherwise>
+        </c:choose>
+
         <div class="extended-header favth-clearfix">
             <c:if test="${not empty person.orcidId}">
                 <div class="details-label favth-col-lg-2 favth-col-md-2 favth-col-sm-3 favth-col-xs-12">
@@ -51,7 +65,7 @@
 
         <c:if test="${not empty authoredPathways}">
             <fieldset class="fieldset-details">
-                <legend>Authored Pathways (${fn:length(authoredPathways)}/${authoredPathwaysSize})</legend>
+                <legend>Authored Pathways (<fmt:formatNumber type = "number" maxFractionDigits = "3" value = "${fn:length(authoredPathways)}"/>/<fmt:formatNumber type = "number" maxFractionDigits = "3" value = "${authoredPathwaysSize}"/>)</legend>
                 <div id="r-responsive-table-ap" class="details-wrap enlarge-table">
                     <table class="reactome">
                         <thead>
@@ -98,7 +112,7 @@
 
         <c:if test="${not empty authoredReactions}">
             <fieldset class="fieldset-details">
-                <legend>Authored Reactions (${fn:length(authoredReactions)}/${authoredReactionsSize})</legend>
+                <legend>Authored Reactions (<fmt:formatNumber type = "number" maxFractionDigits = "3" value = "${fn:length(authoredReactions)}"/>/<fmt:formatNumber type = "number" maxFractionDigits = "3" value = "${authoredReactionsSize}"/>)</legend>
                 <div id="r-responsive-table-ar" class="details-wrap enlarge-table">
                     <table class="reactome">
                         <thead>
@@ -145,7 +159,7 @@
 
         <c:if test="${not empty reviewedPathways}">
             <fieldset class="fieldset-details">
-                <legend>Reviewed Pathways (${fn:length(reviewedPathways)}/${reviewedPathwaysSize})</legend>
+                <legend>Reviewed Pathways (<fmt:formatNumber type = "number" maxFractionDigits = "3" value = "${fn:length(reviewedPathways)}"/>/<fmt:formatNumber type = "number" maxFractionDigits = "3" value = "${reviewedPathwaysSize}"/>)</legend>
                 <div id="r-responsive-table-reviewed-rp" class="details-wrap enlarge-table">
                     <table class="reactome">
                         <thead>
@@ -192,7 +206,7 @@
 
         <c:if test="${not empty reviewedReactions}">
             <fieldset class="fieldset-details">
-                <legend>Reviewed Reactions (${fn:length(reviewedReactions)}/${reviewedReactionsSize})</legend>
+                <legend>Reviewed Reactions (<fmt:formatNumber type = "number" maxFractionDigits = "3" value = "${fn:length(reviewedReactions)}"/>/<fmt:formatNumber type = "number" maxFractionDigits = "3" value = "${reviewedReactionsSize}"/>)</legend>
                 <div id="r-responsive-table-reviewed-rr" class="details-wrap enlarge-table">
                     <table class="reactome">
                         <thead>
