@@ -74,6 +74,9 @@
                                                     </c:otherwise>
                                                 </c:choose>
                                             </c:when>
+                                            <c:when test="${entry.exactType == 'Icon'}" >
+                                                <a href="./detail/icon/${entry.iconName}" class="" title="Show Icon Details" >${entry.iconName}</a>
+                                            </c:when>
                                             <c:otherwise>
                                                 <a href="./detail/${entry.id}" class="" title="Show Details" >${entry.name}</a>
                                             </c:otherwise>
@@ -135,24 +138,31 @@
                                         <div class="favth-col-lg-6 favth-col-md-12 favth-col-sm-12 favth-col-xs-12">
                                             <strong>Reviewed Reactions:</strong> <c:choose><c:when test="${not empty entry.reviewedReactions}">${entry.reviewedReactions}</c:when><c:otherwise>0</c:otherwise></c:choose>
                                         </div>
+                                        <c:if test="${not empty entry.orcidId}">
+                                            <div class="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-12"><strong>OrcidID:</strong> <a href="https://orcid.org/${entry.orcidId}" rel="nofollow noindex" target="_blank">${entry.orcidId}</a></div>
+                                        </c:if>
                                     </c:if>
 
-                                    <%--<c:if test="${not empty entry.authoredPathways}">--%>
-                                        <%--<div class="favth-col-lg-6 favth-col-md-12 favth-col-sm-12 favth-col-xs-12"><strong>Authored Pathways:</strong> ${entry.authoredPathways}</div>--%>
-                                    <%--</c:if>--%>
-                                    <%--<c:if test="${not empty entry.reviewedPathways}">--%>
-                                        <%--<div class="favth-col-lg-6 favth-col-md-12 favth-col-sm-12 favth-col-xs-12"><strong>Reviewed Pathways:</strong> ${entry.reviewedPathways}</div>--%>
-                                    <%--</c:if>--%>
-
-                                    <%--<c:if test="${not empty entry.authoredReactions}">--%>
-                                        <%--<div class="favth-col-lg-6 favth-col-md-12 favth-col-sm-12 favth-col-xs-12"><strong>Authored Reactions:</strong> ${entry.authoredReactions}</div>--%>
-                                    <%--</c:if>--%>
-                                    <%--<c:if test="${not empty entry.reviewedReactions}">--%>
-                                        <%--<div class="favth-col-lg-6 favth-col-md-12 favth-col-sm-12 favth-col-xs-12"><strong>Reviewed Reactions:</strong> ${entry.reviewedReactions}</div>--%>
-                                    <%--</c:if>--%>
-
-                                    <c:if test="${not empty entry.orcidId}">
-                                        <div class="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-12"><strong>OrcidID:</strong> <a href="https://orcid.org/${entry.orcidId}" rel="nofollow noindex" target="_blank">${entry.orcidId}</a></div>
+                                    <%-- ICON --%>
+                                    <c:if test="${entry.exactType == 'Icon'}">
+                                        <div class="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-12 padding0">
+                                            <div class="favth-col-lg-8 favth-col-md-12 favth-col-sm-12 favth-col-xs-12 padding0">
+                                                <c:if test="${not empty entry.iconCuratorName}">
+                                                    <div class="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-12">
+                                                        <strong>Curator:</strong> ${entry.iconCuratorName}
+                                                    </div>
+                                                </c:if>
+                                                <c:if test="${not empty entry.iconDesignerName}">
+                                                    <div class="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-12">
+                                                        <strong>Designer:</strong>
+                                                        <a href="${entry.iconDesignerUrl}" class="">${entry.iconDesignerName}</a>
+                                                    </div>
+                                                </c:if>
+                                            </div>
+                                            <div class="favth-col-lg-4 favth-col-md-12 favth-col-sm-12 favth-col-xs-12">
+                                                <img src="/ehld-icons/lib/${entry.iconGroup}/${entry.iconName}.svg" alt="${entry.iconName}" style="width: 50px; height: 50px;"/>
+                                            </div>
+                                        </div>
                                     </c:if>
 
                                     <c:if test="${not empty entry.summation}">

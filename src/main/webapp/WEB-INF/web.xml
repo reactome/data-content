@@ -70,6 +70,26 @@
         <url-pattern>/content/*</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>IconLibrary</servlet-name>
+        <servlet-class>org.reactome.server.utils.proxy.ProxyServlet</servlet-class>
+        <init-param>
+            <param-name>proxyHost</param-name>
+            <param-value>reactomedev.oicr.on.ca</param-value>
+        </init-param>
+        <init-param>
+            <param-name>proxyPort</param-name>
+            <param-value>80</param-value>
+        </init-param>
+        <init-param>
+            <param-name>proxyPath</param-name>
+            <param-value>/ehld-icons</param-value>
+        </init-param>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>IconLibrary</servlet-name>
+        <url-pattern>/ehld-icons/*</url-pattern>
+    </servlet-mapping>
 
     <servlet>
         <servlet-name>Plugins</servlet-name>
