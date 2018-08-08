@@ -78,6 +78,7 @@ class AuthorReviewedController {
             model.addAttribute("person", person);
             model.addAttribute("label", "Authored Pathways");
             model.addAttribute("type", "Pathway");
+            model.addAttribute("attribute", "reviewed");
             model.addAttribute("list", personService.getAuthoredPathways(id));
             return "graph/personShowAll";
         } else {
@@ -95,7 +96,8 @@ class AuthorReviewedController {
             model.addAttribute("person", person);
             model.addAttribute("label", "Reviewed Pathways");
             model.addAttribute("type", "Pathway");
-            model.addAttribute("list", personService.getAuthoredReactions(id));
+            model.addAttribute("attribute", "reviewed");
+            model.addAttribute("list", personService.getReviewedPathways(id));
             return "graph/personShowAll";
         } else {
             infoLogger.info("Search request for id: {} was not found", id);
@@ -112,7 +114,8 @@ class AuthorReviewedController {
             model.addAttribute("person", person);
             model.addAttribute("label", "Authored Reactions");
             model.addAttribute("type", "Reaction");
-            model.addAttribute("list", personService.getReviewedPathways(id));
+            model.addAttribute("attribute", "authored");
+            model.addAttribute("list", personService.getAuthoredReactions(id));
             return "graph/personShowAll";
         } else {
             infoLogger.info("Search request for id: {} was not found", id);
@@ -129,6 +132,7 @@ class AuthorReviewedController {
             model.addAttribute("person", person);
             model.addAttribute("label", "Reviewed Reactions");
             model.addAttribute("type", "Reaction");
+            model.addAttribute("attribute", "reviewed");
             model.addAttribute("list", personService.getReviewedReactions(id));
             return "graph/personShowAll";
         } else {

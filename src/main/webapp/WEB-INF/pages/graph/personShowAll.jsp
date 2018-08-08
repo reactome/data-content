@@ -66,7 +66,14 @@
                         <c:forEach var="item" items="${list}">
                             <tr>
                                 <td data-label="Date">
-                                    <fmt:parseDate pattern = "yyyy-MM-dd H:m:s.S" value = "${item.authored[0].dateTime}" var="date"/>
+                                    <c:choose>
+                                        <c:when test="${attribute eq 'authored'}">
+                                            <fmt:parseDate pattern = "yyyy-MM-dd H:m:s.S" value = "${item.authored[0].dateTime}" var="date"/>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <fmt:parseDate pattern = "yyyy-MM-dd H:m:s.S" value = "${item.reviewed[0].dateTime}" var="date"/>
+                                        </c:otherwise>
+                                    </c:choose>
                                     <span><fmt:formatDate pattern = "yyyy-MM-dd" value = "${date}"/></span>
                                 </td>
                                 <td data-label="Identifier">
