@@ -3,18 +3,16 @@
 
 <c:import url="../header.jsp"/>
 
-
-<%--<c:out value="${folder}" />--%>
 <c:choose>
     <c:when test="${not empty entries}">
 
         <div class="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-12">
             <div class="ehld-breadcrumb">
-                <a class="icons-lib-home"><i class="icon-home"></i>Library home</a> > ${folderDisplay}
+                <a href="/icon-lib" class="icons-lib-home"><i class="icon-home"></i>Library home</a> > ${group}
             </div>
             <div class="ehld-result-title">
                 <h3>
-                    <i class="fa fa-folder"></i>${folderDisplay}<span> (${total} components)</span>
+                    <i class="fa fa-folder"></i>${group}<span> (${totalIcons} components)</span>
                 </h3>
             </div>
         </div>
@@ -24,12 +22,12 @@
             <div class="favth-col-lg-3 favth-col-md-4 favth-col-sm-6 favth-col-xs-12">
                 <div class="favth-clearfix svg-container">
                     <div class="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-12 svg-component">
-                        <a href="/detail/icon/${entry.name}">
-                            <img src="/ehld-icons/lib/${folder}/${fn:escapeXml(entry.name)}.svg" alt="${entry.name}" />
+                        <a href="/detail/icon/${entry.iconName}">
+                            <img src="/ehld-icons/lib/${folder}/${entry.iconName}.svg" alt="${entry.name}" />
                         </a>
                     </div>
                     <div class="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-12 svg-moreinfo">
-                        <span><a href="/detail/icon/${entry.name}">${fn:replace(entry.name, "_", " ")}</a></span>
+                        <span><a href="/detail/icon/${entry.iconName}">${entry.name}</a></span>
                     </div>
                 </div>
             </div>

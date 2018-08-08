@@ -3,6 +3,10 @@ package org.reactome.server.controller;
 import io.swagger.annotations.ApiParam;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
+import org.reactome.server.graph.domain.model.DatabaseObject;
+import org.reactome.server.graph.service.DatabaseObjectService;
+import org.reactome.server.graph.service.DetailsService;
+import org.reactome.server.graph.service.helper.PathwayBrowserNode;
 import org.reactome.server.search.domain.*;
 import org.reactome.server.search.exception.SolrSearcherException;
 import org.reactome.server.search.service.SearchService;
@@ -19,8 +23,10 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import static org.reactome.server.util.WebUtils.cleanReceivedParameter;
@@ -29,13 +35,30 @@ import static org.reactome.server.util.WebUtils.cleanReceivedParameter;
 class IconLibraryController {
 
     private static final Logger infoLogger = LoggerFactory.getLogger("infoLogger");
-    private static final int rowCount = 28;
+
+    // PAGE VARIABLES
     private static final String TITLE = "title";
+    private static final String ENTRY = "entry";
+    private static final String ICONS = "icons";
+    private static final String TOTAL_ICONS = "totalIcons";
+    private static final String ENTRIES = "entries";
+    private static final String FOLDER = "folder";
+    private static final String ICON_LIB_DIR = "iconLibDir";
+    private static final String GROUP = "group";
+    private static final int ROW_COUNT = 28;
+
+    // PAGES
+    private static final String ICONS_FOLDER_PAGE = "icon/folders";
+    private static final String ICONS_PAGE = "icon/icons";
+    private static final String ICONS_DETAILS = "icon/details";
+    private static final String PAGE_NO_ICON_FOUND = "search/noIconFound";
     private static final String PAGE = "page";
     private static final String MAX_PAGE = "maxpage";
-    private static final String PAGE_NO_RESULTS_FOUND = "search/noResultsFound";
 
     private SearchService searchService;
+    private DetailsService detailsService;
+    private DatabaseObjectService databaseObjectService;
+
 
     @Value("${icons.lib.dir}")
     private String iconLibDir; // E
@@ -49,9 +72,9 @@ class IconLibraryController {
         }
         ff.sort(Comparator.comparing(FacetContainer::getName));
         model.addAttribute(TITLE, "Icon Library");
-        model.addAttribute("icons", aa.getIconGroupFacet());
-        model.addAttribute("totalIcons", aa.getTotalNumFount());
-        return "icon/folders";
+        model.addAttribute(ICONS, aa.getIconGroupFacet());
+        model.addAttribute(TOTAL_ICONS, aa.getTotalNumFount());
+        return ICONS_FOLDER_PAGE;
     }
 
     @RequestMapping(value = "/icon-lib/{folder}", method = RequestMethod.GET)
@@ -60,32 +83,34 @@ class IconLibraryController {
                             ModelMap model,
                             HttpServletResponse response) throws SolrSearcherException {
 
-
         if (page == null || page == 0) page = 1;
 
         String cleanFolder = cleanReceivedParameter(folder);
 
         if (StringUtils.isNotEmpty(cleanFolder)) {
             cleanFolder = cleanFolder.toLowerCase().replaceAll("\\s+", "_");
-            String folderDisplay = StringUtils.capitalize(cleanFolder).replaceAll("_", " ");
+            String group = StringUtils.capitalize(cleanFolder).replaceAll("_", " ");
 
             Query queryObject = new Query("{!term f=iconGroup}" + cleanFolder, null, null, null, null);
-            Result result = searchService.getIconsResult(queryObject, rowCount, page);
+            Result result = searchService.getIconsResult(queryObject, ROW_COUNT, page);
 
-            model.addAttribute(TITLE, folderDisplay);
-            model.addAttribute("iconLibDir", iconLibDir);
-            model.addAttribute("folder", cleanFolder);
-            model.addAttribute("folderDisplay", folderDisplay);
-            model.addAttribute("total", result.getEntriesCount());
-            model.addAttribute("entries", result.getEntries().stream().sorted((e1, e2) -> e1.getName().compareToIgnoreCase(e2.getName())).collect(Collectors.toList()));
+            model.addAttribute(TITLE, group);
+            model.addAttribute(ICON_LIB_DIR, iconLibDir);
+            model.addAttribute(FOLDER, cleanFolder);
+            model.addAttribute(GROUP, group);
+            model.addAttribute(TOTAL_ICONS, result.getEntriesCount());
+            model.addAttribute(ENTRIES, result.getEntries().stream().sorted((e1, e2) -> e1.getName().compareToIgnoreCase(e2.getName())).collect(Collectors.toList()));
             model.addAttribute(PAGE, page);
-            model.addAttribute(MAX_PAGE, (int) Math.ceil((double) result.getEntriesCount() / rowCount));
+            model.addAttribute(MAX_PAGE, (int) Math.ceil((double) result.getEntriesCount() / ROW_COUNT));
 
-            return "icon/icons";
+            return ICONS_PAGE;
         }
+
         infoLogger.info("Icon group {} doesn't exist", folder);
+        model.addAttribute("q", folder);
+        model.addAttribute(TITLE, "Icon group not found");
         response.setStatus(HttpServletResponse.SC_NOT_FOUND);
-        return PAGE_NO_RESULTS_FOUND;
+        return PAGE_NO_ICON_FOUND;
     }
 
     @RequestMapping(value = "/detail/icon/{name}", method = RequestMethod.GET)
@@ -96,23 +121,35 @@ class IconLibraryController {
         if (StringUtils.isNotEmpty(query)) {
             Query queryObject = new Query(query, null, null, null, null);
             Entry iconEntry = searchService.getIcon(queryObject);
-            model.addAttribute(TITLE, iconEntry.getIconName());
-            model.addAttribute("entry", iconEntry);
-            return "icon/details";
+            if (iconEntry != null) {
+                model.addAttribute(TITLE, iconEntry.getIconName());
+                model.addAttribute(ENTRY, iconEntry);
+                model.addAttribute(GROUP, StringUtils.capitalize(iconEntry.getIconGroup().replaceAll("_", " ")));
+                List<Set<PathwayBrowserNode>> ehldPwbTree = new ArrayList<>();
+                for (String iconEhld : iconEntry.getIconEhlds()) {
+                    DatabaseObject st = databaseObjectService.findById(iconEhld);
+                    Set<PathwayBrowserNode> nodes = detailsService.getLocationsInThePathwayBrowserHierarchy(st, false);
+                    ehldPwbTree.add(nodes);
+                }
+                model.addAttribute("topLevelNodes", ehldPwbTree);
+                return ICONS_DETAILS;
+            }
         }
 
         infoLogger.info("Icon {} was NOT found", query);
+        model.addAttribute("q", query);
+        model.addAttribute(TITLE, "Icon not found");
         response.setStatus(HttpServletResponse.SC_NOT_FOUND);
-        return PAGE_NO_RESULTS_FOUND;
+        return PAGE_NO_ICON_FOUND;
     }
 
     @RequestMapping(value = "/icon-lib/download/{name}.{ext:.*}", method = RequestMethod.GET)
     @ResponseBody
     public String downloadIcon(@PathVariable String name,
-                         @ApiParam(value = "File extension (defines the image format)", required = true, defaultValue = "svg", allowableValues = "png,svg,emf")
-                         @PathVariable String ext,
-                         ModelMap model,
-                         HttpServletResponse response) throws SolrSearcherException, IOException {
+                               @ApiParam(value = "File extension (defines the image format)", required = true, defaultValue = "svg", allowableValues = "png,svg,emf")
+                               @PathVariable String ext,
+                               ModelMap model,
+                               HttpServletResponse response) throws SolrSearcherException, IOException {
 
         Entry iconEntry = null;
         String query = cleanReceivedParameter(name);
@@ -165,5 +202,15 @@ class IconLibraryController {
     @Autowired
     public void setSearchService(SearchService searchService) {
         this.searchService = searchService;
+    }
+
+    @Autowired
+    public void setDetailsService(DetailsService detailsService) {
+        this.detailsService = detailsService;
+    }
+
+    @Autowired
+    public void setDatabaseObjectService(DatabaseObjectService databaseObjectService) {
+        this.databaseObjectService = databaseObjectService;
     }
 }

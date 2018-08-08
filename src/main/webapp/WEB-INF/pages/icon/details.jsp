@@ -15,7 +15,7 @@
             <span>Group</span>
         </div>
         <div class="details-field favth-col-lg-10 favth-col-md-10 favth-col-sm-9 favth-col-xs-12">
-            <span><a href="${pageContext.request.contextPath}/icon-lib/${entry.iconGroup}">${entry.iconGroup}</a></span>
+            <span><a href="${pageContext.request.contextPath}/icon-lib/${entry.iconGroup}">${group}</a></span>
         </div>
     </c:if>
 
@@ -50,9 +50,7 @@
 <fieldset class="fieldset-details">
     <legend>Icon preview</legend>
     <div class="favth-col-lg-3 favth-col-md-3 favth-col-sm-3 favth-col-xs-12 text-center">
-        <a href="#">
-            <img class="icon-preview" src="/ehld-icons/lib/${entry.iconGroup}/${fn:escapeXml(entry.name)}.svg" alt="${entry.name}" />
-        </a>
+        <img class="icon-preview" src="/ehld-icons/lib/${entry.iconGroup}/${fn:escapeXml(entry.iconName)}.svg" alt="Icon ${entry.name}" />
     </div>
     <div class="favth-col-lg-9 favth-col-md-9 favth-col-sm-9 favth-col-xs-12">
         <div class="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-4 padding0 bottom">
@@ -67,9 +65,59 @@
     </div>
 </fieldset>
 
+<c:if test="${not empty topLevelNodes}">
+    <div class="clearfix">
+        <fieldset class="fieldset-details">
+            <legend>Locations in the PathwayBrowser</legend>
+
+            <%--<c:if test="${not empty topLevelNodes}">--%>
+                <%--<c:if test="${ (not empty topLevelNodes) && (not empty topLevelNodes.iterator().iterator().next().children)}">--%>
+                    <%--<div class="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-12 favth-text-right">--%>
+                        <%--<a id="pwb_toggle" class="expand-all">Expand all</a>--%>
+                    <%--</div>--%>
+                <%--</c:if>--%>
+            <%--</c:if>--%>
+
+            <div class="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-12">
+                <c:forEach var="ehldPWB" items="${topLevelNodes}">
+                    <c:forEach var="topLvl" items="${ehldPWB}">
+                        <c:choose>
+                            <c:when test="${empty topLvl.children}">
+                                <span style="font-size:13px; padding-left: 20px;"><i class="sprite-resize sprite sprite-Pathway" title="${topLvl.type}"></i></span>
+                                <a href="${topLvl.url}" <c:if test="${topLvl.highlighted}">class="tree-highlighted-item"</c:if> title="goto Reactome Pathway Browser" >${topLvl.name} (${topLvl.species})</a>
+                            </c:when>
+                            <c:otherwise>
+                                <%--
+                                    The class attribute is used as a jQuery selector. This class is not present in the css.
+                                    Specially for chemical, it is present in all species, instead of showing a big list we just show Human as the default
+                                    and let the user select the desired species in a dropdown list.
+                                 --%>
+                                <div>
+                                    <span class="pljus tree-root" title="click here to expand or collapse the tree">
+                                        <i class="fa fa-minus-square-o" title="click here to expand or collapse the tree" style="vertical-align: middle"></i>
+                                        <i class="sprite-resize sprite sprite-Pathway" style="vertical-align: middle"></i>${topLvl.name} (${topLvl.stId})
+                                    </span>
+                                    <div>
+                                        <ul class="tree">
+                                            <c:set var="node" value="${topLvl}" scope="request"/>
+                                            <li> <c:import url="node.jsp"/></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </c:otherwise>
+                        </c:choose>
+                    </c:forEach>
+                </c:forEach>
+            </div>
+        </fieldset>
+    </div>
+</c:if>
+
+
+
 <c:if test="${not empty entry.iconEhlds}">
     <fieldset class="fieldset-details">
-        <legend>Pathways</legend>
+        <legend>Pathways containing this icon</legend>
         <div class="fieldset-pair-container">
             <div class="favth-col-lg-10 favth-col-md-10 favth-col-sm-9 favth-col-xs-12">
                 <div class="wrap">
@@ -117,7 +165,6 @@
         </div>
     </fieldset>
 </c:if>
-
 
 <%--<div class="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-12 padding0">--%>
     <%--<c:import url="disclaimer.jsp"/>--%>
