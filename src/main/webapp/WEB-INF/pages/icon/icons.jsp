@@ -27,7 +27,7 @@
                         </a>
                     </div>
                     <div class="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-12 svg-moreinfo">
-                        <span><a href="/detail/icon/${entry.iconName}">${entry.name}</a></span>
+                        <a href="/detail/icon/${entry.iconName}" title="${entry.name}"><span class="text-lg-overflow">${entry.name}</span></a>
                     </div>
                 </div>
             </div>

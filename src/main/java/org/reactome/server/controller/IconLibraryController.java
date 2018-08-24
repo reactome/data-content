@@ -23,10 +23,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static org.reactome.server.util.WebUtils.cleanReceivedParameter;
@@ -45,6 +42,10 @@ class IconLibraryController {
     private static final String FOLDER = "folder";
     private static final String ICON_LIB_DIR = "iconLibDir";
     private static final String GROUP = "group";
+    private static final String REFERENCES = "references";
+    private static final String PWB_TREE = "pwbTree";
+    private static final String URL_MAPPING = "urlMapping";
+
     private static final int ROW_COUNT = 28;
 
     // PAGES
@@ -54,12 +55,19 @@ class IconLibraryController {
     private static final String PAGE_NO_ICON_FOUND = "search/noIconFound";
     private static final String PAGE = "page";
     private static final String MAX_PAGE = "maxpage";
+    private static Map<String, String> urlMapping = new HashMap<>();
+
+    static {
+        urlMapping.put("UNIPROT", "http://www.uniprot.org/entry/###ID###");
+        urlMapping.put("UNIPROTKB", "http://www.uniprot.org/entry/###ID###");
+        urlMapping.put("CHEBI", "http://www.ebi.ac.uk/chebi/searchId.do?chebiId=CHEBI:###ID###");
+        urlMapping.put("ENSEMBL", "http://www.ensembl.org/Homo_sapiens/geneview?gene=###ID###");
+        urlMapping.put("GO", "http://www.ebi.ac.uk/ego/QuickGO?mode=display&entry=GO:###ID###");
+    }
 
     private SearchService searchService;
     private DetailsService detailsService;
     private DatabaseObjectService databaseObjectService;
-
-
     @Value("${icons.lib.dir}")
     private String iconLibDir; // E
 
@@ -122,16 +130,24 @@ class IconLibraryController {
             Query queryObject = new Query(query, null, null, null, null);
             Entry iconEntry = searchService.getIcon(queryObject);
             if (iconEntry != null) {
+                model.addAttribute(URL_MAPPING, urlMapping);
                 model.addAttribute(TITLE, iconEntry.getIconName());
                 model.addAttribute(ENTRY, iconEntry);
                 model.addAttribute(GROUP, StringUtils.capitalize(iconEntry.getIconGroup().replaceAll("_", " ")));
-                List<Set<PathwayBrowserNode>> ehldPwbTree = new ArrayList<>();
-                for (String iconEhld : iconEntry.getIconEhlds()) {
-                    DatabaseObject st = databaseObjectService.findById(iconEhld);
-                    Set<PathwayBrowserNode> nodes = detailsService.getLocationsInThePathwayBrowserHierarchy(st, false);
-                    ehldPwbTree.add(nodes);
+
+                if (iconEntry.getIconReferences() != null) {
+                    model.addAttribute(REFERENCES, prepareReferences(iconEntry));
                 }
-                model.addAttribute("topLevelNodes", ehldPwbTree);
+
+                List<Set<PathwayBrowserNode>> ehldPwbTree = new ArrayList<>();
+                if (iconEntry.getIconEhlds() != null) {
+                    for (String iconEhld : iconEntry.getIconEhlds()) {
+                        DatabaseObject st = databaseObjectService.findById(iconEhld);
+                        Set<PathwayBrowserNode> nodes = detailsService.getLocationsInThePathwayBrowserHierarchy(st, false);
+                        ehldPwbTree.add(nodes);
+                    }
+                }
+                model.addAttribute(PWB_TREE, ehldPwbTree);
                 return ICONS_DETAILS;
             }
         }
@@ -141,6 +157,23 @@ class IconLibraryController {
         model.addAttribute(TITLE, "Icon not found");
         response.setStatus(HttpServletResponse.SC_NOT_FOUND);
         return PAGE_NO_ICON_FOUND;
+    }
+
+    private Map<String, Set<String>> prepareReferences(Entry iconEntry) {
+        Map<String, Set<String>> ret = new HashMap<>();
+
+        List<String> crossRefs = iconEntry.getIconReferences();
+        for (String xref : crossRefs) {
+            if (xref.contains(":")) {
+                String db = xref.split(":")[0];
+                String identifier = xref.split(":")[1];
+                if (!ret.containsKey(db)) {
+                    ret.put(db, new HashSet<>());
+                }
+                ret.get(db).add(identifier);
+            }
+        }
+        return ret;
     }
 
     @RequestMapping(value = "/icon-lib/download/{name}.{ext:.*}", method = RequestMethod.GET)

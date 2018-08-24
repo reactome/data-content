@@ -1,3 +1,4 @@
+<%@page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="mytag" uri="/WEB-INF/tags/customTag.tld"%>
 
@@ -146,7 +147,7 @@
                                     <%-- ICON --%>
                                     <c:if test="${entry.exactType == 'Icon'}">
                                         <div class="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-12 padding0">
-                                            <div class="favth-col-lg-8 favth-col-md-12 favth-col-sm-12 favth-col-xs-12 padding0">
+                                            <div class="favth-col-lg-8 favth-col-md-8 favth-col-sm-8 favth-col-xs-8 padding0">
                                                 <c:if test="${not empty entry.iconCuratorName}">
                                                     <div class="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-12">
                                                         <strong>Curator:</strong> ${entry.iconCuratorName}
@@ -159,7 +160,7 @@
                                                     </div>
                                                 </c:if>
                                             </div>
-                                            <div class="favth-col-lg-4 favth-col-md-12 favth-col-sm-12 favth-col-xs-12">
+                                            <div class="favth-col-lg-4 favth-col-md-4 favth-col-sm-4 favth-col-xs-4">
                                                 <img src="/ehld-icons/lib/${entry.iconGroup}/${entry.iconName}.svg" alt="${entry.iconName}" style="width: 50px; height: 50px;"/>
                                             </div>
                                         </div>
