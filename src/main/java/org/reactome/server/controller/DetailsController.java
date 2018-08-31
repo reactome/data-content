@@ -64,9 +64,6 @@ class DetailsController {
     private DetailsService detailsService;
     private SchemaNode classBrowserCache;
 
-    @Value("${icons.lib.dir}")
-    private String iconLibDir; // E
-
     /**
      * These resources are the same all the time.
      * In order to speed up the query result and less memory usage, I decided to keep the resource out of the query
