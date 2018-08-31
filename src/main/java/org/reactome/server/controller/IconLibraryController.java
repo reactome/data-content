@@ -3,8 +3,6 @@ package org.reactome.server.controller;
 import io.swagger.annotations.ApiParam;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
-import org.reactome.server.graph.domain.model.DatabaseObject;
-import org.reactome.server.graph.service.DatabaseObjectService;
 import org.reactome.server.graph.service.DetailsService;
 import org.reactome.server.graph.service.helper.PathwayBrowserNode;
 import org.reactome.server.search.domain.*;
@@ -40,7 +38,6 @@ class IconLibraryController {
     private static final String TOTAL_ICONS = "totalIcons";
     private static final String ENTRIES = "entries";
     private static final String FOLDER = "folder";
-    private static final String ICON_LIB_DIR = "iconLibDir";
     private static final String GROUP = "group";
     private static final String REFERENCES = "references";
     private static final String PWB_TREE = "pwbTree";
@@ -67,7 +64,6 @@ class IconLibraryController {
 
     private SearchService searchService;
     private DetailsService detailsService;
-    private DatabaseObjectService databaseObjectService;
     @Value("${icons.lib.dir}")
     private String iconLibDir; // E
 
@@ -103,7 +99,6 @@ class IconLibraryController {
             Result result = searchService.getIconsResult(queryObject, ROW_COUNT, page);
 
             model.addAttribute(TITLE, group);
-            model.addAttribute(ICON_LIB_DIR, iconLibDir);
             model.addAttribute(FOLDER, cleanFolder);
             model.addAttribute(GROUP, group);
             model.addAttribute(TOTAL_ICONS, result.getEntriesCount());
@@ -141,11 +136,8 @@ class IconLibraryController {
 
                 List<Set<PathwayBrowserNode>> ehldPwbTree = new ArrayList<>();
                 if (iconEntry.getIconEhlds() != null) {
-                    for (String iconEhld : iconEntry.getIconEhlds()) {
-                        DatabaseObject st = databaseObjectService.findById(iconEhld);
-                        Set<PathwayBrowserNode> nodes = detailsService.getLocationsInThePathwayBrowserHierarchy(st, false);
-                        ehldPwbTree.add(nodes);
-                    }
+                    Set<PathwayBrowserNode> nodes = detailsService.getLocationInPathwayBrowserForPathways(iconEntry.getIconEhlds());
+                    ehldPwbTree.add(nodes);
                 }
                 model.addAttribute(PWB_TREE, ehldPwbTree);
                 return ICONS_DETAILS;
@@ -240,10 +232,5 @@ class IconLibraryController {
     @Autowired
     public void setDetailsService(DetailsService detailsService) {
         this.detailsService = detailsService;
-    }
-
-    @Autowired
-    public void setDatabaseObjectService(DatabaseObjectService databaseObjectService) {
-        this.databaseObjectService = databaseObjectService;
     }
 }

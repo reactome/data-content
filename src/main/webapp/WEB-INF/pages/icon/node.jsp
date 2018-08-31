@@ -14,7 +14,6 @@
                         <span class="tree-grayedout-item">${node.name} <c:if test="${not empty node.species}">(${node.stId})</c:if></span>
                     </c:otherwise>
                 </c:choose>
-
             </c:if>
             <c:set var="node" value="${node}" scope="request"/>
             <c:import url="node.jsp"/>

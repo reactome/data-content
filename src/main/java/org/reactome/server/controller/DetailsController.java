@@ -17,6 +17,7 @@ import org.reactome.server.graph.service.helper.RelationshipDirection;
 import org.reactome.server.graph.service.helper.SchemaNode;
 import org.reactome.server.graph.service.util.DatabaseObjectUtils;
 import org.reactome.server.graph.service.util.PathwayBrowserLocationsUtils;
+import org.reactome.server.util.IconPhysicalEntityCache;
 import org.reactome.server.util.MapSet;
 import org.reactome.server.util.UAgentInfo;
 import org.slf4j.Logger;
@@ -54,8 +55,6 @@ class DetailsController {
     private static final Logger errorLogger = LoggerFactory.getLogger("errorLogger");
 
     private static final String TITLE = "title";
-    private static final String INTERACTOR_RESOURCES_MAP = "interactorResourceMap";
-    private static final String EVIDENCES_URL_MAP = "evidencesUrlMap";
 
     private static final int OFFSET = 55;
     private final Set<String> ehlds = new HashSet<>();
@@ -64,6 +63,9 @@ class DetailsController {
     private InteractionsService interactionsService;
     private DetailsService detailsService;
     private SchemaNode classBrowserCache;
+
+    @Value("${icons.lib.dir}")
+    private String iconLibDir; // E
 
     /**
      * These resources are the same all the time.
@@ -157,16 +159,18 @@ class DetailsController {
                         List<Interaction> interactions = interactionsService.getInteractions(ewas.getReferenceEntity().getIdentifier());
                         model.addAttribute("interactions", interactions);
                         crossReferences.addAll(getCrossReference(ewas.getReferenceEntity()));
-                        if (ewas.getReferenceEntity() instanceof ReferenceSequence) {
+//                        if (ewas.getReferenceEntity() instanceof ReferenceSequence) {
                             model.addAttribute("isReferenceSequence", true);
-                        }
+//                        }
                     }
                     model.addAttribute("crossReferences", groupCrossReferences(crossReferences));
 
                     // extras
-                    model.addAttribute("flg", getReferenceEntityIdentifier(databaseObject));
+                    String referenceIdentifier = getReferenceEntityIdentifier(databaseObject);
+                    model.addAttribute("flg", referenceIdentifier);
                     model.addAttribute("relatedSpecies", getRelatedSpecies(databaseObject));
                     model.addAttribute("jsonLd", eventDiscovery(contentDetails.getDatabaseObject()));
+                    model.addAttribute("icon", IconPhysicalEntityCache.getIconsMapping().get(referenceIdentifier));
 
                     // responsive design, avoid loading same content twice on screen
                     // instead hiding using CSS, java will detect and the content won't be processed.

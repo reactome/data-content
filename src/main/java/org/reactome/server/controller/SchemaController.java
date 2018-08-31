@@ -38,8 +38,6 @@ class SchemaController {
     private static final Logger errorLogger = LoggerFactory.getLogger("errorLogger");
 
     private static final String TITLE = "title";
-    private static final String INTERACTOR_RESOURCES_MAP = "interactorResourceMap";
-    private static final String EVIDENCES_URL_MAP = "evidencesUrlMap";
 
     private static final int OFFSET = 55;
     private final Set<String> ehlds = new HashSet<>();

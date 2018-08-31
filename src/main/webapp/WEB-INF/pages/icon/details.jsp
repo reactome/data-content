@@ -66,51 +66,60 @@
     </div>
 </fieldset>
 
-<c:if test="${not empty pwbTree}">
-    <div class="clearfix">
+<c:if test="${not empty pwbTree && entry.iconGroup != 'arrows'}">
+   <div class="clearfix">
         <fieldset class="fieldset-details">
-            <legend>EHLD in the PathwayBrowser</legend>
+        <legend>EHLD in the PathwayBrowser</legend>
             <div class="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-12">
-                <c:forEach var="ehldPWB" items="${pwbTree}">
+                 <c:forEach var="ehldPWB" items="${pwbTree}">
                     <c:forEach var="topLvl" items="${ehldPWB}">
-                        <c:choose>
-                            <c:when test="${empty topLvl.children}">
-                                <span style="font-size:13px; padding-left: 0;"><i class="sprite-resize sprite sprite-Pathway" title="${topLvl.type}"></i></span>
-                                <a href="${topLvl.url}" class="tree-sm-overflow" title="goto Reactome Pathway Browser">
-                                    <span <c:if test="${topLvl.highlighted}">class="tree-highlighted-item"</c:if>>${topLvl.name} (${topLvl.stId})</span>
-                                </a>
-                            </c:when>
-                            <c:otherwise>
-                                <div>
+                    <c:choose>
+                        <c:when test="${empty topLvl.children}">
+                        <div id="tplasss_${topLvl.stId}" class="tplsSpe_${fn:replace(topLvl.species, ' ', '_')}">
+                            <span style="font-size:13px; padding-left: 10px;"><i class="sprite-resize sprite sprite-Pathway" title="${topLvl.type}"></i></span>
+                            <a href="${topLvl.url}" <c:if test="${topLvl.highlighted}">class="tree-highlighted-item"</c:if> title="goto Reactome Pathway Browser" >${topLvl.name} (${topLvl.species})</a>
+                        </div>
+                        </c:when>
+                        <c:otherwise>
+                            <%--
+                                The class attribute is used as a jQuery selector. This class is not present in the css.
+                                Specially for chemical, it is present in all species, instead of showing a big list we just show Human as the default
+                                and let the user select the desired species in a dropdown list.
+                             --%>
+                            <div id="tpla_${topLvl.stId}" class="tplSpe_${fn:replace(topLvl.species, ' ', '_')}" style="display: none">
                                     <span class="plus tree-root" title="click here to expand or collapse the tree">
-                                        <i class="fa fa-minus-square-o" title="click here to expand or collapse the tree" style="vertical-align: middle"></i>
-                                        <i class="sprite-resize sprite sprite-Pathway" style="vertical-align: middle"></i><span class="tree-sm-overflow">${topLvl.name} (${topLvl.stId})</span>
+                                        <i class="fa fa-plus-square-o" title="click here to expand or collapse the tree" style="vertical-align: middle"></i>
+                                        <i class="sprite-resize sprite sprite-Pathway" style="vertical-align: middle"></i>
+                                        <a href="${topLvl.url}" <c:if test="${topLvl.highlighted}">class="tree-highlighted-item"</c:if> title="goto Reactome Pathway Browser" >${topLvl.name} (${topLvl.stId})</a>
+                                        <%--<span <c:if test="${topLvl.highlighted}">class="tree-highlighted-item"</c:if>>${topLvl.name} (${topLvl.species})</span>--%>
                                     </span>
-                                    <div>
-                                        <ul class="tree">
-                                            <c:set var="node" value="${topLvl}" scope="request"/>
-                                            <li><c:import url="node.jsp"/></li>
-                                        </ul>
-                                    </div>
+                                <div class="tree-lpwb">
+                                    <ul class="tree">
+                                        <c:set var="node" value="${topLvl}" scope="request"/>
+                                        <li> <c:import url="node.jsp"/></li>
+                                    </ul>
                                 </div>
-                            </c:otherwise>
-                        </c:choose>
+                            </div>
+                        </c:otherwise>
+                    </c:choose>
                     </c:forEach>
                 </c:forEach>
             </div>
         </fieldset>
-    </div>
+   </div>
 </c:if>
 
-<c:if test="${not empty entry.iconStIds}">
+<%-- Mapping an icon to its instance in Reactome --%>
+<c:if test="${not empty entry.iconPhysicalEntities}">
     <fieldset class="fieldset-details">
         <legend>Entries for ${entry.name}</legend>
         <div class="fieldset-pair-container">
             <div class="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-12">
-                <div class="wrap">
-                    <c:forEach var="stId" items="${entry.iconStIds}">
-                        <div class="favth-col-lg-4 favth-col-md-4 favth-col-sm-3 favth-col-xs-6 text-overflow">
-                            <a href="${pageContext.request.contextPath}/detail/${stId}" title="Open ${stId}">${stId}</a>
+                <div class="wrap overflow">
+                    <c:forEach var="iconPE" items="${entry.iconPhysicalEntities}">
+                        <div class="favth-col-lg-6 favth-col-md-6 favth-col-sm-6 favth-col-xs-12 text-overflow">
+                            <%-- index: 0=ST_ID, 1=Type, 2=Name, 3=Compartment --%>
+                            <a href="${pageContext.request.contextPath}/detail/${iconPE.stId}" title="Open ${iconPE.stId}"><i class="sprite sprite-${iconPE.type}" title="${iconPE.type}"></i> ${iconPE.displayName}</a>
                         </div>
                     </c:forEach>
                 </div>
