@@ -24,7 +24,7 @@
                                 <%-- To be used in the url, so it doesn't go with space --%>
                                 <c:set var="folder" value="${fn:replace(available.name, ' ', '_')}" />
                                 <c:set var="folderDisplay" value="${available.name}" />
-                                <a href="${pageContext.request.contextPath}/icon-lib/${folder}">
+                                <a href="/icon-lib/${folder}">
                                     <i class="fa fa-folder" aria-hidden="true"></i>
                                     <div class="folder-label">${folderDisplay}</div><div class="folder-size">(${available.count} components)</div>
                                 </a>

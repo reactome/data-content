@@ -16,7 +16,7 @@
             <span>Group</span>
         </div>
         <div class="details-field favth-col-lg-10 favth-col-md-10 favth-col-sm-9 favth-col-xs-12">
-            <span><a href="${pageContext.request.contextPath}/icon-lib/${entry.iconGroup}">${group}</a></span>
+            <span><a href="/icon-lib/${entry.iconGroup}">${group}</a></span>
         </div>
     </c:if>
 
