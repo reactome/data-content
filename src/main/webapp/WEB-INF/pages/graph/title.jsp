@@ -127,11 +127,11 @@
         </c:if>
     </div>
     <c:if test="${hasIcon}"> <%-- #hidden-xs --%>
-        <div class="favth-col-lg-2 favth-col-md-2 favth-col-sm-2 favth-col-xs-12 text-center favth-hidden-xs details-icon-pe">
-            <a href="../detail/icon/${iconName}" title="Open icon detail">
-                <img style="width: 200px; height: 85px;" src="/ehld-icons/lib/${icon}.svg" alt="${databaseObject.displayName} icon" />
-            </a>
-        </div>
+        <a href="../detail/icon/${iconName}" title="Open icon detail">
+            <div class="favth-col-lg-2 favth-col-md-2 favth-col-sm-2 favth-col-xs-12 text-center favth-hidden-xs details-icon-pe">
+                <img style="width: 200px; height: 85px;" src="/ehld-icons/lib/${icon}.svg" alt="${databaseObject.displayName} icon"/>
+            </div>
+        </a>
     </c:if>
 </div>
 

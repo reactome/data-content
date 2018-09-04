@@ -72,10 +72,12 @@
         <legend>Locations in the PathwayBrowser</legend>
             <c:if test="${not empty pwbTree}">
                 <c:set var="suggestExpandAll" scope="request" value="false"/>
-                <c:forEach items="${pwbTree}" var="aaa">
-                    <c:if test="${ not suggestExpandAll && not empty aaa.iterator().next().children}">
-                        <c:set var="suggestExpandAll" scope="request" value="true"/>
-                    </c:if>
+                <c:forEach items="${pwbTree}" var="ehldPWB">
+                    <c:forEach var="topLvl" items="${ehldPWB}">
+                        <c:if test="${not suggestExpandAll && not empty topLvl.children}">
+                            <c:set var="suggestExpandAll" scope="request" value="true"/>
+                        </c:if>
+                    </c:forEach>
                 </c:forEach>
                 <c:if test="${suggestExpandAll}">
                     <div class="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-12 favth-text-right">

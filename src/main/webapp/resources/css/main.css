@@ -606,9 +606,16 @@ span.secondary-identifiers {
 
 .details-icon-pe {
     border: 1px solid #e7e7e7;
-    border-radius: 5px;
-    box-shadow: 2px 2px 2px #e7e7e7;
+    border-radius: 10px;
     padding: 10px;
+}
+
+.details-icon-pe:hover,
+.details-icon-pe:focus {
+    -webkit-box-shadow: 0 0 10px 6px #f1f1f1;
+    -moz-box-shadow: 0 0 10px 6px #f1f1f1;
+    box-shadow: 0 0 10px 6px #f1f1f1;
+
 }
 
 /* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
