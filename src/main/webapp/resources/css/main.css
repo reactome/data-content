@@ -604,6 +604,13 @@ span.secondary-identifiers {
     vertical-align: middle;
 }
 
+.details-icon-pe {
+    border: 1px solid #e7e7e7;
+    border-radius: 5px;
+    box-shadow: 2px 2px 2px #e7e7e7;
+    padding: 10px;
+}
+
 /* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
 @media screen and (max-height: 450px) {
     #fav-container .sidenav {

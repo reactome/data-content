@@ -116,7 +116,7 @@
             <%-- This is visible on phones only, if you change something here, consider changing also #hidden-xs --%>
             <c:if test="${hasIcon}">
                 <div class="details-label favth-col-lg-2 favth-col-md-3 favth-col-sm-3 favth-col-xs-12 favth-visible-xs">
-                    <span>Icon</span>
+                    <a href="../detail/icon/${iconName}" title="Open icon detail">Icon</a>
                 </div>
                 <div class="details-field favth-col-lg-10 favth-col-md-9 favth-col-sm-9 favth-col-xs-12 favth-visible-xs">
                     <a href="../detail/icon/${iconName}" title="Open icon detail">
@@ -127,7 +127,7 @@
         </c:if>
     </div>
     <c:if test="${hasIcon}"> <%-- #hidden-xs --%>
-        <div class="favth-col-lg-2 favth-col-md-2 favth-col-sm-2 favth-col-xs-12 text-center favth-hidden-xs">
+        <div class="favth-col-lg-2 favth-col-md-2 favth-col-sm-2 favth-col-xs-12 text-center favth-hidden-xs details-icon-pe">
             <a href="../detail/icon/${iconName}" title="Open icon detail">
                 <img style="width: 200px; height: 85px;" src="/ehld-icons/lib/${icon}.svg" alt="${databaseObject.displayName} icon" />
             </a>

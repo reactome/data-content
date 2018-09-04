@@ -69,7 +69,7 @@
 <c:if test="${not empty pwbTree && entry.iconGroup != 'arrows'}">
    <div class="clearfix">
         <fieldset class="fieldset-details">
-        <legend>EHLD in the PathwayBrowser</legend>
+        <legend>Locations in the PathwayBrowser</legend>
             <c:if test="${not empty pwbTree}">
                 <c:set var="suggestExpandAll" scope="request" value="false"/>
                 <c:forEach items="${pwbTree}" var="aaa">
