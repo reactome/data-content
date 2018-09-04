@@ -135,9 +135,9 @@ class IconLibraryController {
                 }
 
                 List<Set<PathwayBrowserNode>> ehldPwbTree = new ArrayList<>();
-                if (iconEntry.getIconEhlds() != null) {
+                if (iconEntry.getIconEhlds() != null && !iconEntry.getIconGroup().equalsIgnoreCase("arrows")) {
                     Set<PathwayBrowserNode> nodes = detailsService.getLocationInPathwayBrowserForPathways(iconEntry.getIconEhlds());
-                    ehldPwbTree.add(nodes);
+                    ehldPwbTree.add(nodes.stream().sorted().collect(Collectors.toCollection(LinkedHashSet::new)));
                 }
                 model.addAttribute(PWB_TREE, ehldPwbTree);
                 return ICONS_DETAILS;

@@ -71,7 +71,7 @@ body.modal-open {
     display: block;
 }
 
-.plus {
+.plus, .tree-root-overflow {
     font-size: 108%;
     cursor: pointer;
     margin: 0 3px;
@@ -772,7 +772,7 @@ span.secondary-identifiers {
     }
 
     /* Locations in the PWB Tree */
-    .plus {
+    .plus, .tree-root-overflow {
         font-size: 85%;
         cursor: pointer;
         margin: 0;

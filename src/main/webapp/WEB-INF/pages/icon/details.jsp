@@ -70,14 +70,31 @@
    <div class="clearfix">
         <fieldset class="fieldset-details">
         <legend>EHLD in the PathwayBrowser</legend>
+            <c:if test="${not empty pwbTree}">
+                <c:set var="suggestExpandAll" scope="request" value="false"/>
+                <c:forEach items="${pwbTree}" var="aaa">
+                    <c:if test="${ not suggestExpandAll && not empty aaa.iterator().next().children}">
+                        <c:set var="suggestExpandAll" scope="request" value="true"/>
+                    </c:if>
+                </c:forEach>
+                <c:if test="${suggestExpandAll}">
+                    <div class="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-12 favth-text-right">
+                        <a id="pwb_toggle" class="expand-all">Expand all</a>
+                    </div>
+                </c:if>
+            </c:if>
+
             <div class="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-12">
                  <c:forEach var="ehldPWB" items="${pwbTree}">
                     <c:forEach var="topLvl" items="${ehldPWB}">
                     <c:choose>
                         <c:when test="${empty topLvl.children}">
-                        <div id="tplasss_${topLvl.stId}" class="tplsSpe_${fn:replace(topLvl.species, ' ', '_')}">
-                            <span style="font-size:13px; padding-left: 10px;"><i class="sprite-resize sprite sprite-Pathway" title="${topLvl.type}"></i></span>
-                            <a href="${topLvl.url}" <c:if test="${topLvl.highlighted}">class="tree-highlighted-item"</c:if> title="goto Reactome Pathway Browser" >${topLvl.name} (${topLvl.species})</a>
+                        <div id="tpla_${topLvl.stId}" class="tplSpe_">
+                            <span class="tree-root tree-root-overflow" title="click here to expand or collapse the tree">
+                                <i class="fa fa-square-o" style="vertical-align: middle"></i>
+                                <i class="sprite-resize sprite sprite-Pathway" title="${topLvl.type}" style="vertical-align: middle"></i>
+                                <a href="${topLvl.url}" <c:if test="${topLvl.highlighted}">class="tree-highlighted-item"</c:if> title="goto Reactome Pathway Browser" >${topLvl.name} (${topLvl.species})</a>
+                            </span>
                         </div>
                         </c:when>
                         <c:otherwise>
@@ -86,12 +103,11 @@
                                 Specially for chemical, it is present in all species, instead of showing a big list we just show Human as the default
                                 and let the user select the desired species in a dropdown list.
                              --%>
-                            <div id="tpla_${topLvl.stId}" class="tplSpe_${fn:replace(topLvl.species, ' ', '_')}" style="display: none">
+                            <div id="tpla_${topLvl.stId}" class="tplSpe_" style="display: none">
                                     <span class="plus tree-root" title="click here to expand or collapse the tree">
                                         <i class="fa fa-plus-square-o" title="click here to expand or collapse the tree" style="vertical-align: middle"></i>
                                         <i class="sprite-resize sprite sprite-Pathway" style="vertical-align: middle"></i>
                                         <a href="${topLvl.url}" <c:if test="${topLvl.highlighted}">class="tree-highlighted-item"</c:if> title="goto Reactome Pathway Browser" >${topLvl.name} (${topLvl.stId})</a>
-                                        <%--<span <c:if test="${topLvl.highlighted}">class="tree-highlighted-item"</c:if>>${topLvl.name} (${topLvl.species})</span>--%>
                                     </span>
                                 <div class="tree-lpwb">
                                     <ul class="tree">
