@@ -95,7 +95,7 @@
                             <span class="tree-root tree-root-overflow" title="click here to expand or collapse the tree">
                                 <i class="fa fa-square-o" style="vertical-align: middle"></i>
                                 <i class="sprite-resize sprite sprite-Pathway" title="${topLvl.type}" style="vertical-align: middle"></i>
-                                <a href="${topLvl.url}" <c:if test="${topLvl.highlighted}">class="tree-highlighted-item"</c:if> title="goto Reactome Pathway Browser" >${topLvl.name} (${topLvl.species})</a>
+                                <a href="${topLvl.url}" <c:if test="${topLvl.highlighted}">class="tree-highlighted-item"</c:if> title="goto Reactome Pathway Browser" >${topLvl.name} (${topLvl.stId})</a>
                             </span>
                         </div>
                         </c:when>
