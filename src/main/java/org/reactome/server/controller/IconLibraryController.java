@@ -42,6 +42,7 @@ class IconLibraryController {
     private static final String REFERENCES = "references";
     private static final String PWB_TREE = "pwbTree";
     private static final String URL_MAPPING = "urlMapping";
+    private static final String ICON_SEARCH = "iconsSearch";
 
     private static final int ROW_COUNT = 28;
 
@@ -78,6 +79,7 @@ class IconLibraryController {
         model.addAttribute(TITLE, "Icon Library");
         model.addAttribute(ICONS, aa.getIconGroupFacet());
         model.addAttribute(TOTAL_ICONS, aa.getTotalNumFount());
+        model.addAttribute(ICON_SEARCH, true);
         return ICONS_FOLDER_PAGE;
     }
 
@@ -103,6 +105,7 @@ class IconLibraryController {
             model.addAttribute(GROUP, group);
             model.addAttribute(TOTAL_ICONS, result.getEntriesCount());
             model.addAttribute(ENTRIES, result.getEntries().stream().sorted((e1, e2) -> e1.getName().compareToIgnoreCase(e2.getName())).collect(Collectors.toList()));
+            model.addAttribute(ICON_SEARCH, true);
             model.addAttribute(PAGE, page);
             model.addAttribute(MAX_PAGE, (int) Math.ceil((double) result.getEntriesCount() / ROW_COUNT));
 
@@ -147,6 +150,7 @@ class IconLibraryController {
         infoLogger.info("Icon {} was NOT found", query);
         model.addAttribute("q", query);
         model.addAttribute(TITLE, "Icon not found");
+        model.addAttribute(ICON_SEARCH, true);
         response.setStatus(HttpServletResponse.SC_NOT_FOUND);
         return PAGE_NO_ICON_FOUND;
     }
