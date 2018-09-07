@@ -6,10 +6,7 @@
 <c:import url="../header.jsp"/>
 
 <div class="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-12">
-    <div class="margin0 top alert alert-info alert-dismissible" role="alert">
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
+    <div class="margin0 top alert alert-info" role="alert">
         <span class="favth-hidden-xs favth-hidden-sm"><i class="fa fa-info-circle"></i>Do you want to search for icons? <strong>Type</strong> e.g "kidneys" in the search box.</span>
         <span class="favth-visible-xs favth-visible-sm" style="font-size: 12px;">Do you want to search for icons? <br/><strong>Type</strong> e.g "kidneys" in the search box.</span>
     </div>
