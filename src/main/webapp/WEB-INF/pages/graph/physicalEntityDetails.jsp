@@ -126,10 +126,13 @@
                         <div class="favth-col-lg-10 favth-col-md-10 favth-col-sm-9 favth-col-xs-12 details-field">
                             <div>
                                 <ul class="list">
-                                    <li>
-                                        <i class="sprite sprite-resize sprite-${databaseObject.fetchRepeatedUnit().object.schemaClass} sprite-position" title="${databaseObject.fetchRepeatedUnit().object.schemaClass}"></i>
-                                        <c:if test="${databaseObject.fetchRepeatedUnit().stoichiometry gt 1}">${databaseObject.fetchRepeatedUnit().stoichiometry} x </c:if>
-                                        <a href="../detail/${databaseObject.fetchRepeatedUnit().object.stId}" class="" title="Show Details" >${databaseObject.fetchRepeatedUnit().object.displayName} <c:if test="${not empty databaseObject.fetchRepeatedUnit().object.speciesName}">(${databaseObject.fetchRepeatedUnit().object.speciesName})</c:if></a></li>
+                                    <c:forEach var="repeatedUnit" items="${databaseObject.fetchRepeatedUnit()}">
+                                        <li>
+                                            <i class="sprite sprite-resize sprite-${repeatedUnit.object.schemaClass} sprite-position" title="${repeatedUnit.object.schemaClass}"></i>
+                                            <c:if test="${repeatedUnit.stoichiometry gt 1}">${repeatedUnit.stoichiometry} x </c:if>
+                                            <a href="../detail/${repeatedUnit.object.stId}" class="" title="Show Details" >${repeatedUnit.object.displayName} <c:if test="${not empty repeatedUnit.object.speciesName}">(${repeatedUnit.object.speciesName})</c:if></a>
+                                        </li>
+                                    </c:forEach>
                                 </ul>
                             </div>
                         </div>
