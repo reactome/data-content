@@ -202,7 +202,8 @@
                             <ul class="list">
                                 <c:forEach var="negativelyRegulates" items="${databaseObject.negativelyRegulates}">
                                     <li>
-                                        <a href="../detail/${negativelyRegulates.stId}" class="" title="Show Details" >${negativelyRegulates.displayName}</a>
+                                        <i class="sprite sprite-resize sprite-${negativelyRegulates.regulatedEntity.schemaClass} sprite-position" title="${negativelyRegulates.regulatedEntity.schemaClass}"></i>
+                                        <a href="../detail/${negativelyRegulates.regulatedEntity.stId}" class="" title="Show Details" >${negativelyRegulates.regulatedEntity.displayName}</a>
                                     </li>
                                 </c:forEach>
                             </ul>
@@ -220,7 +221,8 @@
                             <ul class="list">
                                 <c:forEach var="positivelyRegulates" items="${databaseObject.positivelyRegulates}">
                                     <li>
-                                        <a href="../detail/${positivelyRegulates.stId}" class="" title="Show Details" >${positivelyRegulates.displayName}</a>
+                                        <i class="sprite sprite-resize sprite-${positivelyRegulates.regulatedEntity.schemaClass} sprite-position" title="${positivelyRegulates.regulatedEntity.schemaClass}"></i>
+                                        <a href="../detail/${positivelyRegulates.regulatedEntity.stId}" class="" title="Show Details" >${positivelyRegulates.regulatedEntity.displayName}</a>
                                     </li>
                                 </c:forEach>
                             </ul>
