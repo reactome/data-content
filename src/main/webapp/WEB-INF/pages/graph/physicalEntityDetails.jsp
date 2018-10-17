@@ -196,7 +196,7 @@
         <c:if test="${not empty databaseObject.negativelyRegulates}">
             <div class="fieldset-pair-container">
                 <div class="favth-clearfix">
-                    <div class="favth-col-lg-2 favth-col-md-2 favth-col-sm-3 favth-col-xs-12 details-label">Negative Regulation</div>
+                    <div class="favth-col-lg-2 favth-col-md-2 favth-col-sm-3 favth-col-xs-12 details-label">Negatively</div>
                     <div class="favth-col-lg-10 favth-col-md-10 favth-col-sm-9 favth-col-xs-12 details-field">
                         <div>
                             <ul class="list">
@@ -215,7 +215,7 @@
         <c:if test="${not empty databaseObject.positivelyRegulates}">
             <div class="fieldset-pair-container">
                 <div class="favth-clearfix">
-                    <div class="favth-col-lg-2 favth-col-md-2 favth-col-sm-3 favth-col-xs-12 details-label">Positive Regulation</div>
+                    <div class="favth-col-lg-2 favth-col-md-2 favth-col-sm-3 favth-col-xs-12 details-label">Positively</div>
                     <div class="favth-col-lg-10 favth-col-md-10 favth-col-sm-9 favth-col-xs-12 details-field">
                         <div>
                             <ul class="list">

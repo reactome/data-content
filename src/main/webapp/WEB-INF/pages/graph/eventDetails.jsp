@@ -168,11 +168,11 @@
 
 <c:if test="${not empty negativelyRegulatedBy || not empty positivelyRegulatedBy || not empty requirements}">
     <fieldset class="fieldset-details">
-        <legend>This entity is regulated by</legend>
+        <legend>This event is regulated</legend>
         <c:if test="${not empty negativelyRegulatedBy}">
             <div class="fieldset-pair-container">
                 <div class="favth-clearfix">
-                    <div class="favth-col-lg-2 favth-col-md-2 favth-col-sm-3 favth-col-xs-12 details-label">Negative Regulation</div>
+                    <div class="favth-col-lg-2 favth-col-md-2 favth-col-sm-3 favth-col-xs-12 details-label">Negatively by</div>
                     <div class="favth-col-lg-10 favth-col-md-10 favth-col-sm-9 favth-col-xs-12 details-field">
                         <ul class="list">
                             <c:forEach var="negativelyRegulatedBy" items="${negativelyRegulatedBy}">
@@ -189,7 +189,7 @@
         <c:if test="${not empty positivelyRegulatedBy}">
             <div class="fieldset-pair-container">
                 <div class="favth-clearfix">
-                    <div class="favth-col-lg-2 favth-col-md-2 favth-col-sm-3 favth-col-xs-12 details-label">Positive Regulation</div>
+                    <div class="favth-col-lg-2 favth-col-md-2 favth-col-sm-3 favth-col-xs-12 details-label">Positively by</div>
                     <div class="favth-col-lg-10 favth-col-md-10 favth-col-sm-9 favth-col-xs-12 details-field">
                         <ul class="list">
                             <c:forEach var="positivelyRegulatedBy" items="${positivelyRegulatedBy}">
