@@ -343,7 +343,7 @@ class DetailsController {
 
     private String eventDiscovery(DatabaseObject databaseObject) {
         if (databaseObject instanceof Event) {
-            SchemaDataSet aux = new SchemaDataSet((Event) databaseObject, generalService.getDBVersion());
+            SchemaDataSet aux = new SchemaDataSet((Event) databaseObject, generalService.getDBInfo().getVersion());
             try {
                 ObjectMapper objectMapper = new ObjectMapper();
                 return objectMapper.writeValueAsString(aux);

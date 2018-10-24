@@ -77,7 +77,7 @@ class SearchController {
 
     @Autowired
     public SearchController(GeneralService generalService) {
-        releaseNumber = generalService.getDBVersion();
+        releaseNumber = generalService.getDBInfo().getVersion();
     }
 
     /**

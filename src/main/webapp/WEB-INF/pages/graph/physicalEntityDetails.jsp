@@ -126,10 +126,13 @@
                         <div class="favth-col-lg-10 favth-col-md-10 favth-col-sm-9 favth-col-xs-12 details-field">
                             <div>
                                 <ul class="list">
-                                    <li>
-                                        <i class="sprite sprite-resize sprite-${databaseObject.fetchRepeatedUnit().object.schemaClass} sprite-position" title="${databaseObject.fetchRepeatedUnit().object.schemaClass}"></i>
-                                        <c:if test="${databaseObject.fetchRepeatedUnit().stoichiometry gt 1}">${databaseObject.fetchRepeatedUnit().stoichiometry} x </c:if>
-                                        <a href="../detail/${databaseObject.fetchRepeatedUnit().object.stId}" class="" title="Show Details" >${databaseObject.fetchRepeatedUnit().object.displayName} <c:if test="${not empty databaseObject.fetchRepeatedUnit().object.speciesName}">(${databaseObject.fetchRepeatedUnit().object.speciesName})</c:if></a></li>
+                                    <c:forEach var="repeatedUnit" items="${databaseObject.fetchRepeatedUnit()}">
+                                        <li>
+                                            <i class="sprite sprite-resize sprite-${repeatedUnit.object.schemaClass} sprite-position" title="${repeatedUnit.object.schemaClass}"></i>
+                                            <c:if test="${repeatedUnit.stoichiometry gt 1}">${repeatedUnit.stoichiometry} x </c:if>
+                                            <a href="../detail/${repeatedUnit.object.stId}" class="" title="Show Details" >${repeatedUnit.object.displayName} <c:if test="${not empty repeatedUnit.object.speciesName}">(${repeatedUnit.object.speciesName})</c:if></a>
+                                        </li>
+                                    </c:forEach>
                                 </ul>
                             </div>
                         </div>
@@ -193,13 +196,14 @@
         <c:if test="${not empty databaseObject.negativelyRegulates}">
             <div class="fieldset-pair-container">
                 <div class="favth-clearfix">
-                    <div class="favth-col-lg-2 favth-col-md-2 favth-col-sm-3 favth-col-xs-12 details-label">Negative Regulation</div>
+                    <div class="favth-col-lg-2 favth-col-md-2 favth-col-sm-3 favth-col-xs-12 details-label">Negatively</div>
                     <div class="favth-col-lg-10 favth-col-md-10 favth-col-sm-9 favth-col-xs-12 details-field">
                         <div>
                             <ul class="list">
                                 <c:forEach var="negativelyRegulates" items="${databaseObject.negativelyRegulates}">
                                     <li>
-                                        <a href="../detail/${negativelyRegulates.stId}" class="" title="Show Details" >${negativelyRegulates.displayName}</a>
+                                        <i class="sprite sprite-resize sprite-${negativelyRegulates.regulatedEntity.schemaClass} sprite-position" title="${negativelyRegulates.regulatedEntity.schemaClass}"></i>
+                                        <a href="../detail/${negativelyRegulates.regulatedEntity.stId}" class="" title="Show Details" >${negativelyRegulates.regulatedEntity.displayName}</a>
                                     </li>
                                 </c:forEach>
                             </ul>
@@ -211,13 +215,14 @@
         <c:if test="${not empty databaseObject.positivelyRegulates}">
             <div class="fieldset-pair-container">
                 <div class="favth-clearfix">
-                    <div class="favth-col-lg-2 favth-col-md-2 favth-col-sm-3 favth-col-xs-12 details-label">Positive Regulation</div>
+                    <div class="favth-col-lg-2 favth-col-md-2 favth-col-sm-3 favth-col-xs-12 details-label">Positively</div>
                     <div class="favth-col-lg-10 favth-col-md-10 favth-col-sm-9 favth-col-xs-12 details-field">
                         <div>
                             <ul class="list">
                                 <c:forEach var="positivelyRegulates" items="${databaseObject.positivelyRegulates}">
                                     <li>
-                                        <a href="../detail/${positivelyRegulates.stId}" class="" title="Show Details" >${positivelyRegulates.displayName}</a>
+                                        <i class="sprite sprite-resize sprite-${positivelyRegulates.regulatedEntity.schemaClass} sprite-position" title="${positivelyRegulates.regulatedEntity.schemaClass}"></i>
+                                        <a href="../detail/${positivelyRegulates.regulatedEntity.stId}" class="" title="Show Details" >${positivelyRegulates.regulatedEntity.displayName}</a>
                                     </li>
                                 </c:forEach>
                             </ul>
