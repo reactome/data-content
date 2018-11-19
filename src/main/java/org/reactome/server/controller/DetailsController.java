@@ -53,9 +53,10 @@ class DetailsController {
     private static final Logger infoLogger = LoggerFactory.getLogger("infoLogger");
     private static final Logger errorLogger = LoggerFactory.getLogger("errorLogger");
 
+    private static final String EHLD_URL = "/download/current/ehld/_stId_.svg";
+    private static final String PWY_URL = "/ContentService/exporter/diagram/_stId_.svg?title=false";
+    private static final String RXN_URL = "/ContentService/exporter/reaction/_stId_.svg?title=false";
     private static final String TITLE = "title";
-    private static final String INTERACTOR_RESOURCES_MAP = "interactorResourceMap";
-    private static final String EVIDENCES_URL_MAP = "evidencesUrlMap";
 
     private static final int OFFSET = 55;
     private final Set<String> ehlds = new HashSet<>();
@@ -126,7 +127,6 @@ class DetailsController {
                     model.addAttribute("otherFormsOfThisMolecule", contentDetails.getOtherFormsOfThisMolecule());
                     model.addAttribute("orthologousEvents", getSortedOrthologousEvent(databaseObject));
                     model.addAttribute("inferredTo", getSortedInferredTo(databaseObject));
-                    model.addAttribute("hasEHLD", ehlds.contains(databaseObject.getStId()));
 
                     //RegulatedBy moved to RLE without distinction in the types (now it needs to be done here)
                     List<NegativeRegulation> negativeRegulations = new ArrayList<>();
@@ -157,9 +157,7 @@ class DetailsController {
                         List<Interaction> interactions = interactionsService.getInteractions(ewas.getReferenceEntity().getIdentifier());
                         model.addAttribute("interactions", interactions);
                         crossReferences.addAll(getCrossReference(ewas.getReferenceEntity()));
-                        if (ewas.getReferenceEntity() instanceof ReferenceSequence) {
                             model.addAttribute("isReferenceSequence", true);
-                        }
                     }
                     model.addAttribute("crossReferences", groupCrossReferences(crossReferences));
 
@@ -168,9 +166,13 @@ class DetailsController {
                     model.addAttribute("relatedSpecies", getRelatedSpecies(databaseObject));
                     model.addAttribute("jsonLd", eventDiscovery(contentDetails.getDatabaseObject()));
 
+                    // sets a preview url for reactions and pathways (differentiating EHLD from "normal" pathways)
+                    setPreviewURL(databaseObject, model);
+
                     // responsive design, avoid loading same content twice on screen
                     // instead hiding using CSS, java will detect and the content won't be processed.
                     model.addAttribute("isMobile", u.detectMobileQuick());
+
 
                     infoLogger.info("DatabaseObject for id: {} was found", id);
                     return "graph/detail";
@@ -195,6 +197,21 @@ class DetailsController {
         } else if (databaseObject instanceof EntityWithAccessionedSequence || databaseObject instanceof SimpleEntity) {
             model.addAttribute("hasReferenceEntity", true);
         }
+    }
+
+    private void setPreviewURL(DatabaseObject databaseObject, ModelMap model){
+        String previewURL = null;
+        if (databaseObject instanceof ReactionLikeEvent) {
+            previewURL = RXN_URL;
+        } else if (databaseObject instanceof Pathway) {
+            if (ehlds.contains(databaseObject.getStId())) {
+                previewURL = EHLD_URL;
+            } else {
+                previewURL = PWY_URL;
+            }
+        }
+        if (previewURL != null) previewURL = previewURL.replace("_stId_", databaseObject.getStId());
+        model.addAttribute("previewURL", previewURL);
     }
 
     private Map<String, Set<DatabaseIdentifier>> groupCrossReferences(List<DatabaseIdentifier> databaseIdentifiers) {
