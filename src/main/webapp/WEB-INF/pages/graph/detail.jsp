@@ -10,25 +10,23 @@
             <c:import url="locationsInThePWB.jsp"/>
         </c:if>
 
-        <c:if test="${hasEHLD}">
+        <c:if test="${not empty previewURL || not empty databaseObject.summation}" >
             <fieldset class="fieldset-details">
-                <legend>Diagram preview</legend>
-                <div class="text-center">
-                    <a href="/PathwayBrowser/#/${databaseObject.stId}">
-                        <img src="/download/current/ehld/${databaseObject.stId}.svg" alt="${databaseObject.displayName}" class="ehld">
-                    </a>
-                </div>
-            </fieldset>
-        </c:if>
-
-        <c:if test="${not empty databaseObject.summation}">
-            <fieldset class="fieldset-details">
-                <legend>Summation</legend>
-                <div class="details-summation">
-                    <c:forEach var="summation" items="${databaseObject.summation}">
-                        <p>${summation.text}</p>
-                    </c:forEach>
-                </div>
+                <legend>General</legend>
+                <c:if test="${not empty previewURL}" >
+                    <div class="text-center">
+                        <a href="/PathwayBrowser/#/${databaseObject.stId}">
+                            <img src="${previewURL}" alt="${databaseObject.displayName}" class="ehld">
+                        </a>
+                    </div>
+                </c:if>
+                <c:if test="${not empty databaseObject.summation}">
+                    <div class="details-summation">
+                        <c:forEach var="summation" items="${databaseObject.summation}">
+                            <p>${summation.text}</p>
+                        </c:forEach>
+                    </div>
+                </c:if>
             </fieldset>
         </c:if>
 
