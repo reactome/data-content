@@ -604,6 +604,33 @@ span.secondary-identifiers {
     margin-left: 20px;
 }
 
+/* ORCID Button */
+button[id^="connect-orcid-button"]{
+    border: 1px solid #D3D3D3;
+    padding: .3em;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 1px 1px 3px #999;
+    cursor: pointer;
+    color: #999;
+    font-weight: bold;
+    font-size: .8em;
+    line-height: 24px;
+    vertical-align: middle;
+}
+
+button[id^="connect-orcid-button"]:hover{
+    border: 1px solid #338caf;
+    color: #338caf;
+}
+
+img[id^="orcid-id-icon"]{
+    display: block;
+    margin: 0 .5em 0 0;
+    padding: 0;
+    float: left;
+}
+
 /* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
 @media screen and (max-height: 450px) {
     #fav-container .sidenav {padding-top: 15px;}

@@ -4,6 +4,24 @@
 
 <c:import url="../header.jsp"/>
 
+<c:set value="${pageContext.session.getAttribute('orcidToken')}" var="tokenSession" />
+
+<c:choose>
+    <c:when test="${empty tokenSession}">
+        <button id="connect-orcid-button" onclick="orcidLogin()"><img id="orcid-id-icon" src="https://orcid.org/sites/default/files/images/orcid_24x24.png" width="24" height="24" alt="ORCID iD icon"/> Register or Connect your ORCID iD</button>
+    </c:when>
+    <c:otherwise>
+        <c:choose>
+            <c:when test="${not empty tokenSession}"> <%-- todo compare given orcid with page orcid --%>
+                <button id="connect-orcid-button"><img id="orcid-id-icon2" src="https://orcid.org/sites/default/files/images/orcid_24x24.png" width="24" height="24" alt="ORCID iD icon"/> Claim your work</button>
+            </c:when>
+            <c:otherwise>
+                <h4>hi</h4>
+            </c:otherwise>
+        </c:choose>
+    </c:otherwise>
+</c:choose>
+
 <%-- Person Page--%>
 <c:if test="${not empty person}">
     <div class="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-12 ">
@@ -261,3 +279,12 @@
     </div>
 </c:if>
 <c:import url="../footer.jsp"/>
+<script type=text/javascript>
+    function orcidLogin() {
+        window.open("/orcid/login", "_blank", "toolbar=no, scrollbars=yes, width=500, height=600, top=500, left=500");
+    }
+    function claim() {
+        jQuery
+        window.open("/orcid/login", "_blank", "toolbar=no, scrollbars=yes, width=500, height=600, top=500, left=500");
+    }
+</script>
