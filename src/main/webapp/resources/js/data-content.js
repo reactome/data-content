@@ -15,6 +15,7 @@ jQuery(document).ready(function() {
     // Show summation up to 200 chars.
     jQuery('.summation').each(function() {
         var showCharNumber = 200;
+        // summation text only. The highlighting is lost and it will be done again after.
         var content = jQuery(this).text();
 
         if(content.length > showCharNumber) {
@@ -22,9 +23,14 @@ jQuery(document).ready(function() {
             var hiding = content.substr(showing.length, content.length - showing.length);
             var html = jQuery.trim(showing) + '<span class="moreellipses">' + ellipsestext + '</span><span class="morecontent"><span>' + hiding + '</span><a href="javascript:void(0);" class="morelink">' + moretext + '</a></span>';
 
-            // highlight term
-            var term = jQuery("#js_search-term").val();
-            html = highlighter(term, html);
+            // highlight term again
+            var hightlightTermArr = jQuery(this).find(".highlighting");
+            if (hightlightTermArr.length) {
+                html = highlighter(hightlightTermArr[0].innerText, html);
+            } else {
+                // highlight based on the search term, just in case
+                html = highlighter(jQuery("#js_search-term").val(), html);
+            }
 
             jQuery(this).html(html);
         }
@@ -177,7 +183,7 @@ function shorten(sentence, chars) {
 function highlighter(word, text) {
     try {
         var rgxp = new RegExp("(\\b" + word + "\\b)", "gim");
-        var repl = '<span class="highlighting">' + word + '</span>';
+        var repl = '<span class="highlighting" style="display: inline-block">' + word + '</span>';
         return text.replace(rgxp, repl);
     } catch(err) {
         return text;
