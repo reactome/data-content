@@ -54,9 +54,10 @@ class DetailsController {
     private static final Logger infoLogger = LoggerFactory.getLogger("infoLogger");
     private static final Logger errorLogger = LoggerFactory.getLogger("errorLogger");
 
-    private static final String EHLD_URL = "/download/current/ehld/_stId_.svg";
-    private static final String PWY_URL = "/ContentService/exporter/diagram/_stId_.svg?title=false";
-    private static final String RXN_URL = "/ContentService/exporter/reaction/_stId_.svg?title=false";
+    // These constants are used in the details page -> General. Extensions are replaced accordingly
+    private static final String EHLD_URL = "/download/current/ehld/_stId_._ext_";
+    private static final String PWY_URL = "/ContentService/exporter/diagram/_stId_._ext_";
+    private static final String RXN_URL = "/ContentService/exporter/reaction/_stId_._ext_";
     private static final String TITLE = "title";
 
     private static final int OFFSET = 55;
@@ -162,6 +163,11 @@ class DetailsController {
                     }
                     model.addAttribute("crossReferences", groupCrossReferences(crossReferences));
 
+                    if (databaseObject instanceof ReactionLikeEvent) {
+                        ReactionLikeEvent rle = (ReactionLikeEvent)databaseObject;
+                        model.addAttribute("rleCategory", rle.getCategory());
+                    }
+
                     // extras
                     String referenceIdentifier = getReferenceEntityIdentifier(databaseObject);
                     model.addAttribute("flg", referenceIdentifier);
@@ -194,9 +200,6 @@ class DetailsController {
             model.addAttribute("isReactionLikeEvent", true);
         } else if (databaseObject instanceof EntitySet) {
             model.addAttribute("isEntitySet", true);
-            if (databaseObject instanceof OpenSet) {
-                model.addAttribute("hasReferenceEntity", true);
-            }
         } else if (databaseObject instanceof EntityWithAccessionedSequence || databaseObject instanceof SimpleEntity) {
             model.addAttribute("hasReferenceEntity", true);
         }
@@ -206,14 +209,18 @@ class DetailsController {
         String previewURL = null;
         if (databaseObject instanceof ReactionLikeEvent) {
             previewURL = RXN_URL;
+            model.addAttribute("downloadURL", RXN_URL);
         } else if (databaseObject instanceof Pathway) {
             if (ehlds.contains(databaseObject.getStId())) {
                 previewURL = EHLD_URL;
             } else {
                 previewURL = PWY_URL;
             }
+            model.addAttribute("downloadURL", PWY_URL);
         }
-        if (previewURL != null) previewURL = previewURL.replace("_stId_", databaseObject.getStId());
+        if (previewURL != null) {
+            previewURL = previewURL.replace("_stId_", databaseObject.getStId()).replace("_ext_", "svg");
+        }
         model.addAttribute("previewURL", previewURL);
     }
 
