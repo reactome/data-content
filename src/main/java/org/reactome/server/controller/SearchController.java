@@ -69,11 +69,11 @@ class SearchController {
     private SearchService searchService;
     private MailService mailService;
 
-    @Value("${mail.error.dest}")
+    @Value("${mail.error.to}")
     private String mailErrorDest; // E
 
-    @Value("${mail.support.dest}")
-    private String mailSupportDest; // W
+    @Value("${mail.support.to}")
+    private String mailSupportDest; // Results not found report
 
     @Autowired
     public SearchController(GeneralService generalService) {
