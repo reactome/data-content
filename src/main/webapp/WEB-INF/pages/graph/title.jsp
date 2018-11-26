@@ -52,14 +52,20 @@
             </div>
         </c:if>
 
-        <c:if test="${not empty databaseObject.schemaClass}">
-            <div class="details-label favth-col-lg-2 favth-col-md-3 favth-col-sm-3 favth-col-xs-12">
-                <span>Type</span>
-            </div>
-            <div class="details-field favth-col-lg-10 favth-col-md-9 favth-col-sm-9 favth-col-xs-12">
-                <span title="${databaseObject.explanation}">${databaseObject.className} <c:if test="${databaseObject.schemaClass ne databaseObject.className}">[${databaseObject.schemaClass}]</c:if></span>
-            </div>
-        </c:if>
+    <c:if test="${not empty databaseObject.schemaClass}">
+        <div class="details-label favth-col-lg-2 favth-col-md-3 favth-col-sm-3 favth-col-xs-12">
+            <span>Type</span>
+        </div>
+        <div class="details-field favth-col-lg-10 favth-col-md-9 favth-col-sm-9 favth-col-xs-12">
+        <%-- show category for ReactionLikeEvent --%>
+            <span title="${databaseObject.explanation}">${fn:replace(databaseObject.className, "TopLevel", "")}
+                <c:choose>
+                    <c:when test="${not empty rleCategory}">[${rleCategory}]</c:when>
+                    <c:otherwise><c:if test="${databaseObject.schemaClass ne databaseObject.className}">[${databaseObject.schemaClass}]</c:if></c:otherwise>
+                </c:choose>
+            </span>
+        </div>
+    </c:if>
 
         <c:if test="${clazz != 'Regulation'}">
             <c:if test="${not empty databaseObject.speciesName}">

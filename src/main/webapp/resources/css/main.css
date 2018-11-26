@@ -574,7 +574,8 @@ a.tree-highlighted-item:visited {
 }
 
 .ehld {
-    height: 300px;
+    max-height: 300px;
+    margin: 10px 20px;
 }
 
 .enlarge-table {
@@ -895,4 +896,72 @@ span.secondary-identifiers {
         padding-left: 42%;
         font-size: 12px;
     }
+}
+
+.png-dropdown .png-resolution-tooltip,
+.biopax-dropdown .biopax-version-tooltip {
+    visibility: hidden;
+    background-color: #2F9EC2;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px;
+    box-shadow: 2px 2px 2px #c8c8c8;
+
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 1;
+    /* BOTTOM */
+    width: 85px;
+    top: 100%;
+    left: 100%;
+    margin-left: -100px;
+
+    -webkit-transition: height .5s; /* For Safari 3.1 to 6.0 */
+    transition: height .5s;
+    opacity: 0;
+    height: 0;
+    overflow: hidden;
+}
+
+.biopax-dropdown .biopax-version-tooltip {
+    width: 100px;
+}
+
+.png-dropdown:focus .png-resolution-tooltip,
+.png-dropdown:hover .png-resolution-tooltip,
+.biopax-dropdown:focus .biopax-version-tooltip,
+.biopax-dropdown:hover .biopax-version-tooltip {
+    visibility: visible;
+    background-color: #2F9EC2;
+    opacity: 1;
+    height: 78px;
+}
+
+.biopax-dropdown:focus .biopax-version-tooltip,
+.biopax-dropdown:hover .biopax-version-tooltip {
+    height: 58px;
+}
+
+.png-resolution-tooltip a,
+.biopax-version-tooltip a {
+    font-weight: bold;
+    color: white;
+}
+
+.png-resolution-tooltip a:hover,
+.png-resolution-tooltip a:focus,
+.png-resolution-tooltip a:active,
+.biopax-version-tooltip a:hover,
+.biopax-version-tooltip a:focus,
+.biopax-version-tooltip a:active {
+    font-weight: normal;
+    text-decoration: underline;
+    background-color: #FFF;
+    color: #2F9EC2;
+    opacity: 0.7;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    padding: 1px 3px 1px 3px;
 }
