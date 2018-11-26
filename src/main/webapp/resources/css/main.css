@@ -585,7 +585,8 @@ a.tree-highlighted-item:visited {
 }
 
 .ehld {
-    height: 300px;
+    max-height: 300px;
+    margin: 10px 20px;
 }
 
 .enlarge-table {
