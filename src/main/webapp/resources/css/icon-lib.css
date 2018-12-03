@@ -1,7 +1,7 @@
 /*
  *  MAIN COLOR: #2F9EC2
  */
-.folder {
+.category {
     font-size: 22px;
     margin: 15px 0;
     background-color: #FFFFFF;
@@ -12,12 +12,12 @@
     padding:10px 0;
 }
 
-.folder i[class^="fa fa-"], i[class*=" fa fa-"] {
+.category i[class^="fa fa-"], i[class*=" fa fa-"] {
     font-size: 42px;
     padding: 0;
 }
 
-.folder-size {
+.category-size {
     font-size: small;
     color: #B0B0B0;
 }
@@ -95,15 +95,22 @@
     font-size: 16px;
 }
 
-.collaboration {
-    /*padding: 0 20px;*/
+.disclaimer-info {
+    padding: 0 20px;
+}
+
+.disclaimer-info .guideline {
+    margin: 10px 0 10px 0;
+    text-align: justify;
+}
+
+.disclaimer-info .collaboration {
     margin: 10px 0 10px 0;
     font-size: smaller;
     text-align: justify;
 }
 
-.disclaimer {
-    /*padding: 0 20px;*/
+.disclaimer-info .license {
     margin-bottom: 10px;
     color: gray;
     font-size: smaller;
@@ -116,6 +123,19 @@
 
 .icons-lib-home:hover {
     cursor: pointer;
+}
+
+.title-icon {
+    margin-right: 0 !important;
+    background-color: #fff !important;
+    color: #2F9EC2 !important;
+    padding: 0 5px !important;
+}
+
+.title-icon-result-list {
+    margin: 0 !important;
+    padding: 0 !important;
+    font-size: 11px !important;
 }
 
 /*/// mobile ///*/

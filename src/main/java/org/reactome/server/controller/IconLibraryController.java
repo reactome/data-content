@@ -3,6 +3,7 @@ package org.reactome.server.controller;
 import io.swagger.annotations.ApiParam;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.WordUtils;
 import org.reactome.server.graph.service.DetailsService;
 import org.reactome.server.graph.service.helper.PathwayBrowserNode;
 import org.reactome.server.search.domain.*;
@@ -37,8 +38,8 @@ class IconLibraryController {
     private static final String ICONS = "icons";
     private static final String TOTAL_ICONS = "totalIcons";
     private static final String ENTRIES = "entries";
-    private static final String FOLDER = "folder";
-    private static final String GROUP = "group";
+    private static final String CATEGORY = "category";
+    private static final String CATEGORIES = "categories";
     private static final String REFERENCES = "references";
     private static final String PWB_TREE = "pwbTree";
     private static final String URL_MAPPING = "urlMapping";
@@ -47,7 +48,7 @@ class IconLibraryController {
     private static final int ROW_COUNT = 28;
 
     // PAGES
-    private static final String ICONS_FOLDER_PAGE = "icon/folders";
+    private static final String ICONS_CATEGORIES_PAGE = "icon/categories";
     private static final String ICONS_PAGE = "icon/icons";
     private static final String ICONS_DETAILS = "icon/details";
     private static final String PAGE_NO_ICON_FOUND = "search/noIconFound";
@@ -56,11 +57,25 @@ class IconLibraryController {
     private static Map<String, String> urlMapping = new HashMap<>();
 
     static {
-        urlMapping.put("UNIPROT", "http://www.uniprot.org/entry/###ID###");
+        urlMapping.put("UNIPROT",   "http://www.uniprot.org/entry/###ID###");
         urlMapping.put("UNIPROTKB", "http://www.uniprot.org/entry/###ID###");
-        urlMapping.put("CHEBI", "http://www.ebi.ac.uk/chebi/searchId.do?chebiId=CHEBI:###ID###");
-        urlMapping.put("ENSEMBL", "http://www.ensembl.org/Homo_sapiens/geneview?gene=###ID###");
-        urlMapping.put("GO", "http://www.ebi.ac.uk/ego/QuickGO?mode=display&entry=GO:###ID###");
+        urlMapping.put("CHEBI",     "http://www.ebi.ac.uk/chebi/searchId.do?chebiId=CHEBI:###ID###");
+        urlMapping.put("ENSEMBL",   "http://www.ensembl.org/Homo_sapiens/geneview?gene=###ID###");
+        urlMapping.put("GO",        "http://www.ebi.ac.uk/ego/QuickGO?mode=display&entry=GO:###ID###");
+        urlMapping.put("UBERON",    "https://www.ebi.ac.uk/ols/ontologies/uberon/terms?iri=http://purl.obolibrary.org/obo/UBERON_###ID###");
+        urlMapping.put("RFAM",      "http://rfam.org/family/###ID###");
+        urlMapping.put("PFAM",      "http://pfam.xfam.org/family/###ID###");
+        urlMapping.put("CL",        "http://purl.obolibrary.org/obo/CL_###ID###");
+        urlMapping.put("MESH",      "https://www.ncbi.nlm.nih.gov/mesh/###ID###");
+        urlMapping.put("PUBCHEM",   "https://pubchem.ncbi.nlm.nih.gov/compound/###ID###");
+        urlMapping.put("OMIT",      "https://www.ebi.ac.uk/ols/ontologies/omit/terms?iri=http://purl.obolibrary.org/obo/OMIT_###ID###");
+        urlMapping.put("INTERPRO",  "https://www.ebi.ac.uk/interpro/entry/###ID###");
+        urlMapping.put("KEGG",      "https://www.kegg.jp/entry/###ID###");
+        urlMapping.put("ENA",       "https://www.ebi.ac.uk/ena/data/view/###ID###");
+        urlMapping.put("SO",        "http://www.sequenceontology.org/browser/current_svn/term/SO:###ID###");
+        urlMapping.put("BTO",       "http://purl.obolibrary.org/obo/BTO_###ID###");
+
+
     }
 
     private SearchService searchService;
@@ -70,39 +85,37 @@ class IconLibraryController {
 
     @RequestMapping(value = "/icon-lib", method = RequestMethod.GET)
     public String iconsHomePage(ModelMap model) throws SolrSearcherException {
-        FacetMapping aa = searchService.getIconFacetingInformation();
-        List<FacetContainer> ff = aa.getIconGroupFacet().getAvailable();
-        for (FacetContainer facetContainer : ff) {
+        FacetMapping facetMapping = searchService.getIconFacetingInformation();
+        List<FacetContainer> available = facetMapping.getIconCategoriesFacet().getAvailable();
+        for (FacetContainer facetContainer : available) {
             facetContainer.setName(StringUtils.capitalize(facetContainer.getName()).replaceAll("_", " "));
         }
-        ff.sort(Comparator.comparing(FacetContainer::getName));
+        available.sort(Comparator.comparing(FacetContainer::getName));
         model.addAttribute(TITLE, "Icon Library");
-        model.addAttribute(ICONS, aa.getIconGroupFacet());
-        model.addAttribute(TOTAL_ICONS, aa.getTotalNumFount());
+        model.addAttribute(ICONS, facetMapping.getIconCategoriesFacet());
+        model.addAttribute(TOTAL_ICONS, facetMapping.getTotalNumFount());
         model.addAttribute(ICON_SEARCH, true);
-        return ICONS_FOLDER_PAGE;
+        return ICONS_CATEGORIES_PAGE;
     }
 
-    @RequestMapping(value = "/icon-lib/{folder}", method = RequestMethod.GET)
-    public String listIcons(@PathVariable(name = "folder") String folder,
+    @RequestMapping(value = "/icon-lib/{category}", method = RequestMethod.GET)
+    public String listCategories(@PathVariable(name = "category") String categoryParam,
                             @RequestParam(required = false) Integer page,
                             ModelMap model,
                             HttpServletResponse response) throws SolrSearcherException {
 
         if (page == null || page == 0) page = 1;
 
-        String cleanFolder = cleanReceivedParameter(folder);
+        String cleanCategoryParam = cleanReceivedParameter(categoryParam);
+        if (StringUtils.isNotEmpty(cleanCategoryParam)) {
+            cleanCategoryParam = cleanCategoryParam.toLowerCase().replaceAll("\\s+", "_");
+            String formattedCategory = StringUtils.capitalize(cleanCategoryParam).replaceAll("_", " ");
 
-        if (StringUtils.isNotEmpty(cleanFolder)) {
-            cleanFolder = cleanFolder.toLowerCase().replaceAll("\\s+", "_");
-            String group = StringUtils.capitalize(cleanFolder).replaceAll("_", " ");
-
-            Query queryObject = new Query("{!term f=iconGroup}" + cleanFolder, null, null, null, null);
+            Query queryObject = new Query("{!term f=iconCategories}" + cleanCategoryParam, null, null, null, null);
             Result result = searchService.getIconsResult(queryObject, ROW_COUNT, page);
 
-            model.addAttribute(TITLE, group);
-            model.addAttribute(FOLDER, cleanFolder);
-            model.addAttribute(GROUP, group);
+            model.addAttribute(TITLE, formattedCategory);
+            model.addAttribute(CATEGORY, formattedCategory);
             model.addAttribute(TOTAL_ICONS, result.getEntriesCount());
             model.addAttribute(ENTRIES, result.getEntries().stream().sorted((e1, e2) -> e1.getName().compareToIgnoreCase(e2.getName())).collect(Collectors.toList()));
             model.addAttribute(ICON_SEARCH, true);
@@ -112,18 +125,18 @@ class IconLibraryController {
             return ICONS_PAGE;
         }
 
-        infoLogger.info("Icon group {} doesn't exist", folder);
-        model.addAttribute("q", folder);
-        model.addAttribute(TITLE, "Icon group not found");
+        infoLogger.info("Icon group {} doesn't exist", cleanCategoryParam);
+        model.addAttribute("q", cleanCategoryParam);
+        model.addAttribute(TITLE, "Icon category not found");
         response.setStatus(HttpServletResponse.SC_NOT_FOUND);
         return PAGE_NO_ICON_FOUND;
     }
 
-    @RequestMapping(value = "/detail/icon/{name}", method = RequestMethod.GET)
-    public String iconDetails(@PathVariable(name = "name") String name,
+    @RequestMapping(value = "/detail/icon/{stId}", method = RequestMethod.GET)
+    public String iconDetails(@PathVariable(name = "stId") String stId,
                               ModelMap model,
                               HttpServletResponse response) throws SolrSearcherException {
-        String query = cleanReceivedParameter(name);
+        String query = cleanReceivedParameter(stId);
         if (StringUtils.isNotEmpty(query)) {
             Query queryObject = new Query(query, null, null, null, null);
             Entry iconEntry = searchService.getIcon(queryObject);
@@ -131,14 +144,15 @@ class IconLibraryController {
                 model.addAttribute(URL_MAPPING, urlMapping);
                 model.addAttribute(TITLE, iconEntry.getIconName());
                 model.addAttribute(ENTRY, iconEntry);
-                model.addAttribute(GROUP, StringUtils.capitalize(iconEntry.getIconGroup().replaceAll("_", " ")));
+                // capitalise and remove underline for all categories
+                model.addAttribute(CATEGORIES, iconEntry.getIconCategories().stream().map(WordUtils::capitalize).map(cat -> cat.replaceAll("_", " ")).collect(Collectors.toList()));
 
                 if (iconEntry.getIconReferences() != null) {
                     model.addAttribute(REFERENCES, prepareReferences(iconEntry));
                 }
 
                 List<Set<PathwayBrowserNode>> ehldPwbTree = new ArrayList<>();
-                if (iconEntry.getIconEhlds() != null && !iconEntry.getIconGroup().equalsIgnoreCase("arrows")) {
+                if (iconEntry.getIconEhlds() != null && !iconEntry.getIconCategories().contains("arrow")) {
                     Set<PathwayBrowserNode> nodes = detailsService.getLocationInPathwayBrowserForPathways(iconEntry.getIconEhlds());
                     ehldPwbTree.add(nodes.stream().sorted().collect(Collectors.toCollection(LinkedHashSet::new)));
                 }
@@ -172,26 +186,13 @@ class IconLibraryController {
         return ret;
     }
 
-    @RequestMapping(value = "/icon-lib/download/{name}.{ext:.*}", method = RequestMethod.GET)
+    @RequestMapping(value = "/icon-lib/download/{stId}.{ext:.*}", method = RequestMethod.GET)
     @ResponseBody
-    public String downloadIcon(@PathVariable String name,
+    public String downloadIcon(@PathVariable String stId,
                                @ApiParam(value = "File extension (defines the image format)", required = true, defaultValue = "svg", allowableValues = "png,svg,emf")
                                @PathVariable String ext,
                                ModelMap model,
                                HttpServletResponse response) throws SolrSearcherException, IOException {
-
-        Entry iconEntry = null;
-        String query = cleanReceivedParameter(name);
-        if (StringUtils.isNotEmpty(query)) {
-            Query queryObject = new Query(name, null, null, null, null);
-            iconEntry = searchService.getIcon(queryObject);
-        }
-
-        if (iconEntry == null) {
-            // Generating spell check suggestions if no faceting information was found, while using no filters
-            model.addAttribute("suggestions", searchService.getSpellcheckSuggestions(name));
-            return "search/noResultsFound";
-        }
 
         String type;
         switch (ext) {
@@ -208,15 +209,19 @@ class IconLibraryController {
                 throw new IllegalArgumentException("Invalid extension");
         }
 
-        String iconFullPath = iconLibDir + "/" + iconEntry.getIconGroup() + "/" + iconEntry.getIconName() + "." + ext;
+        String iconFullPath = iconLibDir + "/" + stId + "." + ext;
         File iconFile = new File(iconFullPath);
-        if (!iconFile.exists()) return "";
+        if (!iconFile.exists()) {
+            // Generating spell check suggestions if no faceting information was found, while using no filters
+            model.addAttribute("suggestions", searchService.getSpellcheckSuggestions(stId));
+            return "search/noResultsFound";
+        }
 
         response.setContentType(type);
         response.setStatus(HttpServletResponse.SC_OK);
         response.addHeader("Cache-Control", "public"); // needed for internet explorer
         response.addHeader("Content-Encoding", "none");
-        response.addHeader("Content-Disposition", "attachment; filename=" + iconEntry.getIconName() + "." + ext);
+        response.addHeader("Content-Disposition", "attachment; filename=" + stId + "." + ext);
 
         OutputStream out = response.getOutputStream();
         FileInputStream in = new FileInputStream(iconFile);

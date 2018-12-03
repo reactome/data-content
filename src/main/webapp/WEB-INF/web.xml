@@ -83,12 +83,12 @@
         </init-param>
         <init-param>
             <param-name>proxyPath</param-name>
-            <param-value>/ehld-icons</param-value>
+            <param-value>/Icon</param-value>
         </init-param>
     </servlet>
     <servlet-mapping>
         <servlet-name>IconLibrary</servlet-name>
-        <url-pattern>/ehld-icons/*</url-pattern>
+        <url-pattern>/Icon/*</url-pattern>
     </servlet-mapping>
 
     <servlet>

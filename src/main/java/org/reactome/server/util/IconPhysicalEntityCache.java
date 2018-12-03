@@ -37,7 +37,7 @@ public class IconPhysicalEntityCache {
                     List<String> refs = entry.getIconReferences();
                     if (refs != null) {
                         for (String ref : refs) {
-                            iconsMapping.put(ref, entry.getIconGroup() + "/" + entry.getIconName());
+                            iconsMapping.put(ref, entry.getStId());
                         }
                     }
                 }

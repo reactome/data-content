@@ -56,7 +56,11 @@
                             <div class="favth-rows result clearfix">
                                 <div class="result-title">
                                     <h4 class="title">
-                                        <i class="sprite-resize sprite sprite-${entry.exactType}" title="${entry.exactType}"></i>
+                                        <c:set var="iconClass" value="sprite-resize sprite sprite-${entry.exactType}"/>
+                                        <c:if test="${entry.exactType == 'Icon'}">
+                                            <c:set var="iconClass" value="fa fa-puzzle-piece title-icon title-icon-result-list"/>
+                                        </c:if>
+                                        <i class="${iconClass}" title="${entry.exactType}"></i>
                                         <c:if test="${entry.isDisease}">
                                             <i class="sprite-resize sprite sprite-isDisease" title="Disease related entry"></i>
                                         </c:if>
@@ -76,7 +80,7 @@
                                                 </c:choose>
                                             </c:when>
                                             <c:when test="${entry.exactType == 'Icon'}" >
-                                                <a href="./detail/icon/${entry.iconName}" class="" title="Show Icon Details" >${entry.name}</a>
+                                                <a href="./detail/icon/${entry.stId}" class="" title="Show Icon Details" >${entry.name}</a>
                                             </c:when>
                                             <c:otherwise>
                                                 <a href="./detail/${entry.id}" class="" title="Show Details" >${entry.name}</a>
@@ -86,7 +90,7 @@
                                 </div>
 
                                 <div class="result-detail">
-                                    <c:if test="${not empty entry.stId}">
+                                    <c:if test="${not empty entry.stId && entry.exactType != 'Icon'}">
                                         <div class="favth-col-lg-6 favth-col-md-12 favth-col-sm-12 favth-col-xs-12">
                                             <div>
                                                 <strong>Identifier: </strong>${entry.stId}
@@ -161,7 +165,7 @@
                                                 </c:if>
                                             </div>
                                             <div class="favth-col-lg-4 favth-col-md-4 favth-col-sm-4 favth-col-xs-4">
-                                                <img src="/ehld-icons/lib/${entry.iconGroup}/${entry.iconName}.svg" alt="${entry.iconName}" style="width: 50px; height: 50px;"/>
+                                                <img src="/Icon/${entry.stId}.svg" alt="${entry.iconName} icon" style="width: 50px; height: 50px;"/>
                                             </div>
                                         </div>
                                     </c:if>

@@ -7,16 +7,19 @@
 <div class="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-12">
 
 <h3 class="details-title">
-    <i class="sprite sprite-${entry.exactType}" title="${entry.exactType}"></i> ${entry.name}
+    <i class="fa fa-puzzle-piece title-icon" title="${entry.exactType}"></i> ${entry.iconName}
 </h3>
 
 <div class="extended-header favth-clearfix">
-    <c:if test="${not empty entry.iconGroup}">
+    <c:if test="${not empty entry.iconCategories}">
         <div class="details-label favth-col-lg-2 favth-col-md-2 favth-col-sm-3 favth-col-xs-12">
-            <span>Group</span>
+            <span>Categories</span>
         </div>
         <div class="details-field favth-col-lg-10 favth-col-md-10 favth-col-sm-9 favth-col-xs-12">
-            <span><a href="/icon-lib/${entry.iconGroup}">${group}</a></span>
+            <c:forEach var="category" items="${categories}" varStatus="loop">
+                <c:set var="categoryLink" value="${fn:replace(category, ' ', '_')}" /> <%-- replace spaces so the url doens't need to be encoded --%>
+                <span><a href="/icon-lib/${fn:toLowerCase(categoryLink)}" title="Go to ${category}">${category}</a><c:if test="${not loop.last}">, </c:if></span>
+            </c:forEach>
         </div>
     </c:if>
 
@@ -51,22 +54,22 @@
 <fieldset class="fieldset-details">
     <legend>Icon preview</legend>
     <div class="favth-col-lg-3 favth-col-md-4 favth-col-sm-5 favth-col-xs-12 text-center margin0 top">
-        <img class="icon-preview" src="/ehld-icons/lib/${entry.iconGroup}/${fn:escapeXml(entry.iconName)}.svg" alt="Icon ${entry.name}" />
+        <img class="icon-preview" src="/Icon/${entry.stId}.svg" alt="Icon ${entry.iconName}" />
     </div>
     <div class="favth-col-lg-9 favth-col-md-6 favth-col-sm-5 favth-col-xs-12 text-xs-center margin0 top">
         <div class="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-4 padding0 bottom">
-            <span><a href="${pageContext.request.contextPath}/icon-lib/download/${entry.iconName}.svg"><i class="fa fa-download"></i> SVG</a></span>
+            <span><a href="/Icon/${entry.stId}.svg" download="${entry.stId}.svg" title="Click to download the icon in SVG format"><i class="fa fa-download"></i> SVG</a></span>
         </div>
         <div class="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-4 padding0 bottom">
-            <span><a href="${pageContext.request.contextPath}/icon-lib/download/${entry.iconName}.png"><i class="fa fa-download"></i> PNG</a></span>
+            <span><a href="/Icon/${entry.stId}.png" download="${entry.stId}.png" title="Click to download the icon in PNG format" ><i class="fa fa-download"></i> PNG</a></span>
         </div>
         <div class="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-4 padding0 bottom">
-            <span><a href="${pageContext.request.contextPath}/icon-lib/download/${entry.iconName}.emf"><i class="fa fa-download"></i> EMF</a></span>
+            <span><a href="/Icon/${entry.stId}.emf" download="${entry.stId}.emf" title="Click to download the icon in EMF format"><i class="fa fa-download"></i> EMF</a></span>
         </div>
     </div>
 </fieldset>
 
-<c:if test="${not empty pwbTree && entry.iconGroup != 'arrows'}">
+<c:if test="${not empty pwbTree && not fn:containsIgnoreCase(entry.iconCategories, 'arrow')}">
    <div class="clearfix">
         <fieldset class="fieldset-details">
         <legend>Locations in the PathwayBrowser</legend>
@@ -137,7 +140,7 @@
                     <c:forEach var="iconPE" items="${entry.iconPhysicalEntities}">
                         <div class="favth-col-lg-6 favth-col-md-6 favth-col-sm-6 favth-col-xs-12 text-overflow">
                             <%-- index: 0=ST_ID, 1=Type, 2=Name, 3=Compartment --%>
-                            <a href="${pageContext.request.contextPath}/detail/${iconPE.stId}" title="Open ${iconPE.stId}"><i class="sprite sprite-${iconPE.type}" title="${iconPE.type}"></i> ${iconPE.displayName}</a>
+                            <a href="${pageContext.request.contextPath}/detail/${iconPE.stId}" title="Open ${iconPE.stId}"><i class="sprite sprite-${iconPE.type}" title="${iconPE.type}" style="vertical-align: middle; height: 18px;"></i> ${iconPE.displayName}</a>
                         </div>
                     </c:forEach>
                 </div>
@@ -174,23 +177,6 @@
             </c:forEach>
         </fieldset>
     </div>
-</c:if>
-
-<c:if test="${not empty entry.iconCVTerms}">
-    <fieldset class="fieldset-details">
-        <legend>GO Terms</legend>
-        <div class="fieldset-pair-container">
-            <div class="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-12">
-                <div class="wrap">
-                    <c:forEach var="term" items="${entry.iconCVTerms}">
-                        <div class="favth-col-lg-3 favth-col-md-3 favth-col-sm-6 favth-col-xs-6 text-overflow">
-                             ${term}
-                        </div>
-                    </c:forEach>
-                </div>
-            </div>
-        </div>
-    </fieldset>
 </c:if>
 
 
