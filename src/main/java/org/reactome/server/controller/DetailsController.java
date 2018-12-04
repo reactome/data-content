@@ -174,6 +174,7 @@ class DetailsController {
 
                     // sets a preview url for reactions and pathways (differentiating EHLD from "normal" pathways)
                     setPreviewURL(databaseObject, model);
+                    model.addAttribute("isEHLD", ehlds.contains(databaseObject.getStId()));
 
                     // responsive design, avoid loading same content twice on screen
                     // instead hiding using CSS, java will detect and the content won't be processed.

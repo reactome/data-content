@@ -12,7 +12,6 @@ import org.reactome.server.util.MailService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -58,7 +57,7 @@ class SearchController {
     private static final String MAX_PAGE = "maxpage";
     private static final String CLUSTER = "cluster";
     private static final String MAIL_SUBJECT = "subject";
-    private static final String MAIL_SUBJECT_PLACEHOLDER = "[SEARCH] No results found for ";
+    private static final String MAIL_SUBJECT_PLACEHOLDER = "No results found for ";
     private static final String MAIL_MESSAGE = "message";
     private static final String PAGE_NO_RESULTS_FOUND = "search/noResultsFound";
     private static final String PAGE_EBI_ADVANCED = "search/advanced";
@@ -69,11 +68,7 @@ class SearchController {
     private SearchService searchService;
     private MailService mailService;
 
-    @Value("${mail.error.to}")
-    private String mailErrorDest; // E
 
-    @Value("${mail.support.to}")
-    private String mailSupportDest; // Results not found report
 
     @Autowired
     public SearchController(GeneralService generalService) {
@@ -187,7 +182,6 @@ class SearchController {
     @ResponseBody
     public String contact(@RequestParam String contactName,
                           @RequestParam String mailAddress,
-                          @RequestParam(required = false, defaultValue = "false") Boolean sendEmailCopy,
                           @RequestParam String message,
                           @RequestParam String exception,
                           @RequestParam String url,
@@ -197,15 +191,15 @@ class SearchController {
             contactName = contactName.trim();
             message = message.concat("\n\n--\n").concat(contactName.trim());
         }
-        String to = mailSupportDest;
         if (source.equals("E")) {
-            to = mailErrorDest;
             subject = "Unexpected error occurred [" + url + "]";
             message = message.concat("\nFailed URL: " + url);
             message = message.concat("\nException: " + exception.replaceAll("##C##","\n\t\t").replaceAll("#", "\n\t"));
+            mailService.error(contactName, mailAddress, subject, message);
+        } else {
+            subject = String.format("[%s] %s", StringUtils.isEmpty(contactName) ? mailAddress : contactName, subject);
+            mailService.help(contactName, mailAddress, subject, message);
         }
-        // Call email service.
-        mailService.send(contactName, mailAddress, to, subject, message, sendEmailCopy);
         return "success";
     }
 

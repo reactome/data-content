@@ -222,6 +222,19 @@
     </fieldset>
 </c:if>
 
+
+<c:if test="${isReactionLikeEvent && not empty databaseObject.normalReaction}">
+    <fieldset class="fieldset-details">
+        <legend>Normal reaction</legend>
+        <div class="wrap overflow">
+            <div class="favth-col-lg-6 favth-col-md-6 favth-col-sm-12 favth-col-xs-12 text-overflow">
+                <i class="sprite sprite-resize sprite-${databaseObject.normalReaction.schemaClass} sprite-position" title="${databaseObject.normalReaction.schemaClass}"></i>
+                <a href="../detail/${databaseObject.normalReaction.stId}" class="" title="${databaseObject.normalReaction.displayName} (${databaseObject.normalReaction.speciesName})" >${databaseObject.normalReaction.displayName} (${databaseObject.normalReaction.speciesName})</a>
+            </div>
+        </div>
+    </fieldset>
+</c:if>
+
 <c:if test="${not empty databaseObject.inferredFrom}">
     <fieldset class="fieldset-details">
         <legend>Inferred From</legend>

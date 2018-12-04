@@ -3,6 +3,7 @@ package org.reactome.server.controller;
 import org.apache.commons.lang.StringUtils;
 import org.reactome.server.exception.ViewException;
 import org.reactome.server.graph.domain.model.*;
+import org.reactome.server.graph.domain.result.SchemaClassCount;
 import org.reactome.server.graph.service.*;
 import org.reactome.server.graph.service.helper.SchemaNode;
 import org.reactome.server.graph.service.util.DatabaseObjectUtils;
@@ -139,7 +140,9 @@ class SchemaController {
         try {
             classBrowserCache = DataSchemaCache.getClassBrowserCache();
             if (classBrowserCache == null) {
-                classBrowserCache = DatabaseObjectUtils.getGraphModelTree(generalService.getSchemaClassCounts());
+                Collection<SchemaClassCount> sccs = generalService.getSchemaClassCounts();
+                sccs.removeIf(scc -> scc.getLabels().contains("OpenSet"));
+                classBrowserCache = DatabaseObjectUtils.getGraphModelTree(sccs);
             }
             model.addAttribute(TITLE, className);
             model.addAttribute("node", classBrowserCache);

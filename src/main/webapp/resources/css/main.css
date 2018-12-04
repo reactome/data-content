@@ -584,9 +584,9 @@ a.tree-highlighted-item:visited {
     right: 15px;
 }
 
-.ehld {
+.diagram-rxn-preview {
     max-height: 300px;
-    margin: 10px 20px;
+    margin: 0 20px;
 }
 
 .enlarge-table {
@@ -806,7 +806,7 @@ span.secondary-identifiers {
         width: 85%;
     }
 
-    img.ehld {
+    img.diagram-rxn-preview {
         height: auto;
     }
 }
@@ -841,6 +841,23 @@ span.secondary-identifiers {
         font-size: 12px;
     }
 }
+.png-dropdown,
+.biopax-dropdown {
+    display: inline;
+}
+
+.png-dropdown .png-resolution-tooltip {
+    right: 5.5em;
+}
+
+.png-dropdown .png-resolution-tooltip-noEHLD {
+    right: -1.85em;
+}
+
+.biopax-dropdown .biopax-version-tooltip {
+    width: 100px;
+    left: 11.7em;
+}
 
 .png-dropdown .png-resolution-tooltip,
 .biopax-dropdown .biopax-version-tooltip {
@@ -857,8 +874,7 @@ span.secondary-identifiers {
     z-index: 1;
     /* BOTTOM */
     width: 85px;
-    top: 100%;
-    left: 100%;
+    top: 1.35em;
     margin-left: -100px;
 
     -webkit-transition: height .5s; /* For Safari 3.1 to 6.0 */
@@ -866,10 +882,6 @@ span.secondary-identifiers {
     opacity: 0;
     height: 0;
     overflow: hidden;
-}
-
-.biopax-dropdown .biopax-version-tooltip {
-    width: 100px;
 }
 
 .png-dropdown:focus .png-resolution-tooltip,
