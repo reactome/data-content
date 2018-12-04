@@ -2,13 +2,13 @@
 
 <c:set var="placeholder" value="e.g. O95631, NTN1, signaling by EGFR, glucose" />
 <c:if test="${iconsSearch}">
-    <c:set var="placeholder" value="e.g. P06241, liver, CFTR, proteins" />
+    <c:set var="placeholder" value="e.g. P06241, liver, CFTR, protein" />
 </c:if>
 
 <div class="search">
     <form action="/content/query" method="get" class="clean-form form-inline" id="search_form">
         <label for="local-searchbox" class="element-invisible">Search ...</label>
-        <input id="local-searchbox" type="search" class="inputbox search-query alt-searchbox" name="q" placeholder="${placeholder}" value="${q}"  maxlength="200" autocomplete="off" autofocus/>
+        <input id="local-searchbox" type="search" class="inputbox search-query alt-searchbox" name="q" placeholder="${placeholder}" value="${q}"  maxlength="200" autocomplete="off" />
         <c:choose>
             <c:when test="${not empty species}">
                 <c:forEach var="item" items="${species}">
