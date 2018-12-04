@@ -8,7 +8,7 @@
 <div class="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-12">
     <div class="margin0 top alert alert-info" role="alert">
         <span class="favth-hidden-xs favth-hidden-sm"><i class="fa fa-info-circle"></i>Do you want to search for icons? <strong>Type</strong> e.g "<a href="query?q=kidneys&species=Homo+sapiens&species=Entries+without+species&cluster=true&types=Icon">kidneys</a>" in the search box.</span>
-        <span class="favth-visible-xs favth-visible-sm" style="font-size: 12px;">Do you want to search for icons? <br/><strong>Type</strong> e.g "kidneys" in the search box.</span>
+        <span class="favth-visible-xs favth-visible-sm" style="font-size: 12px;">Do you want to search for icons? <br/><strong>Type</strong> e.g "<a href="query?q=kidneys&species=Homo+sapiens&species=Entries+without+species&cluster=true&types=Icon">kidneys</a>" in the search box.</span>
     </div>
     <div class="margin0 bottom">
         <h3 class="details-title favth-hidden-xs"><i class="fa fa-archive"></i> Library of icons for Enhanced High Level Diagrams (EHLD)</h3>
@@ -17,7 +17,7 @@
 
     <c:if test="${not empty icons.available || not empty icons.selected }">
         <fieldset class="fieldset-details favth-clearfix">
-            <legend>Library - <fmt:formatNumber type = "number" maxFractionDigits = "3" value = "${totalIcons}"/> icons</legend>
+            <legend>Library - <fmt:formatNumber type = "number" maxFractionDigits = "3" value = "${totalIcons}"/> unique icons</legend>
             <div class="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-12 favth-hidden-xs favth-hidden-sm">
                 <h4 class="margin0 top bottom">The icons are organised based on their categories</h4>
             </div>

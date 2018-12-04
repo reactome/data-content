@@ -138,6 +138,16 @@
     font-size: 11px !important;
 }
 
+/* title icons */
+.fav-container h3 [class^="fa fa-"],
+.fav-container h3 [class*=" fa fa-"] {
+    background-color: #2F9EC2;
+    color: #fff;
+    padding: 10px;
+    margin-right: 14px;
+    font-size: 20px;
+}
+
 /*/// mobile ///*/
 @media (max-width: 768px) {
     .svg-component img {
