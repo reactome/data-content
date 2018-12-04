@@ -71,7 +71,7 @@ body.modal-open {
     display: block;
 }
 
-.plus {
+.plus, .tree-root-overflow {
     font-size: 108%;
     cursor: pointer;
     margin: 0 3px;
@@ -224,7 +224,7 @@ ul.tree li a:visited {
     margin: 0 0 2px 0;
 }
 
-#fav-container div.fieldset-pair-container div[class*="mr-"]{
+#fav-container div.fieldset-pair-container div[class*="mr-"] {
     margin: 0 0 0 0;
     max-height: none;
 }
@@ -340,7 +340,7 @@ a.tree-highlighted-item:visited {
     table-layout: fixed;
 }
 
-.wrap table.reactome tr:hover *{
+.wrap table.reactome tr:hover * {
     background-color: #f9f9f9;
 }
 
@@ -377,20 +377,20 @@ a.tree-highlighted-item:visited {
 }
 
 #fav-container div#search-results h3 a:hover,
-#fav-container div#search-results h3 a:focus{
+#fav-container div#search-results h3 a:focus {
     border-bottom: 1px solid #2F9EC2;
 }
 
-#fav-container div#search-headers div{
+#fav-container div#search-headers div {
     border-bottom: 1px dotted #CCCCCC;
 }
 
-#fav-container div#search-headers h2  {
+#fav-container div#search-headers h2 {
     margin-top: 5px;
     color: #2F9EC2;
 }
 
-#fav-container div#search-headers h2 span.searchterm  {
+#fav-container div#search-headers h2 span.searchterm {
     background-color: #2F9EC2;
     color: #FFF;
 }
@@ -398,11 +398,11 @@ a.tree-highlighted-item:visited {
 #fav-container .pagination ul > .active > a,
 #fav-container .pagination ul > .active > span {
     background: #2F9EC2;
-    color:white;
+    color: white;
 }
 
-#fav-container .pagination ul>li>a,
-#fav-container .pagination ul>li>span {
+#fav-container .pagination ul > li > a,
+#fav-container .pagination ul > li > span {
     float: left;
     line-height: 20px;
     text-decoration: none;
@@ -410,24 +410,13 @@ a.tree-highlighted-item:visited {
     border: 1px solid #ddd;
 }
 
-/*#fav-container .pagination ul>li>a:focus,*/
-/*#fav-container .pagination ul>li>span:focus,*/
-/*#fav-container .pagination ul>li>a:hover,*/
-/*#fav-container .pagination ul>li>span:hover {*/
-    /*float: left;*/
-    /*line-height: 20px;*/
-    /*text-decoration: none;*/
-    /*background-color: #2F9EC2;*/
-    /*border: 1px solid #2F9EC2;*/
-/*}*/
-
 #fav-container .morecontent span {
     display: none;
 }
 
 #fav-container .morelink,
 #fav-container .morelink:focus,
-#fav-container .morelink:hover{
+#fav-container .morelink:hover {
     display: inline;
     color: #2F9EC2;
 }
@@ -527,7 +516,7 @@ a.tree-highlighted-item:visited {
 }
 
 #fav-container .sidenav h4 {
-    margin-top:0;
+    margin-top: 0;
 }
 
 #search-filters {
@@ -577,7 +566,7 @@ a.tree-highlighted-item:visited {
     margin: 8px 10px 15px 10px;
 }
 
-#fav-container .person-switch-btn{
+#fav-container .person-switch-btn {
     padding: 3px 20px;
     position: absolute;
     top: 7px;
@@ -605,11 +594,42 @@ span.secondary-identifiers {
     margin-left: 20px;
 }
 
+.text-lg-overflow {
+    width: 89%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    display: inline-block;
+    line-height: 20px;
+    font-size: 14px;
+    vertical-align: middle;
+}
+
+.details-icon-pe {
+    border: 1px solid #e7e7e7;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.details-icon-pe:hover,
+.details-icon-pe:focus {
+    -webkit-box-shadow: 0 0 10px 6px #f1f1f1;
+    -moz-box-shadow: 0 0 10px 6px #f1f1f1;
+    box-shadow: 0 0 10px 6px #f1f1f1;
+
+}
+
 /* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
 @media screen and (max-height: 450px) {
-    #fav-container .sidenav {padding-top: 15px;}
-    #fav-container .sidenav a {font-size: 18px;}
+    #fav-container .sidenav {
+        padding-top: 15px;
+    }
+
+    #fav-container .sidenav a {
+        font-size: 18px;
+    }
 }
+
 /******/
 
 /* CSS Media Queries */
@@ -680,6 +700,38 @@ span.secondary-identifiers {
 
 }
 
+@media (max-width: 767px) {
+    .text-xs-center {
+        text-align: center;
+    }
+
+    #fav-maincontent {
+        margin-bottom: 0;
+    }
+
+    .tree-sm-overflow {
+        width: 89%;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        display: inline-block;
+        line-height: 15px;
+        font-size: 12px;
+    }
+    ul.tree li {
+        margin: 0;
+        font-size: 12px;
+        line-height: 20px;
+        position: relative;
+
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        width: 99%;
+        padding: 0 0 0 12px;
+    }
+}
+
 @media only screen and (max-width: 425px) {
     #fav-container div.extended-header .details-label,
     #fav-container div.fieldset-pair-container .details-label {
@@ -735,7 +787,7 @@ span.secondary-identifiers {
     }
 
     /* Locations in the PWB Tree */
-    .plus {
+    .plus, .tree-root-overflow {
         font-size: 85%;
         cursor: pointer;
         margin: 0;
@@ -803,11 +855,15 @@ span.secondary-identifiers {
 
     input#mod-search-searchword,
     input#local-searchbox {
-        width: 85%;
+        width: 83%;
     }
 
     img.diagram-rxn-preview {
         height: auto;
+    }
+
+    .tree-sm-overflow {
+        width: 84%;
     }
 }
 

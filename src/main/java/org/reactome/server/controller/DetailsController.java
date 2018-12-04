@@ -17,6 +17,7 @@ import org.reactome.server.graph.service.helper.RelationshipDirection;
 import org.reactome.server.graph.service.helper.SchemaNode;
 import org.reactome.server.graph.service.util.DatabaseObjectUtils;
 import org.reactome.server.graph.service.util.PathwayBrowserLocationsUtils;
+import org.reactome.server.util.IconPhysicalEntityCache;
 import org.reactome.server.util.MapSet;
 import org.reactome.server.util.UAgentInfo;
 import org.slf4j.Logger;
@@ -168,9 +169,11 @@ class DetailsController {
                     }
 
                     // extras
-                    model.addAttribute("flg", getReferenceEntityIdentifier(databaseObject));
+                    String referenceIdentifier = getReferenceEntityIdentifier(databaseObject);
+                    model.addAttribute("flg", referenceIdentifier);
                     model.addAttribute("relatedSpecies", getRelatedSpecies(databaseObject));
                     model.addAttribute("jsonLd", eventDiscovery(contentDetails.getDatabaseObject()));
+                    model.addAttribute("icon", IconPhysicalEntityCache.getIconsMapping().get(referenceIdentifier));
 
                     // sets a preview url for reactions and pathways (differentiating EHLD from "normal" pathways)
                     setPreviewURL(databaseObject, model);

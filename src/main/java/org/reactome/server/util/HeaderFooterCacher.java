@@ -20,7 +20,6 @@ import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.security.Security;
-import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 
 /**
@@ -53,9 +52,10 @@ public class HeaderFooterCacher extends Thread {
     private static final String SCRIPT_FOOTER_REPLACE = "<script type=\"text/javascript\" src=\"/content/resources/js/data-content.js?v=3.2\"></script>\n</body>";
 
     private static final String MAIN_CSS = "<link rel=\"stylesheet\" href=\"/content/resources/css/main.css?v=20180710\" type=\"text/css\" />";
+    private static final String ICON_CSS = "<link rel=\"stylesheet\" href=\"/content/resources/css/icon-lib.css?v=20180712\" type=\"text/css\" />";
 
     private static final String HEADER_CLOSE = "</head>";
-    private static final String HEADER_CLOSE_REPLACE = MAIN_CSS + "\n" + "<jsp:include page=\"graph/json-ld.jsp\"/>\n</head>";
+    private static final String HEADER_CLOSE_REPLACE = MAIN_CSS + "\n" + ICON_CSS + "\n"+ "<jsp:include page=\"graph/json-ld.jsp\"/>\n</head>";
 
     private static final Integer MINUTES = 15;
 
@@ -185,10 +185,8 @@ public class HeaderFooterCacher extends Thread {
                     public X509Certificate[] getAcceptedIssuers() {
                         return null;
                     }
-
-                    public void checkServerTrusted(X509Certificate[] certs, String authType) throws CertificateException {}
-
-                    public void checkClientTrusted(X509Certificate[] certs, String authType) throws CertificateException {}
+                    public void checkServerTrusted(X509Certificate[] certs, String authType) {}
+                    public void checkClientTrusted(X509Certificate[] certs, String authType) {}
                 }
         };
 
