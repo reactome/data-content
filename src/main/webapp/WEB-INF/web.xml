@@ -75,7 +75,7 @@
         <servlet-class>org.reactome.server.utils.proxy.ProxyServlet</servlet-class>
         <init-param>
             <param-name>proxyHost</param-name>
-            <param-value>reactomedev.oicr.on.ca</param-value>
+            <param-value>dev.reactome.org</param-value>
         </init-param>
         <init-param>
             <param-name>proxyPort</param-name>
@@ -96,7 +96,7 @@
         <servlet-class>org.reactome.server.utils.proxy.ProxyServlet</servlet-class>
         <init-param>
             <param-name>proxyHost</param-name>
-            <param-value>reactomedev.oicr.on.ca</param-value>
+            <param-value>dev.reactome.org</param-value>
         </init-param>
         <init-param>
             <param-name>proxyPort</param-name>
@@ -117,7 +117,7 @@
         <servlet-class>org.reactome.server.utils.proxy.ProxyServlet</servlet-class>
         <init-param>
             <param-name>proxyHost</param-name>
-            <param-value>reactomedev.oicr.on.ca</param-value>
+            <param-value>dev.reactome.org</param-value>
         </init-param>
         <init-param>
             <param-name>proxyPort</param-name>
@@ -139,7 +139,7 @@
         <servlet-class>org.reactome.server.utils.proxy.ProxyServlet</servlet-class>
         <init-param>
             <param-name>proxyHost</param-name>
-            <param-value>reactomedev.oicr.on.ca</param-value>
+            <param-value>dev.reactome.org</param-value>
         </init-param>
         <init-param>
             <param-name>proxyPort</param-name>
@@ -160,7 +160,7 @@
         <servlet-class>org.reactome.server.utils.proxy.ProxyServlet</servlet-class>
         <init-param>
             <param-name>proxyHost</param-name>
-            <param-value>reactomedev.oicr.on.ca</param-value>
+            <param-value>dev.reactome.org</param-value>
         </init-param>
         <init-param>
             <param-name>proxyPort</param-name>
@@ -182,7 +182,7 @@
         <servlet-class>org.reactome.server.utils.proxy.ProxyServlet</servlet-class>
         <init-param>
             <param-name>proxyHost</param-name>
-            <param-value>reactomedev.oicr.on.ca</param-value>
+            <param-value>dev.reactome.org</param-value>
         </init-param>
         <init-param>
             <param-name>proxyPort</param-name>
@@ -204,7 +204,7 @@
         <servlet-class>org.reactome.server.utils.proxy.ProxyServlet</servlet-class>
         <init-param>
             <param-name>proxyHost</param-name>
-            <param-value>reactomedev.oicr.on.ca</param-value>
+            <param-value>dev.reactome.org</param-value>
         </init-param>
         <init-param>
             <param-name>proxyPort</param-name>
@@ -226,7 +226,7 @@
         <servlet-class>org.reactome.server.utils.proxy.ProxyServlet</servlet-class>
         <init-param>
             <param-name>proxyHost</param-name>
-            <param-value>reactomedev.oicr.on.ca</param-value>
+            <param-value>dev.reactome.org</param-value>
         </init-param>
         <init-param>
             <param-name>proxyPort</param-name>
@@ -248,7 +248,7 @@
         <servlet-class>org.reactome.server.utils.proxy.ProxyServlet</servlet-class>
         <init-param>
             <param-name>proxyHost</param-name>
-            <param-value>reactomedev.oicr.on.ca</param-value>
+            <param-value>dev.reactome.org</param-value>
         </init-param>
         <init-param>
             <param-name>proxyPort</param-name>

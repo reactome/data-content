@@ -22,12 +22,12 @@
             <div class="favth-col-lg-3 favth-col-md-4 favth-col-sm-6 favth-col-xs-12">
                 <div class="favth-clearfix svg-container">
                     <div class="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-12 svg-component">
-                        <a href="${pageContext.request.contextPath}/detail/icon/${entry.stId}">
+                        <a href="${pageContext.request.contextPath}/detail/${entry.stId}">
                             <img src="/Icon/${entry.stId}.svg" alt="${entry.name}" />
                         </a>
                     </div>
                     <div class="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-12 svg-moreinfo">
-                        <a href="${pageContext.request.contextPath}/detail/icon/${entry.stId}" title="${entry.name}"><span class="text-lg-overflow">${entry.name}</span></a>
+                        <a href="${pageContext.request.contextPath}/detail/${entry.stId}" title="${entry.name}"><span class="text-lg-overflow">${entry.name}</span></a>
                     </div>
                 </div>
             </div>

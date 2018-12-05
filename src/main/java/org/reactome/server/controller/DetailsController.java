@@ -67,6 +67,8 @@ class DetailsController {
     private InteractionsService interactionsService;
     private DetailsService detailsService;
     private SchemaNode classBrowserCache;
+    private IconLibraryController iconsController;
+
 
     /**
      * These resources are the same all the time.
@@ -98,6 +100,8 @@ class DetailsController {
                          HttpServletResponse response) {
 
         try {
+            if (id.startsWith("R-ICO-")) return iconsController.iconDetails(id, model, response);
+
             UAgentInfo u = new UAgentInfo(request.getHeader("User-Agent"), null);
 
             boolean interactorPage = StringUtils.isNotEmpty(interactor);
@@ -398,5 +402,10 @@ class DetailsController {
     @Autowired
     public void setInteractionsService(InteractionsService interactionsService) {
         this.interactionsService = interactionsService;
+    }
+
+    @Autowired
+    public void setIconsController(IconLibraryController iconsController) {
+        this.iconsController = iconsController;
     }
 }
