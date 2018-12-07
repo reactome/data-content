@@ -2,7 +2,6 @@ package org.reactome.server.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.reactome.server.exception.ViewException;
 import org.reactome.server.graph.domain.model.*;
@@ -23,7 +22,6 @@ import org.reactome.server.util.UAgentInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -33,10 +31,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
-import java.nio.charset.Charset;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -61,7 +56,7 @@ class DetailsController {
     private static final String TITLE = "title";
 
     private static final int OFFSET = 55;
-    private final Set<String> ehlds = new HashSet<>();
+//    private final Set<String> ehlds = new HashSet<>();
     private GeneralService generalService;
     private AdvancedDatabaseObjectService advancedDatabaseObjectService;
     private InteractionsService interactionsService;
@@ -70,19 +65,19 @@ class DetailsController {
     private IconLibraryController iconsController;
 
 
-    /**
-     * These resources are the same all the time.
-     * In order to speed up the query result and less memory usage, I decided to keep the resource out of the query
-     * and keep a cache with them. Thus we avoid having the same information for all results.
-     */
-    @Autowired
-    public DetailsController(@Value("${svg.summary.file}") String svgSummaryFile) {
-        try {
-            ehlds.addAll(IOUtils.readLines(new FileInputStream(svgSummaryFile), Charset.defaultCharset()));
-        } catch (IOException e) {
-            errorLogger.error("EHLD summary file cannot be loaded: " + e.getMessage(), e);
-        }
-    }
+//    /**
+//     * These resources are the same all the time.
+//     * In order to speed up the query result and less memory usage, I decided to keep the resource out of the query
+//     * and keep a cache with them. Thus we avoid having the same information for all results.
+//     */
+//    @Autowired
+//    public DetailsController(@Value("${svg.summary.file}") String svgSummaryFile) {
+//        try {
+//            ehlds.addAll(IOUtils.readLines(new FileInputStream(svgSummaryFile), Charset.defaultCharset()));
+//        } catch (IOException e) {
+//            errorLogger.error("EHLD summary file cannot be loaded: " + e.getMessage(), e);
+//        }
+//    }
 
     /**
      * * Shows detailed information of an entry
@@ -181,7 +176,8 @@ class DetailsController {
 
                     // sets a preview url for reactions and pathways (differentiating EHLD from "normal" pathways)
                     setPreviewURL(databaseObject, model);
-                    model.addAttribute("isEHLD", ehlds.contains(databaseObject.getStId()));
+                    boolean hasEHLD = (databaseObject instanceof Pathway) && ((Pathway) databaseObject).getHasEHLD();
+                    model.addAttribute("isEHLD", hasEHLD);
 
                     // responsive design, avoid loading same content twice on screen
                     // instead hiding using CSS, java will detect and the content won't be processed.
@@ -216,11 +212,8 @@ class DetailsController {
             previewURL = RXN_URL;
             model.addAttribute("downloadURL", RXN_URL);
         } else if (databaseObject instanceof Pathway) {
-            if (ehlds.contains(databaseObject.getStId())) {
-                previewURL = EHLD_URL;
-            } else {
-                previewURL = PWY_URL;
-            }
+            Pathway pathway = (Pathway) databaseObject;
+            previewURL = pathway.getHasEHLD() ? EHLD_URL : PWY_URL;
             model.addAttribute("downloadURL", PWY_URL);
         }
         if (previewURL != null) {
