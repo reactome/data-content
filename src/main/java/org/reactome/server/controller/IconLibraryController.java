@@ -124,11 +124,13 @@ class IconLibraryController {
         return PAGE_NO_ICON_FOUND;
     }
 
-    @RequestMapping(value = "/detail/icon/{stId}", method = RequestMethod.GET)
-    public String iconDetails(@PathVariable(name = "stId") String stId,
+    /**
+     * This method is called in the Details Controller directly. Same RequestMapping has to be used to map the icons.
+     */
+    String iconDetails(String identifier,
                               ModelMap model,
                               HttpServletResponse response) throws SolrSearcherException {
-        String query = cleanReceivedParameter(stId);
+        String query = cleanReceivedParameter(identifier);
         if (StringUtils.isNotEmpty(query)) {
             Query queryObject = new Query(query, null, null, null, null);
             Entry iconEntry = searchService.getIcon(queryObject);

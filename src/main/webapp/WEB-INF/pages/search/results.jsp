@@ -80,7 +80,7 @@
                                                 </c:choose>
                                             </c:when>
                                             <c:when test="${entry.exactType == 'Icon'}" >
-                                                <a href="./detail/icon/${entry.stId}" class="" title="Show Icon Details" >${entry.name}</a>
+                                                <a href="./detail/${entry.stId}" class="" title="Show Icon Details" >${entry.name}</a>
                                             </c:when>
                                             <c:otherwise>
                                                 <a href="./detail/${entry.id}" class="" title="Show Details" >${entry.name}</a>
