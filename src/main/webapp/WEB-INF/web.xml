@@ -83,12 +83,12 @@
         </init-param>
         <init-param>
             <param-name>proxyPath</param-name>
-            <param-value>/Icon</param-value>
+            <param-value>/icon</param-value>
         </init-param>
     </servlet>
     <servlet-mapping>
         <servlet-name>IconLibrary</servlet-name>
-        <url-pattern>/Icon/*</url-pattern>
+        <url-pattern>/icon/*</url-pattern>
     </servlet-mapping>
 
     <servlet>

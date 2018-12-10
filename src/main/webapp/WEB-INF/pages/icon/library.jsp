@@ -7,8 +7,8 @@
 
 <div class="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-12">
     <div class="margin0 top alert alert-info" role="alert">
-        <span class="favth-hidden-xs favth-hidden-sm"><i class="fa fa-info-circle"></i>Do you want to search for icons? <strong>Type</strong> e.g "<a href="query?q=kidneys&species=Homo+sapiens&species=Entries+without+species&cluster=true&types=Icon">kidneys</a>" in the search box.</span>
-        <span class="favth-visible-xs favth-visible-sm" style="font-size: 12px;">Do you want to search for icons? <br/><strong>Type</strong> e.g "<a href="query?q=kidneys&species=Homo+sapiens&species=Entries+without+species&cluster=true&types=Icon">kidneys</a>" in the search box.</span>
+        <span class="favth-hidden-xs favth-hidden-sm"><i class="fa fa-info-circle"></i>Do you want to search for icons? <strong>Type</strong> e.g "<a href="/content/query?q=kidneys&species=Homo+sapiens&species=Entries+without+species&cluster=true&types=Icon">kidneys</a>" in the search box.</span>
+        <span class="favth-visible-xs favth-visible-sm" style="font-size: 12px;">Do you want to search for icons? <br/><strong>Type</strong> e.g "<a href="/content/query?q=kidneys&species=Homo+sapiens&species=Entries+without+species&cluster=true&types=Icon">kidneys</a>" in the search box.</span>
     </div>
     <div class="margin0 bottom">
         <h3 class="details-title favth-hidden-xs"><i class="fa fa-archive"></i> Library of icons for Enhanced High Level Diagrams (EHLD)</h3>
@@ -45,13 +45,13 @@
                         Download:
                     </div>
                     <div class="favth-col-lg-3 favth-col-md-3 favth-col-sm-3 favth-col-xs-4" title="Download ALL icons in SVG format">
-                        <a href="/Icon/icon-lib-svg.tgz"><i class="fa fa-download" aria-hidden="true"></i>SVG</a>
+                        <a href="/icon/icon-lib-svg.tgz"><i class="fa fa-download" aria-hidden="true"></i>SVG</a>
                     </div>
                     <div class="favth-col-lg-3 favth-col-md-3 favth-col-sm-3 favth-col-xs-4" title="Download ALL icons in EMF format">
-                        <a href="/Icon/icon-lib-emf.tgz"><i class="fa fa-download" aria-hidden="true"></i>EMF</a>
+                        <a href="/icon/icon-lib-emf.tgz"><i class="fa fa-download" aria-hidden="true"></i>EMF</a>
                     </div>
                     <div class="favth-col-lg-3 favth-col-md-3 favth-col-sm-3 favth-col-xs-4" title="Download ALL icons in PNG format">
-                        <a href="/Icon/icon-lib-png.tgz"><i class="fa fa-download" aria-hidden="true"></i>PNG</a>
+                        <a href="/icon/icon-lib-png.tgz"><i class="fa fa-download" aria-hidden="true"></i>PNG</a>
                     </div>
                 </div>
             </div>

@@ -176,8 +176,8 @@ class DetailsController {
 
                     // sets a preview url for reactions and pathways (differentiating EHLD from "normal" pathways)
                     setPreviewURL(databaseObject, model);
-                    Boolean hasEHLD = databaseObject instanceof Pathway ? ((Pathway) databaseObject).getHasEHLD() : Boolean.FALSE;
-                    model.addAttribute("isEHLD", hasEHLD != null && hasEHLD);
+                    boolean hasEHLD = databaseObject instanceof Pathway ? ((Pathway) databaseObject).getHasEHLD() : false;
+                    model.addAttribute("isEHLD", hasEHLD);
 
                     // responsive design, avoid loading same content twice on screen
                     // instead hiding using CSS, java will detect and the content won't be processed.
@@ -213,7 +213,7 @@ class DetailsController {
             model.addAttribute("downloadURL", RXN_URL);
         } else if (databaseObject instanceof Pathway) {
             Pathway pathway = (Pathway) databaseObject;
-            previewURL = pathway.getHasEHLD() != null && pathway.getHasEHLD() ? EHLD_URL : PWY_URL;
+            previewURL = pathway.getHasEHLD() ? EHLD_URL : PWY_URL;
             model.addAttribute("downloadURL", PWY_URL);
         }
         if (previewURL != null) {

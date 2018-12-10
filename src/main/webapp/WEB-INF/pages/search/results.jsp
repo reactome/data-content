@@ -154,18 +154,33 @@
                                             <div class="favth-col-lg-8 favth-col-md-8 favth-col-sm-8 favth-col-xs-8 padding0">
                                                 <c:if test="${not empty entry.iconCuratorName}">
                                                     <div class="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-12">
-                                                        <strong>Curator:</strong> ${entry.iconCuratorName}
+                                                        <strong>Curator:</strong>
+                                                        <c:choose>
+                                                            <c:when test="${not empty entry.iconCuratorOrcidId}">
+                                                                <span><a href="https://orcid.org/${entry.iconCuratorOrcidId}">${entry.iconCuratorName}</a></span>
+                                                            </c:when>
+                                                            <c:otherwise>
+                                                                <span><a href="${entry.iconCuratorUrl}">${entry.iconCuratorName}</a></span>
+                                                            </c:otherwise>
+                                                        </c:choose>
                                                     </div>
                                                 </c:if>
                                                 <c:if test="${not empty entry.iconDesignerName}">
                                                     <div class="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-12">
                                                         <strong>Designer:</strong>
-                                                        <a href="${entry.iconDesignerUrl}" class="">${entry.iconDesignerName}</a>
+                                                        <c:choose>
+                                                            <c:when test="${not empty entry.iconDesignerOrcidId}">
+                                                                <span><a href="https://orcid.org/${entry.iconDesignerOrcidId}">${entry.iconDesignerName}</a></span>
+                                                            </c:when>
+                                                            <c:otherwise>
+                                                                <span><a href="${entry.iconDesignerUrl}">${entry.iconDesignerName}</a></span>
+                                                            </c:otherwise>
+                                                        </c:choose>
                                                     </div>
                                                 </c:if>
                                             </div>
                                             <div class="favth-col-lg-4 favth-col-md-4 favth-col-sm-4 favth-col-xs-4">
-                                                <img src="/Icon/${entry.stId}.svg" alt="${entry.iconName} icon" style="width: 50px; height: 50px;"/>
+                                                <img src="/icon/${entry.stId}.svg" alt="${entry.iconName} icon" style="width: 50px; height: 50px;"/>
                                             </div>
                                         </div>
                                     </c:if>

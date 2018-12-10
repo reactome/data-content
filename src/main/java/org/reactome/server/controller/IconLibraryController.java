@@ -57,7 +57,7 @@ class IconLibraryController {
         urlMapping.put("UNIPROTKB", "http://www.uniprot.org/entry/###ID###");
         urlMapping.put("CHEBI", "http://www.ebi.ac.uk/chebi/searchId.do?chebiId=CHEBI:###ID###");
         urlMapping.put("ENSEMBL", "http://www.ensembl.org/Homo_sapiens/geneview?gene=###ID###");
-        urlMapping.put("GO", "http://www.ebi.ac.uk/ego/QuickGO?mode=display&entry=GO:###ID###");
+        urlMapping.put("GO", "https://www.ebi.ac.uk/QuickGO/term/GO:###ID###");
         urlMapping.put("UBERON", "https://www.ebi.ac.uk/ols/ontologies/uberon/terms?iri=http://purl.obolibrary.org/obo/UBERON_###ID###");
         urlMapping.put("RFAM", "http://rfam.org/family/###ID###");
         urlMapping.put("PFAM", "http://pfam.xfam.org/family/###ID###");

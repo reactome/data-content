@@ -23,7 +23,7 @@
                 <div class="favth-clearfix svg-container">
                     <div class="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-12 svg-component">
                         <a href="${pageContext.request.contextPath}/detail/${entry.stId}">
-                            <img src="/Icon/${entry.stId}.svg" alt="${entry.name}" />
+                            <img src="/icon/${entry.stId}.svg" alt="${entry.name}" />
                         </a>
                     </div>
                     <div class="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-12 svg-moreinfo">

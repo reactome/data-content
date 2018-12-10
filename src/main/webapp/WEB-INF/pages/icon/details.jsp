@@ -28,7 +28,14 @@
             <span>Curator</span>
         </div>
         <div class="details-field favth-col-lg-10 favth-col-md-10 favth-col-sm-9 favth-col-xs-12">
-            <span>${entry.iconCuratorName}</span>
+            <c:choose>
+                <c:when test="${not empty entry.iconCuratorOrcidId}">
+                    <span><a href="https://orcid.org/${entry.iconCuratorOrcidId}">${entry.iconCuratorName}</a></span>
+                </c:when>
+                <c:otherwise>
+                    <span><a href="${entry.iconCuratorUrl}">${entry.iconCuratorName}</a></span>
+                </c:otherwise>
+            </c:choose>
         </div>
     </c:if>
 
@@ -37,7 +44,14 @@
             <span>Designer</span>
         </div>
         <div class="details-field favth-col-lg-10 favth-col-md-10 favth-col-sm-9 favth-col-xs-12">
-            <span>${entry.iconDesignerName}</span>
+            <c:choose>
+                <c:when test="${not empty entry.iconDesignerOrcidId}">
+                    <span><a href="https://orcid.org/${entry.iconDesignerOrcidId}">${entry.iconDesignerName}</a></span>
+                </c:when>
+                <c:otherwise>
+                    <span><a href="${entry.iconDesignerUrl}">${entry.iconDesignerName}</a></span>
+                </c:otherwise>
+            </c:choose>
         </div>
     </c:if>
 
@@ -54,17 +68,17 @@
 <fieldset class="fieldset-details">
     <legend>Icon preview</legend>
     <div class="favth-col-lg-3 favth-col-md-4 favth-col-sm-5 favth-col-xs-12 text-center margin0 top">
-        <img class="icon-preview" src="/Icon/${entry.stId}.svg" alt="Icon ${entry.iconName}" />
+        <img class="icon-preview" src="/icon/${entry.stId}.svg" alt="Icon ${entry.iconName}" />
     </div>
     <div class="favth-col-lg-9 favth-col-md-6 favth-col-sm-5 favth-col-xs-12 text-xs-center margin0 top">
         <div class="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-4 padding0 bottom">
-            <span><a href="/Icon/${entry.stId}.svg" download="${entry.stId}.svg" title="Click to download the icon in SVG format"><i class="fa fa-download"></i> SVG</a></span>
+            <span><a href="/icon/${entry.stId}.svg" download="${entry.stId}.svg" title="Click to download the icon in SVG format"><i class="fa fa-download"></i> SVG</a></span>
         </div>
         <div class="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-4 padding0 bottom">
-            <span><a href="/Icon/${entry.stId}.png" download="${entry.stId}.png" title="Click to download the icon in PNG format" ><i class="fa fa-download"></i> PNG</a></span>
+            <span><a href="/icon/${entry.stId}.png" download="${entry.stId}.png" title="Click to download the icon in PNG format" ><i class="fa fa-download"></i> PNG</a></span>
         </div>
         <div class="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-4 padding0 bottom">
-            <span><a href="/Icon/${entry.stId}.emf" download="${entry.stId}.emf" title="Click to download the icon in EMF format"><i class="fa fa-download"></i> EMF</a></span>
+            <span><a href="/icon/${entry.stId}.emf" download="${entry.stId}.emf" title="Click to download the icon in EMF format"><i class="fa fa-download"></i> EMF</a></span>
         </div>
     </div>
 </fieldset>
