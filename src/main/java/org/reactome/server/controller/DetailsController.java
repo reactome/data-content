@@ -118,7 +118,10 @@ class DetailsController {
                 } else {
                     Set<PathwayBrowserNode> topLevelNodes = contentDetails.getNodes();
 
-                    model.addAttribute(TITLE, databaseObject.getDisplayName());
+                    Collection<String> names = databaseObject.fetchMultiValue("name");
+                    String title = names == null || names.isEmpty() ? databaseObject.getDisplayName() : names.iterator().next();
+
+                    model.addAttribute(TITLE, title);
 
                     model.addAttribute("databaseObject", databaseObject);
                     model.addAttribute("clazz", superClass);

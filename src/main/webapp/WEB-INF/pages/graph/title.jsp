@@ -1,5 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="myTld" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <h3 class="details-title">
     <c:choose>
@@ -18,15 +19,16 @@
             <i class="sprite sprite-isDisease" title="Disease related entry"></i>
         </c:if>
     </c:if>
-    <c:choose>
-        <%-- Always take the first name. If not present then take the displayName --%>
-        <c:when test="${not empty databaseObject.name}">
-            <c:out value="${databaseObject.name[0]}" />
-        </c:when>
-        <c:otherwise>
-            <c:out value="${databaseObject.displayName}" />
-        </c:otherwise>
-    </c:choose>
+    <c:out value="${title}" />
+    <%--<c:choose>--%>
+        <%--&lt;%&ndash; Always take the first name. If not present then take the displayName &ndash;%&gt;--%>
+        <%--<c:when test="${not empty databaseObject.name}">--%>
+            <%--<c:out value="${databaseObject.name[0]}" />--%>
+        <%--</c:when>--%>
+        <%--<c:otherwise>--%>
+            <%--<c:out value="${databaseObject.displayName}" />--%>
+        <%--</c:otherwise>--%>
+    <%--</c:choose>--%>
 </h3>
 
 <%--
