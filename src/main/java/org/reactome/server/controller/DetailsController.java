@@ -56,7 +56,6 @@ class DetailsController {
     private static final String TITLE = "title";
 
     private static final int OFFSET = 55;
-//    private final Set<String> ehlds = new HashSet<>();
     private GeneralService generalService;
     private AdvancedDatabaseObjectService advancedDatabaseObjectService;
     private InteractionsService interactionsService;
@@ -64,20 +63,6 @@ class DetailsController {
     private SchemaNode classBrowserCache;
     private IconLibraryController iconsController;
 
-
-//    /**
-//     * These resources are the same all the time.
-//     * In order to speed up the query result and less memory usage, I decided to keep the resource out of the query
-//     * and keep a cache with them. Thus we avoid having the same information for all results.
-//     */
-//    @Autowired
-//    public DetailsController(@Value("${svg.summary.file}") String svgSummaryFile) {
-//        try {
-//            ehlds.addAll(IOUtils.readLines(new FileInputStream(svgSummaryFile), Charset.defaultCharset()));
-//        } catch (IOException e) {
-//            errorLogger.error("EHLD summary file cannot be loaded: " + e.getMessage(), e);
-//        }
-//    }
 
     /**
      * * Shows detailed information of an entry
@@ -258,7 +243,6 @@ class DetailsController {
         return null;
     }
 
-    @SuppressWarnings("unchecked")
     private Map<String, Collection<Event>> getSortedOrthologousEvent(DatabaseObject databaseObject) {
         Map<String, Collection<Event>> ret = new HashMap<>();
         if (databaseObject instanceof Event) {
@@ -281,7 +265,6 @@ class DetailsController {
         return ret;
     }
 
-    @SuppressWarnings("unchecked")
     private Map<String, List<PhysicalEntity>> getSortedInferredTo(DatabaseObject databaseObject) {
         /*
          * Sorting inferredTo requires:
