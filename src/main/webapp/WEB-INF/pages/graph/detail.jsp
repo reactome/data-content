@@ -59,19 +59,28 @@
 
                     <div>
                         <div class="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-12 padding0 text-center">
-                            <div class="text-center margin0 top" style="min-height: 300px;">
-                                <a href="/PathwayBrowser/#/${databaseObject.stId}">
-                                    <img src="${previewURL}?title=false" alt="${databaseObject.displayName}" title="Open '${databaseObject.displayName}' in the Pathway Browser" class="diagram-rxn-preview">
-                                </a>
-                            </div>
-                            <div class="text-center margin0 bottom">
-                                <span style="font-size: smaller">
-                                    Click the image above or <a href="/PathwayBrowser/#/${databaseObject.stId}">here</a> to open this ${fn:toLowerCase(fn:replace(databaseObject.className, "TopLevel", ""))} in the Pathway Browser
-                                    <c:if test="${databaseObject.className == 'Reaction'}">
-                                        <br/><i class="fa fa-info-circle" style="color: #2F9EC2; font-size: 15px;"></i>The layout of this reaction may differ from that in the pathway view due to the constraints in pathway layout
-                                    </c:if>
-                                </span>
-                            </div>
+                            <c:choose>
+                                <c:when test="${empty topLevelNodes}">
+                                    <div class="text-center margin0 top" style="min-height: 300px;">
+                                        <img src="${previewURL}?title=false" alt="${databaseObject.displayName}" title="'${databaseObject.displayName}' is an orphan event and cannot be opened in the Pathway Browser" class="diagram-rxn-preview">
+                                    </div>
+                                </c:when>
+                                <c:otherwise>
+                                    <div class="text-center margin0 top" style="min-height: 300px;">
+                                        <a href="/PathwayBrowser/#/${databaseObject.stId}">
+                                            <img src="${previewURL}?title=false" alt="${databaseObject.displayName}" title="Open '${databaseObject.displayName}' in the Pathway Browser" class="diagram-rxn-preview">
+                                        </a>
+                                    </div>
+                                    <div class="text-center margin0 bottom">
+                                        <span style="font-size: smaller">
+                                            Click the image above or <a href="/PathwayBrowser/#/${databaseObject.stId}">here</a> to open this ${fn:toLowerCase(fn:replace(databaseObject.className, "TopLevel", ""))} in the Pathway Browser
+                                            <c:if test="${databaseObject.className == 'Reaction'}">
+                                                <br/><i class="fa fa-info-circle" style="color: #2F9EC2; font-size: 15px;"></i>The layout of this reaction may differ from that in the pathway view due to the constraints in pathway layout
+                                            </c:if>
+                                        </span>
+                                    </div>
+                                </c:otherwise>
+                            </c:choose>
                         </div>
                     </div>
                 </c:if>
