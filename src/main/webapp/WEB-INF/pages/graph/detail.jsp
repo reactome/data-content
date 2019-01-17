@@ -99,10 +99,6 @@
 
         <c:import url="generalAttributes.jsp"/>
 
-        <c:if test="${clazz == 'Regulation'}">
-            <c:import url="regulationDetails.jsp"/>
-        </c:if>
-
         <%--For those that ARE in Reactome, for those that ARE NOT in Reactome, check graph/interactors.jsp--%>
         <c:if test="${not empty interactions}">
             <c:import url="interactionDetails.jsp"/>

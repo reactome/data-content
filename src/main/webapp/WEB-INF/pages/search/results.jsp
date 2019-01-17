@@ -121,14 +121,6 @@
                                         <div class="favth-col-lg-6 favth-col-md-12 favth-col-sm-12 favth-col-xs-12"><strong>Primary external reference:</strong> ${entry.databaseName}: <a href="${entry.referenceURL}"  target="_blank"><c:if test="${not empty entry.referenceName}">${entry.referenceName}: </c:if>${entry.referenceIdentifier}</a></div>
                                     </c:if>
 
-                                    <%-- REGULATION --%>
-                                    <c:if test="${not empty entry.regulator}">
-                                        <div class="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-12"><strong>Regulator:</strong> <a href="./detail/${entry.regulatorId}" class="" title="Show Details" >${entry.regulator}</a></div>
-                                    </c:if>
-                                    <c:if test="${not empty entry.regulatedEntity}">
-                                        <div class="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-12"><strong>Regulated entity:</strong> <a href="./detail/${entry.regulatedEntityId}" class="" title="Show Details" >${entry.regulatedEntity}</a></div>
-                                    </c:if>
-
                                     <%-- PERSON --%>
                                     <c:if test="${entry.exactType == 'Person'}">
                                         <div class="favth-col-lg-6 favth-col-md-12 favth-col-sm-12 favth-col-xs-12">

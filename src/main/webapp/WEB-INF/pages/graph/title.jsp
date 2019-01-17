@@ -67,69 +67,67 @@
             </div>
         </c:if>
 
-        <c:if test="${clazz != 'Regulation'}">
-            <c:if test="${not empty databaseObject.speciesName}">
-                <div class="details-label favth-col-lg-2 favth-col-md-3 favth-col-sm-3 favth-col-xs-12">
-                    <span>Species</span>
-                </div>
-                <div class="details-field favth-col-lg-10 favth-col-md-9 favth-col-sm-9 favth-col-xs-12">
-                    <span>${databaseObject.speciesName}</span>
-                </div>
-            </c:if>
-            <c:if test="${not empty relatedSpecies}">
-                <div class="details-label favth-col-lg-2 favth-col-md-3 favth-col-sm-3 favth-col-xs-12">
-                    <span>Related Species</span>
-                </div>
-                <div class="details-field favth-col-lg-10 favth-col-md-9 favth-col-sm-9 favth-col-xs-12">
-                    <c:forEach var="relatedSpecies" items="${relatedSpecies}" varStatus="loop">
-                        <span>${relatedSpecies.displayName}<c:if test="${not loop.last}">, </c:if></span>
-                    </c:forEach>
-                </div>
-            </c:if>
-            <c:if test="${not empty databaseObject.compartment}">
-                <div class="details-label favth-col-lg-2 favth-col-md-3 favth-col-sm-3 favth-col-xs-12">
-                    <span>Compartment</span>
-                </div>
-                <div class="details-field favth-col-lg-10 favth-col-md-9 favth-col-sm-9 favth-col-xs-12">
-                    <c:forEach var="compartment" items="${databaseObject.compartment}" varStatus="loop">
-                        <span><a href="${compartment.url}" target="_blank"  title="Show ${compartment.name}">${compartment.name}</a><c:if test="${not loop.last}">, </c:if></span>
-                    </c:forEach>
-                </div>
-            </c:if>
+        <c:if test="${not empty databaseObject.speciesName}">
+            <div class="details-label favth-col-lg-2 favth-col-md-3 favth-col-sm-3 favth-col-xs-12">
+                <span>Species</span>
+            </div>
+            <div class="details-field favth-col-lg-10 favth-col-md-9 favth-col-sm-9 favth-col-xs-12">
+                <span>${databaseObject.speciesName}</span>
+            </div>
+        </c:if>
+        <c:if test="${not empty relatedSpecies}">
+            <div class="details-label favth-col-lg-2 favth-col-md-3 favth-col-sm-3 favth-col-xs-12">
+                <span>Related Species</span>
+            </div>
+            <div class="details-field favth-col-lg-10 favth-col-md-9 favth-col-sm-9 favth-col-xs-12">
+                <c:forEach var="relatedSpecies" items="${relatedSpecies}" varStatus="loop">
+                    <span>${relatedSpecies.displayName}<c:if test="${not loop.last}">, </c:if></span>
+                </c:forEach>
+            </div>
+        </c:if>
+        <c:if test="${not empty databaseObject.compartment}">
+            <div class="details-label favth-col-lg-2 favth-col-md-3 favth-col-sm-3 favth-col-xs-12">
+                <span>Compartment</span>
+            </div>
+            <div class="details-field favth-col-lg-10 favth-col-md-9 favth-col-sm-9 favth-col-xs-12">
+                <c:forEach var="compartment" items="${databaseObject.compartment}" varStatus="loop">
+                    <span><a href="${compartment.url}" target="_blank"  title="Show ${compartment.name}">${compartment.name}</a><c:if test="${not loop.last}">, </c:if></span>
+                </c:forEach>
+            </div>
+        </c:if>
 
-            <c:if test="${not empty databaseObject.name && fn:length(databaseObject.name) gt 1}">
+        <c:if test="${not empty databaseObject.name && fn:length(databaseObject.name) gt 1}">
+            <div class="details-label favth-col-lg-2 favth-col-md-3 favth-col-sm-3 favth-col-xs-12">
+                <span>Synonyms</span>
+            </div>
+            <div class="details-field favth-col-lg-10 favth-col-md-9 favth-col-sm-9 favth-col-xs-12">
+                <c:forEach var="synonym" items="${databaseObject.name}" varStatus="loop">
+                    <c:if test="${!loop.first}">${synonym}</c:if><c:if test="${!loop.first && !loop.last}">, </c:if>
+                </c:forEach>
+            </div>
+        </c:if>
+
+        <c:if test="${clazz == 'PhysicalEntity'}">
+            <c:if test="${not empty databaseObject.goCellularComponent}">
                 <div class="details-label favth-col-lg-2 favth-col-md-3 favth-col-sm-3 favth-col-xs-12">
-                    <span>Synonyms</span>
+                    <span>GO Cellular Component</span>
                 </div>
                 <div class="details-field favth-col-lg-10 favth-col-md-9 favth-col-sm-9 favth-col-xs-12">
-                    <c:forEach var="synonym" items="${databaseObject.name}" varStatus="loop">
-                        <c:if test="${!loop.first}">${synonym}</c:if><c:if test="${!loop.first && !loop.last}">, </c:if>
-                    </c:forEach>
+                    <a href="${databaseObject.goCellularComponent.url}" class="" title="show ${databaseObject.goCellularComponent.name}" >${databaseObject.goCellularComponent.name}</a> (${databaseObject.goCellularComponent.accession})
                 </div>
             </c:if>
+        </c:if>
 
-            <c:if test="${clazz == 'PhysicalEntity'}">
-                <c:if test="${not empty databaseObject.goCellularComponent}">
-                    <div class="details-label favth-col-lg-2 favth-col-md-3 favth-col-sm-3 favth-col-xs-12">
-                        <span>GO Cellular Component</span>
-                    </div>
-                    <div class="details-field favth-col-lg-10 favth-col-md-9 favth-col-sm-9 favth-col-xs-12">
-                        <a href="${databaseObject.goCellularComponent.url}" class="" title="show ${databaseObject.goCellularComponent.name}" >${databaseObject.goCellularComponent.name}</a> (${databaseObject.goCellularComponent.accession})
-                    </div>
-                </c:if>
-            </c:if>
-
-            <%-- This is visible on phones only, if you change something here, consider changing also #hidden-xs --%>
-            <c:if test="${hasIcon}">
-                <div class="details-label favth-col-lg-2 favth-col-md-3 favth-col-sm-3 favth-col-xs-12 favth-visible-xs">
-                    <a href="../detail/${icon}" title="Open icon detail">Icon</a>
-                </div>
-                <div class="details-field favth-col-lg-10 favth-col-md-9 favth-col-sm-9 favth-col-xs-12 favth-visible-xs">
-                    <a href="../detail/${icon}" title="Open icon detail">
-                        <img style="width: 100px; height: 50px;" src="/Icon/${icon}.svg" alt="${databaseObject.displayName} icon" />
-                    </a>
-                </div>
-            </c:if>
+        <%-- This is visible on phones only, if you change something here, consider changing also #hidden-xs --%>
+        <c:if test="${hasIcon}">
+            <div class="details-label favth-col-lg-2 favth-col-md-3 favth-col-sm-3 favth-col-xs-12 favth-visible-xs">
+                <a href="../detail/${icon}" title="Open icon detail">Icon</a>
+            </div>
+            <div class="details-field favth-col-lg-10 favth-col-md-9 favth-col-sm-9 favth-col-xs-12 favth-visible-xs">
+                <a href="../detail/${icon}" title="Open icon detail">
+                    <img style="width: 100px; height: 50px;" src="/Icon/${icon}.svg" alt="${databaseObject.displayName} icon" />
+                </a>
+            </div>
         </c:if>
     </div>
     <c:if test="${hasIcon}"> <%-- #hidden-xs --%>

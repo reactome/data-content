@@ -248,8 +248,6 @@ class DetailsController {
                 return Event.class.getSimpleName();
             } else if (databaseObject instanceof PhysicalEntity) {
                 return PhysicalEntity.class.getSimpleName();
-            } else if (databaseObject instanceof Regulation) {
-                return Regulation.class.getSimpleName();
             }
         }
         return null;

@@ -2,7 +2,10 @@ package org.reactome.server.controller;
 
 import org.apache.commons.lang.StringUtils;
 import org.reactome.server.exception.ViewException;
-import org.reactome.server.graph.domain.model.*;
+import org.reactome.server.graph.domain.model.DatabaseObject;
+import org.reactome.server.graph.domain.model.Event;
+import org.reactome.server.graph.domain.model.PhysicalEntity;
+import org.reactome.server.graph.domain.model.SimpleEntity;
 import org.reactome.server.graph.service.*;
 import org.reactome.server.graph.service.helper.SchemaNode;
 import org.reactome.server.graph.service.util.DatabaseObjectUtils;
@@ -63,7 +66,7 @@ class SchemaController {
             model.addAttribute("map", DatabaseObjectUtils.getAllFields(databaseObject));
             model.addAttribute("referrals", advancedLinkageService.getReferralsTo(id));
 
-            if (databaseObject instanceof PhysicalEntity || databaseObject instanceof Event || databaseObject instanceof Regulation) {
+            if (databaseObject instanceof PhysicalEntity || databaseObject instanceof Event) {
                 model.addAttribute("linkToDetailsPage", true);
                 model.addAttribute("id", StringUtils.isNotEmpty(databaseObject.getStId()) ? databaseObject.getStId() : databaseObject.getDbId());
             }
