@@ -70,13 +70,33 @@
         <url-pattern>/content/*</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>IconLibrary</servlet-name>
+        <servlet-class>org.reactome.server.utils.proxy.ProxyServlet</servlet-class>
+        <init-param>
+            <param-name>proxyHost</param-name>
+            <param-value>dev.reactome.org</param-value>
+        </init-param>
+        <init-param>
+            <param-name>proxyPort</param-name>
+            <param-value>80</param-value>
+        </init-param>
+        <init-param>
+            <param-name>proxyPath</param-name>
+            <param-value>/icon</param-value>
+        </init-param>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>IconLibrary</servlet-name>
+        <url-pattern>/icon/*</url-pattern>
+    </servlet-mapping>
 
     <servlet>
         <servlet-name>Plugins</servlet-name>
         <servlet-class>org.reactome.server.utils.proxy.ProxyServlet</servlet-class>
         <init-param>
             <param-name>proxyHost</param-name>
-            <param-value>reactomedev.oicr.on.ca</param-value>
+            <param-value>dev.reactome.org</param-value>
         </init-param>
         <init-param>
             <param-name>proxyPort</param-name>
@@ -97,7 +117,7 @@
         <servlet-class>org.reactome.server.utils.proxy.ProxyServlet</servlet-class>
         <init-param>
             <param-name>proxyHost</param-name>
-            <param-value>reactomedev.oicr.on.ca</param-value>
+            <param-value>dev.reactome.org</param-value>
         </init-param>
         <init-param>
             <param-name>proxyPort</param-name>
@@ -119,7 +139,7 @@
         <servlet-class>org.reactome.server.utils.proxy.ProxyServlet</servlet-class>
         <init-param>
             <param-name>proxyHost</param-name>
-            <param-value>reactomedev.oicr.on.ca</param-value>
+            <param-value>dev.reactome.org</param-value>
         </init-param>
         <init-param>
             <param-name>proxyPort</param-name>
@@ -140,7 +160,7 @@
         <servlet-class>org.reactome.server.utils.proxy.ProxyServlet</servlet-class>
         <init-param>
             <param-name>proxyHost</param-name>
-            <param-value>reactomedev.oicr.on.ca</param-value>
+            <param-value>dev.reactome.org</param-value>
         </init-param>
         <init-param>
             <param-name>proxyPort</param-name>
@@ -162,7 +182,7 @@
         <servlet-class>org.reactome.server.utils.proxy.ProxyServlet</servlet-class>
         <init-param>
             <param-name>proxyHost</param-name>
-            <param-value>reactomedev.oicr.on.ca</param-value>
+            <param-value>dev.reactome.org</param-value>
         </init-param>
         <init-param>
             <param-name>proxyPort</param-name>
@@ -178,6 +198,27 @@
         <url-pattern>/PathwayBrowser/*</url-pattern>
     </servlet-mapping>
 
+    <!-- ContentService PROXY Configuration (ONLY USED IN DEV MODE)-->
+    <servlet>
+        <servlet-name>ContentServiceProxy</servlet-name>
+        <servlet-class>org.reactome.server.utils.proxy.ProxyServlet</servlet-class>
+        <init-param>
+            <param-name>proxyHost</param-name>
+            <param-value>dev.reactome.org</param-value>
+        </init-param>
+        <init-param>
+            <param-name>proxyPort</param-name>
+            <param-value>80</param-value>
+        </init-param>
+        <init-param>
+            <param-name>proxyPath</param-name>
+            <param-value>/ContentService/</param-value>
+        </init-param>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ContentServiceProxy</servlet-name>
+        <url-pattern>/ContentService/*</url-pattern>
+    </servlet-mapping>
 
      <!--RESTFul WS PROXY Configuration (ONLY USED IN DEV MODE)-->
     <servlet>
@@ -185,7 +226,7 @@
         <servlet-class>org.reactome.server.utils.proxy.ProxyServlet</servlet-class>
         <init-param>
             <param-name>proxyHost</param-name>
-            <param-value>reactomedev.oicr.on.ca</param-value>
+            <param-value>dev.reactome.org</param-value>
         </init-param>
         <init-param>
             <param-name>proxyPort</param-name>
@@ -207,7 +248,7 @@
         <servlet-class>org.reactome.server.utils.proxy.ProxyServlet</servlet-class>
         <init-param>
             <param-name>proxyHost</param-name>
-            <param-value>reactomedev.oicr.on.ca</param-value>
+            <param-value>dev.reactome.org</param-value>
         </init-param>
         <init-param>
             <param-name>proxyPort</param-name>

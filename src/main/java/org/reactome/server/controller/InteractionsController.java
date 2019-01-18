@@ -70,7 +70,7 @@ public class InteractionsController {
         String query = "" +
                 "MATCH (s:ReferenceEntity)<-[:interactor]-(it:Interaction), " +
                 "      (it)-[ir:interactor]->(in:ReferenceEntity)<-[re:referenceEntity]-(pe:PhysicalEntity), " +
-                "      (:ReactionLikeEvent)-[:input|output|catalystActivity|entityFunctionalStatus|physicalEntity|regulatedBy|regulator*]->(pe) " +
+                "      (:ReactionLikeEvent)-[:input|output|catalystActivity|physicalEntity|entityFunctionalStatus|diseaseEntity|regulatedBy|regulator*]->(pe) " +
                 "WHERE s.variantIdentifier = {accession} OR (s.variantIdentifier IS NULL AND s.identifier = {accession}) " +
 //                "      AND NOT ()-[:referenceEntity]->(s) " +
                 "RETURN DISTINCT it.score AS score, in.identifier AS accession, in.url AS accessionURL, " +

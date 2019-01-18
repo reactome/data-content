@@ -2,7 +2,6 @@ package org.reactome.server.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.reactome.server.exception.ViewException;
 import org.reactome.server.graph.domain.model.*;
@@ -17,12 +16,12 @@ import org.reactome.server.graph.service.helper.RelationshipDirection;
 import org.reactome.server.graph.service.helper.SchemaNode;
 import org.reactome.server.graph.service.util.DatabaseObjectUtils;
 import org.reactome.server.graph.service.util.PathwayBrowserLocationsUtils;
+import org.reactome.server.util.IconPhysicalEntityCache;
 import org.reactome.server.util.MapSet;
 import org.reactome.server.util.UAgentInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,10 +31,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
-import java.nio.charset.Charset;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -53,31 +49,20 @@ class DetailsController {
     private static final Logger infoLogger = LoggerFactory.getLogger("infoLogger");
     private static final Logger errorLogger = LoggerFactory.getLogger("errorLogger");
 
+    // These constants are used in the details page -> General. Extensions are replaced accordingly
+    private static final String EHLD_URL = "/download/current/ehld/_stId_._ext_";
+    private static final String PWY_URL = "/ContentService/exporter/diagram/_stId_._ext_";
+    private static final String RXN_URL = "/ContentService/exporter/reaction/_stId_._ext_";
     private static final String TITLE = "title";
-    private static final String INTERACTOR_RESOURCES_MAP = "interactorResourceMap";
-    private static final String EVIDENCES_URL_MAP = "evidencesUrlMap";
 
     private static final int OFFSET = 55;
-    private final Set<String> ehlds = new HashSet<>();
     private GeneralService generalService;
     private AdvancedDatabaseObjectService advancedDatabaseObjectService;
     private InteractionsService interactionsService;
     private DetailsService detailsService;
     private SchemaNode classBrowserCache;
+    private IconLibraryController iconsController;
 
-    /**
-     * These resources are the same all the time.
-     * In order to speed up the query result and less memory usage, I decided to keep the resource out of the query
-     * and keep a cache with them. Thus we avoid having the same information for all results.
-     */
-    @Autowired
-    public DetailsController(@Value("${svg.summary.file}") String svgSummaryFile) {
-        try {
-            ehlds.addAll(IOUtils.readLines(new FileInputStream(svgSummaryFile), Charset.defaultCharset()));
-        } catch (IOException e) {
-            errorLogger.error("EHLD summary file cannot be loaded: " + e.getMessage(), e);
-        }
-    }
 
     /**
      * * Shows detailed information of an entry
@@ -95,6 +80,8 @@ class DetailsController {
                          HttpServletResponse response) {
 
         try {
+            if (id.startsWith("R-ICO-")) return iconsController.iconDetails(id, model, response);
+
             UAgentInfo u = new UAgentInfo(request.getHeader("User-Agent"), null);
 
             boolean interactorPage = StringUtils.isNotEmpty(interactor);
@@ -116,7 +103,10 @@ class DetailsController {
                 } else {
                     Set<PathwayBrowserNode> topLevelNodes = contentDetails.getNodes();
 
-                    model.addAttribute(TITLE, databaseObject.getDisplayName());
+                    Collection<String> names = databaseObject.fetchMultiValue("name");
+                    String title = names == null || names.isEmpty() ? databaseObject.getDisplayName() : names.iterator().next();
+
+                    model.addAttribute(TITLE, title);
 
                     model.addAttribute("databaseObject", databaseObject);
                     model.addAttribute("clazz", superClass);
@@ -126,7 +116,6 @@ class DetailsController {
                     model.addAttribute("otherFormsOfThisMolecule", contentDetails.getOtherFormsOfThisMolecule());
                     model.addAttribute("orthologousEvents", getSortedOrthologousEvent(databaseObject));
                     model.addAttribute("inferredTo", getSortedInferredTo(databaseObject));
-                    model.addAttribute("hasEHLD", ehlds.contains(databaseObject.getStId()));
 
                     //RegulatedBy moved to RLE without distinction in the types (now it needs to be done here)
                     List<NegativeRegulation> negativeRegulations = new ArrayList<>();
@@ -157,20 +146,31 @@ class DetailsController {
                         List<Interaction> interactions = interactionsService.getInteractions(ewas.getReferenceEntity().getIdentifier());
                         model.addAttribute("interactions", interactions);
                         crossReferences.addAll(getCrossReference(ewas.getReferenceEntity()));
-                        if (ewas.getReferenceEntity() instanceof ReferenceSequence) {
                             model.addAttribute("isReferenceSequence", true);
-                        }
                     }
                     model.addAttribute("crossReferences", groupCrossReferences(crossReferences));
 
+                    if (databaseObject instanceof ReactionLikeEvent) {
+                        ReactionLikeEvent rle = (ReactionLikeEvent)databaseObject;
+                        model.addAttribute("rleCategory", rle.getCategory());
+                    }
+
                     // extras
-                    model.addAttribute("flg", getReferenceEntityIdentifier(databaseObject));
+                    String referenceIdentifier = getReferenceEntityIdentifier(databaseObject);
+                    model.addAttribute("flg", referenceIdentifier);
                     model.addAttribute("relatedSpecies", getRelatedSpecies(databaseObject));
                     model.addAttribute("jsonLd", eventDiscovery(contentDetails.getDatabaseObject()));
+                    model.addAttribute("icon", IconPhysicalEntityCache.getIconsMapping().get(referenceIdentifier));
+
+                    // sets a preview url for reactions and pathways (differentiating EHLD from "normal" pathways)
+                    setPreviewURL(databaseObject, model);
+                    boolean hasEHLD = databaseObject instanceof Pathway ? ((Pathway) databaseObject).getHasEHLD() : false;
+                    model.addAttribute("isEHLD", hasEHLD);
 
                     // responsive design, avoid loading same content twice on screen
                     // instead hiding using CSS, java will detect and the content won't be processed.
                     model.addAttribute("isMobile", u.detectMobileQuick());
+
 
                     infoLogger.info("DatabaseObject for id: {} was found", id);
                     return "graph/detail";
@@ -189,12 +189,25 @@ class DetailsController {
             model.addAttribute("isReactionLikeEvent", true);
         } else if (databaseObject instanceof EntitySet) {
             model.addAttribute("isEntitySet", true);
-            if (databaseObject instanceof OpenSet) {
-                model.addAttribute("hasReferenceEntity", true);
-            }
         } else if (databaseObject instanceof EntityWithAccessionedSequence || databaseObject instanceof SimpleEntity) {
             model.addAttribute("hasReferenceEntity", true);
         }
+    }
+
+    private void setPreviewURL(DatabaseObject databaseObject, ModelMap model){
+        String previewURL = null;
+        if (databaseObject instanceof ReactionLikeEvent) {
+            previewURL = RXN_URL;
+            model.addAttribute("downloadURL", RXN_URL);
+        } else if (databaseObject instanceof Pathway) {
+            Pathway pathway = (Pathway) databaseObject;
+            previewURL = pathway.getHasEHLD() ? EHLD_URL : PWY_URL;
+            model.addAttribute("downloadURL", PWY_URL);
+        }
+        if (previewURL != null) {
+            previewURL = previewURL.replace("_stId_", databaseObject.getStId()).replace("_ext_", "svg");
+        }
+        model.addAttribute("previewURL", previewURL);
     }
 
     private Map<String, Set<DatabaseIdentifier>> groupCrossReferences(List<DatabaseIdentifier> databaseIdentifiers) {
@@ -230,7 +243,6 @@ class DetailsController {
         return null;
     }
 
-    @SuppressWarnings("unchecked")
     private Map<String, Collection<Event>> getSortedOrthologousEvent(DatabaseObject databaseObject) {
         Map<String, Collection<Event>> ret = new HashMap<>();
         if (databaseObject instanceof Event) {
@@ -253,7 +265,6 @@ class DetailsController {
         return ret;
     }
 
-    @SuppressWarnings("unchecked")
     private Map<String, List<PhysicalEntity>> getSortedInferredTo(DatabaseObject databaseObject) {
         /*
          * Sorting inferredTo requires:
@@ -342,7 +353,7 @@ class DetailsController {
 
     private String eventDiscovery(DatabaseObject databaseObject) {
         if (databaseObject instanceof Event) {
-            SchemaDataSet aux = new SchemaDataSet((Event) databaseObject, generalService.getDBVersion());
+            SchemaDataSet aux = new SchemaDataSet((Event) databaseObject, generalService.getDBInfo().getVersion());
             try {
                 ObjectMapper objectMapper = new ObjectMapper();
                 return objectMapper.writeValueAsString(aux);
@@ -371,5 +382,10 @@ class DetailsController {
     @Autowired
     public void setInteractionsService(InteractionsService interactionsService) {
         this.interactionsService = interactionsService;
+    }
+
+    @Autowired
+    public void setIconsController(IconLibraryController iconsController) {
+        this.iconsController = iconsController;
     }
 }

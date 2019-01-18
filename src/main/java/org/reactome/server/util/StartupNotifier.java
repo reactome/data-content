@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.net.InetAddress;
+import java.nio.charset.Charset;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -22,17 +23,24 @@ public class StartupNotifier extends Thread {
     private static Logger logger = LoggerFactory.getLogger("threadLogger");
 
     private static final String PROJECT = "DataContent";
-    private static final String FROM = "noreply@reactome.org";
     private static final String SENDER_NAME = "Tomcat";
 
     private MailService sms;
+    private String from;
     private String to;
 
     @Autowired
-    public StartupNotifier(MailService sms, @Value("${mail.to}") String to, @Value("${startup.notification}") String notify) {
+    public StartupNotifier(MailService sms,
+                            @Value("${startup.notification.from}")
+                           String from,
+                            @Value("${startup.notification.to}")
+                           String to,
+                            @Value("${startup.notification}")
+                           String notify) {
         super("DC-StartupNotifier");
-        if(Boolean.valueOf(notify) && to != null) {
+        if (Boolean.valueOf(notify) && to != null) {
             this.sms = sms;
+            this.from = from;
             this.to = to;
             start();
         }
@@ -49,7 +57,7 @@ public class StartupNotifier extends Thread {
             body += "\n\n List of who is logged in: \n";
             body += getWho();
 
-            sms.send(SENDER_NAME, FROM, to, subject, body);
+            sms.start(SENDER_NAME, from, to, subject, body);
 
             logger.debug("Sent!");
         } catch (Exception e) {
@@ -66,6 +74,6 @@ public class StartupNotifier extends Thread {
     private String getWho() throws IOException, InterruptedException {
         ProcessBuilder pb = new ProcessBuilder("who");
         Process process = pb.start();
-        return process.waitFor() == 0 ? IOUtils.toString(process.getInputStream()) : "<<Couldn't execute 'who' command>>";
+        return process.waitFor() == 0 ? IOUtils.toString(process.getInputStream(), Charset.defaultCharset()) : "<<Couldn't execute 'who' command>>";
     }
 }

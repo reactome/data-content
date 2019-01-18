@@ -93,140 +93,146 @@
     background-position: -291px -5px;
 }
 
-.sprite-Interactor {
+.sprite-Icon {
     width: 16px;
     height: 16px;
     background-position: -317px -5px;
 }
 
-.sprite-NegativeRegulation {
+.sprite-Interactor {
     width: 16px;
     height: 16px;
     background-position: -343px -5px;
 }
 
-.sprite-OpenSet {
+.sprite-NegativeRegulation {
     width: 16px;
     height: 16px;
     background-position: -369px -5px;
 }
 
-.sprite-OtherEntity {
+.sprite-OpenSet {
     width: 16px;
     height: 16px;
     background-position: -395px -5px;
 }
 
-.sprite-Pathway {
+.sprite-OtherEntity {
     width: 16px;
     height: 16px;
     background-position: -421px -5px;
 }
 
-.sprite-Person {
+.sprite-Pathway {
     width: 16px;
     height: 16px;
     background-position: -447px -5px;
 }
 
-.sprite-Polymer {
+.sprite-Person {
     width: 16px;
     height: 16px;
     background-position: -473px -5px;
 }
 
-.sprite-Polymerisation {
+.sprite-Polymer {
     width: 16px;
     height: 16px;
     background-position: -499px -5px;
 }
 
-.sprite-PositiveRegulation {
+.sprite-Polymerisation {
     width: 16px;
     height: 16px;
     background-position: -525px -5px;
 }
 
-.sprite-ProteinDrug {
+.sprite-PositiveRegulation {
     width: 16px;
     height: 16px;
     background-position: -551px -5px;
 }
 
-.sprite-Reaction {
+.sprite-ProteinDrug {
     width: 16px;
     height: 16px;
     background-position: -577px -5px;
 }
 
-.sprite-ReferenceDNASequence {
+.sprite-Reaction {
     width: 16px;
     height: 16px;
     background-position: -603px -5px;
 }
 
-.sprite-ReferenceGeneProduct {
+.sprite-ReferenceDNASequence {
     width: 16px;
     height: 16px;
     background-position: -629px -5px;
 }
 
-.sprite-ReferenceGroup {
+.sprite-ReferenceGeneProduct {
     width: 16px;
     height: 16px;
     background-position: -655px -5px;
 }
 
-.sprite-ReferenceIsoform {
+.sprite-ReferenceGroup {
     width: 16px;
     height: 16px;
     background-position: -681px -5px;
 }
 
-.sprite-ReferenceMolecule {
+.sprite-ReferenceIsoform {
     width: 16px;
     height: 16px;
     background-position: -707px -5px;
 }
 
-.sprite-ReferenceRNASequence {
+.sprite-ReferenceMolecule {
     width: 16px;
     height: 16px;
     background-position: -733px -5px;
 }
 
-.sprite-Requirement {
+.sprite-ReferenceRNASequence {
     width: 16px;
     height: 16px;
     background-position: -759px -5px;
 }
 
-.sprite-SimpleEntity {
+.sprite-Requirement {
     width: 16px;
     height: 16px;
     background-position: -785px -5px;
 }
 
-.sprite-TopLevelPathway {
+.sprite-SimpleEntity {
     width: 16px;
     height: 16px;
     background-position: -811px -5px;
 }
 
+.sprite-TopLevelPathway {
+    width: 16px;
+    height: 16px;
+    background-position: -837px -5px;
+}
+
 .sprite-isDisease {
     width: 10px;
     height: 16px;
-    background-position: -837px -5px;
+    background-position: -863px -5px;
 }
 
 .sprite-minus {
     width: 20px;
     height: 20px;
-    background-position: -857px -5px;
+    background-position: -883px -5px;
 }
 
 .sprite-plus {
     width: 20px;
     height: 20px;
-    background-position: -887px -5px;
+    background-position: -913px -5px;
 }

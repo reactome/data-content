@@ -3,7 +3,7 @@
 <fieldset class="fieldset-details">
     <legend>Participants</legend>
 
-    <c:if test="${databaseObject.schemaClass == 'Pathway' || databaseObject.schemaClass == 'BlackBoxEvent' || databaseObject.schemaClass == 'TopLevelPathway'}">
+    <c:if test="${databaseObject.schemaClass == 'Pathway' || databaseObject.schemaClass == 'TopLevelPathway'}">
         <c:if test="${not empty databaseObject.hasEvent}">
 
             <div class="fieldset-pair-container">
@@ -168,16 +168,17 @@
 
 <c:if test="${not empty negativelyRegulatedBy || not empty positivelyRegulatedBy || not empty requirements}">
     <fieldset class="fieldset-details">
-        <legend>This entity is regulated by</legend>
+        <legend>This event is regulated</legend>
         <c:if test="${not empty negativelyRegulatedBy}">
             <div class="fieldset-pair-container">
                 <div class="favth-clearfix">
-                    <div class="favth-col-lg-2 favth-col-md-2 favth-col-sm-3 favth-col-xs-12 details-label">Negative Regulation</div>
+                    <div class="favth-col-lg-2 favth-col-md-2 favth-col-sm-3 favth-col-xs-12 details-label">Negatively by</div>
                     <div class="favth-col-lg-10 favth-col-md-10 favth-col-sm-9 favth-col-xs-12 details-field">
                         <ul class="list">
                             <c:forEach var="negativelyRegulatedBy" items="${negativelyRegulatedBy}">
                                 <li>
-                                    <a href="../detail/${negativelyRegulatedBy.stId}" class="" title="Show Details" >${negativelyRegulatedBy.displayName}</a>
+                                    <i class="sprite sprite-resize sprite-${negativelyRegulatedBy.regulator.schemaClass} sprite-position" title="${negativelyRegulatedBy.regulator.schemaClass}"></i>
+                                    <a href="../detail/${negativelyRegulatedBy.regulator.stId}" class="" title="Show Details" >${negativelyRegulatedBy.regulator.displayName}</a>
                                 </li>
                             </c:forEach>
                         </ul>
@@ -188,12 +189,13 @@
         <c:if test="${not empty positivelyRegulatedBy}">
             <div class="fieldset-pair-container">
                 <div class="favth-clearfix">
-                    <div class="favth-col-lg-2 favth-col-md-2 favth-col-sm-3 favth-col-xs-12 details-label">Positive Regulation</div>
+                    <div class="favth-col-lg-2 favth-col-md-2 favth-col-sm-3 favth-col-xs-12 details-label">Positively by</div>
                     <div class="favth-col-lg-10 favth-col-md-10 favth-col-sm-9 favth-col-xs-12 details-field">
                         <ul class="list">
                             <c:forEach var="positivelyRegulatedBy" items="${positivelyRegulatedBy}">
                                 <li>
-                                    <a href="../detail/${positivelyRegulatedBy.stId}" class="" title="Show Details" >${positivelyRegulatedBy.displayName}</a>
+                                    <i class="sprite sprite-resize sprite-${positivelyRegulatedBy.regulator.schemaClass} sprite-position" title="${positivelyRegulatedBy.regulator.schemaClass}"></i>
+                                    <a href="../detail/${positivelyRegulatedBy.regulator.stId}" class="" title="Show Details" >${positivelyRegulatedBy.regulator.displayName}</a>
                                 </li>
                             </c:forEach>
                         </ul>
@@ -217,6 +219,19 @@
                 </div>
             </div>
         </c:if>
+    </fieldset>
+</c:if>
+
+
+<c:if test="${isReactionLikeEvent && not empty databaseObject.normalReaction}">
+    <fieldset class="fieldset-details">
+        <legend>Normal reaction</legend>
+        <div class="wrap overflow">
+            <div class="favth-col-lg-6 favth-col-md-6 favth-col-sm-12 favth-col-xs-12 text-overflow">
+                <i class="sprite sprite-resize sprite-${databaseObject.normalReaction.schemaClass} sprite-position" title="${databaseObject.normalReaction.schemaClass}"></i>
+                <a href="../detail/${databaseObject.normalReaction.stId}" class="" title="${databaseObject.normalReaction.displayName} (${databaseObject.normalReaction.speciesName})" >${databaseObject.normalReaction.displayName} (${databaseObject.normalReaction.speciesName})</a>
+            </div>
+        </div>
     </fieldset>
 </c:if>
 

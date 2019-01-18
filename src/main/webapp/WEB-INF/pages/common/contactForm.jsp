@@ -56,7 +56,7 @@
         <div class="favth-col-sm-offset-2 favth-col-sm-10">
             <div class="checkbox">
                 <label>
-                    <input type="checkbox" id="sendEmailCopy" name="sendEmailCopy" checked> Send me a copy
+                    <input type="checkbox" id="sendEmailCopy" name="sendEmailCopy" disabled="disabled" checked> Send me a copy
                 </label>
             </div>
         </div>

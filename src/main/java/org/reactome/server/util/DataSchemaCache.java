@@ -25,26 +25,27 @@ public class DataSchemaCache {
 
     private static SchemaNode classBrowserCache = null;
 
-    @Autowired
     private GeneralService generalService;
 
     @PostConstruct
     public void queryPsicquicResources() {
-        (new Thread(){
-            @Override
-            public void run() {
-                try {
-                    if (classBrowserCache == null) {
-                        classBrowserCache = DatabaseObjectUtils.getGraphModelTree(generalService.getSchemaClassCounts());
-                    }
-                } catch (ClassNotFoundException e) {
-                    infoLogger.warn("Could not cache the Graph Model Tree which is used in the Data Schema. It will cache when the page starts.");
+        (new Thread(() -> {
+            try {
+                if (classBrowserCache == null) {
+                    classBrowserCache = DatabaseObjectUtils.getGraphModelTree(generalService.getSchemaClassCounts());
                 }
+            } catch (ClassNotFoundException e) {
+                infoLogger.warn("Could not cache the Graph Model Tree which is used in the Data Schema. It will cache when the page starts.");
             }
-        }).start();
+        })).start();
     }
 
     public static SchemaNode getClassBrowserCache() {
         return classBrowserCache;
+    }
+
+    @Autowired
+    public void setGeneralService(GeneralService generalService) {
+        this.generalService = generalService;
     }
 }
