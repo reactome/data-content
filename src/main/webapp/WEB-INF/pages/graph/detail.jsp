@@ -27,9 +27,8 @@
                                             <a href="/ReactomeRESTfulAPI/RESTfulWS/biopaxExporter/Level2/${databaseObject.dbId}">Level 2</a>
                                             <a href="/ReactomeRESTfulAPI/RESTfulWS/biopaxExporter/Level3/${databaseObject.dbId}">Level 3</a>
                                         </div>
-                                    </div>
-                                    <%-- UNCOMMENT TO EXPORT TO PDF --%>
-                                    <%--&nbsp;|&nbsp;<a href="/ContentService/exporter/diagram/${databaseObject.stId}.pdf" download="${databaseObject.stId}.pdf" title="Export diagram to PDF">PDF</a>--%>
+                                    </div>&nbsp;|&nbsp;
+                                    <a href="/ContentService/exporter/document/event/${databaseObject.stId}.pdf" download="${databaseObject.stId}.pdf" title="Export diagram to PDF">PDF</a>
                                 </div>
                             </div>
                         </div>
