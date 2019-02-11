@@ -7,7 +7,7 @@
 <head>
     <meta name="robots" content="noindex, nofollow" />
     <meta name="description" content="Reactome is pathway database which provides intuitive bioinformatics tools for the visualisation, interpretation and analysis of pathway knowledge." />
-    <workTitle>Reactome | Authenticating ...</workTitle>
+    <title>Reactome | Authenticating ...</title>
     <link href="/templates/favourite/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon" />
     <script src="/media/jui/js/jquery.min.js?97ad68e2b82f1d3065eec557567289fb" type="text/javascript"></script>
     <script src="/media/jui/js/jquery-noconflict.js?97ad68e2b82f1d3065eec557567289fb" type="text/javascript"></script>
@@ -157,9 +157,9 @@
     <script type=text/javascript>
         jQuery(function(){
             jQuery.ajax({
-                url: "http://localhost:8484/orcid/token?code=${code}",
+                url: "/content/orcid/token?code=${code}",
                 type: "GET",
-                success: function(response){
+                success: function(){
                     setTimeout(
                         function(){
                             window.opener.location.reload(true);

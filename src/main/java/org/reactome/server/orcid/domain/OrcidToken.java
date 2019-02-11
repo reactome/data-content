@@ -97,4 +97,19 @@ public class OrcidToken implements Serializable {
     public void setErrorDescription(String errorDescription) {
         this.errorDescription = errorDescription;
     }
+
+    @Override
+    public String toString() {
+        return "OrcidToken{" +
+                "accessToken='********'" +
+                ", tokenType='" + tokenType + '\'' +
+                ", refreshToken='" + refreshToken + '\'' +
+                ", expiresIn='" + expiresIn + '\'' +
+                ", scope='" + scope + '\'' +
+                ", name='" + name + '\'' +
+                ", orcid='" + orcid + '\'' +
+                ", error='" + error + '\'' +
+                ", errorDescription='" + errorDescription + '\'' +
+                '}';
+    }
 }

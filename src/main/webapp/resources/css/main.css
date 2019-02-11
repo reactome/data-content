@@ -620,12 +620,13 @@ span.secondary-identifiers {
 }
 
 /* ORCID Button */
-button[id^="connect-orcid-button"]{
+button[id^="connect-orcid-button"],
+button[id^="claim-your-work"] {
     border: 1px solid #D3D3D3;
     padding: .3em;
     background-color: #fff;
     border-radius: 8px;
-    box-shadow: 1px 1px 3px #999;
+    /*box-shadow: 1px 1px 3px #999;*/
     cursor: pointer;
     color: #999;
     font-weight: bold;
@@ -634,12 +635,16 @@ button[id^="connect-orcid-button"]{
     vertical-align: middle;
 }
 
-button[id^="connect-orcid-button"]:hover{
+button[id^="connect-orcid-button"]:hover,
+button[id^="claim-your-work"]:hover{
     border: 1px solid #338caf;
     color: #338caf;
 }
 
-img[id^="orcid-id-icon"]{
+img[id^="orcid-id-icon"],
+img[id^="claim-your-work"]{
+    width: 20px;
+    height: 20px;
     display: block;
     margin: 0 .5em 0 0;
     padding: 0;

@@ -3,15 +3,12 @@ package org.reactome.server.orcid.domain;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeName;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 
 /**
  * POJO representing a Work in Orcid
- * It can be access in READ / WRITE operations
+ * It can be accessed in READ / WRITE operations
  *
  * @author Guilherme S Viteri <gviteri@ebi.ac.uk>
  */
@@ -73,22 +70,6 @@ public class Work implements Serializable {
     private String displayIndex;
 
     public Work() {
-    }
-
-    public static void main(String[] args) throws Exception {
-        Work a = new Work();
-        a.setJournalTitle(new Value("Journal Title"));
-        a.setType("DATA_SET");
-        a.setUrl(new Value("aaa"));
-        a.setWorkTitle(new WorkTitle(new Value("My Pathway")));
-        ExternalIds externalIds = new ExternalIds();
-        externalIds.setExternalId(new ArrayList<>());
-        externalIds.getExternalId().add(new ExternalId("doi", "10.11112222", "https://doi.org/10.11111122", "SELF"));
-        a.setExternalIds(externalIds);
-
-        ObjectMapper aa = new ObjectMapper();
-        aa.enable(SerializationFeature.INDENT_OUTPUT);
-        System.out.println(aa.writeValueAsString(a));
     }
 
     public Value getCreatedDate() {
@@ -187,6 +168,13 @@ public class Work implements Serializable {
         this.externalIds = externalIds;
     }
 
+    public void addExternalId(ExternalId externalId) {
+        if (externalIds == null) {
+            externalIds = new ExternalIds();
+        }
+        externalIds.getExternalId().add(externalId);
+    }
+
     public Value getUrl() {
         return url;
     }
@@ -206,6 +194,13 @@ public class Work implements Serializable {
 
     public void setContributors(WorkContributors contributors) {
         this.contributors = contributors;
+    }
+
+    public void addContributor(WorkContributor workContributor) {
+        if (contributors == null) {
+            contributors = new WorkContributors();
+        }
+        contributors.getContributors().add(workContributor);
     }
 
     public String getLanguageCode() {

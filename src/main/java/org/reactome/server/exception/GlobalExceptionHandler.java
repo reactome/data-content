@@ -1,5 +1,6 @@
 package org.reactome.server.exception;
 
+import org.reactome.server.orcid.exception.OrcidAuthorisationException;
 import org.reactome.server.search.exception.SolrSearcherException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,6 +48,12 @@ class GlobalExceptionHandler {
     @ExceptionHandler(IOException.class)
     public void handleIOException(IOException e) {
         errorLogger.error("IOException handler executed", e);  //returning 404 error code
+    }
+
+    @ResponseStatus(value = HttpStatus.UNAUTHORIZED, reason = "Not Authorised")
+    @ExceptionHandler(OrcidAuthorisationException.class)
+    public void handleWorkClaimException(OrcidAuthorisationException e) {
+        errorLogger.warn("User not authorized to claim work", e);
     }
 
     private ModelAndView buildModelView(HttpServletRequest request, Exception e) {

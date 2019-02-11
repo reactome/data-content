@@ -1,6 +1,7 @@
 package org.reactome.server.orcid.domain;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonRawValue;
 import org.apache.commons.lang.StringUtils;
 
 import java.time.LocalDate;
@@ -20,6 +21,18 @@ public class PublicationDate {
 
     @JsonProperty("year")
     private Year year;
+
+    @JsonProperty("media-type")
+    private String mediaType;
+
+    public PublicationDate() {
+    }
+
+    public PublicationDate(Year year, Month month, Day day) {
+        this.year = year;
+        this.month = month;
+        this.day = day;
+    }
 
     public PublicationDate (String dateTime) {
         if (StringUtils.isNotEmpty(dateTime)) {
@@ -55,11 +68,21 @@ public class PublicationDate {
         this.year = year;
     }
 
+    public String getMediaType() {
+        return mediaType;
+    }
+
+    public void setMediaType(String mediaType) {
+        this.mediaType = mediaType;
+    }
+
     private class Day {
         @JsonProperty("value")
+        @JsonRawValue
         private Value content;
+        public Day () {}
         Day(int day) {
-            this.content = new Value(StringUtils.leftPad(Integer.toString(day), 2, '0'));
+            this.content = new Value(Integer.toString(day));
         }
         public Value getContent() {
             return content;
@@ -71,16 +94,13 @@ public class PublicationDate {
 
     private class Month {
         @JsonProperty("value")
+        @JsonRawValue
         private Value content;
-
-        Month(int month) {
-            this.content = new Value(StringUtils.leftPad(Integer.toString(month), 2, '0'));
-        }
-
+        public Month () {}
+        Month(int month) { this.content = new Value(Integer.toString(month)); }
         public Value getContent() {
             return content;
         }
-
         public void setContent(Value content) {
             this.content = content;
         }
@@ -88,16 +108,15 @@ public class PublicationDate {
 
     private class Year {
         @JsonProperty("value")
+        @JsonRawValue
         private Value content;
-
+        public Year () {}
         Year(int year) {
             this.content = new Value(Integer.toString(year));
         }
-
         public Value getContent() {
             return content;
         }
-
         public void setContent(Value content) {
             this.content = content;
         }
