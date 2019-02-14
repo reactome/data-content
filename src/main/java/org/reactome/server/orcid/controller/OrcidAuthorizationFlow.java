@@ -10,6 +10,7 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
+import org.reactome.server.orcid.domain.LoggedInMetadata;
 import org.reactome.server.orcid.domain.OrcidToken;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,6 +27,8 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,7 +42,7 @@ public class OrcidAuthorizationFlow {
     private static final Logger errorLogger = LoggerFactory.getLogger("errorLogger");
 
     private static final String ORCID_TOKEN = "orcidToken";
-    private final String REDIRECT_URI = "http://localhost:8484/orcid/callback"; // host has to be registered in Orcid systems. reactome.org and localhost:8484 is already registered. Must be https in prod
+    private final String CALLBACK_PATH = "/orcid/callback"; // host has to be registered in Orcid systems. reactome.org and localhost:8484 is already registered. Must be https in prod
 
     @Value("${orcid.client.id}")
     private String clientId;
@@ -50,14 +53,15 @@ public class OrcidAuthorizationFlow {
 
     @RequestMapping(value = "/orcid/login", method = RequestMethod.GET)
     public ModelAndView login() {
-        String orcidLoginUrl = String.format("%s/authorize?client_id=%s&response_type=code&scope=/activities/update%%20/read-limited&redirect_uri=%s", orcidBaseUrl, clientId, REDIRECT_URI);
+        String redirectUri = getHostname() + CALLBACK_PATH;
+        String orcidLoginUrl = String.format("%s/authorize?client_id=%s&response_type=code&scope=/activities/update%%20/read-limited&redirect_uri=%s", orcidBaseUrl, clientId, redirectUri);
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setView(new RedirectView(orcidLoginUrl, true, false));
         return modelAndView;
     }
 
     @RequestMapping(value = "/orcid/callback", method = RequestMethod.GET)
-    public String callback(@RequestParam(required = false) String code, @RequestParam(required = false) String error, @RequestParam(name = "error_description", required = false) String errorDescription, HttpServletRequest request, ModelMap model) {
+    public String callback(@RequestParam(required = false) String code, @RequestParam(required = false) String error, @RequestParam(name = "error_description", required = false) String errorDescription, ModelMap model) {
         if (StringUtils.isNotEmpty(code)) {
             model.addAttribute("code", code);
             return "orcid/token";
@@ -69,13 +73,13 @@ public class OrcidAuthorizationFlow {
     }
 
     @RequestMapping(value = "/orcid/token", method = RequestMethod.GET)
-    public @ResponseBody String authorize(@RequestParam String code, HttpServletRequest request) {
+    public @ResponseBody Boolean authorize(@RequestParam String code, HttpServletRequest request) {
         try {
             HttpClient client = HttpClientBuilder.create().build();
             List<NameValuePair> params = new ArrayList<>();
             params.add(new BasicNameValuePair("client_id", clientId));
             params.add(new BasicNameValuePair("client_secret", clientSecret));
-            params.add(new BasicNameValuePair("redirect_uri", REDIRECT_URI));
+            params.add(new BasicNameValuePair("redirect_uri", getHostname() + CALLBACK_PATH));
             params.add(new BasicNameValuePair("scope", "/activities/update"));
             params.add(new BasicNameValuePair("grant_type", "authorization_code"));
             params.add(new BasicNameValuePair("code", code));
@@ -92,16 +96,32 @@ public class OrcidAuthorizationFlow {
             OrcidToken orcidToken = objectMapper.readValue(responseString, OrcidToken.class);
             request.getSession().setAttribute(ORCID_TOKEN, orcidToken);
 
-            return "success";
+            LoggedInMetadata lim = new LoggedInMetadata(orcidToken);
+            request.getSession().setAttribute("METADATA", objectMapper.writeValueAsString(lim));
+
+            return true;
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return "error";
+        return false;
     }
 
+    private String getHostname(){
+        String ret;
+        try {
+            ret = "https://" + InetAddress.getLocalHost().getHostName();
+            if(!ret.contains("reactome")){
+                ret = "http://localhost:8484";
+            }
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+            ret = null;
+        }
+        return ret;
+    }
 
     @RequestMapping(value = "/orcid/signout", method = RequestMethod.GET)
-    public String signOut(HttpServletRequest request) {
+    public @ResponseBody String signOut(HttpServletRequest request) {
         request.getSession().removeAttribute(ORCID_TOKEN);
         request.getSession().invalidate();
         return "success";

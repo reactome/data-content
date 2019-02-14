@@ -27,13 +27,21 @@
     }
 </style>
 
-<link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/hot-sneaks/jquery-ui.css" />
-
 <c:set value="${pageContext.session.getAttribute('orcidToken')}" var="tokenSession" />
+
+<%-- Orcid requires a metadata of the authenticated user --%>
+<c:if test="${not empty tokenSession && (person.orcidId == tokenSession.orcid) || (not empty param['orcidtest'] && tokenSession.orcid == param['orcidtest'])}">
+<script type="application/ld+json">
+    <c:out value="${METADATA}" escapeXml="false"></c:out>
+</script>
+</c:if>
+
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/hot-sneaks/jquery-ui.css" />
 
 <c:if test="${not empty tokenSession}">
     <%--<div class="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-12 text-right">--%>
         <%--<img src="https://orcid.org/sites/default/files/images/orcid_24x24.png" width="16" height="16" alt="ORCID iD icon"/> <span style="font-size: 10px;">${tokenSession.name} ( <a href="#" class="orcid-signout"><i class="fa fa-sign-out" style="font-size: 12px; padding: 0;" aria-hidden="true"></i> Logout</a> )</span>--%>
+        <%--<a href="https://orcid.org"><img alt="ORCID logo" src="/content/resources/images/orcid_16x16.png" width="16" height="16" hspace="4" /></a> <a href="https://orcid.org/${tokenSession.orcid}">https://orcid.org/${tokenSession.orcid}</a>--%>
     <%--</div>--%>
 
     <div id="dialog" title="Claiming works..." style="display: none;">
@@ -46,12 +54,18 @@
     <div id="dialog-summary" title="Claiming Summary" style="display: none;">
         <h3>Synchronization has finished</h3>
         <div style="background: #f0f0f0; padding: 8px; border: 1px solid darkgray; border-radius: 0 10px 0 10px;">
-            <span>Total: </span><span class="total"></span><br/>
-            <span>&nbsp;&nbsp;New: </span><span class="total-created"></span><br/>
-            <span>&nbsp;&nbsp;Conflict: </span><span class="total-conflict"></span><br/>
-            <span>&nbsp;&nbsp;Errors: </span><span class="total-errors"></span><br/>
+            <span>Claimed: </span><span class="total"></span><br/>
+            <span>&nbsp;&nbsp;Created: </span><span class="total-created"></span><br/>
+            <span>&nbsp;&nbsp;Existing: </span><span class="total-conflict"></span><br/>
+            <span style="display: none;">&nbsp;&nbsp;Errors: </span><span class="total-errors"></span><br/>
         </div>
-        <p class="text-right"><a href="https://orcid.org/${tokenSession.orcid}" target="_blank" rel="nofollow noindex"><span style="font-size:12px;">Visit your Orcid page</span></a></p>
+        <div style="text-align:right;">
+            <img alt="ORCID logo" src="/content/resources/images/orcid_16x16.png" width="16" height="16" hspace="4" /><a href="https://orcid.org/${tokenSession.orcid}" target="_blank" rel="nofollow noindex"><span style="font-size:12px;">Visit your Orcid page</span></a></p>
+        </div>
+    </div>
+
+    <div id="dialog-error" title="Error" style="display: none;">
+        <span style="font-size: 1.2em;" class="err-msg"></span>
     </div>
 
 </c:if>
@@ -87,18 +101,19 @@
                 </c:if>
 
                 <c:if test="${empty tokenSession}">
-                    <button id="connect-orcid-button"><img id="orcid-id-icon" src="https://orcid.org/sites/default/files/images/orcid_24x24.png" alt="ORCID iD icon"/>Are you ${personName} ? Register or Connect your ORCID iD</button>
+                    <button id="connect-orcid-button"><img id="orcid-id-icon" alt="ORCID logo" src="/content/resources/images/orcid_16x16.png" width="16" height="16" hspace="4" title="ORCID provides a persistent digital identifier that distinguishes you from other researchers. Learn more at orcid.org"/>Are you ${personName} ? Register or Connect your ORCID iD</button>
                 </c:if>
 
                 <c:choose>
                     <%--<c:when test="${tokenSession.orcid == '0000-0002-5910-2066'}">--%>
-                    <c:when test="${not empty tokenSession && (person.orcidId == tokenSession.orcid) || tokenSession.orcid == param['orcidtest']}">
-                        <button id="claim-your-work"><img id="orcid-id-icon-a" src="https://orcid.org/sites/default/files/images/orcid_24x24.png" alt="ORCID iD icon"/>Claim your work</button>
+                    <c:when test="${not empty tokenSession && (person.orcidId == tokenSession.orcid) || (not empty param['orcidtest'] && tokenSession.orcid == param['orcidtest'])}">
+                        <button id="claim-your-work" name="all"><img id="orcid-id-icon-all" alt="ORCID logo" src="/content/resources/images/orcid_16x16.png" width="16" height="16" hspace="4" />Claim all work</button>
                     </c:when>
                     <c:otherwise>
-                        <c:if test="${empty person.orcidId && not empty tokenSession}">
+                        <c:if test="${empty person.orcidId}">
+                            <%--&& not empty tokenSession}">--%>
                             <div class="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-12">
-                            <span class="alert alert-warning">Let us know your Orcid. Contact <a href="mailto:help@reactome.org?subject=[ORCID]I'd like my Orcid to be added in Reactome&body=Name: ${tokenSession.name}%0D%0AOrcid ID: ${tokenSession.orcid}">help@reactome.org</a></span>
+                                <span class="alert alert-warning">Let us know your ORCID. Contact <a href="mailto:help@reactome.org?subject=[ORCID]I'd like my Orcid to be added in Reactome&body=Name: xxxxx %0D%0AOrcid ID: xxxxx ">help@reactome.org</a></span>
                             </div>
                         </c:if>
                     </c:otherwise>
@@ -177,7 +192,7 @@
                     </table>
                 </div>
                 <c:if test="${not param['showAll']}">
-                    <div style="padding: 5px 0 0 14px;">
+                    <div class="favth-col-lg-9 favth-col-md-9 favth-col-sm-9 favth-col-xs-12" style="padding: 5px 0 0 14px;">
                         <c:choose>
                             <c:when test="${not empty person.orcidId}">
                                 <a href="./${person.orcidId}/pathways/authored" class="" title="Show all">Show all authored pathways...</a>
@@ -186,6 +201,15 @@
                                 <a href="./${person.dbId}/pathways/authored" class="" title="Show all">Show all authored pathways...</a>
                             </c:otherwise>
                         </c:choose>
+                    </div>
+                </c:if>
+                <c:if test="${not empty tokenSession && (person.orcidId == tokenSession.orcid) || (not empty param['orcidtest'] && tokenSession.orcid == param['orcidtest'])}">
+                    <c:set var="columns" value="favth-col-lg-3 favth-col-md-3 favth-col-sm-3 favth-col-xs-12"/>
+                    <c:if test="${param['showAll']}">
+                        <c:set var="columns" value="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-12"/>
+                    </c:if>
+                    <div class="${columns} text-right text-xs-center">
+                        <button id="claim-your-work-pa" name="pa"><img id="orcid-id-icon-pa" alt="ORCID logo" src="/content/resources/images/orcid_16x16.png" width="16" height="16" hspace="4"/>Claim authored pathways (<fmt:formatNumber type = "number" maxFractionDigits = "3" value = "${authoredPathwaysSize}"/>)</button>
                     </div>
                 </c:if>
             </fieldset>
@@ -228,15 +252,24 @@
                     </table>
                 </div>
                 <c:if test="${not param['showAll']}">
-                    <div style="padding: 5px 0 0 14px;">
+                    <div class="favth-col-lg-9 favth-col-md-9 favth-col-sm-9 favth-col-xs-12" style="padding: 5px 0 0 14px;">
                         <c:choose>
                             <c:when test="${not empty person.orcidId}">
-                                <a href="./${person.orcidId}/pathways/reviewed" class="" title="Show all" >Show all reviewed pathways...</a>
+                                <a href="./${person.orcidId}/reactions/authored" class="" title="Show all" >Show all authored reactions...</a>
                             </c:when>
                             <c:otherwise>
-                                <a href="./${person.dbId}/pathways/reviewed" class="" title="Show all" >Show all reviewed pathways...</a>
+                                <a href="./${person.dbId}/reactions/authored" class="" title="Show all" >Show all authored reactions...</a>
                             </c:otherwise>
                         </c:choose>
+                    </div>
+                </c:if>
+                <c:if test="${not empty tokenSession && (person.orcidId == tokenSession.orcid) || (not empty param['orcidtest'] && tokenSession.orcid == param['orcidtest'])}">
+                    <c:set var="columns" value="favth-col-lg-3 favth-col-md-3 favth-col-sm-3 favth-col-xs-12"/>
+                    <c:if test="${param['showAll']}">
+                        <c:set var="columns" value="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-12"/>
+                    </c:if>
+                    <div class="${columns} text-right text-xs-center">
+                        <button id="claim-your-work-ra" name="ra"><img id="orcid-id-icon-pr" alt="ORCID logo" src="/content/resources/images/orcid_16x16.png" width="16" height="16" hspace="4"/>Claim authored reactions (<fmt:formatNumber type = "number" maxFractionDigits = "3" value = "${authoredReactionsSize}"/>)</button>
                     </div>
                 </c:if>
             </fieldset>
@@ -279,17 +312,27 @@
                     </table>
                 </div>
                 <c:if test="${not param['showAll']}">
-                    <div style="padding: 5px 0 0 14px;">
+                    <div class="favth-col-lg-9 favth-col-md-9 favth-col-sm-9 favth-col-xs-12" style="padding: 5px 0 0 14px;">
                         <c:choose>
                             <c:when test="${not empty person.orcidId}">
-                                <a href="./${person.orcidId}/reactions/authored" class="" title="Show all" >Show all authored reactions...</a>
+                                <a href="./${person.orcidId}/pathways/reviewed" class="" title="Show all" >Show all reviewed pathways...</a>
                             </c:when>
                             <c:otherwise>
-                                <a href="./${person.dbId}/reactions/authored" class="" title="Show all" >Show all authored reactions...</a>
+                                <a href="./${person.dbId}/pathways/reviewed" class="" title="Show all" >Show all reviewed pathways...</a>
                             </c:otherwise>
                         </c:choose>
                     </div>
                 </c:if>
+                <c:if test="${not empty tokenSession && (person.orcidId == tokenSession.orcid) || (not empty param['orcidtest'] && tokenSession.orcid == param['orcidtest'])}">
+                    <c:set var="columns" value="favth-col-lg-3 favth-col-md-3 favth-col-sm-3 favth-col-xs-12"/>
+                    <c:if test="${param['showAll']}">
+                        <c:set var="columns" value="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-12"/>
+                    </c:if>
+                    <div class="${columns} text-right text-xs-center">
+                        <button id="claim-your-work-pr" name="pr"><img id="orcid-id-icon-ra" alt="ORCID logo" src="/content/resources/images/orcid_16x16.png" width="16" height="16" hspace="4"/>Claim reviewed pathways (<fmt:formatNumber type = "number" maxFractionDigits = "3" value = "${reviewedPathwaysSize}"/>)</button>
+                    </div>
+                </c:if>
+
             </fieldset>
             </div>
         </c:if>
@@ -330,23 +373,33 @@
                         </table>
                     </div>
                     <c:if test="${not param['showAll']}">
-                        <div style="padding: 5px 0 0 14px;">
+                        <div class="favth-col-lg-9 favth-col-md-9 favth-col-sm-9 favth-col-xs-12" style="padding: 5px 0 0 14px;">
                             <c:choose>
                                 <c:when test="${not empty person.orcidId}">
-                                    <a href="./${person.orcidId}/reactions/reviewed" class="" title="Show all" >Show all reviewed reactions...</a>
+                                    <a href="./${person.orcidId}/reactions/reviewed" class="" title="Show all">Show all reviewed reactions...</a>
                                 </c:when>
                                 <c:otherwise>
-                                    <a href="./${person.dbId}/reactions/reviewed" class="" title="Show all" >Show all reviewed reactions...</a>
+                                    <a href="./${person.dbId}/reactions/reviewed" class="" title="Show all">Show all reviewed reactions...</a>
                                 </c:otherwise>
                             </c:choose>
                         </div>
                     </c:if>
+                    <c:if test="${not empty tokenSession && (person.orcidId == tokenSession.orcid) || (not empty param['orcidtest'] && tokenSession.orcid == param['orcidtest'])}">
+                        <c:set var="columns" value="favth-col-lg-3 favth-col-md-3 favth-col-sm-3 favth-col-xs-12"/>
+                        <c:if test="${param['showAll']}">
+                            <c:set var="columns" value="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-12"/>
+                        </c:if>
+                        <div class="${columns} text-right text-xs-center">
+                            <button id="claim-your-work-rr" name="rr"><img id="orcid-id-icon-rr" alt="ORCID logo" src="/content/resources/images/orcid_16x16.png" width="16" height="16" hspace="4"/>Claim reviewed reactions (<fmt:formatNumber type = "number" maxFractionDigits = "3" value = "${reviewedReactionsSize}"/>)</button>
+                        </div>
+                    </c:if>
+
                 </fieldset>
             </div>
         </c:if>
     </div>
 </c:if>
-<c:import url="../footer.jsp"/>
+
 <script src="http://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script type=text/javascript>
     var expiredDialog =
@@ -362,6 +415,25 @@
                 text: "Reload", click: function() {
                     jQuery(this).dialog("close");
                     location.reload();
+                }
+            }],
+            open: function() {
+                jQuery(".ui-dialog-titlebar-close", this.parentNode).hide();
+            }
+        });
+
+    var errDialog =
+        jQuery('#dialog-error').dialog({
+            autoOpen: false, // Do not open on page load
+            modal: true, // Freeze the background behind the overlay
+            width: 350,
+            height: "auto",
+            draggable: false,
+            closeOnEscape: false,
+            resizable: false,
+            buttons: [ {
+                text: "OK", click: function() {
+                    jQuery(this).dialog("close");
                 }
             }],
             open: function() {
@@ -391,7 +463,7 @@
             modal: true, // Freeze the background behind the overlay
             width: "auto",
             maxWidth: 600,
-            height: 295,
+            height: 315,
             draggable: false,
             resizable: false,
             fluid: true,
@@ -402,9 +474,12 @@
         window.open("/orcid/login", "_blank", "toolbar=no, scrollbars=yes, width=500, height=600, top=500, left=500");
     });
 
-    <c:if test="${not empty tokenSession && (person.orcidId == tokenSession.orcid) || tokenSession.orcid == param['orcidtest']}">
-        jQuery("#claim-your-work").click(function (e) {
+    <c:if test="${(not empty tokenSession && (person.orcidId == tokenSession.orcid)) || tokenSession.orcid == param['orcidtest']}">
+        // jQuery("#claim-your-work").click(function (e) {
+        jQuery('button[id^="claim-your-work"]').click(function (e) {
             e.preventDefault();
+            var path = '/' + jQuery(this).attr('name');
+
             jQuery.ajax({
                 url: "/content/orcid/authenticated",
                 type: "GET",
@@ -415,7 +490,7 @@
                         jQuery("#progressbar").progressbar({ value: false });
 
                         jQuery.ajax({
-                            url: "/content/orcid/claiming/",
+                            url: '/content/orcid/claim'+path+'<c:if test="${not empty param['orcidtest']}">?orcidtest=${param['orcidtest']}</c:if>',
                             type: "POST",
                             contentType: "text/plain",
                             dataType: "json",
@@ -431,21 +506,23 @@
                                 jQuery(".total").text(data.total);
                                 jQuery(".total-created").text(data.totalIncluded);
                                 jQuery(".total-conflict").text(data.totalConflict);
-                                jQuery(".total-errors").text(data.totalErrors);
+                                if(data.totalErrors > 0) {
+                                    jQuery(".total-errors").show();
+                                    jQuery(".total-errors").text(data.totalErrors);
+                                }
                             },
                             error: function (data) {
                                 pgDialog.dialog("close");
                                 jQuery("#progressbar").progressbar("destroy");
-                                console.log(data);
+                                errDialog.dialog("open");
+                                jQuery(".err-msg").text(data.responseJSON["user-message"]);
                             }
                         });
                     } else {
                         expiredDialog.dialog("open");
                     }
                 },
-                error: function () {
-
-                }
+                error: function () {}
             });
         });
 
@@ -465,4 +542,4 @@
     </c:if>
 </script>
 
-
+<c:import url="../footer.jsp"/>

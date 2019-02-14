@@ -27,6 +27,10 @@ public class ResponseError implements Serializable {
     public ResponseError() {
     }
 
+    public ResponseError(String userMessage) {
+        this.userMessage = userMessage;
+    }
+
     public ResponseError(String errorCode, String userMessage) {
         this.errorCode = errorCode;
         this.userMessage = userMessage;

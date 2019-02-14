@@ -14,7 +14,7 @@
     <script src="/media/jui/js/jquery-migrate.min.js?97ad68e2b82f1d3065eec557567289fb" type="text/javascript"></script>
     <style>
         .sk-circle {
-            margin: 100px auto;
+            margin: 50px auto;
             width: 40px;
             height: 40px;
             position: relative;
@@ -138,34 +138,50 @@
 </head>
 <body>
 
-    <h3>Retrieving access token from Orcid</h3>
-    <div class="sk-circle">
-        <div class="sk-circle1 sk-child"></div>
-        <div class="sk-circle2 sk-child"></div>
-        <div class="sk-circle3 sk-child"></div>
-        <div class="sk-circle4 sk-child"></div>
-        <div class="sk-circle5 sk-child"></div>
-        <div class="sk-circle6 sk-child"></div>
-        <div class="sk-circle7 sk-child"></div>
-        <div class="sk-circle8 sk-child"></div>
-        <div class="sk-circle9 sk-child"></div>
-        <div class="sk-circle10 sk-child"></div>
-        <div class="sk-circle11 sk-child"></div>
-        <div class="sk-circle12 sk-child"></div>
+    <div class="waiting" style="display:none; border: 1px solid #c8c8c8; background-color: #e1e1e1; border-radius: 4px; padding: 4px;">
+        <h3 style="text-align: center;">Retrieving access token from ORCID</h3>
+        <div class="sk-circle">
+            <div class="sk-circle1 sk-child"></div>
+            <div class="sk-circle2 sk-child"></div>
+            <div class="sk-circle3 sk-child"></div>
+            <div class="sk-circle4 sk-child"></div>
+            <div class="sk-circle5 sk-child"></div>
+            <div class="sk-circle6 sk-child"></div>
+            <div class="sk-circle7 sk-child"></div>
+            <div class="sk-circle8 sk-child"></div>
+            <div class="sk-circle9 sk-child"></div>
+            <div class="sk-circle10 sk-child"></div>
+            <div class="sk-circle11 sk-child"></div>
+            <div class="sk-circle12 sk-child"></div>
+        </div>
+    </div>
+
+    <div class="thankyou" style="display: none; border: 1px solid #c8c8c8; background-color: #fff; border-radius: 4px; padding: 4px; text-align:center;">
+        <h3>Thank you for connecting your ORCID <img id="orcid-id-icon-rr" alt="ORCID logo" src="/content/resources/images/orcid_16x16.png" width="16" height="16" hspace="4" /></h3>
+        <h4>You will now be directed back to the submission system website.</h4>
     </div>
 
     <script type=text/javascript>
+        jQuery(document).ajaxStart(function(){
+            jQuery(".waiting").show();
+        });
+
         jQuery(function(){
             jQuery.ajax({
                 url: "/content/orcid/token?code=${code}",
                 type: "GET",
-                success: function(){
-                    setTimeout(
-                        function(){
-                            window.opener.location.reload(true);
-                            window.close();
-                        }, 3500
-                    );
+                success: function(auth){
+                    if (auth) {
+                        jQuery(".waiting").hide();
+                        jQuery(".thankyou").show();
+
+                        setInterval(
+                            function () {
+                                window.opener.location.reload(true);
+                                window.close();
+                            }, 3500
+                        );
+                    }
                 },
                 error: function () {
 
