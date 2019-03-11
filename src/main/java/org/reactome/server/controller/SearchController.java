@@ -24,6 +24,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.StringTokenizer;
 import java.util.stream.Collectors;
 
 import static org.reactome.server.util.WebUtils.cleanReceivedParameter;
@@ -236,9 +237,13 @@ class SearchController {
         Map<String, String> result = new HashMap<>();
         result.put("user-agent", request.getHeader("User-Agent"));
         String remoteAddr = request.getHeader("X-FORWARDED-FOR"); // Client IP
-        if (StringUtils.isEmpty(remoteAddr)) {
+        if (!StringUtils.isEmpty(remoteAddr)) {
+            // The general format of the field is: X-Forwarded-For: client, proxy1, proxy2 ... we only want the client
+            remoteAddr = new StringTokenizer(remoteAddr, ",").nextToken().trim();
+        } else {
             remoteAddr = request.getRemoteAddr();
         }
+
         result.put("ip-address", remoteAddr);
         result.put("release-version", releaseNumber.toString());
 
