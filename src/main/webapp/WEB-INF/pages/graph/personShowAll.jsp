@@ -4,8 +4,42 @@
 
 <c:import url="../header.jsp"/>
 
+<style>
+    .ui-widget .ui-widget {
+        font-size: 0.5em !important;
+    }
+
+    .ui-widget-overlay {
+        background: repeat-x scroll 50% 50% #AAA !important;
+        opacity:0.3;
+    }
+
+    .ui-widget-header {
+        border: none !important;
+        background: #2F9EC2 !important;
+        color: #FFF !important;
+        font-weight: bold !important;
+    }
+
+    .ui-progressbar .ui-progressbar-value {
+        height: 104% !important;
+        width: 101% !important;
+    }
+</style>
+
+<c:set value="${pageContext.session.getAttribute('orcidToken')}" var="tokenSession" />
+
 <%-- Person Page--%>
 <c:if test="${not empty person}">
+
+    <c:choose>
+        <c:when test="${not empty person.orcidId}">
+            <a href="${pageContext.request.contextPath}/detail/person/${person.orcidId}" class="" title="Return to person details">  fff</a>
+        </c:when>
+        <c:otherwise>
+            <a href="${pageContext.request.contextPath}/detail/person/${person.dbId}" class="" title="Return to person details"> dff</a>
+        </c:otherwise>
+    </c:choose>
     <div class="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-12 ">
         <h3 class="details-title">
             <i class="sprite sprite-Person"></i>
@@ -90,15 +124,31 @@
                         </tbody>
                     </table>
                 </div>
-            </fieldset>
-            <c:if test="${not empty tokenSession && (person.orcidId == tokenSession.orcid) || (not empty param['orcidtest'] && tokenSession.orcid == param['orcidtest'])}">
-                <div class="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-12 text-right text-xs-center">
-                    <button id="claim-your-work-pa" name="pa"><img id="orcid-id-icon-pa" alt="ORCID logo" src="/content/resources/images/orcid_16x16.png" width="16" height="16" hspace="4"/>Claim authored pathways (<fmt:formatNumber type = "number" maxFractionDigits = "3" value = "${authoredPathwaysSize}"/>)</button>
-                </div>
-            </c:if>
 
+                <c:if test="${empty tokenSession}">
+                    <button id="connect-orcid-button"><img id="orcid-id-icon" alt="ORCID logo" src="/content/resources/images/orcid_16x16.png" width="16" height="16" hspace="4" title="ORCID provides a persistent digital identifier that distinguishes you from other researchers. Learn more at orcid.org"/>Are you ${personName} ? Register or Connect your ORCID iD</button>
+                </c:if>
+
+                <c:choose>
+                    <c:when test="${not empty tokenSession && (person.orcidId == tokenSession.orcid) || (not empty param['orcidtest'] && tokenSession.orcid == param['orcidtest'])}">
+                        <div class="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-12 text-right text-xs-center">
+                            <button id="claim-your-work-pa" name="pa"><img id="orcid-id-icon-pa" alt="ORCID logo" src="/content/resources/images/orcid_16x16.png" width="16" height="16" hspace="4"/>Claim ${fn:toLowerCase(label)} (<fmt:formatNumber type = "number" maxFractionDigits = "3" value = "${fn:length(list)}"/>)</button>
+                        </div>
+                    </c:when>
+                    <c:otherwise>
+                        <c:if test="${empty person.orcidId && not empty tokenSession}">
+                            <%--<div class="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-12">--%>
+                                <%--<span class="alert alert-warning">Let us know your ORCID. Contact <a href="mailto:help@reactome.org?subject=[ORCID]I'd like my Orcid to be added in Reactome&body=Name: xxxxx %0D%0AOrcid ID: xxxxx ">help@reactome.org</a></span>--%>
+                            <%--</div>--%>
+                        </c:if>
+                    </c:otherwise>
+                </c:choose>
+            </fieldset>
         </c:if>
 
     </div>
 </c:if>
+
+<script src="http://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<c:import url="personCommon.jsp"/>
 <c:import url="../footer.jsp"/>
