@@ -25,6 +25,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 import static org.reactome.server.util.WebUtils.cleanReceivedParameter;
@@ -65,15 +67,15 @@ class SearchController {
     private static final String PAGE_EBI_SEARCHER = "search/results";
     private static final String TARGETS = "targets";
     private final Integer releaseNumber;
+    private static Pattern stIdPattern;
 
     private SearchService searchService;
     private MailService mailService;
 
-
-
     @Autowired
     public SearchController(GeneralService generalService) {
         releaseNumber = generalService.getDBInfo().getVersion();
+        stIdPattern = Pattern.compile("(?i)(^R-[A-Z]{3}-\\d+(-\\d+)?(\\.\\d+)?$)|(^REACT_\\d+(\\.\\d+)?$)");
     }
 
     /**
@@ -148,7 +150,15 @@ class SearchController {
             model.addAttribute(CLUSTER, cluster);
             model.addAttribute(PAGE, page);
 
+            String stIdMatch = null;
+            Matcher matcher = stIdPattern.matcher(q);
+            if (matcher.matches()) {
+                stIdMatch = "oldStId:" + q + " OR stId:" + q;
+            }
+
             Query queryObject = new Query(q, species, types, compartments, keywords, getReportInformation(request));
+            if(stIdMatch != null) queryObject.setQuery(stIdMatch);
+
             SearchResult searchResult = searchService.getSearchResult(queryObject, rowCount, page, cluster);
             if (searchResult != null && (searchResult.getTargetResults() == null || searchResult.getTargetResults().isEmpty())) {
                 model.addAttribute(SPECIES_FACET, searchResult.getFacetMapping().getSpeciesFacet());
