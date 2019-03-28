@@ -72,11 +72,11 @@ class AuthorReviewedController {
     @RequestMapping(value = "/detail/person/{id:.*}/pathways/authored", method = RequestMethod.GET)
     public String personPathwaysAuthored(@PathVariable String id, ModelMap model, HttpServletResponse response) {
         Person person = personService.findPerson(id);
-
         if (person != null) {
             model.addAttribute(TITLE, person.getDisplayName());
             model.addAttribute("person", person);
             model.addAttribute("label", "Authored Pathways");
+            model.addAttribute("claimyourworkpath", "pa");
             model.addAttribute("type", "Pathway");
             model.addAttribute("attribute", "reviewed");
             model.addAttribute("list", personService.getAuthoredPathways(id));
@@ -90,11 +90,11 @@ class AuthorReviewedController {
     @RequestMapping(value = "/detail/person/{id:.*}/pathways/reviewed", method = RequestMethod.GET)
     public String personPathwaysReviewed(@PathVariable String id, ModelMap model, HttpServletResponse response) {
         Person person = personService.findPerson(id);
-
         if (person != null) {
             model.addAttribute(TITLE, person.getDisplayName());
             model.addAttribute("person", person);
             model.addAttribute("label", "Reviewed Pathways");
+            model.addAttribute("claimyourworkpath", "pr");
             model.addAttribute("type", "Pathway");
             model.addAttribute("attribute", "reviewed");
             model.addAttribute("list", personService.getReviewedPathways(id));
@@ -108,11 +108,11 @@ class AuthorReviewedController {
     @RequestMapping(value = "/detail/person/{id:.*}/reactions/authored", method = RequestMethod.GET)
     public String personReactionsAuthored(@PathVariable String id, ModelMap model, HttpServletResponse response) {
         Person person = personService.findPerson(id);
-
         if (person != null) {
             model.addAttribute(TITLE, person.getDisplayName());
             model.addAttribute("person", person);
             model.addAttribute("label", "Authored Reactions");
+            model.addAttribute("claimyourworkpath", "ra");
             model.addAttribute("type", "Reaction");
             model.addAttribute("attribute", "authored");
             model.addAttribute("list", personService.getAuthoredReactions(id));
@@ -126,11 +126,11 @@ class AuthorReviewedController {
     @RequestMapping(value = "/detail/person/{id:.*}/reactions/reviewed", method = RequestMethod.GET)
     public String personReactionsReviewed(@PathVariable String id, ModelMap model, HttpServletResponse response) {
         Person person = personService.findPerson(id);
-
         if (person != null) {
             model.addAttribute(TITLE, person.getDisplayName());
             model.addAttribute("person", person);
             model.addAttribute("label", "Reviewed Reactions");
+            model.addAttribute("claimyourworkpath", "rr");
             model.addAttribute("type", "Reaction");
             model.addAttribute("attribute", "reviewed");
             model.addAttribute("list", personService.getReviewedReactions(id));

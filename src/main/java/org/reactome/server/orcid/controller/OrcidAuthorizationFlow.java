@@ -12,8 +12,6 @@ import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 import org.reactome.server.orcid.domain.LoggedInMetadata;
 import org.reactome.server.orcid.domain.OrcidToken;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -27,20 +25,16 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
+
+import static org.reactome.server.orcid.util.OrcidHelper.getHostname;
 
 /**
  * @author Guilherme S Viteri <gviteri@ebi.ac.uk>
  */
 @Controller
 public class OrcidAuthorizationFlow {
-
-    private static final Logger infoLogger = LoggerFactory.getLogger("infoLogger");
-    private static final Logger errorLogger = LoggerFactory.getLogger("errorLogger");
-
     private static final String ORCID_TOKEN = "orcidToken";
     private final String CALLBACK_PATH = "/orcid/callback"; // host has to be registered in Orcid systems. reactome.org and localhost:8484 is already registered. Must be https in prod
 
@@ -104,20 +98,6 @@ public class OrcidAuthorizationFlow {
             e.printStackTrace();
         }
         return false;
-    }
-
-    private String getHostname(){
-        String ret;
-        try {
-            ret = "https://" + InetAddress.getLocalHost().getHostName();
-            if(!ret.contains("reactome")){
-                ret = "http://localhost:8484";
-            }
-        } catch (UnknownHostException e) {
-            e.printStackTrace();
-            ret = null;
-        }
-        return ret;
     }
 
     @RequestMapping(value = "/orcid/signout", method = RequestMethod.GET)

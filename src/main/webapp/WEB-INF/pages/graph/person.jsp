@@ -4,79 +4,12 @@
 
 <c:import url="../header.jsp"/>
 
-<style>
-    .ui-widget .ui-widget {
-        font-size: 0.5em !important;
-    }
-
-    .ui-widget-overlay {
-        background: repeat-x scroll 50% 50% #AAA !important;
-        opacity:0.3;
-    }
-
-    .ui-widget-header {
-        border: none !important;
-        background: #2F9EC2 !important;
-        color: #FFF !important;
-        font-weight: bold !important;
-    }
-
-    .ui-progressbar .ui-progressbar-value {
-        height: 104% !important;
-        width: 101% !important;
-    }
-</style>
-
 <c:set value="${pageContext.session.getAttribute('orcidToken')}" var="tokenSession" />
-
-<%-- Orcid requires a metadata of the authenticated user --%>
-<c:if test="${not empty tokenSession && (person.orcidId == tokenSession.orcid) || (not empty param['orcidtest'] && tokenSession.orcid == param['orcidtest'])}">
-<script type="application/ld+json">
-    <c:out value="${METADATA}" escapeXml="false"/>
-</script>
-</c:if>
-
-<link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/hot-sneaks/jquery-ui.css" />
-
-<c:if test="${not empty tokenSession}">
-    <%--<div class="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-12 text-right">--%>
-        <%--<img src="https://orcid.org/sites/default/files/images/orcid_24x24.png" width="16" height="16" alt="ORCID iD icon"/> <span style="font-size: 10px;">${tokenSession.name} ( <a href="#" class="orcid-signout"><i class="fa fa-sign-out" style="font-size: 12px; padding: 0;" aria-hidden="true"></i> Logout</a> )</span>--%>
-        <%--<a href="https://orcid.org"><img alt="ORCID logo" src="/content/resources/images/orcid_16x16.png" width="16" height="16" hspace="4" /></a> <a href="https://orcid.org/${tokenSession.orcid}">https://orcid.org/${tokenSession.orcid}</a>--%>
-    <%--</div>--%>
-
-    <div id="dialog" title="Claiming works..." style="display: none;">
-        <p><span style="font-size: 1.2em;">Please wait while works are claimed</span></p>
-        <p class="text-center"><span style="font-size: 0.7em;">Note: This may take few seconds. Do not close this window.</span></p>
-        <p></p>
-        <div id="progressbar"></div>
-    </div>
-
-    <div id="dialog-summary" title="Claiming Summary" style="display: none;">
-        <h3>Synchronization has finished</h3>
-        <div style="background: #f0f0f0; padding: 8px; border: 1px solid darkgray; border-radius: 0 10px 0 10px;">
-            <span>Claimed: </span><span class="total"></span><br/>
-            <span>&nbsp;&nbsp;Created: </span><span class="total-created"></span><br/>
-            <span>&nbsp;&nbsp;Existing: </span><span class="total-conflict"></span><br/>
-            <span style="display: none;">&nbsp;&nbsp;Errors: </span><span class="total-errors"></span><br/>
-        </div>
-        <div style="text-align:right;">
-            <img alt="ORCID logo" src="/content/resources/images/orcid_16x16.png" width="16" height="16" hspace="4" /><a href="https://orcid.org/${tokenSession.orcid}" target="_blank" rel="nofollow noindex"><span style="font-size:12px;">Visit your Orcid page</span></a></p>
-        </div>
-    </div>
-
-    <div id="dialog-error" title="Error" style="display: none;">
-        <span style="font-size: 1.2em;" class="err-msg"></span>
-    </div>
-
-</c:if>
-
-<div id="dialog-expired" title="Session Expired" style="display: none;">
-    <h4>Please log in again</h4>
-</div>
 
 <%-- Person Page--%>
 <c:if test="${not empty person}">
-    <div class="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-12 ">
+
+    <div class="favth-col-xs-12 ">
         <h3 class="details-title">
             <i class="sprite sprite-Person"></i>
             <c:set var="personName" value="${person.displayName}" />
@@ -92,7 +25,10 @@
         </h3>
 
         <div class="extended-header favth-clearfix">
-            <div class="details-label favth-col-lg-2 favth-col-md-2 favth-col-sm-3 favth-col-xs-12">
+            <div class="details-label favth-col-lg-2 favth-col-md-2 favth-col-sm-3 favth-col-xs-12" style="line-height: 35px;">
+                <c:if test="${not empty tokenSession && (person.orcidId == tokenSession.orcid) || (not empty param['orcidtest'] && tokenSession.orcid == param['orcidtest'])}">
+                    <img alt="ORCID logo" src="/content/resources/images/orcid_16x16.png" width="13" height="13" hspace="4" title="You are logged in with your ORCID account"/>
+                </c:if>
                 <span>Orcid</span>
             </div>
             <div class="details-field favth-col-lg-10 favth-col-md-10 favth-col-sm-9 favth-col-xs-12">
@@ -110,9 +46,8 @@
                     </c:when>
                     <c:otherwise>
                         <c:if test="${empty person.orcidId && not empty tokenSession}">
-                            <%--&& not empty tokenSession}">--%>
-                            <div class="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-12">
-                                <span class="alert alert-warning">Let us know your ORCID. Contact <a href="mailto:help@reactome.org?subject=[ORCID]I'd like my Orcid to be added in Reactome&body=Name: xxxxx %0D%0AOrcid ID: xxxxx ">help@reactome.org</a></span>
+                            <div>
+                                <span>Let us know your <img alt="ORCID logo" src="/content/resources/images/orcid_16x16.png" width="16" height="16" hspace="4" class="margin margin0" style="margin-bottom: 3px; margin-right: 1px;"/>ORCID. Contact <a href="mailto:help@reactome.org?subject=[ORCID]I'd like my Orcid to be added in Reactome&body=Name: %0D%0AOrcid ID: ">help@reactome.org</a></span>
                             </div>
                         </c:if>
                     </c:otherwise>
@@ -141,18 +76,18 @@
         </div>
 
         <div class="favth-clearfix">
-        <c:choose>
-            <c:when test="${param['showAll']}">
-                <div>
-                    <a href="?" class="btn btn-info person-switch-btn">Show Summary</a>
-                </div>
-            </c:when>
-            <c:otherwise>
-                <div>
-                    <a href="?showAll=true" class="btn btn-info person-switch-btn">Expand All</a>
-                </div>
-            </c:otherwise>
-        </c:choose>
+            <c:choose>
+                <c:when test="${param['showAll']}">
+                    <div>
+                        <a href="?" class="btn btn-info person-switch-btn">Show Summary</a>
+                    </div>
+                </c:when>
+                <c:otherwise>
+                    <div>
+                        <a href="?showAll=true" class="btn btn-info person-switch-btn">Expand All</a>
+                    </div>
+                </c:otherwise>
+            </c:choose>
         </div>
 
         <c:if test="${not empty authoredPathways}">

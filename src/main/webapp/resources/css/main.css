@@ -618,6 +618,27 @@ span.secondary-identifiers {
     box-shadow: 0 0 10px 6px #f1f1f1;
 
 }
+/* Orcid widget and progress bar */
+.ui-widget .ui-widget {
+    font-size: 0.5em !important;
+}
+
+.ui-widget-overlay {
+    background: repeat-x scroll 50% 50% #AAA !important;
+    opacity:0.3;
+}
+
+.ui-widget-header {
+    border: none !important;
+    background: #2F9EC2 !important;
+    color: #FFF !important;
+    font-weight: bold !important;
+}
+
+.ui-progressbar .ui-progressbar-value {
+    height: 104% !important;
+    width: 101% !important;
+}
 
 /* ORCID Button */
 button[id^="connect-orcid-button"],
