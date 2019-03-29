@@ -36,20 +36,23 @@ public class OrcidHelper {
     private static final String PWB_URL = "https://reactome.org/PathwayBrowser/#/##ID##";
 
     public enum ContributionRole {
-        AUTHORED, REVIEWED
+        AUTHORED, REVIEWED, BOTH;
     }
 
     private static Work createWork(Event event, ContributionRole contributionRole) {
         Work work = new Work();
         work.setWorkTitle(new WorkTitle(event.getDisplayName()));
-        work.setShortDescription((event instanceof Pathway ? "Pathway" : "Reaction") + " [" + contributionRole.name() + "]");
+        work.setShortDescription((event instanceof Pathway ? "Pathway" : "Reaction"));
         work.setType("DATA_SET");
         if(event.getCreated() != null) { // create date can be empty!
             work.setPublicationDate(new PublicationDate(event.getCreated().getDateTime()));
         }
         work.setUrl(DETAILS_URL.replace("##ID##", event.getStId()));
         work.addExternalId(new ExternalId(ExternalIdType.OTHERID.getName(), event.getStId(), PWB_URL.replace("##ID##", event.getStId()), "SELF"));
-        if (contributionRole == ContributionRole.AUTHORED) {
+        if (contributionRole == ContributionRole.BOTH) {
+            work.addContributor(new WorkContributor(new ContributorAttributes(ContributorAttributes.ContributorSequence.FIRST, ContributorAttributes.ContributorRole.AUTHOR)));
+            work.addContributor(new WorkContributor(new ContributorAttributes(ContributorAttributes.ContributorSequence.ADDITIONAL, ContributorAttributes.ContributorRole.ASSIGNEE)));
+        } else if (contributionRole == ContributionRole.AUTHORED) {
             work.addContributor(new WorkContributor(new ContributorAttributes(ContributorAttributes.ContributorSequence.FIRST, ContributorAttributes.ContributorRole.AUTHOR)));
         } else {
             work.addContributor(new WorkContributor(new ContributorAttributes(ContributorAttributes.ContributorSequence.ADDITIONAL, ContributorAttributes.ContributorRole.ASSIGNEE)));
@@ -76,11 +79,11 @@ public class OrcidHelper {
             ObjectMapper mapper = new ObjectMapper();
             String output = IOUtils.toString(response.getEntity().getContent());
             ResponseError responseError = mapper.readValue(output, ResponseError.class);
-            throw new WorkClaimException("", responseError);
+            throw new WorkClaimException("Unexpected error from the API in orcid.org", responseError);
         }
     }
 
-    public static int postWork(OrcidToken tokenSession, Collection<? extends Event> events, ContributionRole contributionRole, WorkBulkResponse workBulkResponse) throws IOException, WorkClaimException {
+    public static int bulkPostWork(OrcidToken tokenSession, Collection<? extends Event> events, ContributionRole contributionRole, WorkBulkResponse workBulkResponse) throws IOException, WorkClaimException {
         int totalExecuted = 0;
         WorkBulk workBulk = new WorkBulk();
         List<Work> bulkWork = new ArrayList<>(MAX_BULK_POST);
