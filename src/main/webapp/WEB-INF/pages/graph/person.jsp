@@ -5,6 +5,7 @@
 <c:import url="../header.jsp"/>
 
 <c:set value="${pageContext.session.getAttribute('orcidToken')}" var="tokenSession" />
+<c:set value="${not empty tokenSession && (person.orcidId == tokenSession.orcid) || (not empty param['orcidtest'] && tokenSession.orcid == param['orcidtest'])}" var="isAuthenticated" />
 
 <%-- Person Page--%>
 <c:if test="${not empty person}">
@@ -25,8 +26,8 @@
         </h3>
 
         <div class="extended-header favth-clearfix">
-            <div class="details-label favth-col-lg-2 favth-col-md-2 favth-col-sm-3 favth-col-xs-12" style="line-height: 35px;">
-                <c:if test="${not empty tokenSession && (person.orcidId == tokenSession.orcid) || (not empty param['orcidtest'] && tokenSession.orcid == param['orcidtest'])}">
+            <div class="details-label favth-col-lg-2 favth-col-md-2 favth-col-sm-3 favth-col-xs-12" style="line-height:22px; <c:if test="${isAuthenticated}">line-height:30px;</c:if>" >
+                <c:if test="${isAuthenticated}">
                     <img alt="ORCID logo" src="/content/resources/images/orcid_16x16.png" width="13" height="13" hspace="4" title="You are logged in with your ORCID account"/>
                 </c:if>
                 <span>Orcid</span>
@@ -41,7 +42,7 @@
                 </c:if>
 
                 <c:choose>
-                    <c:when test="${not empty tokenSession && (person.orcidId == tokenSession.orcid) || (not empty param['orcidtest'] && tokenSession.orcid == param['orcidtest'])}">
+                    <c:when test="${isAuthenticated}">
                         <button id="claim-your-work" name="all"><img id="orcid-id-icon-all" alt="ORCID logo" src="/content/resources/images/orcid_16x16.png" width="16" height="16" hspace="4" />Claim all work</button>
                     </c:when>
                     <c:otherwise>
@@ -257,7 +258,7 @@
                         </c:choose>
                     </div>
                 </c:if>
-                <c:if test="${not empty tokenSession && (person.orcidId == tokenSession.orcid) || (not empty param['orcidtest'] && tokenSession.orcid == param['orcidtest'])}">
+                <c:if test="${isAuthenticated}">
                     <c:set var="columns" value="favth-col-lg-3 favth-col-md-3 favth-col-sm-3 favth-col-xs-12"/>
                     <c:if test="${param['showAll']}">
                         <c:set var="columns" value="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-12"/>

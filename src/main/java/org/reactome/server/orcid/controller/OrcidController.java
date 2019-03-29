@@ -43,11 +43,11 @@ public class OrcidController {
         Collection<Pathway> authoredPathways = personService.getAuthoredPathways(personId);
         totalExecuted += postWork(tokenSession, authoredPathways, OrcidHelper.ContributionRole.AUTHORED, workBulkResponse);
 
-        Collection<Pathway> reviewedPathways = personService.getReviewedPathways(personId);
-        totalExecuted += postWork(tokenSession, reviewedPathways, ContributionRole.REVIEWED, workBulkResponse);
-
         Collection<ReactionLikeEvent> authoredReactions = personService.getAuthoredReactions(personId);
         totalExecuted += postWork(tokenSession, authoredReactions, ContributionRole.AUTHORED, workBulkResponse);
+
+        Collection<Pathway> reviewedPathways = personService.getReviewedPathways(personId);
+        totalExecuted += postWork(tokenSession, reviewedPathways, ContributionRole.REVIEWED, workBulkResponse);
 
         Collection<ReactionLikeEvent> reviewedReactions = personService.getReviewedReactions(personId);
         totalExecuted += postWork(tokenSession, reviewedReactions, ContributionRole.REVIEWED, workBulkResponse);

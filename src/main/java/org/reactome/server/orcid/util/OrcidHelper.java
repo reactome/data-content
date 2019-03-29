@@ -44,7 +44,9 @@ public class OrcidHelper {
         work.setWorkTitle(new WorkTitle(event.getDisplayName()));
         work.setShortDescription((event instanceof Pathway ? "Pathway" : "Reaction") + " [" + contributionRole.name() + "]");
         work.setType("DATA_SET");
-        work.setPublicationDate(new PublicationDate(event.getCreated().getDateTime()));
+        if(event.getCreated() != null) { // create date can be empty!
+            work.setPublicationDate(new PublicationDate(event.getCreated().getDateTime()));
+        }
         work.setUrl(DETAILS_URL.replace("##ID##", event.getStId()));
         work.addExternalId(new ExternalId(ExternalIdType.OTHERID.getName(), event.getStId(), PWB_URL.replace("##ID##", event.getStId()), "SELF"));
         if (contributionRole == ContributionRole.AUTHORED) {

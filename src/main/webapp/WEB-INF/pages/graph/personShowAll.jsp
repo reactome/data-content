@@ -5,6 +5,7 @@
 <c:import url="../header.jsp"/>
 
 <c:set value="${pageContext.session.getAttribute('orcidToken')}" var="tokenSession" />
+<c:set value="${not empty tokenSession && (person.orcidId == tokenSession.orcid) || (not empty param['orcidtest'] && tokenSession.orcid == param['orcidtest'])}" var="isAuthenticated" />
 
 <%-- Person Page--%>
 <c:if test="${not empty person}">
@@ -30,7 +31,10 @@
         </h3>
         <div class="extended-header favth-clearfix">
             <c:if test="${not empty person.orcidId}">
-                <div class="details-label favth-col-lg-2 favth-col-md-2 favth-col-sm-3 favth-col-xs-12" style="line-height: 35px;">
+                <div class="details-label favth-col-lg-2 favth-col-md-2 favth-col-sm-3 favth-col-xs-12">
+                    <c:if test="${isAuthenticated}">
+                        <img alt="ORCID logo" src="/content/resources/images/orcid_16x16.png" width="13" height="13" hspace="4" title="You are logged in with your ORCID account"/>
+                    </c:if>
                     <span>Orcid ID</span>
                 </div>
                 <div class="details-field favth-col-lg-10 favth-col-md-10 favth-col-sm-9 favth-col-xs-12">

@@ -1,9 +1,10 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <c:set value="${pageContext.session.getAttribute('orcidToken')}" var="tokenSession" />
+<c:set value="${not empty tokenSession && (person.orcidId == tokenSession.orcid) || (not empty param['orcidtest'] && tokenSession.orcid == param['orcidtest'])}" var="isAuthenticated" />
 
 <%-- Orcid requires a metadata of the authenticated user --%>
-<c:if test="${not empty tokenSession && (person.orcidId == tokenSession.orcid) || (not empty param['orcidtest'] && tokenSession.orcid == param['orcidtest'])}">
+<c:if test="${isAuthenticated}">
     <script type="application/ld+json">
       <c:out value="${METADATA}" escapeXml="false"/>
     </script>
@@ -103,7 +104,7 @@
             modal: true, // Freeze the background behind the overlay
             width: "auto",
             maxWidth: 600,
-            height: 315,
+            height: 320,
             draggable: false,
             resizable: false,
             fluid: true,
@@ -114,7 +115,7 @@
         window.open("/orcid/login", "_blank", "toolbar=no, scrollbars=yes, width=500, height=600, top=500, left=500");
     });
 
-    <c:if test="${(not empty tokenSession && (person.orcidId == tokenSession.orcid)) || tokenSession.orcid == param['orcidtest']}">
+    <c:if test="${isAuthenticated}">
         jQuery('button[id^="claim-your-work"]').click(function (e) {
             e.preventDefault();
             var path = '/' + jQuery(this).attr('name');
@@ -122,8 +123,8 @@
             jQuery.ajax({
                 url: "/content/orcid/authenticated",
                 type: "GET",
-                success: function (isAuthenticated) {
-                    if(isAuthenticated) {
+                success: function (isAuthenticatedinOrcid) {
+                    if(isAuthenticatedinOrcid) {
                         jQuery(".ui-front").css("z-index", "98888");
                         pgDialog.dialog("open");
                         jQuery("#progressbar").progressbar({ value: false });
@@ -133,7 +134,7 @@
                             type: "POST",
                             contentType: "text/plain",
                             dataType: "json",
-                            data: "${person.dbId}",
+                            data: "<c:if test="${not empty person.orcidId}">${person.orcidId}</c:if><c:if test="${empty person.orcidId}">${person.dbId}</c:if>",
                             success: function(data){
                                 pgDialog.dialog("close");
                                 jQuery("#progressbar").progressbar("destroy");
