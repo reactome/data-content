@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.reactome.server.orcid.util.OrcidHelper.*;
 
@@ -39,22 +41,34 @@ public class OrcidController {
         else validatePerson(tokenSession, personId);
 
         WorkBulkResponse workBulkResponse = new WorkBulkResponse();
-        int totalExecuted = 0;
         Collection<Pathway> authoredPathways = personService.getAuthoredPathways(personId);
-        totalExecuted += postWork(tokenSession, authoredPathways, OrcidHelper.ContributionRole.AUTHORED, workBulkResponse);
-
         Collection<ReactionLikeEvent> authoredReactions = personService.getAuthoredReactions(personId);
-        totalExecuted += postWork(tokenSession, authoredReactions, ContributionRole.AUTHORED, workBulkResponse);
-
         Collection<Pathway> reviewedPathways = personService.getReviewedPathways(personId);
-        totalExecuted += postWork(tokenSession, reviewedPathways, ContributionRole.REVIEWED, workBulkResponse);
-
         Collection<ReactionLikeEvent> reviewedReactions = personService.getReviewedReactions(personId);
-        totalExecuted += postWork(tokenSession, reviewedReactions, ContributionRole.REVIEWED, workBulkResponse);
+
+        // Some users are author and reviewer in certain pathways or reaction. We claim it once.
+        List<Pathway> authoredAndReviewedPathways = authoredPathways.stream().filter(reviewedPathways::contains).collect(Collectors.toList());
+        List<ReactionLikeEvent> authoredAndReviewedReactions = authoredReactions.stream().filter(reviewedReactions::contains).collect(Collectors.toList());
+        if (!authoredAndReviewedPathways.isEmpty()) {
+            authoredPathways.removeAll(authoredAndReviewedPathways);
+            reviewedPathways.removeAll(authoredAndReviewedPathways);
+        }
+        if (!authoredAndReviewedReactions.isEmpty()) {
+            authoredReactions.removeAll(authoredAndReviewedReactions);
+            reviewedReactions.removeAll(authoredAndReviewedReactions);
+        }
+
+        int totalExecuted = 0;
+        totalExecuted += bulkPostWork(tokenSession, authoredPathways, OrcidHelper.ContributionRole.AUTHORED, workBulkResponse);
+        totalExecuted += bulkPostWork(tokenSession, authoredReactions, ContributionRole.AUTHORED, workBulkResponse);
+        totalExecuted += bulkPostWork(tokenSession, reviewedPathways, ContributionRole.REVIEWED, workBulkResponse);
+        totalExecuted += bulkPostWork(tokenSession, reviewedReactions, ContributionRole.REVIEWED, workBulkResponse);
+        totalExecuted += bulkPostWork(tokenSession, authoredAndReviewedPathways, ContributionRole.BOTH, workBulkResponse);
+        totalExecuted += bulkPostWork(tokenSession, authoredAndReviewedReactions, ContributionRole.BOTH, workBulkResponse);
 
         orcidDAO.asyncPersistResponse(tokenSession, workBulkResponse);
 
-        int total = authoredPathways.size() + reviewedPathways.size() + authoredReactions.size() + reviewedReactions.size();
+        int total = authoredPathways.size() + reviewedPathways.size() + authoredReactions.size() + reviewedReactions.size() + authoredAndReviewedPathways.size() + authoredAndReviewedReactions.size();
         return new ClaimingSummary(total, totalExecuted, workBulkResponse);
     }
 
@@ -71,7 +85,7 @@ public class OrcidController {
 
         orcidDAO.asyncPersistResponse(tokenSession, workBulkResponse);
 
-        int totalExecuted = postWork(tokenSession, authoredPathways, ContributionRole.AUTHORED, workBulkResponse);
+        int totalExecuted = bulkPostWork(tokenSession, authoredPathways, ContributionRole.AUTHORED, workBulkResponse);
         return new ClaimingSummary(authoredPathways.size(), totalExecuted, workBulkResponse);
     }
 
@@ -88,7 +102,7 @@ public class OrcidController {
 
         orcidDAO.asyncPersistResponse(tokenSession, workBulkResponse);
 
-        int totalExecuted = postWork(tokenSession, reviewedPathways, ContributionRole.REVIEWED, workBulkResponse);
+        int totalExecuted = bulkPostWork(tokenSession, reviewedPathways, ContributionRole.REVIEWED, workBulkResponse);
         return new ClaimingSummary(reviewedPathways.size(), totalExecuted, workBulkResponse);
     }
 
@@ -105,7 +119,7 @@ public class OrcidController {
 
         orcidDAO.asyncPersistResponse(tokenSession, workBulkResponse);
 
-        int totalExecuted = postWork(tokenSession, authoredReactions, ContributionRole.AUTHORED, workBulkResponse);
+        int totalExecuted = bulkPostWork(tokenSession, authoredReactions, ContributionRole.AUTHORED, workBulkResponse);
         return new ClaimingSummary(authoredReactions.size(), totalExecuted, workBulkResponse);
     }
 
@@ -122,7 +136,7 @@ public class OrcidController {
 
         orcidDAO.asyncPersistResponse(tokenSession, workBulkResponse);
 
-        int totalExecuted = postWork(tokenSession, reviewedReactions, ContributionRole.REVIEWED, workBulkResponse);
+        int totalExecuted = bulkPostWork(tokenSession, reviewedReactions, ContributionRole.REVIEWED, workBulkResponse);
         return new ClaimingSummary(reviewedReactions.size(), totalExecuted, workBulkResponse);
     }
 

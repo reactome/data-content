@@ -127,7 +127,7 @@
                     </table>
                 </div>
                 <c:if test="${not param['showAll']}">
-                    <div class="favth-col-lg-9 favth-col-md-9 favth-col-sm-9 favth-col-xs-12" style="padding: 5px 0 0 14px;">
+                    <div class="favth-col-lg-9 favth-col-md-9 favth-col-sm-6 favth-col-xs-12" style="padding: 5px 0 0 14px;">
                         <c:choose>
                             <c:when test="${not empty person.orcidId}">
                                 <a href="./${person.orcidId}/pathways/authored" class="" title="Show all">Show all authored pathways...</a>
@@ -139,9 +139,9 @@
                     </div>
                 </c:if>
                 <c:if test="${not empty tokenSession && (person.orcidId == tokenSession.orcid) || (not empty param['orcidtest'] && tokenSession.orcid == param['orcidtest'])}">
-                    <c:set var="columns" value="favth-col-lg-3 favth-col-md-3 favth-col-sm-3 favth-col-xs-12"/>
+                    <c:set var="columns" value="favth-col-lg-3 favth-col-md-3 favth-col-sm-6 favth-col-xs-12"/>
                     <c:if test="${param['showAll']}">
-                        <c:set var="columns" value="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-12"/>
+                        <c:set var="columns" value="favth-col-xs-12"/>
                     </c:if>
                     <div class="${columns} text-right text-xs-center">
                         <button id="claim-your-work-pa" name="pa"><img id="orcid-id-icon-pa" alt="ORCID logo" src="/content/resources/images/orcid_16x16.png" width="16" height="16" hspace="4"/>Claim authored pathways (<fmt:formatNumber type = "number" maxFractionDigits = "3" value = "${authoredPathwaysSize}"/>)</button>
@@ -187,7 +187,7 @@
                     </table>
                 </div>
                 <c:if test="${not param['showAll']}">
-                    <div class="favth-col-lg-9 favth-col-md-9 favth-col-sm-9 favth-col-xs-12" style="padding: 5px 0 0 14px;">
+                    <div class="favth-col-lg-9 favth-col-md-9 favth-col-sm-6 favth-col-xs-12" style="padding: 5px 0 0 14px;">
                         <c:choose>
                             <c:when test="${not empty person.orcidId}">
                                 <a href="./${person.orcidId}/reactions/authored" class="" title="Show all" >Show all authored reactions...</a>
@@ -199,9 +199,9 @@
                     </div>
                 </c:if>
                 <c:if test="${not empty tokenSession && (person.orcidId == tokenSession.orcid) || (not empty param['orcidtest'] && tokenSession.orcid == param['orcidtest'])}">
-                    <c:set var="columns" value="favth-col-lg-3 favth-col-md-3 favth-col-sm-3 favth-col-xs-12"/>
+                    <c:set var="columns" value="favth-col-lg-3 favth-col-md-3 favth-col-sm-6 favth-col-xs-12"/>
                     <c:if test="${param['showAll']}">
-                        <c:set var="columns" value="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-12"/>
+                        <c:set var="columns" value="avth-col-xs-12"/>
                     </c:if>
                     <div class="${columns} text-right text-xs-center">
                         <button id="claim-your-work-ra" name="ra"><img id="orcid-id-icon-pr" alt="ORCID logo" src="/content/resources/images/orcid_16x16.png" width="16" height="16" hspace="4"/>Claim authored reactions (<fmt:formatNumber type = "number" maxFractionDigits = "3" value = "${authoredReactionsSize}"/>)</button>
@@ -247,7 +247,7 @@
                     </table>
                 </div>
                 <c:if test="${not param['showAll']}">
-                    <div class="favth-col-lg-9 favth-col-md-9 favth-col-sm-9 favth-col-xs-12" style="padding: 5px 0 0 14px;">
+                    <div class="favth-col-lg-9 favth-col-md-9 favth-col-sm-6 favth-col-xs-12" style="padding: 5px 0 0 14px;">
                         <c:choose>
                             <c:when test="${not empty person.orcidId}">
                                 <a href="./${person.orcidId}/pathways/reviewed" class="" title="Show all" >Show all reviewed pathways...</a>
@@ -259,9 +259,9 @@
                     </div>
                 </c:if>
                 <c:if test="${isAuthenticated}">
-                    <c:set var="columns" value="favth-col-lg-3 favth-col-md-3 favth-col-sm-3 favth-col-xs-12"/>
+                    <c:set var="columns" value="favth-col-lg-3 favth-col-md-3 favth-col-sm-6 favth-col-xs-12"/>
                     <c:if test="${param['showAll']}">
-                        <c:set var="columns" value="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-12"/>
+                        <c:set var="columns" value="favth-col-xs-12"/>
                     </c:if>
                     <div class="${columns} text-right text-xs-center">
                         <button id="claim-your-work-pr" name="pr"><img id="orcid-id-icon-ra" alt="ORCID logo" src="/content/resources/images/orcid_16x16.png" width="16" height="16" hspace="4"/>Claim reviewed pathways (<fmt:formatNumber type = "number" maxFractionDigits = "3" value = "${reviewedPathwaysSize}"/>)</button>
@@ -308,7 +308,7 @@
                         </table>
                     </div>
                     <c:if test="${not param['showAll']}">
-                        <div class="favth-col-lg-9 favth-col-md-9 favth-col-sm-9 favth-col-xs-12" style="padding: 5px 0 0 14px;">
+                        <div class="favth-col-lg-9 favth-col-md-9 favth-col-sm-6 favth-col-xs-12" style="padding: 5px 0 0 14px;">
                             <c:choose>
                                 <c:when test="${not empty person.orcidId}">
                                     <a href="./${person.orcidId}/reactions/reviewed" class="" title="Show all">Show all reviewed reactions...</a>
@@ -320,9 +320,9 @@
                         </div>
                     </c:if>
                     <c:if test="${not empty tokenSession && (person.orcidId == tokenSession.orcid) || (not empty param['orcidtest'] && tokenSession.orcid == param['orcidtest'])}">
-                        <c:set var="columns" value="favth-col-lg-3 favth-col-md-3 favth-col-sm-3 favth-col-xs-12"/>
+                        <c:set var="columns" value="favth-col-lg-3 favth-col-md-3 favth-col-sm-6 favth-col-xs-12"/>
                         <c:if test="${param['showAll']}">
-                            <c:set var="columns" value="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-12"/>
+                            <c:set var="columns" value="favth-col-xs-12"/>
                         </c:if>
                         <div class="${columns} text-right text-xs-center">
                             <button id="claim-your-work-rr" name="rr"><img id="orcid-id-icon-rr" alt="ORCID logo" src="/content/resources/images/orcid_16x16.png" width="16" height="16" hspace="4"/>Claim reviewed reactions (<fmt:formatNumber type = "number" maxFractionDigits = "3" value = "${reviewedReactionsSize}"/>)</button>

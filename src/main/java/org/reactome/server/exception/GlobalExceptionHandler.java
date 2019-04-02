@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.reactome.server.orcid.domain.ResponseError;
 import org.reactome.server.orcid.exception.OrcidAuthorisationException;
+import org.reactome.server.orcid.exception.OrcidOAuthException;
 import org.reactome.server.orcid.exception.WorkClaimException;
 import org.reactome.server.search.exception.SolrSearcherException;
 import org.slf4j.Logger;
@@ -19,6 +20,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.net.UnknownHostException;
 
 /**
  * Global exception handler controller
@@ -57,6 +59,12 @@ class GlobalExceptionHandler {
         errorLogger.error("IOException handler executed", e);  //returning 404 error code
     }
 
+    @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR, reason = "Unknown host")
+    @ExceptionHandler(UnknownHostException.class)
+    public void handleUnknownHostException(UnknownHostException e) {
+        errorLogger.warn("UnknownHostException handler executed", e.getMessage());
+    }
+
     @ResponseStatus(value = HttpStatus.UNAUTHORIZED, reason = "Not Authorised")
     @ExceptionHandler(OrcidAuthorisationException.class)
     public void handleOrcidAuthorisationException(OrcidAuthorisationException e) {
@@ -67,6 +75,12 @@ class GlobalExceptionHandler {
     @ExceptionHandler(WorkClaimException.class)
     public @ResponseBody ResponseEntity<String> handleWorkClaimException(WorkClaimException e) {
         return toJsonResponse(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
+    }
+
+    @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
+    @ExceptionHandler(OrcidOAuthException.class)
+    public @ResponseBody ResponseEntity<String> handleOrcidOAuthException(OrcidOAuthException e) {
+        return toJsonResponse(HttpStatus.INTERNAL_SERVER_ERROR, e.getOrcidToken().getErrorDescription());
     }
 
     private ModelAndView buildModelView(HttpServletRequest request, Exception e) {

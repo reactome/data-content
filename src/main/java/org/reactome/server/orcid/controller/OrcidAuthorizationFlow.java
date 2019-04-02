@@ -12,6 +12,7 @@ import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 import org.reactome.server.orcid.domain.LoggedInMetadata;
 import org.reactome.server.orcid.domain.OrcidToken;
+import org.reactome.server.orcid.exception.OrcidOAuthException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -24,7 +25,6 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -67,7 +67,7 @@ public class OrcidAuthorizationFlow {
     }
 
     @RequestMapping(value = "/orcid/token", method = RequestMethod.GET)
-    public @ResponseBody Boolean authorize(@RequestParam String code, HttpServletRequest request) {
+    public @ResponseBody Boolean authorize(@RequestParam String code, HttpServletRequest request) throws OrcidOAuthException {
         try {
             HttpClient client = HttpClientBuilder.create().build();
             List<NameValuePair> params = new ArrayList<>();
@@ -90,14 +90,17 @@ public class OrcidAuthorizationFlow {
             OrcidToken orcidToken = objectMapper.readValue(responseString, OrcidToken.class);
             request.getSession().setAttribute(ORCID_TOKEN, orcidToken);
 
-            LoggedInMetadata lim = new LoggedInMetadata(orcidToken);
-            request.getSession().setAttribute("METADATA", objectMapper.writeValueAsString(lim));
-
-            return true;
-        } catch (IOException e) {
-            e.printStackTrace();
+            int statusCode = response.getStatusLine().getStatusCode();
+            if (statusCode == 200) {
+                LoggedInMetadata lim = new LoggedInMetadata(orcidToken);
+                request.getSession().setAttribute("METADATA", objectMapper.writeValueAsString(lim));
+                return true;
+            } else {
+                throw new OrcidOAuthException("Authorization error", orcidToken);
+            }
+        } catch (Exception e) {
+            throw new OrcidOAuthException("Couldn't proceed to Orcid Authentication");
         }
-        return false;
     }
 
     @RequestMapping(value = "/orcid/signout", method = RequestMethod.GET)

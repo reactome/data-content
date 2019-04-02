@@ -48,7 +48,9 @@ public class OrcidDAO {
                 for (ExternalId eid : ss.getWork().getExternalIds().getExternalId()) {
                     if (eid.getType().equalsIgnoreCase(ExternalIdType.OTHERID.getName())) stId = eid.getValue();
                 }
-                list.add(new OrcidClaimRecord(stId, orcid, ss.getWork().getPutCode()));
+                String createdDate = (ss.getWork().getCreatedDate() != null) ? ss.getWork().getCreatedDate().getContent() : "";
+                String lastModifiedDate = (ss.getWork().getLastModifiedDate() != null) ? ss.getWork().getLastModifiedDate().getContent() : "";
+                list.add(new OrcidClaimRecord(stId, orcid, ss.getWork().getPutCode(), ss.getWork().getCreatedDate().getContent(), ss.getWork().getLastModifiedDate().getContent()));
             }
         }
         new Thread(() -> persistResponse(list), "ReportOrcidThread").start();

@@ -177,14 +177,21 @@
 
                         setInterval(
                             function () {
-                                window.opener.location.reload(true);
-                                window.close();
+                                try {
+                                    window.opener.location.reload(true);
+                                    window.close();
+                                } catch (err) {
+                                    window.open('/', '_self', '');
+                                    window.close();
+                                }
                             }, 3500
                         );
                     }
                 },
-                error: function () {
-
+                error: function (data) {
+                    alert(data.responseJSON["user-message"]);
+                    window.open('/', '_self', '');
+                    window.close();
                 }
             });
         });

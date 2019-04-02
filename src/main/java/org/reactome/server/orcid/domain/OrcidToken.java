@@ -21,6 +21,12 @@ public class OrcidToken implements Serializable {
     private String error;
     private String errorDescription;
 
+    public OrcidToken() {}
+
+    public OrcidToken(String errorDescription){
+        this.errorDescription = errorDescription;
+    }
+
     @JsonProperty("access_token")
     public String getAccessToken() {
         return accessToken;

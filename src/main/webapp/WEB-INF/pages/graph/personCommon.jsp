@@ -155,29 +155,22 @@
                                 pgDialog.dialog("close");
                                 jQuery("#progressbar").progressbar("destroy");
                                 errDialog.dialog("open");
-                                jQuery(".err-msg").text(data.responseJSON["user-message"]);
+                                try {
+                                    jQuery(".err-msg").text(data.responseJSON["user-message"]);
+                                } catch(err) {
+                                    jQuery(".err-msg").text("Unexpected error. Please try again.");
+                                }
                             }
                         });
                     } else {
                         expiredDialog.dialog("open");
                     }
                 },
-                error: function () {}
+                error: function () {
+                    errDialog.dialog("open");
+                    jQuery(".err-msg").text("Unexpected error. Please try again.");
+                }
             });
-        });
-
-        jQuery(".orcid-signout").click(function () {
-           jQuery.ajax({
-               url: "/content/orcid/signout",
-               type: "GET",
-               success: function(){
-
-               },
-               error: function() {
-
-               }
-
-           })
         });
     </c:if>
 </script>
