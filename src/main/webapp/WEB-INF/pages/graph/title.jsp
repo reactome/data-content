@@ -36,7 +36,7 @@
    columns-css by default doesn't split the grid and it is 12.
    Once the icon is present we desing it in 9-3 grid.
 --%>
-<c:set var="columnsCss" value="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-12" />
+<c:set var="columnsCss" value="favth-col-xs-12" />
 <c:if test="${not empty icon}">
     <c:set var="columnsCss" value="favth-col-lg-10 favth-col-md-10 favth-col-sm-10 favth-col-xs-12" />
     <c:set var="iconName" value="${fn:split(icon, '/')[1]}" />

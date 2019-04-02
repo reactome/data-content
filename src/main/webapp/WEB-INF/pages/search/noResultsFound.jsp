@@ -5,7 +5,7 @@
 
 <c:import url="../header.jsp"/>
 
-<div class="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-12">
+<div class="favth-col-xs-12">
     <c:choose>
         <c:when test="${empty q}">
             <h3>No search has been specified.</h3>

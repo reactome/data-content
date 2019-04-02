@@ -113,7 +113,7 @@
             <fmt:parseDate pattern = "yyyy-MM-dd H:m:s.S" value = "${databaseObject.created.dateTime}" var="date"/>
             <div class="wrap overflow">
                 <c:forEach var="person" items="${databaseObject.created.author}">
-                    <div class="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-12 text-overflow">
+                    <div class="favth-col-xs-12 text-overflow">
                         <c:choose>
                             <c:when test="${not empty person.orcidId}">
                                 <a href="../detail/person/${person.orcidId}" class="" title="${person.displayName}" >${person.displayName} &nbsp;(<fmt:formatDate pattern = "yyyy-MM-dd" value = "${date}"/>)</a>

@@ -5,7 +5,7 @@
 
 <c:import url="../header.jsp"/>
 
-<div class="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-12">
+<div class="favth-col-xs-12">
     <div class="margin0 top alert alert-info" role="alert">
         <span class="favth-hidden-xs favth-hidden-sm"><i class="fa fa-info-circle"></i>Do you want to search for icons? <strong>Type</strong> e.g "<a href="/content/query?q=kidneys&species=Homo+sapiens&species=Entries+without+species&cluster=true&types=Icon">kidneys</a>" in the search box.</span>
         <span class="favth-visible-xs favth-visible-sm" style="font-size: 12px;">Do you want to search for icons? <br/><strong>Type</strong> e.g "<a href="/content/query?q=kidneys&species=Homo+sapiens&species=Entries+without+species&cluster=true&types=Icon">kidneys</a>" in the search box.</span>
@@ -18,11 +18,11 @@
     <c:if test="${not empty icons.available || not empty icons.selected }">
         <fieldset class="fieldset-details favth-clearfix">
             <legend>Library - <fmt:formatNumber type = "number" maxFractionDigits = "3" value = "${totalIcons}"/> unique icons</legend>
-            <div class="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-12 favth-hidden-xs favth-hidden-sm">
+            <div class="favth-col-xs-12 favth-hidden-xs favth-hidden-sm">
                 <h4 class="margin0 top bottom">The icons are organised based on their categories</h4>
             </div>
             <div class="favth-row">
-                <div class="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-12">
+                <div class="favth-col-xs-12">
                     <c:forEach var="available" items="${icons.available}">
                         <div class="favth-col-lg-3 favth-col-md-4 favth-col-sm-6 favth-col-xs-12 favth-text-center">
                             <div class="category">
@@ -39,7 +39,7 @@
                 </div>
             </div>
 
-            <div class="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-12 padding0 text-center">
+            <div class="favth-col-xs-12 padding0 text-center">
                 <div class="favth-col-lg-offset-8 favth-col-lg-4 favth-col-md-5 favth-col-md-offset-7 favth-col-sm-6 favth-col-sm-offset-6 favth-col-xs-12 padding0">
                     <div class="favth-col-lg-3 favth-col-md-3 favth-col-sm-3 favth-col-xs-12 favth-hidden-xs category-size">
                         Download:
@@ -59,7 +59,7 @@
         </fieldset>
     </c:if>
 
-    <div class="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-12 disclaimer-info padding0">
+    <div class="favth-col-xs-12 disclaimer-info padding0">
         <c:import url="disclaimer.jsp"/>
     </div>
 

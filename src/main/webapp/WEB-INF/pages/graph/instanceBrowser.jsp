@@ -6,7 +6,7 @@
 <%--<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/schema.css" type="text/css">--%>
 <link rel="stylesheet" href="/content/resources/css/schema.css" type="text/css">
 
-<div class="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-12">
+<div class="favth-col-xs-12">
     <div>
         <div class="breadcrumbs clearfix">
             <a href="${pageContext.request.contextPath}/schema/">Schema</a> &gt;

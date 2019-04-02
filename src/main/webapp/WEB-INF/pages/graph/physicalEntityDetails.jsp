@@ -318,7 +318,7 @@
                                     <div class="favth-col-lg-2 favth-col-md-3 favth-col-sm-12 favth-col-xs-12 details-label mr-label">PsiMod</div>
                                     <div class="favth-col-lg-10 favth-col-md-9 favth-col-sm-12 favth-col-xs-12 details-field mr-field">
                                     <c:forEach var="psiMod" items="${modifiedResidue.psiMod}" varStatus="loop">
-                                        <div class="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-12 details-field mr-field mr-psi-field" style="border-top: 1px dotted #c8c8c8;">
+                                        <div class="favth-col-xs-12 details-field mr-field mr-psi-field" style="border-top: 1px dotted #c8c8c8;">
                                             <div class="favth-col-lg-4 favth-col-md-12 favth-col-sm-12 favth-col-xs-12 details-field mr-field  mr-psi-field">
                                                 <c:if test="${not empty psiMod.displayName}">
                                                     <a href="${psiMod.url}" class="" title="Show Details" >${psiMod.displayName}</a>

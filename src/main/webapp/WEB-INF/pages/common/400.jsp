@@ -9,12 +9,12 @@
     <c:set var="reqURL" value="${reqURL}?${requestScope['javax.servlet.forward.query_string']}" />
 </c:if>
 <c:import url="../header.jsp"/>
-<div class="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-12">
+<div class="favth-col-xs-12">
     <div class="moduletable">
         <div class="custom">
             <div class="favth-container">
                 <div class="favth-row">
-                    <div class="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-12">
+                    <div class="favth-col-xs-12">
                         <h2>Bad Request. Your browser sent a request that this server could not understand.</h2>
                         <hr>
                         <p>If difficulties persist, please contact the <a href="mailto:help@reactome.org">help@reactome.org</a> and report the error below.</p>

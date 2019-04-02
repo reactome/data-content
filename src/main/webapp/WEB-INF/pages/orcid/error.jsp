@@ -4,12 +4,12 @@
 
 <c:import url="../header.jsp" />
 
-<div class="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-12">
+<div class="favth-col-xs-12">
     <div class="moduletable">
         <div class="custom">
             <div class="favth-container">
                 <div class="favth-row">
-                    <div class="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-12">
+                    <div class="favth-col-xs-12">
                         <h3>Couldn't get access to your ORCID records</h3>
                         <pre><code>${errorDescription}</code></pre>
                         <h5 class="text-center"> *** This window will close automatically. *** </h5>
