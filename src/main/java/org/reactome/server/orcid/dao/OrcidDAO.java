@@ -50,7 +50,7 @@ public class OrcidDAO {
                 }
                 String createdDate = (ss.getWork().getCreatedDate() != null) ? ss.getWork().getCreatedDate().getContent() : "";
                 String lastModifiedDate = (ss.getWork().getLastModifiedDate() != null) ? ss.getWork().getLastModifiedDate().getContent() : "";
-                list.add(new OrcidClaimRecord(stId, orcid, ss.getWork().getPutCode(), ss.getWork().getCreatedDate().getContent(), ss.getWork().getLastModifiedDate().getContent()));
+                list.add(new OrcidClaimRecord(stId, orcid, ss.getWork().getPutCode(), createdDate, lastModifiedDate));
             }
         }
         new Thread(() -> persistResponse(list), "ReportOrcidThread").start();
