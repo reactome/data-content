@@ -11,7 +11,6 @@ public class OrcidOAuthException extends Exception {
 
     public OrcidOAuthException(String msg) {
         super(msg);
-        orcidToken = new OrcidToken(msg);
     }
 
     public OrcidOAuthException(String msg, OrcidToken orcidToken) {

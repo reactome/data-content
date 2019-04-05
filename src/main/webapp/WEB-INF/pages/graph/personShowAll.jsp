@@ -20,8 +20,10 @@
     <div class="favth-col-xs-12">
         <h3 class="details-title">
             <i class="sprite sprite-Person"></i>
+            <c:set var="personName" value="${person.displayName}" />
             <c:choose>
                 <c:when test="${not empty person.firstname && not empty person.surname}">
+                    <c:set var="personName" value="${person.firstname}&nbsp;${person.surname}" />
                     <span>${person.firstname}&nbsp;${person.surname}</span>
                 </c:when>
                 <c:otherwise>
@@ -30,17 +32,35 @@
             </c:choose>
         </h3>
         <div class="extended-header favth-clearfix">
-            <c:if test="${not empty person.orcidId}">
-                <div class="details-label favth-col-lg-2 favth-col-md-2 favth-col-sm-3 favth-col-xs-12">
-                    <c:if test="${isAuthenticated}">
-                        <img alt="ORCID logo" src="/content/resources/images/orcid_16x16.png" width="13" height="13" hspace="4" title="You are logged in with your ORCID account"/>
-                    </c:if>
-                    <span>Orcid ID</span>
-                </div>
-                <div class="details-field favth-col-lg-10 favth-col-md-10 favth-col-sm-9 favth-col-xs-12">
+            <div class="details-label favth-col-lg-2 favth-col-md-2 favth-col-sm-3 favth-col-xs-12" style="line-height:22px; <c:if test="${isAuthenticated}">line-height:30px;</c:if>" >
+                <c:if test="${isAuthenticated}">
+                    <img alt="ORCID logo" src="/content/resources/images/orcid_16x16.png" width="13" height="13" hspace="4" title="You are logged in with your ORCID account"/>
+                </c:if>
+                <span>Orcid<a href="/orcid" title="Click here to know more about Orcid Integration">&nbsp;<i class="fa fa-external-link" aria-hidden="true" style="font-size: 12px; padding-right: 0;"></i></a></span>
+            </div>
+            <div class="details-field favth-col-lg-10 favth-col-md-10 favth-col-sm-9 favth-col-xs-12">
+                <c:if test="${not empty person.orcidId}">
                     <span><a href="https://orcid.org/${person.orcidId}" rel="nofollow noindex" target="_blank">${person.orcidId}</a></span>
-                </div>
-            </c:if>
+                </c:if>
+
+                <c:if test="${empty tokenSession}">
+                    <button id="connect-orcid-button"><img id="orcid-id-icon" alt="ORCID logo" src="/content/resources/images/orcid_16x16.png" width="16" height="16" hspace="4" title="ORCID provides a persistent digital identifier that distinguishes you from other researchers. Learn more at orcid.org"/>Are you ${personName} ? Register or Connect your ORCID iD</button>
+                </c:if>
+
+                <c:choose>
+                    <c:when test="${isAuthenticated}">
+                        <button id="claim-your-work-${claimyourworkpath}" name="${claimyourworkpath}"><img id="orcid-id-icon-${claimyourworkpath}" alt="ORCID logo" src="/content/resources/images/orcid_16x16.png" width="16" height="16" hspace="4"/>Claim ${fn:toLowerCase(label)} (<fmt:formatNumber type = "number" maxFractionDigits = "3" value = "${fn:length(list)}"/>)</button>
+                    </c:when>
+                    <c:otherwise>
+                        <c:if test="${empty person.orcidId && not empty tokenSession}">
+                            <div>
+                                <span>Let us know your <img alt="ORCID logo" src="/content/resources/images/orcid_16x16.png" width="16" height="16" hspace="4" class="margin margin0" style="margin-bottom: 3px; margin-right: 1px;"/>ORCID. Contact <a href="mailto:help@reactome.org?subject=[ORCID]I'd like my Orcid to be added in Reactome&body=Name: %0D%0AOrcid ID: ">help@reactome.org</a></span>
+                            </div>
+                        </c:if>
+                    </c:otherwise>
+                </c:choose>
+            </div>
+
             <c:if test="${not empty person.project}">
                 <div class="details-label favth-col-lg-2 favth-col-md-2 favth-col-sm-3 favth-col-xs-12">
                     <span>Project</span>
@@ -104,27 +124,6 @@
                         </tbody>
                     </table>
                 </div>
-
-                <c:if test="${empty tokenSession}">
-                    <div class="favth-col-xs-12 text-right text-xs-center">
-                        <button id="connect-orcid-button"><img id="orcid-id-icon" alt="ORCID logo" src="/content/resources/images/orcid_16x16.png" width="16" height="16" hspace="4" title="ORCID provides a persistent digital identifier that distinguishes you from other researchers. Learn more at orcid.org"/>Are you ${personName} ? Register or Connect your ORCID iD</button>
-                    </div>
-                </c:if>
-
-                <c:choose>
-                    <c:when test="${not empty tokenSession && (person.orcidId == tokenSession.orcid) || (not empty param['orcidtest'] && tokenSession.orcid == param['orcidtest'])}">
-                        <div class="favth-col-xs-12 text-right text-xs-center">
-                            <button id="claim-your-work-${claimyourworkpath}" name="${claimyourworkpath}"><img id="orcid-id-icon-${claimyourworkpath}" alt="ORCID logo" src="/content/resources/images/orcid_16x16.png" width="16" height="16" hspace="4"/>Claim ${fn:toLowerCase(label)} (<fmt:formatNumber type = "number" maxFractionDigits = "3" value = "${fn:length(list)}"/>)</button>
-                        </div>
-                    </c:when>
-                    <c:otherwise>
-                        <c:if test="${empty person.orcidId && not empty tokenSession}">
-                            <div class="favth-col-xs-12 text-right text-xs-center">
-                                <span>Let us know your <img alt="ORCID logo" src="/content/resources/images/orcid_16x16.png" width="16" height="16" hspace="4" class="margin margin0" style="margin-bottom: 3px; margin-right: 1px;"/>ORCID. Contact <a href="mailto:help@reactome.org?subject=[ORCID]I'd like my Orcid to be added in Reactome&body=Name: %0D%0AOrcid ID: ">help@reactome.org</a></span>
-                            </div>
-                        </c:if>
-                    </c:otherwise>
-                </c:choose>
             </fieldset>
         </c:if>
 

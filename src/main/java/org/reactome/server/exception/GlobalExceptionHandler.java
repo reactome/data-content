@@ -77,10 +77,12 @@ class GlobalExceptionHandler {
         return toJsonResponse(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
     }
 
-    @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
+    @ResponseStatus(value = HttpStatus.UNAUTHORIZED)
     @ExceptionHandler(OrcidOAuthException.class)
-    public @ResponseBody ResponseEntity<String> handleOrcidOAuthException(OrcidOAuthException e) {
-        return toJsonResponse(HttpStatus.INTERNAL_SERVER_ERROR, e.getOrcidToken().getErrorDescription());
+    public @ResponseBody ResponseEntity<String> handleOrcidOAuthException(OrcidOAuthException e, HttpServletRequest request) {
+        request.getSession().removeAttribute("orcidToken");
+        request.getSession().invalidate();
+        return toJsonResponse(HttpStatus.UNAUTHORIZED, e.getOrcidToken().getErrorDescription());
     }
 
     private ModelAndView buildModelView(HttpServletRequest request, Exception e) {

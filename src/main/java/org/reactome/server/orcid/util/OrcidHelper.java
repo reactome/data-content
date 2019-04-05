@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClientBuilder;
@@ -14,7 +15,10 @@ import org.reactome.server.graph.domain.model.Event;
 import org.reactome.server.graph.domain.model.Pathway;
 import org.reactome.server.orcid.domain.*;
 import org.reactome.server.orcid.exception.OrcidAuthorisationException;
+import org.reactome.server.orcid.exception.OrcidOAuthException;
 import org.reactome.server.orcid.exception.WorkClaimException;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
@@ -27,11 +31,17 @@ import java.util.List;
 /**
  * @author Guilherme S Viteri <gviteri@ebi.ac.uk>
  */
-
+@Component
 public class OrcidHelper {
     private static final String ORCID_TOKEN = "orcidToken";
     private static final Integer MAX_BULK_POST = 100; // Orcid API won't accept more than 100 per call
-    private static final String ORCID_WORKS = "https://api.sandbox.orcid.org/v2.1/##ORCID##/works";
+
+    @Value("${orcid.api.baseurl}")
+    private  String ORCID_API_URI;
+    private static final String ORCID_API_VERSION = "v2.1/";
+    private static final String ORCID_ALL_WORKS = "##ORCID##/works"; //GET or POST
+
+    // Reactome URLs
     private static final String DETAILS_URL = "https://reactome.org/content/detail/##ID##";
     private static final String PWB_URL = "https://reactome.org/PathwayBrowser/#/##ID##";
 
@@ -39,7 +49,7 @@ public class OrcidHelper {
         AUTHORED, REVIEWED, BOTH;
     }
 
-    private static Work createWork(Event event, ContributionRole contributionRole) {
+    private Work createWork(Event event, ContributionRole contributionRole) {
         Work work = new Work();
         work.setWorkTitle(new WorkTitle(event.getDisplayName()));
         work.setShortDescription((event instanceof Pathway ? "Pathway" : "Reaction"));
@@ -60,30 +70,33 @@ public class OrcidHelper {
         return work;
     }
 
-    private static void execute(OrcidToken tokenSession, WorkBulk workBulk, WorkBulkResponse workBulkResponse) throws IOException, WorkClaimException {
+    private void execute(OrcidToken tokenSession, WorkBulk workBulk, WorkBulkResponse workBulkResponse) throws IOException, OrcidOAuthException, WorkClaimException {
         HttpClient httpclient = HttpClientBuilder.create().build();  // the http-client, that will send the request
-        HttpPost httpPost = new HttpPost(ORCID_WORKS.replace("##ORCID##", tokenSession.getOrcid()));
+        HttpPost httpPost = new HttpPost(ORCID_API_URI + ORCID_API_VERSION + ORCID_ALL_WORKS.replace("##ORCID##", tokenSession.getOrcid()));
         httpPost.setHeader("Content-Type", "application/orcid+json; qs=4");
         httpPost.setHeader("Accept", "application/json");
         httpPost.addHeader("Authorization", "Bearer " + tokenSession.getAccessToken()); // add the authorization header to the request
 
         httpPost.setEntity(new StringEntity(unmarshaller(workBulk)));
         HttpResponse response = httpclient.execute(httpPost); // the client executes the request and gets a response
+        ObjectMapper mm = new ObjectMapper();
         if (response.getStatusLine().getStatusCode() == 200) {
-            ObjectMapper mm = new ObjectMapper();
             String output = IOUtils.toString(response.getEntity().getContent());
             WorkBulkResponse wbr = mm.readValue(output, WorkBulkResponse.class);
             workBulkResponse.getBulk().addAll(wbr.getBulk());
             workBulkResponse.getErrors().addAll(wbr.getErrors());
-        } else {
-            ObjectMapper mapper = new ObjectMapper();
+        } else if (response.getStatusLine().getStatusCode() == 401) {
             String output = IOUtils.toString(response.getEntity().getContent());
-            ResponseError responseError = mapper.readValue(output, ResponseError.class);
+            OrcidToken orcidToken = mm.readValue(output, OrcidToken.class);
+            throw new OrcidOAuthException("HTTP Not Authorised {401}", orcidToken);
+        } else {
+            String output = IOUtils.toString(response.getEntity().getContent());
+            ResponseError responseError = mm.readValue(output, ResponseError.class);
             throw new WorkClaimException("Unexpected error from the API in orcid.org", responseError);
         }
     }
 
-    public static int bulkPostWork(OrcidToken tokenSession, Collection<? extends Event> events, ContributionRole contributionRole, WorkBulkResponse workBulkResponse) throws IOException, WorkClaimException {
+    public int bulkPostWork(OrcidToken tokenSession, Collection<? extends Event> events, ContributionRole contributionRole, WorkBulkResponse workBulkResponse) throws IOException, WorkClaimException, OrcidOAuthException {
         int totalExecuted = 0;
         WorkBulk workBulk = new WorkBulk();
         List<Work> bulkWork = new ArrayList<>(MAX_BULK_POST);
@@ -109,19 +122,42 @@ public class OrcidHelper {
         return totalExecuted;
     }
 
-    public static OrcidToken getAuthorisedOrcidUser(HttpServletRequest request) throws OrcidAuthorisationException {
+    public Works getAllWorks(OrcidToken tokenSession) throws IOException, WorkClaimException {
+        Works ret = null;
+        HttpClient httpclient = HttpClientBuilder.create().build();  // the http-client, that will send the request
+        HttpGet httpGet = new HttpGet(ORCID_API_URI + ORCID_API_VERSION + ORCID_ALL_WORKS.replace("##ORCID##", tokenSession.getOrcid()));
+        httpGet.setHeader("Content-Type", "application/orcid+json; qs=4");
+        httpGet.setHeader("Accept", "application/json");
+        httpGet.addHeader("Authorization", "Bearer " + tokenSession.getAccessToken()); // add the authorization header to the request
+
+        HttpResponse response = httpclient.execute(httpGet); // the client executes the request and gets a response
+        if (response.getStatusLine().getStatusCode() == 200) {
+            ObjectMapper mm = new ObjectMapper();
+            String output = IOUtils.toString(response.getEntity().getContent());
+            ret = mm.readValue(output, Works.class);
+        } else {
+            ObjectMapper mapper = new ObjectMapper();
+            String output = IOUtils.toString(response.getEntity().getContent());
+            ResponseError responseError = mapper.readValue(output, ResponseError.class);
+            throw new WorkClaimException("Unexpected error from the API in orcid.org", responseError);
+        }
+
+        return ret;
+    }
+
+    public OrcidToken getAuthorisedOrcidUser(HttpServletRequest request) throws OrcidAuthorisationException {
         OrcidToken tokenSession = (OrcidToken) request.getSession().getAttribute(ORCID_TOKEN);
         if (tokenSession == null) throw new OrcidAuthorisationException("Not authorised");
         return tokenSession;
     }
 
-    public static String unmarshaller(Object obj) throws JsonProcessingException {
+    public String unmarshaller(Object obj) throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
         mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
         return mapper.writeValueAsString(obj);
     }
 
-    public static <T> List<T> marshaller(String json) throws IOException {
+    public <T> List<T> marshaller(String json) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
         return mapper.readValue(json, new TypeReference<List<T>>(){});
     }
@@ -130,7 +166,7 @@ public class OrcidHelper {
      * Hostname is used in the redirect_uri on the authorisation flow.
      * Our servers must be registered in Orcid API.
      */
-    public static String getHostname(){
+    public String getHostname(){
         String ret;
         try {
             ret = "https://" + InetAddress.getLocalHost().getHostName();

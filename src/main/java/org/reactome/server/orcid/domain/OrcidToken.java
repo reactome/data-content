@@ -2,13 +2,15 @@ package org.reactome.server.orcid.domain;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import javax.annotation.Nonnull;
 import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * @author Guilherme S Viteri <gviteri@ebi.ac.uk>
  */
 
-public class OrcidToken implements Serializable {
+public class OrcidToken implements Serializable, Comparable<OrcidToken> {
     //{"access_token":"56191de4-9dd9-4afa-8d6b-0f03816001e3","token_type":"bearer","refresh_token":"b8c1f9a0-ffaa-464a-9728-6076c356a1ca","expires_in":631138518,"scope":"/authenticate","name":"Guilherme Viteri","orcid":"0000-0002-5910-2066"}
 
     private String accessToken;
@@ -117,5 +119,23 @@ public class OrcidToken implements Serializable {
                 ", error='" + error + '\'' +
                 ", errorDescription='" + errorDescription + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        OrcidToken that = (OrcidToken) o;
+        return Objects.equals(orcid, that.orcid);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(orcid);
+    }
+
+    @Override
+    public int compareTo(@Nonnull OrcidToken o) {
+        return this.orcid.compareTo(o.getOrcid());
     }
 }

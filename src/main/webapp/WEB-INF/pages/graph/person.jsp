@@ -26,11 +26,11 @@
         </h3>
 
         <div class="extended-header favth-clearfix">
-            <div class="details-label favth-col-lg-2 favth-col-md-2 favth-col-sm-3 favth-col-xs-12" style="line-height:22px; <c:if test="${isAuthenticated}">line-height:30px;</c:if>" >
+            <div class="details-label favth-col-lg-2 favth-col-md-2 favth-col-sm-3 favth-col-xs-12" style="line-height:22px; <c:if test="${isAuthenticated}">line-height:30px;</c:if>">
                 <c:if test="${isAuthenticated}">
                     <img alt="ORCID logo" src="/content/resources/images/orcid_16x16.png" width="13" height="13" hspace="4" title="You are logged in with your ORCID account"/>
                 </c:if>
-                <span>Orcid</span>
+                <span>Orcid<a href="/orcid" title="Click here to know more about Orcid Integration">&nbsp;<i class="fa fa-external-link" aria-hidden="true" style="font-size: 12px; padding-right: 0;"></i></a></span>
             </div>
             <div class="details-field favth-col-lg-10 favth-col-md-10 favth-col-sm-9 favth-col-xs-12">
                 <c:if test="${not empty person.orcidId}">
