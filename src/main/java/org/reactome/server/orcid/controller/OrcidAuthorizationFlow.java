@@ -10,6 +10,7 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
+import org.reactome.server.orcid.dao.OrcidReportDAO;
 import org.reactome.server.orcid.domain.LoggedInMetadata;
 import org.reactome.server.orcid.domain.OrcidToken;
 import org.reactome.server.orcid.exception.OrcidOAuthException;
@@ -47,11 +48,12 @@ public class OrcidAuthorizationFlow {
     private String orcidAuthBaseUrl;
 
     private OrcidHelper orcidHelper;
+    private OrcidReportDAO orcidReportDAO;
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public ModelAndView login() {
         String redirectUri = orcidHelper.getHostname() + CALLBACK_PATH;
-        String orcidLoginUrl = String.format("%s/authorize?client_id=%s&response_type=code&scope=/activities/update%%20/read-limited&redirect_uri=%s", orcidAuthBaseUrl, clientId, redirectUri);
+        String orcidLoginUrl = String.format("%s/authorize?client_id=%s&response_type=code&scope=/activities/update&redirect_uri=%s", orcidAuthBaseUrl, clientId, redirectUri);
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setView(new RedirectView(orcidLoginUrl, true, false));
         return modelAndView;
@@ -92,6 +94,7 @@ public class OrcidAuthorizationFlow {
             int statusCode = httpResponse.getStatusLine().getStatusCode();
             if (statusCode == 200) {
                 request.getSession().setAttribute(ORCID_TOKEN, orcidToken);
+                orcidReportDAO.asyncPersistOrcidToken(orcidToken);
                 LoggedInMetadata lim = new LoggedInMetadata(orcidToken);
                 request.getSession().setAttribute("METADATA", objectMapper.writeValueAsString(lim));
                 return true;
@@ -121,5 +124,10 @@ public class OrcidAuthorizationFlow {
     @Autowired
     public void setOrcidHelper(OrcidHelper orcidHelper) {
         this.orcidHelper = orcidHelper;
+    }
+
+    @Autowired
+    public void setOrcidReportDAO(OrcidReportDAO orcidReportDAO) {
+        this.orcidReportDAO = orcidReportDAO;
     }
 }

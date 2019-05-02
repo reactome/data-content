@@ -16,7 +16,7 @@ public class OrcidToken implements Serializable, Comparable<OrcidToken> {
     private String accessToken;
     private String tokenType;
     private String refreshToken;
-    private String expiresIn;
+    private Long expiresIn;
     private String scope;
     private String name;
     private String orcid;
@@ -57,11 +57,11 @@ public class OrcidToken implements Serializable, Comparable<OrcidToken> {
     }
 
     @JsonProperty("expires_in")
-    public String getExpiresIn() {
+    public Long getExpiresIn() {
         return expiresIn;
     }
 
-    public void setExpiresIn(String expiresIn) {
+    public void setExpiresIn(Long expiresIn) {
         this.expiresIn = expiresIn;
     }
 

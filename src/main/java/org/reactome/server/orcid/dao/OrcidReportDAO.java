@@ -36,8 +36,13 @@ public class OrcidReportDAO {
 
     private static final Logger infoLogger = LoggerFactory.getLogger("infoLogger");
     private static final String REPORT_ENDPOINT = "http://localhost:5050/report/orcid/";
-    private static final String REPORT_ORCIDREGISTER = "register";
-    private static final String REPORT_ORCIDLOAD = "load/%s";
+
+    // URLs
+    private static final String REPORT_ORCIDCLAIMREGISTER = "claim/register";
+    private static final String REPORT_ORCIDCLAIMLOAD = "claim/load/%s";
+    private static final String REPORT_ORCIDTOKENREGISTER = "token/register";
+    private static final String REPORT_ORCIDTOKENLOAD = "token/load/%s";
+
     private static List<OrcidClaimRecord> pendingList = new ArrayList<>();
 
     @Value("${report.user:default}")
@@ -61,26 +66,24 @@ public class OrcidReportDAO {
                 list.add(new OrcidClaimRecord(stId, orcid, ss.getWork().getPutCode(), createdDate, lastModifiedDate));
             }
         }
-        new Thread(() -> persistResponse(list), "ReportOrcidThread").start();
+        new Thread(() -> persistClaimingResponse(list), "ReportOrcidThread").start();
+    }
+
+    public void asyncPersistOrcidToken(OrcidToken orcidToken) {
+        new Thread(() -> persistToken(orcidToken), "ReportOrcidTokenThread").start();
     }
 
     /**
-     * putcodes are added to pendingList if they can't be persisted in the report projectthe pSynchronise pending list every hour
+     * putcodes are added to pendingList if they can't be persisted in the report project, than ynchronise pending list every hour
      */
-    @Scheduled(cron="0 0 */1 * * *")
+    @Scheduled(cron = "0 0 */1 * * *")
     private synchronized void persistPendingList() {
-        if (pendingList != null && pendingList.size() > 0) persistResponse(pendingList);
+        if (pendingList != null && pendingList.size() > 0) persistClaimingResponse(pendingList);
     }
 
-    private synchronized void persistResponse(List<OrcidClaimRecord> list) {
+    private synchronized void persistClaimingResponse(List<OrcidClaimRecord> list) {
         try {
-            CloseableHttpClient client = getHttpClient();
-            HttpPost httpPost = new HttpPost(REPORT_ENDPOINT + REPORT_ORCIDREGISTER);
-            httpPost.setHeader("Content-Type", "application/json");
-            httpPost.setHeader("Accept", "application/json");
-            httpPost.setEntity(new StringEntity(orcidHelper.unmarshaller(list)));
-            CloseableHttpResponse response = client.execute(httpPost);
-            int statusCode = response.getStatusLine().getStatusCode();
+            int statusCode = httpPost(REPORT_ORCIDCLAIMREGISTER, list);
             if (statusCode != 200) {
                 pendingList.clear();
                 pendingList.addAll(list);
@@ -96,7 +99,7 @@ public class OrcidReportDAO {
     public List<OrcidClaimRecord> load(String orcid) {
         try {
             CloseableHttpClient client = getHttpClient();
-            HttpGet httpGet = new HttpGet(REPORT_ENDPOINT + String.format(REPORT_ORCIDLOAD, orcid));
+            HttpGet httpGet = new HttpGet(REPORT_ENDPOINT + String.format(REPORT_ORCIDCLAIMLOAD, orcid));
             httpGet.setHeader("Content-Type", "application/json");
             httpGet.setHeader("Accept", "application/json");
             CloseableHttpResponse response = client.execute(httpGet);
@@ -111,11 +114,32 @@ public class OrcidReportDAO {
         return null;
     }
 
+    private synchronized void persistToken(OrcidToken orcidToken) {
+        int statusCode = httpPost(REPORT_ORCIDTOKENREGISTER, orcidToken);
+        if (statusCode != 200) infoLogger.warn("[REPORT_ORCID022] Couldn't store Token. StatusCode: " + statusCode);
+    }
+
     private CloseableHttpClient getHttpClient() {
         CredentialsProvider provider = new BasicCredentialsProvider();
         UsernamePasswordCredentials credentials = new UsernamePasswordCredentials(this.reportUser, this.reportPassword);
         provider.setCredentials(AuthScope.ANY, credentials);
         return HttpClients.custom().setDefaultCredentialsProvider(provider).build();
+    }
+
+    private int httpPost(String pathMapping, Object entity) {
+        int ret = -1;
+        try {
+            CloseableHttpClient client = getHttpClient();
+            HttpPost httpPost = new HttpPost(REPORT_ENDPOINT + pathMapping);
+            httpPost.setHeader("Content-Type", "application/json");
+            httpPost.setHeader("Accept", "application/json");
+            httpPost.setEntity(new StringEntity(orcidHelper.unmarshaller(entity)));
+            CloseableHttpResponse response = client.execute(httpPost);
+            ret = response.getStatusLine().getStatusCode();
+        } catch (Throwable e) { // don't create pendingList if report is unavailable.
+            infoLogger.warn("[REPORT_ORCID001] Report project is unavailable.", e.getMessage());
+        }
+        return ret;
     }
 
     @Autowired
