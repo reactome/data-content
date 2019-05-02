@@ -145,7 +145,7 @@
                                             <strong>Reviewed Reactions:</strong> <c:choose><c:when test="${not empty entry.reviewedReactions}">${entry.reviewedReactions}</c:when><c:otherwise>0</c:otherwise></c:choose>
                                         </div>
                                         <c:if test="${not empty entry.orcidId}">
-                                            <div class="favth-col-xs-12"><strong>Orcid: </strong><img alt="ORCID logo" src="/content/resources/images/orcid_16x16.png" width="16" height="16" hspace="4" class="margin margin0" style="margin-bottom: 3px; margin-right: 1px;"/><a href="https://orcid.org/${entry.orcidId}" rel="nofollow noindex" target="_blank"> ${entry.orcidId}</a></div>
+                                            <div class="favth-col-xs-12"><strong>ORCID: </strong><img alt="ORCID logo" src="/content/resources/images/orcid_16x16.png" width="16" height="16" hspace="4" class="margin margin0" style="margin-bottom: 3px; margin-right: 1px;"/><a href="https://orcid.org/${entry.orcidId}" rel="nofollow noindex" target="_blank"> ${entry.orcidId}</a></div>
                                         </c:if>
                                     </c:if>
 

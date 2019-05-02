@@ -29,7 +29,7 @@
             <span style="display: none;">&nbsp;&nbsp;Errors: </span><span class="total-errors"></span><br/>
         </div>
         <div style="text-align:right;">
-            <img alt="ORCID logo" src="/content/resources/images/orcid_16x16.png" width="16" height="16" hspace="4" /><a href="https://orcid.org/${tokenSession.orcid}" target="_blank" rel="nofollow noindex"><span style="font-size:12px;">Visit your Orcid page</span></a></p>
+            <img alt="ORCID logo" src="/content/resources/images/orcid_16x16.png" width="16" height="16" hspace="4" /><a href="https://orcid.org/${tokenSession.orcid}" target="_blank" rel="nofollow noindex"><span style="font-size:12px;">Visit your ORCID page</span></a></p>
         </div>
     </div>
 
