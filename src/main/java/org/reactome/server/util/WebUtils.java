@@ -5,6 +5,7 @@ import org.jsoup.safety.Whitelist;
 import org.springframework.ui.ModelMap;
 
 import javax.servlet.http.HttpServletResponse;
+import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,5 +38,13 @@ public class WebUtils {
         model.addAttribute("title", "No details found for " + term);
         response.setStatus(HttpServletResponse.SC_NOT_FOUND);
         return "graph/noDetailsFound";
+    }
+
+    public static boolean matchesHostname(String hostname) {
+        try {
+            return hostname.equalsIgnoreCase(InetAddress.getLocalHost().getHostName());
+        } catch (Throwable t) {
+            return false;
+        }
     }
 }

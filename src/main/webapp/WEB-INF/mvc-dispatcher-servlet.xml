@@ -37,4 +37,11 @@
         </property>
     </bean>
 
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/orcid/**" />
+            <bean class="org.reactome.server.orcid.controller.OrcidServerInterceptor"/>
+        </mvc:interceptor>
+    </mvc:interceptors>
+
 </beans>

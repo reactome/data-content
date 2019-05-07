@@ -5,7 +5,7 @@
 <c:import url="../header.jsp"/>
 
 <c:set value="${pageContext.session.getAttribute('orcidToken')}" var="tokenSession" />
-<c:set value="${not empty tokenSession && (person.orcidId == tokenSession.orcid) || (not empty param['orcidtest'] && tokenSession.orcid == param['orcidtest'])}" var="isAuthenticated" />
+<c:set value="${showOrcidBtn && not empty tokenSession && (person.orcidId == tokenSession.orcid) || (not empty param['orcidtest'] && tokenSession.orcid == param['orcidtest'])}" var="isAuthenticated" />
 
 <%-- Person Page--%>
 <c:if test="${not empty person}">
@@ -37,7 +37,7 @@
                     <span><a href="https://orcid.org/${person.orcidId}" rel="nofollow noindex" target="_blank">https://orcid.org/${person.orcidId}</a></span>
                 </c:if>
 
-                <c:if test="${empty tokenSession}">
+                <c:if test="${empty tokenSession && showOrcidBtn}">
                     <button id="connect-orcid-button"><img id="orcid-id-icon" alt="ORCID logo" src="/content/resources/images/orcid_16x16.png" width="16" height="16" hspace="4" title="ORCID provides a persistent digital identifier that distinguishes you from other researchers. Learn more at orcid.org"/>Are you ${personName} ? Register or Connect your ORCID</button>
                 </c:if>
 
@@ -46,9 +46,9 @@
                         <button id="claim-your-work" name="all"><img id="orcid-id-icon-all" alt="ORCID logo" src="/content/resources/images/orcid_16x16.png" width="16" height="16" hspace="4" />Claim all work</button>
                     </c:when>
                     <c:otherwise>
-                        <c:if test="${empty person.orcidId && not empty tokenSession}">
+                        <c:if test="${showOrcidBtn && (empty person.orcidId && not empty tokenSession)}">
                             <div>
-                                <span>Let us know your <img alt="ORCID logo" src="/content/resources/images/orcid_16x16.png" width="16" height="16" hspace="4" class="margin margin0" style="margin-bottom: 3px; margin-right: 1px;"/>ORCID. Contact <a href="mailto:help@reactome.org?subject=[ORCID]I'd like my Orcid to be added in Reactome&body=Name: %0D%0AORCID: ">help@reactome.org</a></span>
+                                <span>Let us know your <img alt="ORCID logo" src="/content/resources/images/orcid_16x16.png" width="16" height="16" hspace="4" class="margin margin0" style="margin-bottom: 3px; margin-right: 1px;"/>ORCID. Contact <a href="mailto:help@reactome.org?subject=[ORCID]I'd like my Orcid to be added in Reactome&body=Name: %0D%0AORCID: ${tokenSession.orcid}">help@reactome.org</a></span>
                             </div>
                         </c:if>
                     </c:otherwise>
