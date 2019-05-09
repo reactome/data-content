@@ -48,7 +48,7 @@
                     <c:otherwise>
                         <c:if test="${showOrcidBtn && (empty person.orcidId && not empty tokenSession)}">
                             <div>
-                                <span>Let us know your <img alt="ORCID logo" src="/content/resources/images/orcid_16x16.png" width="16" height="16" hspace="4" class="margin margin0" style="margin-bottom: 3px; margin-right: 1px;"/>ORCID. Contact <a href="mailto:help@reactome.org?subject=[ORCID]I'd like my Orcid to be added in Reactome&body=Name: %0D%0AORCID: ${tokenSession.orcid}">help@reactome.org</a></span>
+                                <span><a href="/orcid/let-us-know-your-orcid" rel="nofollow noindex">Let us know your <img alt="ORCID logo" src="/content/resources/images/orcid_16x16.png" width="16" height="16" hspace="4" class="margin margin0" style="margin-bottom: 3px; margin-right: 1px;"/>ORCID.</a> </span>
                             </div>
                         </c:if>
                     </c:otherwise>

@@ -15,6 +15,7 @@ import org.reactome.server.orcid.util.OrcidHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -149,6 +150,19 @@ public class OrcidController {
         else validatePerson(tokenSession, orcid);
 
         return orcidHelper.getAllWorks(tokenSession);
+    }
+
+    @RequestMapping(value = "/let-us-know-your-orcid", method = RequestMethod.GET)
+    public String autoFillContactForm(ModelMap model, HttpServletRequest request) throws WorkClaimException {
+        OrcidToken tokenSession = orcidHelper.getAuthorisedOrcidUser(request);
+        if (tokenSession == null) return null;
+        final String MAIL_SUBJECT_PLACEHOLDER = "[ORCID] Please add my orcid into Reactome";
+        final String MAIL_MESSAGE_PLACEHOLDER = "Dear help desk,\n\nI am logged in orcid.org and I have granted Reactome access. However my ORCID [%s] isn't in my profile. \nCould you please update my records? \n\nThank you.\n\nWe will try to get back to you as soon as possible.\n\nNOTE: This is an automatically generated message.\n\n";
+        model.addAttribute("subject", MAIL_SUBJECT_PLACEHOLDER);
+        model.addAttribute("message", String.format(MAIL_MESSAGE_PLACEHOLDER, tokenSession.getOrcid()));
+        model.addAttribute("title", "Let us know your orcid");
+        model.addAttribute("tokenSession", tokenSession);
+        return "orcid/shareYourOrcid";
     }
 
     /**

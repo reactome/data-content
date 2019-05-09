@@ -33,7 +33,7 @@ import java.util.List;
  */
 @Component
 public class OrcidHelper {
-    private static final String ORCID_TOKEN = "orcidToken";
+    public static final String ORCID_TOKEN = "orcidToken";
     private static final Integer MAX_BULK_POST = 100; // Orcid API won't accept more than 100 per call
 
     @Value("${orcid.api.baseurl}")
