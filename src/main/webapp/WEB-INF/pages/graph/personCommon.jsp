@@ -113,7 +113,7 @@
             });
 
         jQuery("#connect-orcid-button").click(function () {
-            window.open("/orcid/login", "_blank", "toolbar=no, scrollbars=yes, width=500, height=600, top=500, left=500");
+            window.open("/content/orcid/login", "_blank", "toolbar=no, scrollbars=yes, width=500, height=600, top=500, left=500");
         });
 
         <c:if test="${isAuthenticated}">
