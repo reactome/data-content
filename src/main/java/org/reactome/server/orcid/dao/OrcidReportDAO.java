@@ -35,7 +35,7 @@ import java.util.List;
 public class OrcidReportDAO {
 
     private static final Logger infoLogger = LoggerFactory.getLogger("infoLogger");
-    private static final String REPORT_ENDPOINT = "http://localhost:5050/report/orcid/";
+    private static final String REPORT_ENDPOINT = "http://localhost:8080/report/orcid/";
 
     // URLs
     private static final String REPORT_ORCIDCLAIMREGISTER = "claim/register";
