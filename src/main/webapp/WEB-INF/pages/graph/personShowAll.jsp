@@ -130,6 +130,6 @@
     </div>
 </c:if>
 
-<script src="http://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <c:import url="personCommon.jsp"/>
 <c:import url="../footer.jsp"/>

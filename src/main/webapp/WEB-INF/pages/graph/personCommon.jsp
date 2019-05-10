@@ -11,7 +11,7 @@
 </c:if>
 
 <c:if test="${showOrcidBtn}">
-    <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/hot-sneaks/jquery-ui.min.css" />
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/hot-sneaks/jquery-ui.min.css" />
 
     <c:if test="${not empty tokenSession}">
         <div id="dialog" title="Claiming works..." style="display: none;">
