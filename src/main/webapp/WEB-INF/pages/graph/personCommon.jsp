@@ -112,8 +112,10 @@
                 buttons: [ { text: "OK", click: function() { jQuery(this).dialog("close"); } } ]
             });
 
-        jQuery("#connect-orcid-button").click(function () {
-            window.open("/content/orcid/login", "_blank", "toolbar=no, scrollbars=yes, width=500, height=600, top=500, left=500");
+        jQuery("#connect-orcid-button").click(function (e) {
+            e.preventDefault();
+            var oauthpopup = window.open("about:blank", "_blank", "toolbar=no, scrollbars=yes, width=500, height=600, top=500, left=500");
+            oauthpopup.location.href='/content/orcid/login';
         });
 
         <c:if test="${isAuthenticated}">
