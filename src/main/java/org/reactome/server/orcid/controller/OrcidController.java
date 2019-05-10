@@ -38,12 +38,9 @@ public class OrcidController {
     private OrcidHelper orcidHelper;
 
     @RequestMapping(value = "/claim/all", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    public @ResponseBody ClaimingSummary claimAll(@RequestBody String personId, @RequestParam(name = "orcidtest", required = false) String orcidTestParam, HttpServletRequest request) throws IOException, WorkClaimException, OrcidOAuthException {
+    public @ResponseBody ClaimingSummary claimAll(@RequestBody String personId, HttpServletRequest request) throws IOException, WorkClaimException, OrcidOAuthException {
         OrcidToken tokenSession = orcidHelper.getAuthorisedOrcidUser(request);
-
-        // TODO REMOVE THIS AND THE REQUEST PARAM
-        if (orcidTestParam != null) tokenSession.setOrcid(orcidTestParam);
-        else validatePerson(tokenSession, personId);
+        validatePerson(tokenSession, personId);
 
         WorkBulkResponse workBulkResponse = new WorkBulkResponse();
         Collection<Pathway> authoredPathways = personService.getAuthoredPathways(personId);
@@ -78,12 +75,9 @@ public class OrcidController {
     }
 
     @RequestMapping(value = "/claim/pa", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    public @ResponseBody ClaimingSummary claimPathwayAuthored(@RequestBody String personId, @RequestParam(name = "orcidtest", required = false) String orcidTestParam, HttpServletRequest request) throws IOException, WorkClaimException, OrcidOAuthException {
+    public @ResponseBody ClaimingSummary claimPathwayAuthored(@RequestBody String personId, HttpServletRequest request) throws IOException, WorkClaimException, OrcidOAuthException {
         OrcidToken tokenSession = orcidHelper.getAuthorisedOrcidUser(request);
-
-        // TODO REMOVE THIS AND THE REQUEST PARAM
-        if (orcidTestParam != null) tokenSession.setOrcid(orcidTestParam);
-        else validatePerson(tokenSession, personId);
+        validatePerson(tokenSession, personId);
 
         WorkBulkResponse workBulkResponse = new WorkBulkResponse();
         Collection<Pathway> authoredPathways = personService.getAuthoredPathways(personId);
@@ -94,12 +88,9 @@ public class OrcidController {
     }
 
     @RequestMapping(value = "/claim/pr", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    public @ResponseBody ClaimingSummary claimReviewedPathway(@RequestBody String personId, @RequestParam(name = "orcidtest", required = false) String orcidTestParam, HttpServletRequest request) throws IOException, WorkClaimException, OrcidOAuthException {
+    public @ResponseBody ClaimingSummary claimReviewedPathway(@RequestBody String personId, HttpServletRequest request) throws IOException, WorkClaimException, OrcidOAuthException {
         OrcidToken tokenSession = orcidHelper.getAuthorisedOrcidUser(request);
-
-        // TODO REMOVE THIS AND THE REQUEST PARAM
-        if (orcidTestParam != null) tokenSession.setOrcid(orcidTestParam);
-        else validatePerson(tokenSession, personId);
+        validatePerson(tokenSession, personId);
 
         WorkBulkResponse workBulkResponse = new WorkBulkResponse();
         Collection<Pathway> reviewedPathways = personService.getReviewedPathways(personId);
@@ -110,12 +101,9 @@ public class OrcidController {
     }
 
     @RequestMapping(value = "/claim/ra", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    public @ResponseBody ClaimingSummary claimAuthoredReaction(@RequestBody String personId, @RequestParam(name = "orcidtest", required = false) String orcidTestParam, HttpServletRequest request) throws IOException, WorkClaimException, OrcidOAuthException {
+    public @ResponseBody ClaimingSummary claimAuthoredReaction(@RequestBody String personId, HttpServletRequest request) throws IOException, WorkClaimException, OrcidOAuthException {
         OrcidToken tokenSession = orcidHelper.getAuthorisedOrcidUser(request);
-
-        // TODO REMOVE THIS AND THE REQUEST PARAM
-        if (orcidTestParam != null) tokenSession.setOrcid(orcidTestParam);
-        else validatePerson(tokenSession, personId);
+        validatePerson(tokenSession, personId);
 
         WorkBulkResponse workBulkResponse = new WorkBulkResponse();
         Collection<ReactionLikeEvent> authoredReactions = personService.getAuthoredReactions(personId);
@@ -126,12 +114,9 @@ public class OrcidController {
     }
 
     @RequestMapping(value = "/claim/rr", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    public @ResponseBody ClaimingSummary claimReviewedReaction(@RequestBody String personId, @RequestParam(name = "orcidtest", required = false) String orcidTestParam, HttpServletRequest request) throws IOException, WorkClaimException, OrcidOAuthException {
+    public @ResponseBody ClaimingSummary claimReviewedReaction(@RequestBody String personId, HttpServletRequest request) throws IOException, WorkClaimException, OrcidOAuthException {
         OrcidToken tokenSession = orcidHelper.getAuthorisedOrcidUser(request);
-
-        // TODO REMOVE THIS AND THE REQUEST PARAM
-        if (orcidTestParam != null) tokenSession.setOrcid(orcidTestParam);
-        else validatePerson(tokenSession, personId);
+        validatePerson(tokenSession, personId);
 
         WorkBulkResponse workBulkResponse = new WorkBulkResponse();
         Collection<ReactionLikeEvent> reviewedReactions = personService.getReviewedReactions(personId);
@@ -140,15 +125,10 @@ public class OrcidController {
         return new ClaimingSummary(reviewedReactions.size(), totalExecuted, workBulkResponse);
     }
 
-
     @RequestMapping(value = "/{orcid:.*}/works", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public @ResponseBody Works getAllWorks(@PathVariable String orcid, @RequestParam(name = "orcidtest", required = false) String orcidTestParam, HttpServletRequest request) throws IOException, WorkClaimException {
+    public @ResponseBody Works getAllWorks(@PathVariable String orcid, HttpServletRequest request) throws IOException, WorkClaimException {
         OrcidToken tokenSession = orcidHelper.getAuthorisedOrcidUser(request);
-
-        // TODO REMOVE THIS AND THE REQUEST PARAM
-        if (orcidTestParam != null) tokenSession.setOrcid(orcidTestParam);
-        else validatePerson(tokenSession, orcid);
-
+        validatePerson(tokenSession, orcid);
         return orcidHelper.getAllWorks(tokenSession);
     }
 

@@ -5,7 +5,7 @@
 <c:import url="../header.jsp"/>
 
 <c:set value="${pageContext.session.getAttribute('orcidToken')}" var="tokenSession" />
-<c:set value="${showOrcidBtn && not empty tokenSession && (person.orcidId == tokenSession.orcid) || (not empty param['orcidtest'] && tokenSession.orcid == param['orcidtest'])}" var="isAuthenticated" />
+<c:set value="${showOrcidBtn && not empty tokenSession && (person.orcidId == tokenSession.orcid)}" var="isAuthenticated" />
 
 <%-- Person Page--%>
 <c:if test="${not empty person}">
@@ -48,7 +48,7 @@
                     <c:otherwise>
                         <c:if test="${showOrcidBtn && (empty person.orcidId && not empty tokenSession)}">
                             <div>
-                                <span><a href="/orcid/let-us-know-your-orcid" rel="nofollow noindex">Let us know your <img alt="ORCID logo" src="/content/resources/images/orcid_16x16.png" width="16" height="16" hspace="4" class="margin margin0" style="margin-bottom: 3px; margin-right: 1px;"/>ORCID.</a> </span>
+                                <span><a href="/content/orcid/let-us-know-your-orcid" rel="nofollow noindex">Let us know your <img alt="ORCID logo" src="/content/resources/images/orcid_16x16.png" width="16" height="16" hspace="4" class="margin margin0" style="margin-bottom: 3px; margin-right: 1px;"/>ORCID.</a> </span>
                             </div>
                         </c:if>
                     </c:otherwise>
@@ -138,7 +138,7 @@
                         </c:choose>
                     </div>
                 </c:if>
-                <c:if test="${not empty tokenSession && (person.orcidId == tokenSession.orcid) || (not empty param['orcidtest'] && tokenSession.orcid == param['orcidtest'])}">
+                <c:if test="${isAuthenticated}">
                     <c:set var="columns" value="favth-col-lg-3 favth-col-md-3 favth-col-sm-6 favth-col-xs-12"/>
                     <c:if test="${param['showAll']}">
                         <c:set var="columns" value="favth-col-xs-12"/>
@@ -198,7 +198,7 @@
                         </c:choose>
                     </div>
                 </c:if>
-                <c:if test="${not empty tokenSession && (person.orcidId == tokenSession.orcid) || (not empty param['orcidtest'] && tokenSession.orcid == param['orcidtest'])}">
+                <c:if test="${isAuthenticated}">
                     <c:set var="columns" value="favth-col-lg-3 favth-col-md-3 favth-col-sm-6 favth-col-xs-12"/>
                     <c:if test="${param['showAll']}">
                         <c:set var="columns" value="avth-col-xs-12"/>
@@ -319,7 +319,7 @@
                             </c:choose>
                         </div>
                     </c:if>
-                    <c:if test="${not empty tokenSession && (person.orcidId == tokenSession.orcid) || (not empty param['orcidtest'] && tokenSession.orcid == param['orcidtest'])}">
+                    <c:if test="${isAuthenticated}">
                         <c:set var="columns" value="favth-col-lg-3 favth-col-md-3 favth-col-sm-6 favth-col-xs-12"/>
                         <c:if test="${param['showAll']}">
                             <c:set var="columns" value="favth-col-xs-12"/>
