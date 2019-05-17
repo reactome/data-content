@@ -5,6 +5,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang.StringUtils;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
@@ -44,9 +45,10 @@ public class OrcidHelper {
     // Reactome URLs
     private static final String DETAILS_URL = "https://reactome.org/content/detail/##ID##";
     private static final String PWB_URL = "https://reactome.org/PathwayBrowser/#/##ID##";
+    private static final String DOI_URL = "http://dx.doi.org/##ID##";
 
     public enum ContributionRole {
-        AUTHORED, REVIEWED, BOTH;
+        AUTHORED, REVIEWED, BOTH
     }
 
     private Work createWork(Event event, ContributionRole contributionRole) {
@@ -58,7 +60,21 @@ public class OrcidHelper {
             work.setPublicationDate(new PublicationDate(event.getCreated().getDateTime()));
         }
         work.setUrl(DETAILS_URL.replace("##ID##", event.getStId()));
-        work.addExternalId(new ExternalId(ExternalIdType.OTHERID.getName(), event.getStId(), PWB_URL.replace("##ID##", event.getStId()), "SELF"));
+
+        String type = ExternalIdType.OTHERID.getName();
+        String id = event.getStId();
+        String url = PWB_URL.replace("##ID##", id);
+        if (event instanceof Pathway) {
+            Pathway p = (Pathway) event;
+            if (StringUtils.isNotEmpty(p.getDoi())) {
+                id = p.getDoi();
+                type = ExternalIdType.DOI.getName();
+                url = DOI_URL.replace("##ID##", id);
+                System.out.println(event.getStId() + " -- " + id);
+            }
+        }
+        work.addExternalId(new ExternalId(type, id, url, "SELF"));
+
         if (contributionRole == ContributionRole.BOTH) {
             work.addContributor(new WorkContributor(new ContributorAttributes(ContributorAttributes.ContributorSequence.FIRST, ContributorAttributes.ContributorRole.AUTHOR)));
             work.addContributor(new WorkContributor(new ContributorAttributes(ContributorAttributes.ContributorSequence.ADDITIONAL, ContributorAttributes.ContributorRole.ASSIGNEE)));
