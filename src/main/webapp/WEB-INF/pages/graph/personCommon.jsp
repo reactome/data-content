@@ -133,7 +133,7 @@
                             jQuery("#progressbar").progressbar({ value: false });
 
                             jQuery.ajax({
-                                url: '/content/orcid/claim'+path+'<c:if test="${not empty param['orcidtest']}">?orcidtest=${param['orcidtest']}</c:if>',
+                                url: '/content/orcid/claim'+path,
                                 type: "POST",
                                 contentType: "text/plain",
                                 dataType: "json",
