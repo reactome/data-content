@@ -21,14 +21,14 @@
 
         <c:if test="${not empty topLevelNodes}">
             <c:if test="${ (not empty topLevelNodes) && (not empty topLevelNodes.iterator().next().children)}">
-                <div class="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-12 favth-text-right">
+                <div class="favth-col-xs-12 favth-text-right">
                     <a id="pwb_toggle" class="expand-all">Expand all</a>
                 </div>
             </c:if>
         </c:if>
 
         <c:if test="${fn:length(availableSpecies) gt 1  && isMobile}">
-            <div class="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-12">
+            <div class="favth-col-xs-12">
                 <div class="species-selector">
                     Species:
                     <select name="availableSpecies" id="availableSpeciesSelSm" class="speciesSelection" >
@@ -40,7 +40,7 @@
             </div>
         </c:if>
 
-        <div class="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-12">
+        <div class="favth-col-xs-12">
             <c:forEach var="topLvl" items="${topLevelNodes}">
                 <c:choose>
                     <c:when test="${empty topLvl.children}">

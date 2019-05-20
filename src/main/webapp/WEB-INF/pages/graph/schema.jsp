@@ -5,7 +5,7 @@
 <c:import url="../header.jsp"/>
 <link rel="stylesheet" href="/content/resources/css/schema.css" type="text/css">
 
-<div class="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-12">
+<div class="favth-col-xs-12">
     <h3 class="favth-visible-lg favth-visible-md">Graph Database :: Data Schema</h3>
     <h4 class="favth-visible-xs favth-visible-sm">Graph Database :: Data Schema</h4>
 

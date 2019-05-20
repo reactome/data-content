@@ -5,7 +5,7 @@
 
 <c:import url="../header.jsp"/>
 
-<div class="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-12" id="search-headers">
+<div class="favth-col-xs-12" id="search-headers">
     <div>
         <h2>Search results for <span class="searchterm">${q}</span></h2>
         <p class="favth-hidden-xs favth-hidden-sm">Showing <strong>${groupedResult.rowCount}</strong> results out of <strong>${groupedResult.numberOfMatches}</strong></p>
@@ -13,7 +13,7 @@
 </div>
 
 <%-- MAX-WIDTH 768px --%>
-<div class="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-12 favth-visible-xs favth-visible-sm">
+<div class="favth-col-xs-12 favth-visible-xs favth-visible-sm">
     <div style="margin-top: 10px;">
         <a><i class="fa fa-filter"></i><span onclick="openSideNav()">Filter your results (<strong>${groupedResult.rowCount}</strong>  of <strong>${groupedResult.numberOfMatches}</strong>)</span></a>
     </div>
@@ -124,10 +124,10 @@
 
                                     <%-- REGULATION --%>
                                     <c:if test="${not empty entry.regulator}">
-                                        <div class="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-12"><strong>Regulator:</strong> <a href="./detail/${entry.regulatorId}" class="" title="Show Details" >${entry.regulator}</a></div>
+                                        <div class="favth-col-xs-12"><strong>Regulator:</strong> <a href="./detail/${entry.regulatorId}" class="" title="Show Details" >${entry.regulator}</a></div>
                                     </c:if>
                                     <c:if test="${not empty entry.regulatedEntity}">
-                                        <div class="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-12"><strong>Regulated entity:</strong> <a href="./detail/${entry.regulatedEntityId}" class="" title="Show Details" >${entry.regulatedEntity}</a></div>
+                                        <div class="favth-col-xs-12"><strong>Regulated entity:</strong> <a href="./detail/${entry.regulatedEntityId}" class="" title="Show Details" >${entry.regulatedEntity}</a></div>
                                     </c:if>
 
                                     <%-- PERSON --%>
@@ -145,16 +145,16 @@
                                             <strong>Reviewed Reactions:</strong> <c:choose><c:when test="${not empty entry.reviewedReactions}">${entry.reviewedReactions}</c:when><c:otherwise>0</c:otherwise></c:choose>
                                         </div>
                                         <c:if test="${not empty entry.orcidId}">
-                                            <div class="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-12"><strong>OrcidID:</strong> <a href="https://orcid.org/${entry.orcidId}" rel="nofollow noindex" target="_blank">${entry.orcidId}</a></div>
+                                            <div class="favth-col-xs-12"><strong>ORCID: </strong><img alt="ORCID logo" src="/content/resources/images/orcid_16x16.png" width="16" height="16" hspace="4" class="margin margin0" style="margin-bottom: 3px; margin-right: 1px;"/><a href="https://orcid.org/${entry.orcidId}" rel="nofollow noindex" target="_blank"> ${entry.orcidId}</a></div>
                                         </c:if>
                                     </c:if>
 
                                     <%-- ICON --%>
                                     <c:if test="${entry.exactType == 'Icon'}">
-                                        <div class="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-12 padding0">
+                                        <div class="favth-col-xs-12 padding0">
                                             <div class="favth-col-lg-8 favth-col-md-8 favth-col-sm-8 favth-col-xs-8 padding0">
                                                 <c:if test="${not empty entry.iconCuratorName}">
-                                                    <div class="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-12">
+                                                    <div class="favth-col-xs-12">
                                                         <strong>Curator:</strong>
                                                         <c:choose>
                                                             <c:when test="${not empty entry.iconCuratorOrcidId}">
@@ -167,7 +167,7 @@
                                                     </div>
                                                 </c:if>
                                                 <c:if test="${not empty entry.iconDesignerName}">
-                                                    <div class="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-12">
+                                                    <div class="favth-col-xs-12">
                                                         <strong>Designer:</strong>
                                                         <c:choose>
                                                             <c:when test="${not empty entry.iconDesignerOrcidId}">
@@ -187,7 +187,7 @@
                                     </c:if>
 
                                     <c:if test="${not empty entry.summation}">
-                                        <div class="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-12 summation">${entry.summation}</div>
+                                        <div class="favth-col-xs-12 summation">${entry.summation}</div>
                                     </c:if>
                                 </div>
                             </div> <%-- result --%>

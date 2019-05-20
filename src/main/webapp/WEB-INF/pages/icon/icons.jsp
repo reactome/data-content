@@ -6,7 +6,7 @@
 <c:choose>
     <c:when test="${not empty entries}">
 
-        <div class="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-12">
+        <div class="favth-col-xs-12">
             <div class="ehld-breadcrumb">
                 <a href="/icon-lib" class="icons-lib-home"><i class="icon-home"></i>Library home</a> > ${category}
             </div>
@@ -17,16 +17,16 @@
             </div>
         </div>
 
-        <div class="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-12">
+        <div class="favth-col-xs-12">
         <c:forEach var="entry" items="${entries}" varStatus="loop">
             <div class="favth-col-lg-3 favth-col-md-4 favth-col-sm-6 favth-col-xs-12">
                 <div class="favth-clearfix svg-container">
-                    <div class="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-12 svg-component">
+                    <div class="favth-col-xs-12 svg-component">
                         <a href="${pageContext.request.contextPath}/detail/${entry.stId}">
                             <img src="/icon/${entry.stId}.svg" alt="${entry.name}" />
                         </a>
                     </div>
-                    <div class="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-12 svg-moreinfo">
+                    <div class="favth-col-xs-12 svg-moreinfo">
                         <a href="${pageContext.request.contextPath}/detail/${entry.stId}" title="${entry.name}"><span class="text-lg-overflow">${entry.name}</span></a>
                     </div>
                 </div>
@@ -35,7 +35,7 @@
         </div>
 
         <c:if test="${maxpage>1}">
-            <div class="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-12">
+            <div class="favth-col-xs-12">
                 <div id="pagination" class="pagination" style="margin: 1% auto">
                     <ul class="pagination-list">
                         <c:choose>
@@ -81,13 +81,13 @@
                     </ul>
                 </div>
             </div>
-            <div class="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-12 disclaimer-info ">
+            <div class="favth-col-xs-12 disclaimer-info ">
                 <c:import url="disclaimer.jsp" />
             </div>
         </c:if>
     </c:when>
     <c:otherwise>
-        <div class="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-12 disclaimer-info">
+        <div class="favth-col-xs-12 disclaimer-info">
             <p class="alert alert-danger">Sorry we could not find any icons in the category "${category}". Visit <a href="/icon-lib">Icon Library</a> to access the correct category.</p>
         </div>
     </c:otherwise>

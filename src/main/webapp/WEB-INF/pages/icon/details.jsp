@@ -4,7 +4,7 @@
 
 <c:import url="../header.jsp"/>
 
-<div class="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-12">
+<div class="favth-col-xs-12">
 
 <h3 class="details-title">
     <i class="fa fa-puzzle-piece title-icon" title="${entry.exactType}"></i> ${entry.iconName}
@@ -97,13 +97,13 @@
                     </c:forEach>
                 </c:forEach>
                 <c:if test="${suggestExpandAll}">
-                    <div class="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-12 favth-text-right">
+                    <div class="favth-col-xs-12 favth-text-right">
                         <a id="pwb_toggle" class="expand-all">Expand all</a>
                     </div>
                 </c:if>
             </c:if>
 
-            <div class="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-12">
+            <div class="favth-col-xs-12">
                  <c:forEach var="ehldPWB" items="${pwbTree}">
                     <c:forEach var="topLvl" items="${ehldPWB}">
                     <c:choose>
@@ -149,7 +149,7 @@
     <fieldset class="fieldset-details">
         <legend>Entries for ${entry.name}</legend>
         <div class="fieldset-pair-container">
-            <div class="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-12">
+            <div class="favth-col-xs-12">
                 <div class="wrap overflow">
                     <c:forEach var="iconPE" items="${entry.iconPhysicalEntities}">
                         <div class="favth-col-lg-6 favth-col-md-6 favth-col-sm-6 favth-col-xs-12 text-overflow">

@@ -618,6 +618,59 @@ span.secondary-identifiers {
     box-shadow: 0 0 10px 6px #f1f1f1;
 
 }
+/* Orcid widget and progress bar */
+.ui-widget .ui-widget {
+    font-size: 0.5em !important;
+}
+
+.ui-widget-overlay {
+    background: repeat-x scroll 50% 50% #AAA !important;
+    opacity:0.3;
+}
+
+.ui-widget-header {
+    border: none !important;
+    background: #2F9EC2 !important;
+    color: #FFF !important;
+    font-weight: bold !important;
+}
+
+.ui-progressbar .ui-progressbar-value {
+    height: 104% !important;
+    width: 101% !important;
+}
+
+/* ORCID Button */
+button[id^="connect-orcid-button"],
+button[id^="claim-your-work"] {
+    border: 1px solid #D3D3D3;
+    padding: .3em;
+    background-color: #fff;
+    border-radius: 8px;
+    /*box-shadow: 1px 1px 3px #999;*/
+    cursor: pointer;
+    color: #999;
+    font-weight: bold;
+    font-size: .8em;
+    line-height: 22px;
+    vertical-align: middle;
+}
+
+button[id^="connect-orcid-button"]:hover,
+button[id^="claim-your-work"]:hover{
+    border: 1px solid #338caf;
+    color: #338caf;
+}
+
+img[id^="orcid-id-icon"],
+img[id^="claim-your-work"]{
+    width: 20px;
+    height: 20px;
+    display: block;
+    margin: 0 .5em 0 0;
+    padding: 0;
+    float: left;
+}
 
 /* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
 @media screen and (max-height: 450px) {

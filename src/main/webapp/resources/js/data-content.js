@@ -20,19 +20,22 @@ jQuery(document).ready(function() {
 
         if(content.length > showCharNumber) {
             var showing = shorten(content, showCharNumber);
-            var hiding = content.substr(showing.length, content.length - showing.length);
-            var html = jQuery.trim(showing) + '<span class="moreellipses">' + ellipsestext + '</span><span class="morecontent"><span>' + hiding + '</span><a href="javascript:void(0);" class="morelink">' + moretext + '</a></span>';
 
-            // highlight term again
-            var hightlightTermArr = jQuery(this).find(".highlighting");
-            if (hightlightTermArr.length) {
-                html = highlighter(hightlightTermArr[0].innerText, html);
-            } else {
-                // highlight based on the search term, just in case
-                html = highlighter(jQuery("#js_search-term").val(), html);
+            if(showing.length !== content.length) {
+                var hiding = content.substr(showing.length, content.length - showing.length);
+                var html = jQuery.trim(showing) + '<span class="moreellipses">' + ellipsestext + '</span><span class="morecontent"><span>' + hiding + '</span><a href="javascript:void(0);" class="morelink">' + moretext + '</a></span>';
+
+                // highlight term again
+                var hightlightTermArr = jQuery(this).find(".highlighting");
+                if (hightlightTermArr.length) {
+                    html = highlighter(hightlightTermArr[0].innerText, html);
+                } else {
+                    // highlight based on the search term, just in case
+                    html = highlighter(jQuery("#js_search-term").val(), html);
+                }
+
+                jQuery(this).html(html);
             }
-
-            jQuery(this).html(html);
         }
     });
 

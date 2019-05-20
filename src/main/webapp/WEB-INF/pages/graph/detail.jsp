@@ -3,7 +3,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <c:import url="../header.jsp"/>
-    <div class="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-12">
+    <div class="favth-col-xs-12">
         <c:import url="title.jsp"/>
 
         <c:if test="${not empty topLevelNodes}">
@@ -15,9 +15,9 @@
                 <legend>General</legend>
                 <c:if test="${not empty previewURL}" >
 
-                    <div class="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-12 favth-hidden-xs">
+                    <div class="favth-col-xs-12 favth-hidden-xs">
                         <div class="favth-col-lg-6 favth-col-md-6 favth-col-sm-6 favth-col-xs-6">
-                            <div class="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-12 padding0">
+                            <div class="favth-col-xs-12 padding0">
                                 <div class="">
                                     <i class="fa fa-file-code-o" style="color: #2F9EC2"></i>
                                     <a href="/ContentService/exporter/event/${databaseObject.stId}.sbml" download="${databaseObject.stId}.sbml" title="Export diagram to SBML">SBML</a>&nbsp;|&nbsp;
@@ -39,7 +39,7 @@
                         <c:if test="${not (empty topLevelNodes && databaseObject.schemaClass=='Pathway')}">
                             <c:set var="url" value="${fn:replace(downloadURL, '_stId_', databaseObject.stId)}" />
                             <div class="favth-col-lg-6 favth-col-md-6 favth-col-sm-6 favth-col-xs-6 padding0">
-                                <div class="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-12 padding0">
+                                <div class="favth-col-xs-12 padding0">
                                     <div class="pull-right">
                                         <i class="fa fa-download" style="color: #2F9EC2"></i>
                                         <a href="${fn:replace(url, "_ext_", "svg")}" download="${databaseObject.stId}.svg">SVG</a>&nbsp;|&nbsp;
@@ -63,7 +63,7 @@
 
                     <c:if test="${not (empty topLevelNodes && databaseObject.schemaClass=='Pathway')}">
                         <div>
-                            <div class="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-12 padding0 text-center">
+                            <div class="favth-col-xs-12 padding0 text-center">
                                 <c:choose>
                                     <c:when test="${empty topLevelNodes}">
                                         <div class="text-center margin0 top" style="min-height: 300px;">

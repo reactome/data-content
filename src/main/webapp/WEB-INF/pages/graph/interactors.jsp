@@ -6,7 +6,7 @@
 
 <%-- Interactors Intermediate Page--%>
 <c:if test="${not empty interactions}">
-    <div class="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-12 ">
+    <div class="favth-col-xs-12 ">
         <h3 class="details-title">
             <i class="sprite sprite-Interactor" title="${referenceEntity.displayName}"></i>
             ${referenceEntity.displayName}

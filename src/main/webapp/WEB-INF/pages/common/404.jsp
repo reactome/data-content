@@ -10,12 +10,12 @@
 </c:if>
 <c:import url="../header.jsp"/>
 <script>document.title = "Reactome | (404) Not found";</script>
-<div class="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-12">
+<div class="favth-col-xs-12">
     <div class="moduletable">
         <div class="custom">
             <div class="favth-container">
                 <div class="favth-row">
-                    <div class="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-12">
+                    <div class="favth-col-xs-12">
                         <h2>The requested page can't be found.</h2>
                         <hr>
                         <p>If difficulties persist, please contact the <a href="mailto:help@reactome.org">help@reactome.org</a> and report the error below.</p>

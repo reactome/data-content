@@ -7,6 +7,7 @@ import org.reactome.server.graph.service.PersonService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,6 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
+import static org.reactome.server.util.WebUtils.matchesHostname;
 import static org.reactome.server.util.WebUtils.noDetailsFound;
 
 /**
@@ -27,6 +29,7 @@ import static org.reactome.server.util.WebUtils.noDetailsFound;
  */
 @SuppressWarnings("unused")
 @Controller
+@RequestMapping(value = "/detail/person")
 class AuthorReviewedController {
 
     private static final Logger infoLogger = LoggerFactory.getLogger("infoLogger");
@@ -35,9 +38,14 @@ class AuthorReviewedController {
     private static final String TITLE = "title";
     private static final Integer MAX = 15;
 
+    private static final String SHOW_ORCID_BTN = "showOrcidBtn";
+
     private PersonService personService;
 
-    @RequestMapping(value = "/detail/person/{id:.*}", method = RequestMethod.GET)
+    @Value("${orcid.server}")
+    private String hostname;
+
+    @RequestMapping(value = "/{id:.*}", method = RequestMethod.GET)
     public String personDetail(@PathVariable String id, ModelMap model, HttpServletResponse response,
                                @RequestParam(defaultValue = "false") Boolean showAll) {
         Person person = personService.findPerson(id);
@@ -61,6 +69,8 @@ class AuthorReviewedController {
             model.addAttribute("reviewedReactionsSize", reviewedReactions.size());
             model.addAttribute("reviewedReactions", showAll ? reviewedReactions : reviewedReactions.stream().limit(MAX).collect(Collectors.toList()));
 
+            model.addAttribute(SHOW_ORCID_BTN, matchesHostname(hostname));
+
             infoLogger.info("Search request for id: {} was found", id);
             return "graph/person";
         } else {
@@ -69,17 +79,18 @@ class AuthorReviewedController {
         }
     }
 
-    @RequestMapping(value = "/detail/person/{id:.*}/pathways/authored", method = RequestMethod.GET)
+    @RequestMapping(value = "/{id:.*}/pathways/authored", method = RequestMethod.GET)
     public String personPathwaysAuthored(@PathVariable String id, ModelMap model, HttpServletResponse response) {
         Person person = personService.findPerson(id);
-
         if (person != null) {
             model.addAttribute(TITLE, person.getDisplayName());
             model.addAttribute("person", person);
             model.addAttribute("label", "Authored Pathways");
+            model.addAttribute("claimyourworkpath", "pa");
             model.addAttribute("type", "Pathway");
             model.addAttribute("attribute", "reviewed");
             model.addAttribute("list", personService.getAuthoredPathways(id));
+            model.addAttribute(SHOW_ORCID_BTN, matchesHostname(hostname));
             return "graph/personShowAll";
         } else {
             infoLogger.info("Search request for id: {} was not found", id);
@@ -87,17 +98,18 @@ class AuthorReviewedController {
         }
     }
 
-    @RequestMapping(value = "/detail/person/{id:.*}/pathways/reviewed", method = RequestMethod.GET)
+    @RequestMapping(value = "/{id:.*}/pathways/reviewed", method = RequestMethod.GET)
     public String personPathwaysReviewed(@PathVariable String id, ModelMap model, HttpServletResponse response) {
         Person person = personService.findPerson(id);
-
         if (person != null) {
             model.addAttribute(TITLE, person.getDisplayName());
             model.addAttribute("person", person);
             model.addAttribute("label", "Reviewed Pathways");
+            model.addAttribute("claimyourworkpath", "pr");
             model.addAttribute("type", "Pathway");
             model.addAttribute("attribute", "reviewed");
             model.addAttribute("list", personService.getReviewedPathways(id));
+            model.addAttribute(SHOW_ORCID_BTN, matchesHostname(hostname));
             return "graph/personShowAll";
         } else {
             infoLogger.info("Search request for id: {} was not found", id);
@@ -105,17 +117,18 @@ class AuthorReviewedController {
         }
     }
 
-    @RequestMapping(value = "/detail/person/{id:.*}/reactions/authored", method = RequestMethod.GET)
+    @RequestMapping(value = "/{id:.*}/reactions/authored", method = RequestMethod.GET)
     public String personReactionsAuthored(@PathVariable String id, ModelMap model, HttpServletResponse response) {
         Person person = personService.findPerson(id);
-
         if (person != null) {
             model.addAttribute(TITLE, person.getDisplayName());
             model.addAttribute("person", person);
             model.addAttribute("label", "Authored Reactions");
+            model.addAttribute("claimyourworkpath", "ra");
             model.addAttribute("type", "Reaction");
             model.addAttribute("attribute", "authored");
             model.addAttribute("list", personService.getAuthoredReactions(id));
+            model.addAttribute(SHOW_ORCID_BTN, matchesHostname(hostname));
             return "graph/personShowAll";
         } else {
             infoLogger.info("Search request for id: {} was not found", id);
@@ -123,17 +136,18 @@ class AuthorReviewedController {
         }
     }
 
-    @RequestMapping(value = "/detail/person/{id:.*}/reactions/reviewed", method = RequestMethod.GET)
+    @RequestMapping(value = "/{id:.*}/reactions/reviewed", method = RequestMethod.GET)
     public String personReactionsReviewed(@PathVariable String id, ModelMap model, HttpServletResponse response) {
         Person person = personService.findPerson(id);
-
         if (person != null) {
             model.addAttribute(TITLE, person.getDisplayName());
             model.addAttribute("person", person);
             model.addAttribute("label", "Reviewed Reactions");
+            model.addAttribute("claimyourworkpath", "rr");
             model.addAttribute("type", "Reaction");
             model.addAttribute("attribute", "reviewed");
             model.addAttribute("list", personService.getReviewedReactions(id));
+            model.addAttribute(SHOW_ORCID_BTN, matchesHostname(hostname));
             return "graph/personShowAll";
         } else {
             infoLogger.info("Search request for id: {} was not found", id);

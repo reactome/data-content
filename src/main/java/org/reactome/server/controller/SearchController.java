@@ -2,6 +2,8 @@ package org.reactome.server.controller;
 
 import org.apache.commons.lang.StringUtils;
 import org.reactome.server.graph.service.GeneralService;
+import org.reactome.server.orcid.domain.OrcidToken;
+import org.reactome.server.orcid.util.OrcidHelper;
 import org.reactome.server.search.domain.FacetMapping;
 import org.reactome.server.search.domain.Query;
 import org.reactome.server.search.domain.SearchResult;
@@ -197,18 +199,28 @@ class SearchController {
                           @RequestParam String exception,
                           @RequestParam String url,
                           @RequestParam String subject,
-                          @RequestParam String source) {
+                          @RequestParam String source,
+                          HttpServletRequest request) {
         if (StringUtils.isNotBlank(contactName)) {
             contactName = contactName.trim();
             message = message.concat("\n\n--\n").concat(contactName.trim());
         }
+
+        subject = String.format("[%s] %s", StringUtils.isEmpty(contactName) ? mailAddress : contactName, subject);
         if (source.equals("E")) {
             subject = "Unexpected error occurred [" + url + "]";
             message = message.concat("\nFailed URL: " + url);
             message = message.concat("\nException: " + exception.replaceAll("##C##","\n\t\t").replaceAll("#", "\n\t"));
             mailService.error(contactName, mailAddress, subject, message);
+        } else if (source.equals("O")) {
+            OrcidToken tokenSession = (OrcidToken) request.getSession().getAttribute(OrcidHelper.ORCID_TOKEN);
+            if (tokenSession != null) {
+                message = message.concat("\n\n----- AUTOMATICALLY ADDED BY THE SERVER -----");
+                message = message.concat("\nNAME: " + tokenSession.getName());
+                message = message.concat("\nORCID: " + tokenSession.getOrcid());
+            }
+            mailService.help(contactName, mailAddress, subject, message);
         } else {
-            subject = String.format("[%s] %s", StringUtils.isEmpty(contactName) ? mailAddress : contactName, subject);
             mailService.help(contactName, mailAddress, subject, message);
         }
         return "success";
