@@ -61,19 +61,13 @@ public class OrcidHelper {
         }
         work.setUrl(DETAILS_URL.replace("##ID##", event.getStId()));
 
-        String type = ExternalIdType.OTHERID.getName();
-        String id = event.getStId();
-        String url = PWB_URL.replace("##ID##", id);
+        work.addExternalId(new ExternalId(ExternalIdType.OTHERID.getName(), event.getStId(), PWB_URL.replace("##ID##", event.getStId()), "SELF"));
         if (event instanceof Pathway) {
             Pathway p = (Pathway) event;
-            if (StringUtils.isNotEmpty(p.getDoi())) {
-                id = p.getDoi();
-                type = ExternalIdType.DOI.getName();
-                url = DOI_URL.replace("##ID##", id);
-                System.out.println(event.getStId() + " -- " + id);
+            if (StringUtils.isNotEmpty(p.getDoi()) || StringUtils.isNotBlank(p.getDoi())) {
+                work.addExternalId(new ExternalId(ExternalIdType.DOI.getName(), p.getDoi(), DOI_URL.replace("##ID##", p.getDoi()), "SELF"));
             }
         }
-        work.addExternalId(new ExternalId(type, id, url, "SELF"));
 
         if (contributionRole == ContributionRole.BOTH) {
             work.addContributor(new WorkContributor(new ContributorAttributes(ContributorAttributes.ContributorSequence.FIRST, ContributorAttributes.ContributorRole.AUTHOR)));
