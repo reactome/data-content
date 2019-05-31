@@ -16,7 +16,7 @@
     <c:if test="${not empty tokenSession}">
         <div id="dialog" title="Claiming works..." style="display: none;">
             <p><span style="font-size: 1.2em;">Please wait while works are claimed</span></p>
-            <p class="text-center"><span style="font-size: 0.7em;">Note: This may take few seconds. Do not close this window.</span></p>
+            <p class="text-center"><span style="font-size: 0.7em;">Note: This may take a few seconds. Do not close this window.</span></p>
             <p></p>
             <div id="progressbar"></div>
         </div>
