@@ -23,8 +23,6 @@ import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -176,16 +174,7 @@ public class OrcidHelper {
      * Hostname is used in the redirect_uri on the authorisation flow.
      * Our servers must be registered in Orcid API.
      */
-    public String getHostname(){
-        String ret;
-        try {
-            ret = "https://" + InetAddress.getLocalHost().getHostName();
-            if(!ret.contains("reactome")){
-                ret = "http://localhost:8484";
-            }
-        } catch (UnknownHostException e) {
-            ret = null;
-        }
-        return ret;
+    public String getHostname(HttpServletRequest request){
+        return request.getRequestURL().toString().replace(request.getServletPath(), "");
     }
 }

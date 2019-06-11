@@ -51,8 +51,8 @@ public class OrcidAuthorizationFlow {
     private OrcidReportDAO orcidReportDAO;
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public ModelAndView login() {
-        String redirectUri = orcidHelper.getHostname() + CALLBACK_PATH;
+    public ModelAndView login(HttpServletRequest request) {
+        String redirectUri = orcidHelper.getHostname(request) + CALLBACK_PATH;
         String orcidLoginUrl = String.format("%s/authorize?client_id=%s&response_type=code&scope=/activities/update&redirect_uri=%s", orcidAuthBaseUrl, clientId, redirectUri);
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setView(new RedirectView(orcidLoginUrl, true, false));
@@ -78,7 +78,7 @@ public class OrcidAuthorizationFlow {
             List<NameValuePair> params = new ArrayList<>();
             params.add(new BasicNameValuePair("client_id", clientId));
             params.add(new BasicNameValuePair("client_secret", clientSecret));
-            params.add(new BasicNameValuePair("redirect_uri", orcidHelper.getHostname() + CALLBACK_PATH));
+            params.add(new BasicNameValuePair("redirect_uri", orcidHelper.getHostname(request) + CALLBACK_PATH));
             params.add(new BasicNameValuePair("scope", "/activities/update"));
             params.add(new BasicNameValuePair("grant_type", "authorization_code"));
             params.add(new BasicNameValuePair("code", code));
