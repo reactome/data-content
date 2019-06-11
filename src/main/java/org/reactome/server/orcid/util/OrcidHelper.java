@@ -175,6 +175,14 @@ public class OrcidHelper {
      * Our servers must be registered in Orcid API.
      */
     public String getHostname(HttpServletRequest request){
+        System.out.println(request.getRequestURL().toString());
+        System.out.println(request.getServletPath());
+        System.out.println(request.getScheme());
+        System.out.println(request.getRequestURI());
+        System.out.println(request.getContextPath());
+        System.out.println(request.getLocalAddr());
+        System.out.println(request.getServerName());
+        System.out.println(request.getServerPort());
         return request.getRequestURL().toString().replace(request.getServletPath(), "");
     }
 }

@@ -38,7 +38,7 @@ import java.util.List;
 @RequestMapping("/orcid")
 public class OrcidAuthorizationFlow {
     private static final String ORCID_TOKEN = "orcidToken";
-    private final String CALLBACK_PATH = "/content/orcid/callback"; // host has to be registered in Orcid systems. reactome.org and localhost:8484 is already registered. Must be https in prod
+    private final String CALLBACK_PATH = "/orcid/callback"; // host has to be registered in Orcid systems. reactome.org and localhost:8484 is already registered. Must be https in prod
 
     @Value("${orcid.client.id}")
     private String clientId;
