@@ -175,6 +175,9 @@ public class OrcidHelper {
      * Our servers must be registered in Orcid API.
      */
     public String getHostname(HttpServletRequest request){
-        return request.getRequestURL().toString().replace("http://", "https://").replace(request.getRequestURI(), "");
+        String url = request.getRequestURL().toString();
+        String protocol = "https://";
+        if (request.getRemoteAddr().equals("127.0.0.1")) protocol = "http://";
+        return url.replace("http://", protocol).replace(request.getRequestURI(), "");
     }
 }

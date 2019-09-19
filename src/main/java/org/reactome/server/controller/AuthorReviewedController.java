@@ -83,13 +83,15 @@ class AuthorReviewedController {
     public String personPathwaysAuthored(@PathVariable String id, ModelMap model, HttpServletResponse response) {
         Person person = personService.findPerson(id);
         if (person != null) {
+            Collection<Pathway> authoredPathways = personService.getAuthoredPathways(id);
             model.addAttribute(TITLE, person.getDisplayName());
             model.addAttribute("person", person);
             model.addAttribute("label", "Authored Pathways");
             model.addAttribute("claimyourworkpath", "pa");
             model.addAttribute("type", "Pathway");
             model.addAttribute("attribute", "reviewed");
-            model.addAttribute("list", personService.getAuthoredPathways(id));
+            model.addAttribute("list", authoredPathways);
+            model.addAttribute("authoredPathwaysSize", authoredPathways.size());
             model.addAttribute(SHOW_ORCID_BTN, matchesHostname(hostname));
             return "graph/personShowAll";
         } else {
@@ -102,13 +104,15 @@ class AuthorReviewedController {
     public String personPathwaysReviewed(@PathVariable String id, ModelMap model, HttpServletResponse response) {
         Person person = personService.findPerson(id);
         if (person != null) {
+            Collection<Pathway> reviewedPathways = personService.getReviewedPathways(id);
             model.addAttribute(TITLE, person.getDisplayName());
             model.addAttribute("person", person);
             model.addAttribute("label", "Reviewed Pathways");
             model.addAttribute("claimyourworkpath", "pr");
             model.addAttribute("type", "Pathway");
             model.addAttribute("attribute", "reviewed");
-            model.addAttribute("list", personService.getReviewedPathways(id));
+            model.addAttribute("list", reviewedPathways);
+            model.addAttribute("reviewedPathwaysSize", reviewedPathways.size());
             model.addAttribute(SHOW_ORCID_BTN, matchesHostname(hostname));
             return "graph/personShowAll";
         } else {
@@ -121,13 +125,15 @@ class AuthorReviewedController {
     public String personReactionsAuthored(@PathVariable String id, ModelMap model, HttpServletResponse response) {
         Person person = personService.findPerson(id);
         if (person != null) {
+            Collection<ReactionLikeEvent> authoredReactions = personService.getAuthoredReactions(id);
             model.addAttribute(TITLE, person.getDisplayName());
             model.addAttribute("person", person);
             model.addAttribute("label", "Authored Reactions");
             model.addAttribute("claimyourworkpath", "ra");
             model.addAttribute("type", "Reaction");
             model.addAttribute("attribute", "authored");
-            model.addAttribute("list", personService.getAuthoredReactions(id));
+            model.addAttribute("list", authoredReactions);
+            model.addAttribute("authoredReactionsSize", authoredReactions.size());
             model.addAttribute(SHOW_ORCID_BTN, matchesHostname(hostname));
             return "graph/personShowAll";
         } else {
@@ -140,13 +146,15 @@ class AuthorReviewedController {
     public String personReactionsReviewed(@PathVariable String id, ModelMap model, HttpServletResponse response) {
         Person person = personService.findPerson(id);
         if (person != null) {
+            Collection<ReactionLikeEvent> reviewedReactions = personService.getReviewedReactions(id);
             model.addAttribute(TITLE, person.getDisplayName());
             model.addAttribute("person", person);
             model.addAttribute("label", "Reviewed Reactions");
             model.addAttribute("claimyourworkpath", "rr");
             model.addAttribute("type", "Reaction");
             model.addAttribute("attribute", "reviewed");
-            model.addAttribute("list", personService.getReviewedReactions(id));
+            model.addAttribute("list", reviewedReactions);
+            model.addAttribute("reviewedReactionsSize", reviewedReactions.size());
             model.addAttribute(SHOW_ORCID_BTN, matchesHostname(hostname));
             return "graph/personShowAll";
         } else {

@@ -43,7 +43,8 @@
 
                 <c:choose>
                     <c:when test="${isAuthenticated}">
-                        <button id="claim-your-work" name="all"><img id="orcid-id-icon-all" alt="ORCID logo" src="/content/resources/images/orcid_16x16.png" width="16" height="16" hspace="4" />Claim all work</button>
+                        <c:set var="allWorks" value="${authoredPathwaysSize + authoredReactionsSize + reviewedPathwaysSize + reviewedReactionsSize}" />
+                        <button id="claim-your-work" name="all"><img id="orcid-id-icon-all" alt="ORCID logo" src="/content/resources/images/orcid_16x16.png" width="16" height="16" hspace="4" />Claim all work (<fmt:formatNumber type = "number" maxFractionDigits = "3" value = "${allWorks}"/>)</button>
                     </c:when>
                     <c:otherwise>
                         <c:if test="${showOrcidBtn && (empty person.orcidId && not empty tokenSession)}">
