@@ -177,7 +177,7 @@ public class OrcidHelper {
     public String getHostname(HttpServletRequest request){
         String url = request.getRequestURL().toString();
         String protocol = "https://";
-        if (request.getRemoteAddr().equals("127.0.0.1")) protocol = "http://";
+        if (!url.contains("reactome.org")) protocol = "http://";
         return url.replace("http://", protocol).replace(request.getRequestURI(), "");
     }
 }
