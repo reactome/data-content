@@ -33,6 +33,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 import static org.reactome.server.util.WebUtils.noDetailsFound;
@@ -63,6 +64,11 @@ class DetailsController {
     private SchemaNode classBrowserCache;
     private IconLibraryController iconsController;
 
+    private static Pattern lowerCaseExp;
+
+    public DetailsController() {
+        lowerCaseExp = Pattern.compile("[a-z]+");
+    }
 
     /**
      * * Shows detailed information of an entry
@@ -73,13 +79,14 @@ class DetailsController {
      * @throws ViewException Runtime exception when building the details page
      */
     @RequestMapping(value = "/detail/{id:.*}", method = RequestMethod.GET)
-    public String detail(@PathVariable String id,
+    public String details(@PathVariable String id,
                          @RequestParam(required = false, defaultValue = "") String interactor,
                          ModelMap model,
                          HttpServletRequest request,
                          HttpServletResponse response) {
 
         try {
+            if (lowerCaseExp.matcher(id).find()) return "redirect:/detail/" + id.toUpperCase();
             if (id.startsWith("R-ICO-")) return iconsController.iconDetails(id, model, response);
 
             UAgentInfo u = new UAgentInfo(request.getHeader("User-Agent"), null);
@@ -164,13 +171,11 @@ class DetailsController {
 
                     // sets a preview url for reactions and pathways (differentiating EHLD from "normal" pathways)
                     setPreviewURL(databaseObject, model);
-                    boolean hasEHLD = databaseObject instanceof Pathway ? ((Pathway) databaseObject).getHasEHLD() : false;
-                    model.addAttribute("isEHLD", hasEHLD);
+                    model.addAttribute("isEHLD", databaseObject instanceof Pathway ? ((Pathway) databaseObject).getHasEHLD() : false);
 
                     // responsive design, avoid loading same content twice on screen
                     // instead hiding using CSS, java will detect and the content won't be processed.
                     model.addAttribute("isMobile", u.detectMobileQuick());
-
 
                     infoLogger.info("DatabaseObject for id: {} was found", id);
                     return "graph/detail";

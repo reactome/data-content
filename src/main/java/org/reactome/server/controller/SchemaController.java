@@ -22,6 +22,7 @@ import java.lang.reflect.Method;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.regex.Pattern;
 
 import static org.reactome.server.util.WebUtils.noDetailsFound;
 
@@ -48,11 +49,19 @@ class SchemaController {
     private AdvancedLinkageService advancedLinkageService;
     private SchemaNode classBrowserCache;
 
+    private static Pattern lowerCaseExp;
+
+    public SchemaController() {
+        lowerCaseExp = Pattern.compile("[a-z]+");
+    }
+
     @RequestMapping(value = "/schema/instance/browser/{id}", method = RequestMethod.GET)
     public String objectDetail(@PathVariable String id,
                                ModelMap model,
                                HttpServletResponse response) throws ViewException {
         try {
+            if (lowerCaseExp.matcher(id).find()) return "redirect:/schema/instance/browser/" + id.toUpperCase();
+
             DatabaseObject databaseObject = advancedDatabaseObjectService.findById(id, 1000);
             if (databaseObject == null) {
                 infoLogger.info("DatabaseObject for id: {} was not found", id);
