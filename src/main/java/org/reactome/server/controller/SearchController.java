@@ -158,8 +158,18 @@ class SearchController {
                 stIdMatch = "oldStId:" + q + " OR stId:" + q;
             }
 
-            Query queryObject = new Query(q, species, types, compartments, keywords, getReportInformation(request));
-            if(stIdMatch != null) queryObject.setQuery(stIdMatch);
+            Query queryObject =
+                    new Query.Builder(q)
+                    .forSpecies(species)
+                    .withTypes(types)
+                    .withKeywords(keywords)
+                    .inCompartments(compartments)
+                    .withReportInfo(getReportInformation(request))
+                    .build();
+
+            if(stIdMatch != null) {
+                queryObject.setQuery(stIdMatch);
+            }
 
             SearchResult searchResult = searchService.getSearchResult(queryObject, rowCount, page, cluster);
             if (searchResult != null && (searchResult.getTargetResults() == null || searchResult.getTargetResults().isEmpty())) {

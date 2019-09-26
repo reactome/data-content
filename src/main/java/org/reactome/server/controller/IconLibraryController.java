@@ -103,7 +103,7 @@ class IconLibraryController {
             cleanCategoryParam = cleanCategoryParam.toLowerCase().replaceAll("\\s+", "_");
             String formattedCategory = StringUtils.capitalize(cleanCategoryParam).replaceAll("_", " ");
 
-            Query queryObject = new Query("{!term f=iconCategories}" + cleanCategoryParam, null, null, null, null);
+            Query queryObject = new Query.Builder("{!term f=iconCategories}" + cleanCategoryParam).build();
             Result result = searchService.getIconsResult(queryObject, ICONS_PER_PAGE, page);
 
             model.addAttribute(TITLE, formattedCategory);
@@ -132,7 +132,7 @@ class IconLibraryController {
                               HttpServletResponse response) throws SolrSearcherException {
         String query = cleanReceivedParameter(identifier);
         if (StringUtils.isNotEmpty(query)) {
-            Query queryObject = new Query(query, null, null, null, null);
+            Query queryObject = new Query.Builder(query).build(); //new Query(query, null, null, null, null);
             Entry iconEntry = searchService.getIcon(queryObject);
             if (iconEntry != null) {
                 model.addAttribute(URL_MAPPING, urlMapping);
