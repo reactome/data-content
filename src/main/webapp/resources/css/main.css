@@ -166,28 +166,29 @@ ul.tree li a:visited {
 
 /* ADVANCED SEARCH */
 
-#fav-container .advanced-search .adv-list {
+ul[id^="adv-list-"] {
     list-style-type: none;
     padding-left: 0;
     margin-left: 0;
     white-space: nowrap;
-    height: 250px;
+    height: 262px;
     overflow-x: auto;
     overflow-y: auto;
 }
 
-#fav-container .advanced-search .adv-list li {
+ul[id^="adv-list-"] li {
     font-size: 90%;
     padding-left: 0;
     margin-left: 0;
 }
 
-#fav-container .advanced-search textarea {
-    width: 100%;
+ul[id^="adv-list-"] li input[type="checkbox"] {
+    margin: 0;
+    vertical-align: unset;
 }
 
-#fav-container .advanced-search input[type="checkbox"] {
-    margin: 0;
+#fav-container .advanced-search textarea {
+    width: 100%;
 }
 
 #fav-container .advanced-filter {

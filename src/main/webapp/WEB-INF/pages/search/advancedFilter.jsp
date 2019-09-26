@@ -3,7 +3,7 @@
 <div class="favth-col-lg-3 favth-col-md-6 favth-col-sm-12 favth-col-xs-12 clearfix">
     <div>
         <h4>Species</h4>
-        <ul class="adv-list">
+        <ul id="adv-list-sf">
             <c:forEach var="available" items="${species_facet.available}">
                 <li class="term-item">
                     <label>
@@ -18,7 +18,7 @@
 <div class="favth-col-lg-3 favth-col-md-6 favth-col-sm-12 favth-col-xs-12 clearfix">
     <div>
         <h4>Types</h4>
-        <ul class="adv-list">
+        <ul id="adv-list-tf">
             <c:forEach var="available" items="${type_facet.available}">
                 <li class="term-item">
                     <label>
@@ -33,7 +33,7 @@
 <div class="favth-col-lg-3 favth-col-md-6 favth-col-sm-12 favth-col-xs-12 clearfix">
     <div>
         <h4>Compartments</h4>
-        <ul class="adv-list">
+        <ul id="adv-list-cf">
             <c:forEach var="available" items="${compartment_facet.available}">
                 <li class="term-item">
                     <label>
@@ -48,7 +48,7 @@
 <div class="favth-col-lg-3 favth-col-md-6 favth-col-sm-12 favth-col-xs-12 clearfix">
     <div>
         <h4>Reaction types</h4>
-        <ul class="adv-list">
+        <ul id="adv-list-kf">
             <c:forEach var="available" items="${keyword_facet.available}">
                 <li class="term-item">
                     <label>

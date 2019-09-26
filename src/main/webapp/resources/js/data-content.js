@@ -236,7 +236,7 @@ function writeCookie(key, value) {
 }
 
 function openSideNav() {
-    jQuery("#search-filter-sidenav").css({width: "270px", left: "0" });
+    jQuery("#search-filter-sidenav").css({width: "310px", left: "0" });
     jQuery(".sidenav-bg").css('display', 'block');
     lockBackground();
 }

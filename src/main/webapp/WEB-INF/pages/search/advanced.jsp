@@ -22,7 +22,7 @@
         </div>
 
         <%-- MOBILE VIEW --%>
-        <div class="favth-col-xs-12 favth-visible-xs favth-visible-sm clearfix padding0 bottom">
+        <div class="favth-col-lg-12 favth-visible-xs favth-visible-sm clearfix padding0 bottom">
             <div style="margin-top: 10px;">
                 <a><i class="fa fa-filter"></i><span onclick="openSideNav();">Filtering Parameters</span></a>
             </div>
@@ -48,7 +48,7 @@
             </div>
         </div>
 
-        <div class="text-center">
+        <div class="favth-col-xs-12 text-center">
             <input type="hidden" name="cluster" value="true"/>
             <input type="submit" name="submitSearch" value="Search" class="btn btn-info" />
         </div>
