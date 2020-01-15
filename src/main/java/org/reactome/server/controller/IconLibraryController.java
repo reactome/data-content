@@ -70,6 +70,7 @@ class IconLibraryController {
         urlMapping.put("ENA", "https://www.ebi.ac.uk/ena/data/view/###ID###");
         urlMapping.put("SO", "http://www.sequenceontology.org/browser/current_svn/term/SO:###ID###");
         urlMapping.put("BTO", "http://purl.obolibrary.org/obo/BTO_###ID###");
+        urlMapping.put("COMPLEXPORTAL", "https://www.ebi.ac.uk/complexportal/complex/###ID###");
     }
 
     private SearchService searchService;
