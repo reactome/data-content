@@ -163,8 +163,8 @@
                                                 type: "POST",
                                                 contentType: "text/plain",
                                                 dataType: "json",
-                                                data: "<c:if test="${not empty person.orcidId}">0000-0002-6416-5619</c:if><c:if test="${empty person.orcidId}">${person.dbId}</c:if>",
-                                                <%--data: "<c:if test="${not empty person.orcidId}">${person.orcidId}</c:if><c:if test="${empty person.orcidId}">${person.dbId}</c:if>", --%>
+                                                <%--data: "<c:if test="${not empty person.orcidId}">0000-0002-6416-5619</c:if><c:if test="${empty person.orcidId}">${person.dbId}</c:if>",--%>
+                                                data: "<c:if test="${not empty person.orcidId}">${person.orcidId}</c:if><c:if test="${empty person.orcidId}">${person.dbId}</c:if>",
 
                                                 success: function(data){
                                                     pgDialog.dialog("close");

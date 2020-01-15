@@ -4,10 +4,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.lang.StringUtils;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
-import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 import org.reactome.server.orcid.dao.OrcidReportDAO;
@@ -72,9 +72,11 @@ public class OrcidAuthorizationFlow {
     }
 
     @RequestMapping(value = "/token", method = RequestMethod.GET)
-    public @ResponseBody Boolean authorize(@RequestParam String code, HttpServletRequest request) throws OrcidOAuthException {
+    public @ResponseBody
+    Boolean authorize(@RequestParam String code, HttpServletRequest request) throws OrcidOAuthException {
         try {
-            HttpClient client = HttpClientBuilder.create().build();
+            CloseableHttpClient client = HttpClients.custom().setConnectionManager(orcidHelper.getSSLConnectionManager()).build();
+//            HttpClient client = HttpClientBuilder.create().build();
             List<NameValuePair> params = new ArrayList<>();
             params.add(new BasicNameValuePair("client_id", clientId));
             params.add(new BasicNameValuePair("client_secret", clientSecret));
@@ -109,14 +111,16 @@ public class OrcidAuthorizationFlow {
     }
 
     @RequestMapping(value = "/signout", method = RequestMethod.GET)
-    public @ResponseBody String signOut(HttpServletRequest request) {
+    public @ResponseBody
+    String signOut(HttpServletRequest request) {
         request.getSession().removeAttribute(ORCID_TOKEN);
         request.getSession().invalidate();
         return "success";
     }
 
     @RequestMapping(value = "/authenticated", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public @ResponseBody Boolean authorize(HttpServletRequest request) {
+    public @ResponseBody
+    Boolean authorize(HttpServletRequest request) {
         OrcidToken orcidToken = (OrcidToken) request.getSession().getAttribute(ORCID_TOKEN);
         return orcidToken != null;
     }

@@ -21,6 +21,9 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.net.UnknownHostException;
+import java.security.KeyManagementException;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
 
 /**
  * Global exception handler controller
@@ -83,6 +86,12 @@ class GlobalExceptionHandler {
         request.getSession().removeAttribute("orcidToken");
         request.getSession().invalidate();
         return toJsonResponse(HttpStatus.UNAUTHORIZED, e.getOrcidToken().getErrorDescription());
+    }
+
+    @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR, reason = "SSL Exception occurred")
+    @ExceptionHandler({KeyManagementException.class, KeyStoreException.class, NoSuchAlgorithmException.class})
+    public void handleSSLException(Exception e) {
+        errorLogger.error("SSL Exception handler executed.", e);
     }
 
     private ModelAndView buildModelView(HttpServletRequest request, Exception e) {

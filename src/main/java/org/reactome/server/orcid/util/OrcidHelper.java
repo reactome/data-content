@@ -7,11 +7,18 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.config.RegistryBuilder;
+import org.apache.http.conn.socket.ConnectionSocketFactory;
+import org.apache.http.conn.socket.PlainConnectionSocketFactory;
+import org.apache.http.conn.ssl.NoopHostnameVerifier;
+import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
+import org.apache.http.ssl.SSLContexts;
 import org.reactome.server.graph.domain.model.Event;
 import org.reactome.server.graph.domain.model.Pathway;
 import org.reactome.server.orcid.domain.*;
@@ -21,8 +28,12 @@ import org.reactome.server.orcid.exception.WorkClaimException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import javax.net.ssl.SSLContext;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.security.KeyManagementException;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -78,8 +89,9 @@ public class OrcidHelper {
         return work;
     }
 
-    private void execute(OrcidToken tokenSession, WorkBulk workBulk, WorkBulkResponse workBulkResponse) throws IOException, OrcidOAuthException, WorkClaimException {
-        HttpClient httpclient = HttpClientBuilder.create().build();  // the http-client, that will send the request
+    private void execute(OrcidToken tokenSession, WorkBulk workBulk, WorkBulkResponse workBulkResponse) throws IOException, OrcidOAuthException, WorkClaimException, NoSuchAlgorithmException, KeyStoreException, KeyManagementException {
+        CloseableHttpClient httpclient = HttpClients.custom().setConnectionManager(getSSLConnectionManager()).build();
+//        HttpClient httpclient = HttpClientBuilder.create().build();  // the http-client, that will send the request
         HttpPost httpPost = new HttpPost(ORCID_API_URI + ORCID_API_VERSION + ORCID_ALL_WORKS.replace("##ORCID##", tokenSession.getOrcid()));
         httpPost.setHeader("Content-Type", "application/orcid+json; qs=4");
         httpPost.setHeader("Accept", "application/json");
@@ -104,7 +116,7 @@ public class OrcidHelper {
         }
     }
 
-    public int bulkPostWork(OrcidToken tokenSession, Collection<? extends Event> events, ContributionRole contributionRole, WorkBulkResponse workBulkResponse) throws IOException, WorkClaimException, OrcidOAuthException {
+    public int bulkPostWork(OrcidToken tokenSession, Collection<? extends Event> events, ContributionRole contributionRole, WorkBulkResponse workBulkResponse) throws IOException, WorkClaimException, OrcidOAuthException, NoSuchAlgorithmException, KeyStoreException, KeyManagementException {
         int totalExecuted = 0;
         WorkBulk workBulk = new WorkBulk();
         List<Work> bulkWork = new ArrayList<>(MAX_BULK_POST);
@@ -130,9 +142,10 @@ public class OrcidHelper {
         return totalExecuted;
     }
 
-    public Works getAllWorks(OrcidToken tokenSession) throws IOException, WorkClaimException {
-        Works ret = null;
-        HttpClient httpclient = HttpClientBuilder.create().build();  // the http-client, that will send the request
+    public Works getAllWorks(OrcidToken tokenSession) throws IOException, WorkClaimException, NoSuchAlgorithmException, KeyStoreException, KeyManagementException {
+        Works ret;
+        CloseableHttpClient httpclient = HttpClients.custom().setConnectionManager(getSSLConnectionManager()).build();
+        //HttpClient httpclient = HttpClientBuilder.create().build();  // the http-client, that will send the request
         HttpGet httpGet = new HttpGet(ORCID_API_URI + ORCID_API_VERSION + ORCID_ALL_WORKS.replace("##ORCID##", tokenSession.getOrcid()));
         httpGet.setHeader("Content-Type", "application/orcid+json; qs=4");
         httpGet.setHeader("Accept", "application/json");
@@ -179,5 +192,21 @@ public class OrcidHelper {
         String protocol = "https://";
         if (!url.contains("reactome.org")) protocol = "http://";
         return url.replace("http://", protocol).replace(request.getRequestURI(), "");
+    }
+
+    public PoolingHttpClientConnectionManager getSSLConnectionManager() throws KeyStoreException, NoSuchAlgorithmException, KeyManagementException {
+//        try {
+            SSLContext sslContext = SSLContexts.custom().loadTrustMaterial((chain, authType) -> true).build();
+            SSLConnectionSocketFactory sslConnectionSocketFactory = new SSLConnectionSocketFactory(sslContext, new String[]
+                    {"SSLv2Hello", "SSLv3", "TLSv1", "TLSv1.1", "TLSv1.2"}, null, NoopHostnameVerifier.INSTANCE);
+
+            return new PoolingHttpClientConnectionManager(
+                    RegistryBuilder.<ConnectionSocketFactory>create()
+                            .register("http", PlainConnectionSocketFactory.getSocketFactory())
+                            .register("https", sslConnectionSocketFactory).build());
+//        } catch (KeyStoreException | NoSuchAlgorithmException | KeyManagementException e) {
+//            return null;
+//
+//        }
     }
 }

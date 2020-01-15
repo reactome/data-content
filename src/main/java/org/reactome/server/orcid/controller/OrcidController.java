@@ -20,6 +20,9 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.security.KeyManagementException;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -38,7 +41,7 @@ public class OrcidController {
     private OrcidHelper orcidHelper;
 
     @RequestMapping(value = "/claim/all", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    public @ResponseBody ClaimingSummary claimAll(@RequestBody String personId, HttpServletRequest request) throws IOException, WorkClaimException, OrcidOAuthException {
+    public @ResponseBody ClaimingSummary claimAll(@RequestBody String personId, HttpServletRequest request) throws IOException, WorkClaimException, OrcidOAuthException, NoSuchAlgorithmException, KeyStoreException, KeyManagementException {
         OrcidToken tokenSession = orcidHelper.getAuthorisedOrcidUser(request);
         validatePerson(tokenSession, personId);
 
@@ -75,7 +78,7 @@ public class OrcidController {
     }
 
     @RequestMapping(value = "/claim/pa", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    public @ResponseBody ClaimingSummary claimPathwayAuthored(@RequestBody String personId, HttpServletRequest request) throws IOException, WorkClaimException, OrcidOAuthException {
+    public @ResponseBody ClaimingSummary claimPathwayAuthored(@RequestBody String personId, HttpServletRequest request) throws IOException, WorkClaimException, OrcidOAuthException, NoSuchAlgorithmException, KeyStoreException, KeyManagementException {
         OrcidToken tokenSession = orcidHelper.getAuthorisedOrcidUser(request);
         validatePerson(tokenSession, personId);
 
@@ -88,7 +91,7 @@ public class OrcidController {
     }
 
     @RequestMapping(value = "/claim/pr", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    public @ResponseBody ClaimingSummary claimReviewedPathway(@RequestBody String personId, HttpServletRequest request) throws IOException, WorkClaimException, OrcidOAuthException {
+    public @ResponseBody ClaimingSummary claimReviewedPathway(@RequestBody String personId, HttpServletRequest request) throws IOException, WorkClaimException, OrcidOAuthException, NoSuchAlgorithmException, KeyStoreException, KeyManagementException {
         OrcidToken tokenSession = orcidHelper.getAuthorisedOrcidUser(request);
         validatePerson(tokenSession, personId);
 
@@ -101,7 +104,7 @@ public class OrcidController {
     }
 
     @RequestMapping(value = "/claim/ra", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    public @ResponseBody ClaimingSummary claimAuthoredReaction(@RequestBody String personId, HttpServletRequest request) throws IOException, WorkClaimException, OrcidOAuthException {
+    public @ResponseBody ClaimingSummary claimAuthoredReaction(@RequestBody String personId, HttpServletRequest request) throws IOException, WorkClaimException, OrcidOAuthException, NoSuchAlgorithmException, KeyStoreException, KeyManagementException {
         OrcidToken tokenSession = orcidHelper.getAuthorisedOrcidUser(request);
         validatePerson(tokenSession, personId);
 
@@ -114,7 +117,7 @@ public class OrcidController {
     }
 
     @RequestMapping(value = "/claim/rr", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    public @ResponseBody ClaimingSummary claimReviewedReaction(@RequestBody String personId, HttpServletRequest request) throws IOException, WorkClaimException, OrcidOAuthException {
+    public @ResponseBody ClaimingSummary claimReviewedReaction(@RequestBody String personId, HttpServletRequest request) throws IOException, WorkClaimException, OrcidOAuthException, NoSuchAlgorithmException, KeyStoreException, KeyManagementException {
         OrcidToken tokenSession = orcidHelper.getAuthorisedOrcidUser(request);
         validatePerson(tokenSession, personId);
 
@@ -126,7 +129,7 @@ public class OrcidController {
     }
 
     @RequestMapping(value = "/{orcid:.*}/works", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public @ResponseBody Works getAllWorks(@PathVariable String orcid, HttpServletRequest request) throws IOException, WorkClaimException {
+    public @ResponseBody Works getAllWorks(@PathVariable String orcid, HttpServletRequest request) throws IOException, WorkClaimException, NoSuchAlgorithmException, KeyStoreException, KeyManagementException {
         OrcidToken tokenSession = orcidHelper.getAuthorisedOrcidUser(request);
         validatePerson(tokenSession, orcid);
         return orcidHelper.getAllWorks(tokenSession);
