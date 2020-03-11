@@ -72,6 +72,7 @@ class IconLibraryController {
         urlMapping.put("DOID", "http://purl.obolibrary.org/obo/DOID_###ID###");
         urlMapping.put("NCIT", "http://purl.obolibrary.org/obo/NCIT_###ID###");
         urlMapping.put("OMIT", "http://purl.obolibrary.org/obo/OMIT_###ID###");
+        urlMapping.put("OPL", "http://purl.obolibrary.org/obo/OPL_###ID###");
         urlMapping.put("UBERON", "http://purl.obolibrary.org/obo/UBERON_###ID###");
     }
 
