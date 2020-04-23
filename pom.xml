@@ -44,7 +44,7 @@
         <reactome.search.core>1.4.1</reactome.search.core>
         <spring.version>5.1.6.RELEASE</spring.version>
         <javax.servlet.version>4.0.1</javax.servlet.version>
-        <jackson.version>2.9.8</jackson.version>
+        <jackson.version>2.9.10.4</jackson.version>
         <maven.compiler.version>3.0</maven.compiler.version>
         <maven.war.version>2.6</maven.war.version>
         <jdk.version>1.8</jdk.version>
