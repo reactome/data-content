@@ -103,11 +103,10 @@ class SchemaController {
             model.addAttribute("className", className);
             model.addAttribute("page", page);
 
-            Class clazz = DatabaseObjectUtils.getClassForName(className);
+            Class<?> clazz = DatabaseObjectUtils.getClassForName(className);
             Collection<DatabaseObject> databaseObjects;
             try {
                 if (clazz.equals(SimpleEntity.class)) throw new Exception("No species available for simple entity");
-                //noinspection unchecked,unused
                 Method m = clazz.getMethod("getSpecies");
                 databaseObjects = schemaService.getByClassName(className, speciesTaxId, page, OFFSET);
                 Integer num = schemaService.countByClassAndSpecies(className, speciesTaxId);

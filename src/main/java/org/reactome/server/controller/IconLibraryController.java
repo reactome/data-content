@@ -53,27 +53,28 @@ class IconLibraryController {
     private static Map<String, String> urlMapping = new HashMap<>();
 
     static {
-        urlMapping.put("UNIPROT", "http://www.uniprot.org/entry/###ID###");
-        urlMapping.put("UNIPROTKB", "http://www.uniprot.org/entry/###ID###");
-        urlMapping.put("CHEBI", "http://www.ebi.ac.uk/chebi/searchId.do?chebiId=CHEBI:###ID###");
-        urlMapping.put("ENSEMBL", "http://www.ensembl.org/Homo_sapiens/geneview?gene=###ID###");
-        urlMapping.put("GO", "https://www.ebi.ac.uk/QuickGO/term/GO:###ID###");
-        urlMapping.put("RFAM", "http://rfam.org/family/###ID###");
-        urlMapping.put("PFAM", "http://pfam.xfam.org/family/###ID###");
-        urlMapping.put("MESH", "https://www.ncbi.nlm.nih.gov/mesh/###ID###");
-        urlMapping.put("PUBCHEM", "https://pubchem.ncbi.nlm.nih.gov/compound/###ID###");
-        urlMapping.put("INTERPRO", "https://www.ebi.ac.uk/interpro/entry/###ID###");
-        urlMapping.put("KEGG", "https://www.kegg.jp/entry/###ID###");
-        urlMapping.put("ENA", "https://www.ebi.ac.uk/ena/data/view/###ID###");
-        urlMapping.put("SO", "http://www.sequenceontology.org/browser/current_svn/term/SO:###ID###");
-        urlMapping.put("COMPLEXPORTAL", "https://www.ebi.ac.uk/complexportal/complex/###ID###");
-        urlMapping.put("BTO", "http://purl.obolibrary.org/obo/BTO_###ID###");
-        urlMapping.put("CL", "http://purl.obolibrary.org/obo/CL_###ID###");
-        urlMapping.put("DOID", "http://purl.obolibrary.org/obo/DOID_###ID###");
-        urlMapping.put("NCIT", "http://purl.obolibrary.org/obo/NCIT_###ID###");
-        urlMapping.put("OMIT", "http://purl.obolibrary.org/obo/OMIT_###ID###");
-        urlMapping.put("OPL", "http://purl.obolibrary.org/obo/OPL_###ID###");
-        urlMapping.put("UBERON", "http://purl.obolibrary.org/obo/UBERON_###ID###");
+        urlMapping.put("UNIPROT",           "http://www.uniprot.org/entry/###ID###");
+        urlMapping.put("UNIPROTKB",         "http://www.uniprot.org/entry/###ID###");
+        urlMapping.put("CHEBI",             "http://www.ebi.ac.uk/chebi/searchId.do?chebiId=CHEBI:###ID###");
+        urlMapping.put("ENSEMBL",           "http://www.ensembl.org/Homo_sapiens/geneview?gene=###ID###");
+        urlMapping.put("GO",                "https://www.ebi.ac.uk/QuickGO/term/GO:###ID###");
+        urlMapping.put("RFAM",              "http://rfam.org/family/###ID###");
+        urlMapping.put("PFAM",              "http://pfam.xfam.org/family/###ID###");
+        urlMapping.put("MESH",              "https://www.ncbi.nlm.nih.gov/mesh/###ID###");
+        urlMapping.put("PUBCHEM",           "https://pubchem.ncbi.nlm.nih.gov/compound/###ID###");
+        urlMapping.put("INTERPRO",          "https://www.ebi.ac.uk/interpro/entry/###ID###");
+        urlMapping.put("KEGG",              "https://www.kegg.jp/entry/###ID###");
+        urlMapping.put("ENA",               "https://www.ebi.ac.uk/ena/data/view/###ID###");
+        urlMapping.put("SO",                "http://www.sequenceontology.org/browser/current_svn/term/SO:###ID###");
+        urlMapping.put("COMPLEXPORTAL",     "https://www.ebi.ac.uk/complexportal/complex/###ID###");
+        urlMapping.put("BTO",               "http://purl.obolibrary.org/obo/BTO_###ID###");
+        urlMapping.put("CL",                "http://purl.obolibrary.org/obo/CL_###ID###");
+        urlMapping.put("DOID",              "http://purl.obolibrary.org/obo/DOID_###ID###");
+        urlMapping.put("NCIT",              "http://purl.obolibrary.org/obo/NCIT_###ID###");
+        urlMapping.put("OMIT",              "http://purl.obolibrary.org/obo/OMIT_###ID###");
+        urlMapping.put("OPL",               "http://purl.obolibrary.org/obo/OPL_###ID###");
+        urlMapping.put("UBERON",            "http://purl.obolibrary.org/obo/UBERON_###ID###");
+        urlMapping.put("NCBI",              "https://www.ncbi.nlm.nih.gov/protein/###ID###");
     }
 
     private SearchService searchService;
