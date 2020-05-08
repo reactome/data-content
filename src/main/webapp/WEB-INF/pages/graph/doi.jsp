@@ -8,6 +8,8 @@
 <%@page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 
 <c:import url="../header.jsp"/>
 
@@ -47,7 +49,9 @@
                     <td data-label="Revised">
                         <c:if test="${not empty pathway.reviseDate}">
                             <c:set var="date" value="${pathway.reviseDate}"/>
-                            ${fn:substring(date, 0, 10)}
+                            <fmt:parseDate value="${date}" var="parsedDate"  pattern="yyyy-MM-dd HH:mm:ss.S" />
+                            <fmt:formatDate value="${parsedDate}" var= "formatDate" pattern="yyyy-MM-dd" />
+                            <c:out value = "${formatDate}" />
                         </c:if>
                     </td>
 
