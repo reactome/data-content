@@ -52,7 +52,7 @@ class DoiController {
     public String tocTable(ModelMap model) {
 
         Collection<PathwayResult> tocPathways = getAllTocPathways();
-        model.addAttribute(TITLE, "Table of Contens");
+        model.addAttribute(TITLE, "Table of Contents");
         model.addAttribute(TOCPATHWAYS, tocPathways);
         return "graph/toc";
     }
