@@ -16,7 +16,7 @@ import java.util.*;
 
 @SuppressWarnings("unused")
 @Controller
-class DoiController {
+class TocDoiController {
 
     private static final Logger errorLogger = LoggerFactory.getLogger("errorLogger");
 
@@ -32,7 +32,7 @@ class DoiController {
         this.tocDoiService = tocDoiService;
     }
 
-    public DoiController() {
+    public TocDoiController() {
     }
 
     @RequestMapping(value = "/doi", method = RequestMethod.GET)
