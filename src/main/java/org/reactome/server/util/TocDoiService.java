@@ -70,7 +70,7 @@ public class TocDoiService {
                 "OPTIONAL MATCH (p)<-[:revised]-(re:InstanceEdit)" +
                 "OPTIONAL MATCH (p)-[:reviewed]-(:InstanceEdit)" +
                 "OPTIONAL MATCH (p)-[:hasEvent*]->(rle:ReactionLikeEvent)" +
-                "OPTIONAL MATCH (p)-[:hasEvent]->(pa:Pathway{hasDiagram:True})" +
+                "OPTIONAL MATCH (p:TopLevelPathway{hasDiagram:True})-[:hasEvent]->(pa:Pathway)" +
                 "OPTIONAL MATCH (rle)<-[:authored]-(:InstanceEdit)<-[:author]-(rlea:Person)" +
                 "OPTIONAL MATCH (rle)<-[:reviewed]-(:InstanceEdit)<-[:author]-(rler:Person)" +
                 "OPTIONAL MATCH (rle)<-[:edited]-(:InstanceEdit)<-[:author]-(rlee:Person)" +
