@@ -4,8 +4,6 @@ package org.reactome.server.controller;
 import org.reactome.server.graph.domain.result.PathwayResult;
 import org.reactome.server.graph.service.DoiService;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -18,8 +16,6 @@ import java.util.Collection;
 @SuppressWarnings("unused")
 @Controller
 class DoiController {
-
-    private static final Logger errorLogger = LoggerFactory.getLogger("errorLogger");
 
     private static final String TITLE = "title";
     private static final String DOIPATHWAYS = "doiPathways";
