@@ -31,14 +31,14 @@
                     <td data-label="Topic">
                         <ul class="level0">
                             <li>
-                                <a class="sidebar" href="/content/detail/${pathway.stId}" target="_blank"
+                                <a class="sidebar" href="/content/detail/${pathway.stId}"
                                    title="Show ${pathway.displayName}">
                                         ${pathway.displayName}[${pathway.species}]</a>
                                 <a class="DOI"><c:if test="${not empty pathway.doi}">(DOI)</c:if></a></li>
                             <ul class="level1">
                                 <c:forEach var="childPathway" items="${pathway.subPathway}">
                                     <li>
-                                        -<a class="sidebar" href="/content/detail/${childPathway.stId}" target="_blank"
+                                        -<a class="sidebar" href="/content/detail/${childPathway.stId}"
                                            title="Show ${childPathway.displayName}">
                                                 ${childPathway.displayName}[${childPathway.speciesName}]</a>
                                         <a class="DOI"><c:if test="${not empty childPathway.doi}">(DOI)</c:if></a>
@@ -51,7 +51,7 @@
                     <td data-label="Authors">
                         <c:forEach var="person" items="${pathway.authors}" varStatus="status">
                             <c:set var="fullname" value="${person.surname}, ${not empty person.firstname ? person.firstname  : person.initial}"/>
-                            <a href="/content/detail/person/${person.dbId}" target="_blank">${fullname}</a>
+                            <a href="/content/detail/person/${person.dbId}" >${fullname}</a>
                             <c:if test="${not status.last}">,</c:if>
                         </c:forEach>
                     </td>
@@ -70,7 +70,7 @@
                     <td data-label="Reviewers">
                         <c:forEach var="person" items="${pathway.reviewers}" varStatus="status">
                             <c:set var="fullname" value="${person.surname}, ${not empty person.firstname ? person.firstname  : person.initial}"/>
-                            <a href="/content/detail/person/${person.dbId}" target="_blank">${fullname}</a>
+                            <a href="/content/detail/person/${person.dbId}" >${fullname}</a>
                             <c:if test="${not status.last}">,</c:if>
                         </c:forEach>
                     </td>
@@ -78,7 +78,7 @@
                     <td data-label="Editors">
                         <c:forEach var="person" items="${pathway.editors}" varStatus="status">
                             <c:set var="fullname" value="${person.surname}, ${not empty person.firstname ? person.firstname  : person.initial}"/>
-                            <a href="/content/detail/person/${person.dbId}" target="_blank">${fullname}</a>
+                            <a href="/content/detail/person/${person.dbId}" >${fullname}</a>
                             <c:if test="${not status.last}">,</c:if>
                         </c:forEach>
                     </td>

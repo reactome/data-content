@@ -22,17 +22,16 @@ class DoiController {
     private static final String DOIPATHWAYS = "doiPathways";
 
     private DoiService doiService;
-
     private DoiPathwayCache doiPathwayCache;
-
-    @Autowired
-    public void setDoiCache(DoiPathwayCache doiPathwayCache) {
-        this.doiPathwayCache = doiPathwayCache;
-    }
 
     @Autowired
     public void setDoiService(DoiService doiService) {
         this.doiService = doiService;
+    }
+
+    @Autowired
+    public void setDoiCache(DoiPathwayCache doiPathwayCache) {
+        this.doiPathwayCache = doiPathwayCache;
     }
 
     public DoiController() {
