@@ -4,6 +4,7 @@ package org.reactome.server.controller;
 import org.reactome.server.graph.domain.result.PathwayResult;
 import org.reactome.server.graph.service.DoiService;
 
+import org.reactome.server.util.DoiPathwayCache;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -22,6 +23,13 @@ class DoiController {
 
     private DoiService doiService;
 
+    private DoiPathwayCache doiPathwayCache;
+
+    @Autowired
+    public void setDoiCache(DoiPathwayCache doiPathwayCache) {
+        this.doiPathwayCache = doiPathwayCache;
+    }
+
     @Autowired
     public void setDoiService(DoiService doiService) {
         this.doiService = doiService;
@@ -33,7 +41,11 @@ class DoiController {
     @RequestMapping(value = "/doi", method = RequestMethod.GET)
     public String doiTable(ModelMap model) {
 
-        Collection<PathwayResult> doiPathways = doiService.getAllDoiPathway();
+        Collection<PathwayResult> doiPathways = doiPathwayCache.getDoiPathwayCache();
+
+        if (doiPathways == null) {
+            doiPathways = doiService.getAllDoiPathway();
+        }
 
         model.addAttribute(TITLE, "DOI Table");
         model.addAttribute(DOIPATHWAYS, doiPathways);
