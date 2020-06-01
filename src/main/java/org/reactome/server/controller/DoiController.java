@@ -21,13 +21,7 @@ class DoiController {
     private static final String TITLE = "title";
     private static final String DOIPATHWAYS = "doiPathways";
 
-    private DoiService doiService;
     private DoiPathwayCache doiPathwayCache;
-
-    @Autowired
-    public void setDoiService(DoiService doiService) {
-        this.doiService = doiService;
-    }
 
     @Autowired
     public void setDoiCache(DoiPathwayCache doiPathwayCache) {
@@ -39,13 +33,7 @@ class DoiController {
 
     @RequestMapping(value = "/doi", method = RequestMethod.GET)
     public String doiTable(ModelMap model) {
-
         Collection<PathwayResult> doiPathways = doiPathwayCache.getDoiPathwayCache();
-
-        if (doiPathways == null) {
-            doiPathways = doiService.getAllDoiPathway();
-        }
-
         model.addAttribute(TITLE, "DOI Table");
         model.addAttribute(DOIPATHWAYS, doiPathways);
         return "graph/doi";
