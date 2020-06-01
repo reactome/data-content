@@ -51,8 +51,7 @@
                     <td data-label="Authors">
                         <c:forEach var="person" items="${pathway.authors}" varStatus="status">
                             <c:set var="fullname" value="${person.surname}, ${not empty person.firstname ? person.firstname  : person.initial}"/>
-                            <a href="/content/detail/person/${person.dbId}" >${fullname}</a>
-                            <c:if test="${not status.last}">,</c:if>
+                            <a href="/content/detail/person/${person.dbId}" >${fullname}<c:if test="${not status.last}">,</c:if></a>
                         </c:forEach>
                     </td>
 
@@ -70,16 +69,14 @@
                     <td data-label="Reviewers">
                         <c:forEach var="person" items="${pathway.reviewers}" varStatus="status">
                             <c:set var="fullname" value="${person.surname}, ${not empty person.firstname ? person.firstname  : person.initial}"/>
-                            <a href="/content/detail/person/${person.dbId}" >${fullname}</a>
-                            <c:if test="${not status.last}">,</c:if>
+                            <a href="/content/detail/person/${person.dbId}" >${fullname}<c:if test="${not status.last}">,</c:if></a>
                         </c:forEach>
                     </td>
 
                     <td data-label="Editors">
                         <c:forEach var="person" items="${pathway.editors}" varStatus="status">
                             <c:set var="fullname" value="${person.surname}, ${not empty person.firstname ? person.firstname  : person.initial}"/>
-                            <a href="/content/detail/person/${person.dbId}" >${fullname}</a>
-                            <c:if test="${not status.last}">,</c:if>
+                            <a href="/content/detail/person/${person.dbId}" >${fullname}<c:if test="${not status.last}">,</c:if></a>
                         </c:forEach>
                     </td>
                 </tr>
