@@ -58,12 +58,17 @@
                     <td data-label="Released">${pathway.releaseDate} ${pathway.releaseStatus}</td>
 
                     <td data-label="Revised">
-                        <c:if test="${not empty pathway.reviseDate}">
-                            <c:set var="date" value="${pathway.reviseDate}"/>
-                            <fmt:parseDate value="${date}" var="parsedDate" pattern="yyyy-MM-dd HH:mm:ss.S"/>
-                            <fmt:formatDate value="${parsedDate}" var="formatDate" pattern="yyyy-MM-dd"/>
-                            <c:out value="${formatDate}"/>
-                        </c:if>
+                        <c:choose>
+                            <c:when test="${not empty pathway.reviseDate}">
+                                <c:set var="date" value="${pathway.reviseDate}"/>
+                                <fmt:parseDate value="${date}" var="parsedDate" pattern="yyyy-MM-dd HH:mm:ss.S"/>
+                                <fmt:formatDate value="${parsedDate}" var="formatDate" pattern="yyyy-MM-dd"/>
+                                <c:out value="${formatDate}"/>
+                            </c:when>
+                            <c:otherwise>
+                                ${"&nbsp;"}
+                            </c:otherwise>
+                        </c:choose>
                     </td>
 
                     <td data-label="Reviewers">
