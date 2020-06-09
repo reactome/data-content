@@ -71,6 +71,8 @@ class AuthorReviewedController {
 
             model.addAttribute(SHOW_ORCID_BTN, matchesHostname(hostname));
 
+            if(authoredPathways.size() + authoredReactions.size() + reviewedPathways.size() + reviewedReactions.size() == 0 )  return noDetailsFound(model, response, id);
+
             infoLogger.info("Search request for id: {} was found", id);
             return "graph/person";
         } else {
