@@ -281,7 +281,6 @@
             <legend>Modified Residues</legend>
             <div class="fieldset-pair-container overflow300">
                 <c:forEach var="modifiedResidue" items="${databaseObject.hasModifiedResidue}">
-
                     <div class="favth-clearfix modified-residue">
                         <div class="favth-col-lg-2 favth-col-md-3 favth-col-sm-12 favth-col-xs-12 details-label mr-label">Name</div>
                         <div class="favth-col-lg-10 favth-col-md-9 favth-col-sm-12 favth-col-xs-12 details-field mr-field">${modifiedResidue.displayName}</div>
@@ -295,7 +294,6 @@
 
                         <c:catch>
                             <c:if test="${not empty modifiedResidue.modification}">
-
                                 <div class="favth-col-lg-2 favth-col-md-3 favth-col-sm-12 favth-col-xs-12 details-label mr-label">Modification</div>
                                 <div class="favth-col-lg-10 favth-col-md-9 favth-col-sm-12 favth-col-xs-12 details-field mr-field">
                                     <c:catch var="hasUrl">
@@ -311,7 +309,6 @@
                                         </c:otherwise>
                                     </c:choose>
                                 </div>
-
                             </c:if>
                         </c:catch>
 
@@ -336,7 +333,6 @@
                                                 </div>
                                             </c:forEach>
                                         </div>
-
                                     </c:when>
                                     <c:otherwise>
                                         <div class="favth-row favth-clearfix">
@@ -358,7 +354,6 @@
                             </c:if>
                         </c:catch>
                     </div>
-
                 </c:forEach>
             </div>
         </fieldset>
