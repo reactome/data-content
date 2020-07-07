@@ -12,19 +12,20 @@
 
 
 <c:import url="../header.jsp"/>
-
+<div class = favth-col-lg-12>
 <c:if test="${not empty doiPathways}">
-    <div id="r-responsive-table" class="padding0 top30">
+
+        <div id="r-responsive-table" class="padding0 top30">
         <table width="100%" class="reactome" border="0" cellpadding="0" cellspacing="0">
             <thead>
             <tr>
                 <th scope="col">Topic</th>
                 <th scope="col">DOI</th>
-                <th scope="col" width="20%">Authors</th>
-                <th scope="col">Released</th>
-                <th scope="col">Revised</th>
-                <th scope="col" width="20%">Reviewers</th>
-                <th scope="col" width="20%">Editors</th>
+                <th scope="col" width="19%">Authors</th>
+                <th scope="col" width="10%">Released</th>
+                <th scope="col" width="9%">Revised</th>
+                <th scope="col" width="19%">Reviewers</th>
+                <th scope="col" width="19%">Editors</th>
             </tr>
             </thead>
             <tbody>
@@ -32,18 +33,25 @@
                 <tr>
                     <td data-label="Topic">
                         <a href="/content/detail/${pathway.stId}"
-                           title="Show ${pathway.displayName}">${pathway.displayName}</a>[${pathway.species}]
+                           title="Show ${pathway.displayName}">${pathway.displayName}</a> [${pathway.species}]
                     </td>
                     <td data-label="DOI">${pathway.doi}</td>
 
                     <td data-label="Authors">
                         <c:forEach var="person" items="${pathway.authors}" varStatus="status">
                             <c:set var="fullname" value="${person.surname}, ${not empty person.firstname ? person.firstname  : person.initial}"/>
-                            <a href="/content/detail/person/${person.dbId}" >${fullname}<c:if test="${not status.last}">,</c:if></a>
+                            <a href="/content/detail/person/${person.dbId}" >${fullname}</a><c:if test="${not status.last}">,</c:if>
                         </c:forEach>
                     </td>
 
-                    <td data-label="Released">${pathway.releaseDate} ${pathway.releaseStatus}</td>
+                    <td data-label="Released">
+                        <c:choose>
+                            <c:when test="${pathway.releaseStatus =='UPDATED'}"><img alt="Update" src="${pageContext.request.contextPath}/resources/images/update.png"/></c:when>
+                            <c:when test="${pathway.releaseStatus =='NEW'}"><img alt="Update" src="${pageContext.request.contextPath}/resources/images/new.png"/></c:when>
+                            <c:otherwise>${pathway.releaseStatus}</c:otherwise>
+                        </c:choose>
+                        ${pathway.releaseDate}
+                    </td>
 
                     <td data-label="Revised">
                         <c:choose>
@@ -64,21 +72,21 @@
                     <td data-label="Reviewers">
                         <c:forEach var="person" items="${pathway.reviewers}" varStatus="status">
                             <c:set var="fullname" value="${person.surname}, ${not empty person.firstname ? person.firstname  : person.initial}"/>
-                            <a href="/content/detail/person/${person.dbId}" >${fullname}<c:if test="${not status.last}">,</c:if></a>
+                            <a href="/content/detail/person/${person.dbId}" >${fullname}</a><c:if test="${not status.last}">,</c:if>
                         </c:forEach>
                     </td>
 
                     <td data-label="Editors">
                         <c:forEach var="person" items="${pathway.editors}" varStatus="status">
                             <c:set var="fullname" value="${person.surname}, ${not empty person.firstname ? person.firstname  : person.initial}"/>
-                            <a href="/content/detail/person/${person.dbId}" >${fullname}<c:if test="${not status.last}">,</c:if></a>
+                            <a href="/content/detail/person/${person.dbId}" >${fullname}</a><c:if test="${not status.last}">,</c:if>
                         </c:forEach>
                     </td>
                 </tr>
             </c:forEach>
             </tbody>
         </table>
-
-    </div>
+        </div>
 </c:if>
+</div>
 <c:import url="../footer.jsp"/>
