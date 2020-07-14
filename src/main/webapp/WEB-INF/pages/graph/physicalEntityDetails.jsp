@@ -80,7 +80,7 @@
                                 <div class="wrap">
                                     <c:forEach var="otherIdentifier" items="${databaseObject.referenceEntity.otherIdentifier}">
                                         <div class="favth-col-lg-3 favth-col-md-3 favth-col-sm-9 favth-col-xs-12 text-overflow">
-                                            ${otherIdentifier}
+                                                ${otherIdentifier}
                                         </div>
                                     </c:forEach>
                                 </div>
@@ -285,80 +285,74 @@
                         <div class="favth-col-lg-2 favth-col-md-3 favth-col-sm-12 favth-col-xs-12 details-label mr-label">Name</div>
                         <div class="favth-col-lg-10 favth-col-md-9 favth-col-sm-12 favth-col-xs-12 details-field mr-field">${modifiedResidue.displayName}</div>
 
-                        <c:if test="${modifiedResidue.schemaClass != 'FragmentReplacedModification' &&
-                                      modifiedResidue.schemaClass != 'FragmentDeletionModification' &&
-                                      modifiedResidue.schemaClass != 'FragmentInsertionModification'}">
-
+                        <c:catch>
                             <c:if test="${not empty modifiedResidue.coordinate}">
                                 <div class="favth-col-lg-2 favth-col-md-3 favth-col-sm-12 favth-col-xs-12 details-label mr-label">Coordinate</div>
                                 <div class="favth-col-lg-10 favth-col-md-9 favth-col-sm-12 favth-col-xs-12 details-field mr-field">${modifiedResidue.coordinate}</div>
                             </c:if>
+                        </c:catch>
 
-                            <c:if test="${modifiedResidue.schemaClass == 'CrosslinkedResidue' || modifiedResidue.schemaClass == 'GroupModifiedResidue'}">
-                                <c:if test="${not empty modifiedResidue.modification.displayName}">
-                                    <div class="favth-col-lg-2 favth-col-md-3 favth-col-sm-12 favth-col-xs-12 details-label mr-label">Modification</div>
-                                    <div class="favth-col-lg-10 favth-col-md-9 favth-col-sm-12 favth-col-xs-12 details-field mr-field">
-                                        <c:catch var="hasUrl">
-                                            <c:set value="${modifiedResidue.modification.url}" var="url" />
-                                        </c:catch>
-                                        <c:choose>
-                                            <c:when test="${empty hasUrl}">
-                                                <a href="../detail/${url}" class="" title="Show Details" >${modifiedResidue.modification.displayName}</a>
-                                            </c:when>
-                                            <c:otherwise>
-                                                ${modifiedResidue.modification.displayName}
-                                            </c:otherwise>
-                                        </c:choose>
-                                    </div>
-                                </c:if>
+                        <c:catch>
+                            <c:if test="${not empty modifiedResidue.modification}">
+                                <div class="favth-col-lg-2 favth-col-md-3 favth-col-sm-12 favth-col-xs-12 details-label mr-label">Modification</div>
+                                <div class="favth-col-lg-10 favth-col-md-9 favth-col-sm-12 favth-col-xs-12 details-field mr-field">
+                                    <c:catch var="hasUrl">
+                                        <c:set value="${modifiedResidue.modification.url}" var="url"/>
+                                    </c:catch>
+                                    <c:choose>
+                                        <c:when test="${empty hasUrl}">
+                                            <a href="../detail/${url}" class=""
+                                               title="Show Details">${modifiedResidue.modification.displayName}</a>
+                                        </c:when>
+                                        <c:otherwise>
+                                            ${modifiedResidue.modification.displayName}
+                                        </c:otherwise>
+                                    </c:choose>
+                                </div>
                             </c:if>
+                        </c:catch>
 
-                            <c:choose>
-                                <c:when test="${modifiedResidue.psiMod.getClass().getSimpleName() == 'ArrayList'}">
-                                    <div class="favth-col-lg-2 favth-col-md-3 favth-col-sm-12 favth-col-xs-12 details-label mr-label">PsiMod</div>
-                                    <div class="favth-col-lg-10 favth-col-md-9 favth-col-sm-12 favth-col-xs-12 details-field mr-field">
-                                    <c:forEach var="psiMod" items="${modifiedResidue.psiMod}" varStatus="loop">
-                                        <div class="favth-col-xs-12 details-field mr-field mr-psi-field" style="border-top: 1px dotted #c8c8c8;">
-                                            <div class="favth-col-lg-4 favth-col-md-12 favth-col-sm-12 favth-col-xs-12 details-field mr-field  mr-psi-field">
-                                                <c:if test="${not empty psiMod.displayName}">
-                                                    <a href="${psiMod.url}" class="" title="Show Details" >${psiMod.displayName}</a>
+                        <c:catch>
+                            <c:if test="${not empty modifiedResidue.psiMod}">
+                                <c:choose>
+                                    <c:when test="${modifiedResidue.psiMod.getClass().getSimpleName() == 'ArrayList'}">
+                                        <div class="favth-col-lg-2 favth-col-md-3 favth-col-sm-12 favth-col-xs-12 details-label mr-label">PsiMod</div>
+                                        <div class="favth-col-lg-10 favth-col-md-9 favth-col-sm-12 favth-col-xs-12 details-field mr-field">
+                                            <c:forEach var="psiMod" items="${modifiedResidue.psiMod}" varStatus="loop">
+                                                <div class="favth-col-xs-12 details-field mr-field mr-psi-field" style="border-top: 1px dotted #c8c8c8;">
+                                                    <div class="favth-col-lg-4 favth-col-md-12 favth-col-sm-12 favth-col-xs-12 details-field mr-field  mr-psi-field">
+                                                        <c:if test="${not empty psiMod.displayName}">
+                                                            <a href="${psiMod.url}" class="" title="Show Details">${psiMod.displayName}</a>
+                                                        </c:if>
+                                                    </div>
+                                                    <div class="favth-col-lg-8 favth-col-md-12 favth-col-sm-12 favth-col-xs-12 details-field mr-field  mr-psi-field">
+                                                        <c:if test="${not empty psiMod.definition}">
+                                                            ${psiMod.definition}
+                                                        </c:if>
+                                                    </div>
+                                                </div>
+                                            </c:forEach>
+                                        </div>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <div class="favth-row favth-clearfix">
+                                            <div class="favth-col-lg-2 favth-col-md-3 favth-col-sm-12 favth-col-xs-12 details-label mr-label">PsiMod Name</div>
+                                            <div class="favth-col-lg-10 favth-col-md-12 favth-col-sm-12 favth-col-xs-12 details-field mr-field">
+                                                <c:if test="${not empty modifiedResidue.psiMod.displayName}">
+                                                    <a href="${modifiedResidue.psiMod.url}" class="" title="Show Details">${modifiedResidue.psiMod.displayName}</a>
                                                 </c:if>
                                             </div>
-                                            <div class="favth-col-lg-8 favth-col-md-12 favth-col-sm-12 favth-col-xs-12 details-field mr-field  mr-psi-field">
-                                                <c:if test="${not empty psiMod.definition}">
-                                                    ${psiMod.definition}
+                                            <div class="favth-col-lg-2 favth-col-md-3 favth-col-sm-12 favth-col-xs-12 details-label mr-label">PsiMod Definition</div>
+                                            <div class="favth-col-lg-10 favth-col-md-12 favth-col-sm-12 favth-col-xs-12 details-field mr-field">
+                                                <c:if test="${not empty modifiedResidue.psiMod.definition}">
+                                                    ${modifiedResidue.psiMod.definition}
                                                 </c:if>
                                             </div>
                                         </div>
-                                    </c:forEach>
-                                    </div>
-
-                                </c:when>
-                                <c:otherwise>
-                                    <div class="favth-row favth-clearfix">
-                                        <div class="favth-col-lg-2 favth-col-md-3 favth-col-sm-12 favth-col-xs-12 details-label mr-label">PsiMod Name</div>
-                                        <div class="favth-col-lg-10 favth-col-md-12 favth-col-sm-12 favth-col-xs-12 details-field mr-field">
-                                            <c:if test="${not empty modifiedResidue.psiMod.displayName}">
-                                                <a href="${modifiedResidue.psiMod.url}" class="" title="Show Details" >${modifiedResidue.psiMod.displayName}</a>
-                                            </c:if>
-                                        </div>
-                                        <div class="favth-col-lg-2 favth-col-md-3 favth-col-sm-12 favth-col-xs-12 details-label mr-label">PsiMod Definition</div>
-                                        <div class="favth-col-lg-10 favth-col-md-12 favth-col-sm-12 favth-col-xs-12 details-field mr-field">
-                                            <c:if test="${not empty modifiedResidue.psiMod.definition}">
-                                                ${modifiedResidue.psiMod.definition}
-                                            </c:if>
-                                        </div>
-                                    </div>
-                                </c:otherwise>
-                            </c:choose>
-                        </c:if>
-
-                        <c:if test="${modifiedResidue.schemaClass == 'FragmentInsertionModification'}">
-                            <c:if test="${not empty modifiedResidue.coordinate}">
-                                <div class="favth-col-lg-2 favth-col-md-3 favth-col-sm-12 favth-col-xs-12 details-label mr-label">Coordinate</div>
-                                <div class="favth-col-lg-10 favth-col-md-9 favth-col-sm-12 favth-col-xs-12 details-field mr-field">${modifiedResidue.coordinate}</div>
+                                    </c:otherwise>
+                                </c:choose>
                             </c:if>
-                        </c:if>
+                        </c:catch>
                     </div>
                 </c:forEach>
             </div>
