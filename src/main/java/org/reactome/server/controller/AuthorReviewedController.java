@@ -71,6 +71,8 @@ class AuthorReviewedController {
 
             model.addAttribute(SHOW_ORCID_BTN, matchesHostname(hostname));
 
+            if(authoredPathways.size() + authoredReactions.size() + reviewedPathways.size() + reviewedReactions.size() == 0) return noDetailsFound(model, response, id);
+
             infoLogger.info("Search request for id: {} was found", id);
             return "graph/person";
         } else {
@@ -93,6 +95,9 @@ class AuthorReviewedController {
             model.addAttribute("list", authoredPathways);
             model.addAttribute("authoredPathwaysSize", authoredPathways.size());
             model.addAttribute(SHOW_ORCID_BTN, matchesHostname(hostname));
+
+            if(authoredPathways.isEmpty()) return noDetailsFound(model, response, id);
+
             return "graph/personShowAll";
         } else {
             infoLogger.info("Search request for id: {} was not found", id);
@@ -114,6 +119,9 @@ class AuthorReviewedController {
             model.addAttribute("list", reviewedPathways);
             model.addAttribute("reviewedPathwaysSize", reviewedPathways.size());
             model.addAttribute(SHOW_ORCID_BTN, matchesHostname(hostname));
+
+            if(reviewedPathways.isEmpty()) return noDetailsFound(model, response, id);
+
             return "graph/personShowAll";
         } else {
             infoLogger.info("Search request for id: {} was not found", id);
@@ -135,6 +143,9 @@ class AuthorReviewedController {
             model.addAttribute("list", authoredReactions);
             model.addAttribute("authoredReactionsSize", authoredReactions.size());
             model.addAttribute(SHOW_ORCID_BTN, matchesHostname(hostname));
+
+            if(authoredReactions.isEmpty()) return noDetailsFound(model, response, id);
+
             return "graph/personShowAll";
         } else {
             infoLogger.info("Search request for id: {} was not found", id);
@@ -156,6 +167,9 @@ class AuthorReviewedController {
             model.addAttribute("list", reviewedReactions);
             model.addAttribute("reviewedReactionsSize", reviewedReactions.size());
             model.addAttribute(SHOW_ORCID_BTN, matchesHostname(hostname));
+
+            if(reviewedReactions.isEmpty()) return noDetailsFound(model, response, id);
+
             return "graph/personShowAll";
         } else {
             infoLogger.info("Search request for id: {} was not found", id);
