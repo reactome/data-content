@@ -11,7 +11,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <c:import url="../header.jsp"/>
-<div class =favth-col-lg-12>
+<div class ="favth-col-lg-12">
     <h3 style="margin-left: 5px">Table of Contents</h3>
 <c:if test="${not empty tocPathways}">
      <div id="r-responsive-table">
