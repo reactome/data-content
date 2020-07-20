@@ -36,7 +36,11 @@
                         <a href="/content/detail/${pathway.stId}"
                            title="Show ${pathway.displayName}">${pathway.displayName}</a> [${pathway.species}]
                     </td>
-                    <td data-label="DOI"><a href="https://search.crossref.org/?q=${pathway.doi}" target="_blank">${pathway.doi}</a></td>
+
+                    <td data-label="DOI">
+                        <a href="https://search.crossref.org/?q=${pathway.doi}" target="_blank"
+                           title="Search in Crossref">${pathway.doi}</a>
+                    </td>
 
                     <td data-label="Authors">
                         <c:forEach var="person" items="${pathway.authors}" varStatus="status">
