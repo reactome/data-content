@@ -12,7 +12,7 @@
 
 
 <c:import url="../header.jsp"/>
-<div class =favth-col-lg-12>
+<div class ="favth-col-lg-12">
     <h3 style="margin-left: 5px">DOI</h3>
 <c:if test="${not empty doiPathways}">
     <div id="r-responsive-table">
