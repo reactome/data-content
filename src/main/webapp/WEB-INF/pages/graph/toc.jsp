@@ -21,7 +21,7 @@
                 <th scope="col">Topic</th>
                 <th scope="col" width="19%">Authors</th>
                 <th scope="col" width="10%">Released</th>
-                <%--hie this column and its content--%>
+                <%--hide this column and its content--%>
                 <%--<th scope="col" width="9%">Revised</th>--%>
                 <th scope="col" width="19%">Reviewers</th>
                 <th scope="col" width="19%">Editors</th>
@@ -36,14 +36,28 @@
                                 <a class="sidebar" href="/content/detail/${pathway.stId}"
                                    title="Show ${pathway.displayName}">
                                         ${pathway.displayName} [${pathway.species}]</a>
-                                <br /><span class="DOI"><c:if test="${not empty pathway.doi}"> <a href="https://search.crossref.org/?q=${pathway.doi}" target="_blank">${"&nbsp;"}${"&nbsp;"}${pathway.doi}</a></c:if></span></li>
+                                <br/>
+                                <span class="DOI">
+                                    <c:if test="${not empty pathway.doi}">
+                                        <a href="https://search.crossref.org/?q=${pathway.doi}" target="_blank"
+                                           title="Search in Crossref"
+                                           style="font-style: italic">${"&nbsp;"}${"&nbsp;"}${pathway.doi}</a>
+                                    </c:if>
+                                </span>
                             <ul class="level1">
                                 <c:forEach var="childPathway" items="${pathway.subPathway}">
                                     <li>
                                         -<a class="sidebar" href="/content/detail/${childPathway.stId}"
                                            title="Show ${childPathway.displayName}">
                                                 ${childPathway.displayName} [${childPathway.speciesName}]</a>
-                                        <br /><span class="DOI"><c:if test="${not empty childPathway.doi}"> <a href="https://search.crossref.org/?q=${childPathway.doi}" target="_blank">${"&nbsp;"}${"&nbsp;"}${childPathway.doi}</a></c:if></span>
+                                        <br />
+                                        <span class="DOI">
+                                            <c:if test="${not empty childPathway.doi}">
+                                            <a href="https://search.crossref.org/?q=${childPathway.doi}" target="_blank"
+                                               title="Search in Crossref"
+                                               style="font-style: italic">${"&nbsp;"}${"&nbsp;"}${childPathway.doi}</a>
+                                            </c:if>
+                                        </span>
                                     </li>
                                 </c:forEach>
                             </ul>
