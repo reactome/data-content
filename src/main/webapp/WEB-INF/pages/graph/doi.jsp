@@ -12,10 +12,10 @@
 
 
 <c:import url="../header.jsp"/>
-<div class="favth-col-lg-12">
+<div class ="favth-col-lg-12">
+    <h3 style="margin-left: 5px">DOI</h3>
 <c:if test="${not empty doiPathways}">
-
-        <div id="r-responsive-table" class="padding0 top30">
+    <div id="r-responsive-table">
         <table width="100%" class="reactome" border="0" cellpadding="0" cellspacing="0">
             <thead>
             <tr>
@@ -23,7 +23,8 @@
                 <th scope="col">DOI</th>
                 <th scope="col" width="19%">Authors</th>
                 <th scope="col" width="10%">Released</th>
-                <th scope="col" width="9%">Revised</th>
+                <%--hide this column and its content--%>
+                <%-- <th scope="col" width="9%">Revised</th>--%>
                 <th scope="col" width="19%">Reviewers</th>
                 <th scope="col" width="19%">Editors</th>
             </tr>
@@ -35,12 +36,12 @@
                         <a href="/content/detail/${pathway.stId}"
                            title="Show ${pathway.displayName}">${pathway.displayName}</a> [${pathway.species}]
                     </td>
-                    <td data-label="DOI">${pathway.doi}</td>
+                    <td data-label="DOI"><a href="https://search.crossref.org/?q=${pathway.doi}" target="_blank">${pathway.doi}</a></td>
 
                     <td data-label="Authors">
                         <c:forEach var="person" items="${pathway.authors}" varStatus="status">
                             <c:set var="fullname" value="${person.surname}, ${not empty person.firstname ? person.firstname  : person.initial}"/>
-                            <a href="/content/detail/person/${person.dbId}" >${fullname}</a><c:if test="${not status.last}">,</c:if>
+                            <a href="/content/detail/person/${person.dbId}"  >${fullname}</a><c:if test="${not status.last}">,</c:if>
                         </c:forEach>
                     </td>
 
@@ -53,7 +54,7 @@
                         ${pathway.releaseDate}
                     </td>
 
-                    <td data-label="Revised">
+                   <%-- <td data-label="Revised">
                         <c:choose>
                             <c:when test="${not empty pathway.reviseDate}">
                                 <c:set var="date" value="${pathway.reviseDate}"/>
@@ -61,13 +62,12 @@
                                 <fmt:formatDate value="${parsedDate}" var="formatDate" pattern="yyyy-MM-dd"/>
                                 <c:out value="${formatDate}"/>
                             </c:when>
-                            <%-- show the cell on mobile version --%>
+                            &lt;%&ndash; show the cell on mobile version &ndash;%&gt;
                             <c:otherwise>
                                 ${"&nbsp;"}
                             </c:otherwise>
                         </c:choose>
-
-                    </td>
+                    </td>--%>
 
                     <td data-label="Reviewers">
                         <c:forEach var="person" items="${pathway.reviewers}" varStatus="status">

@@ -11,16 +11,18 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <c:import url="../header.jsp"/>
-<div class="favth-col-lg-12">
+<div class ="favth-col-lg-12">
+    <h3 style="margin-left: 5px">Table of Contents</h3>
 <c:if test="${not empty tocPathways}">
-    <div id="r-responsive-table" class="padding0 top30">
+     <div id="r-responsive-table">
         <table width="100%" class="reactome" border="0" cellpadding="0" cellspacing="0">
             <thead>
             <tr>
                 <th scope="col">Topic</th>
                 <th scope="col" width="19%">Authors</th>
                 <th scope="col" width="10%">Released</th>
-                <th scope="col" width="9%">Revised</th>
+                <%--hie this column and its content--%>
+                <%--<th scope="col" width="9%">Revised</th>--%>
                 <th scope="col" width="19%">Reviewers</th>
                 <th scope="col" width="19%">Editors</th>
             </tr>
@@ -33,15 +35,15 @@
                             <li>
                                 <a class="sidebar" href="/content/detail/${pathway.stId}"
                                    title="Show ${pathway.displayName}">
-                                        ${pathway.displayName}[${pathway.species}]</a>
-                                <span class="DOI"><c:if test="${not empty pathway.doi}">(DOI)</c:if></span></li>
+                                        ${pathway.displayName} [${pathway.species}]</a>
+                                <br /><span class="DOI"><c:if test="${not empty pathway.doi}"> <a href="https://search.crossref.org/?q=${pathway.doi}" target="_blank">${"&nbsp;"}${"&nbsp;"}${pathway.doi}</a></c:if></span></li>
                             <ul class="level1">
                                 <c:forEach var="childPathway" items="${pathway.subPathway}">
                                     <li>
                                         -<a class="sidebar" href="/content/detail/${childPathway.stId}"
                                            title="Show ${childPathway.displayName}">
-                                                ${childPathway.displayName}[${childPathway.speciesName}]</a>
-                                        <span class="DOI"><c:if test="${not empty childPathway.doi}">(DOI)</c:if></span>
+                                                ${childPathway.displayName} [${childPathway.speciesName}]</a>
+                                        <br /><span class="DOI"><c:if test="${not empty childPathway.doi}"> <a href="https://search.crossref.org/?q=${childPathway.doi}" target="_blank">${"&nbsp;"}${"&nbsp;"}${childPathway.doi}</a></c:if></span>
                                     </li>
                                 </c:forEach>
                             </ul>
@@ -64,7 +66,7 @@
                         ${pathway.releaseDate}
                     </td>
 
-                    <td data-label="Revised">
+                   <%-- <td data-label="Revised">
                         <c:choose>
                             <c:when test="${not empty pathway.reviseDate}">
                                 <c:set var="date" value="${pathway.reviseDate}"/>
@@ -76,7 +78,7 @@
                                 ${"&nbsp;"}
                             </c:otherwise>
                         </c:choose>
-                    </td>
+                    </td>--%>
 
                     <td data-label="Reviewers">
                         <c:forEach var="person" items="${pathway.reviewers}" varStatus="status">
