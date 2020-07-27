@@ -73,8 +73,8 @@
 
                     <td data-label="Released">
                         <c:choose>
-                            <c:when test="${pathway.releaseStatus =='UPDATED'}"><img alt="Update" src="${pageContext.request.contextPath}/resources/images/update.png"/></c:when>
-                            <c:when test="${pathway.releaseStatus =='NEW'}"><img alt="Update" src="${pageContext.request.contextPath}/resources/images/new.png"/></c:when>
+                            <c:when test="${pathway.releaseStatus =='UPDATED'}"><img alt="Update" title="UPDATED" src="${pageContext.request.contextPath}/resources/images/update.png"/></c:when>
+                            <c:when test="${pathway.releaseStatus =='NEW'}"><img alt="New" title="NEW" src="${pageContext.request.contextPath}/resources/images/new.png"/></c:when>
                             <c:otherwise>${pathway.releaseStatus}</c:otherwise>
                         </c:choose>
                         ${pathway.releaseDate}
