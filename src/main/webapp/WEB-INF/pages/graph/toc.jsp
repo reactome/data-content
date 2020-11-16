@@ -20,7 +20,7 @@
             <tr>
                 <th scope="col">Topic</th>
                 <th scope="col" width="19%">Authors</th>
-                <th scope="col" width="10%">Released</th>
+                <th scope="col" width="10%">Created</th>
                 <%--hide this column and its content--%>
                 <%--<th scope="col" width="9%">Revised</th>--%>
                 <th scope="col" width="19%">Reviewers</th>
@@ -67,7 +67,7 @@
                     <td data-label="Authors">
                         <c:forEach var="person" items="${pathway.authors}" varStatus="status">
                             <c:set var="fullname" value="${person.surname}, ${not empty person.firstname ? person.firstname  : person.initial}"/>
-                            <a href="/content/detail/person/${person.dbId}" >${fullname}</a><c:if test="${not status.last}">,</c:if>
+                            <a href="/content/detail/person/${person.dbId}" >${fullname}</a><c:if test="${not status.last}">;</c:if>
                         </c:forEach>
                     </td>
 
@@ -97,14 +97,14 @@
                     <td data-label="Reviewers">
                         <c:forEach var="person" items="${pathway.reviewers}" varStatus="status">
                             <c:set var="fullname" value="${person.surname}, ${not empty person.firstname ? person.firstname  : person.initial}"/>
-                            <a href="/content/detail/person/${person.dbId}" >${fullname}</a><c:if test="${not status.last}">,</c:if>
+                            <a href="/content/detail/person/${person.dbId}" >${fullname}</a><c:if test="${not status.last}">;</c:if>
                         </c:forEach>
                     </td>
 
                     <td data-label="Editors">
                         <c:forEach var="person" items="${pathway.editors}" varStatus="status">
                             <c:set var="fullname" value="${person.surname}, ${not empty person.firstname ? person.firstname  : person.initial}"/>
-                            <a href="/content/detail/person/${person.dbId}" >${fullname}</a><c:if test="${not status.last}">,</c:if>
+                            <a href="/content/detail/person/${person.dbId}" >${fullname}</a><c:if test="${not status.last}">;</c:if>
                         </c:forEach>
                     </td>
                 </tr>
