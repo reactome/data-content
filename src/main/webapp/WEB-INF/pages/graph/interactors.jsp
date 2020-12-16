@@ -73,7 +73,7 @@
                                     <c:forEach var="interactor" items="${interaction.physicalEntity}">
                                         <li>
                                             <i class="sprite sprite-${interactor.schemaClass}" title="${interactor.schemaClass}"></i>
-                                            <a href="/content/detail/${interactor.stId}?interactor=${referenceEntity.displayName}" title="Show Details" target="_blank" >${interactor.displayName}<span> (${interactor.stId})</span></a>
+                                            <a href="/content/detail/${interactor.stId}?interactor=${referenceEntity.displayName}" title="Show Details">${interactor.displayName}<span> (${interactor.stId})</span></a>
                                         </li>
                                     </c:forEach>
                                 </ul>

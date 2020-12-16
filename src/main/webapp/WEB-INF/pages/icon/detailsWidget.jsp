@@ -228,9 +228,7 @@
     <div class="favth-container" style="margin: 0; width:100%">
         <div class="favth-col-xs-12">
 
-            <%--backslash breaks the links here, the out put is //detail/widget/--%>
-            <%--  <c:set var="detailRequestPrefix" value="${pageContext.request.contextPath}/detail/widget/"/>--%>
-
+           <c:set var="detailRequestPrefix" value="${pageContext.request.contextPath}/detail/"/>
             <h3 class="details-title">
                 <i class="fa fa-puzzle-piece title-icon" title="${entry.exactType}"></i> ${entry.iconName}
             </h3>
@@ -245,8 +243,9 @@
                             <c:set var="categoryLink"
                                    value="${fn:replace(category, ' ', '_')}"/> <%-- replace spaces so the url doens't need to be encoded --%>
                             <span><a href="/icon-lib/${fn:toLowerCase(categoryLink)}"
-                                     title="Go to ${category}">${category}
-                                    <c:if test="${not empty widget}"> target="_blank" </c:if></a>
+                                     title="Go to ${category}" <c:if
+                                    test="${not empty widget}"> target="_blank" </c:if>>${category}
+                            </a>
                                 <c:if test="${not loop.last}">, </c:if></span>
                         </c:forEach>
                     </div>
@@ -398,7 +397,7 @@
                                 <c:forEach var="iconPE" items="${entry.iconPhysicalEntities}">
                                     <div class="favth-col-lg-6 favth-col-md-6 favth-col-sm-6 favth-col-xs-12 text-overflow">
                                             <%-- index: 0=ST_ID, 1=Type, 2=Name, 3=Compartment --%>
-                                        <a href="${iconPE.stId}" title="Open ${iconPE.stId}"><i
+                                        <a href="${detailRequestPrefix}${iconPE.stId}" title="Open ${iconPE.stId}" <c:if test="${not empty widget}">target="_blank"</c:if>><i
                                                 class="sprite sprite-${iconPE.type}" title="${iconPE.type}"
                                                 style="vertical-align: middle; height: 18px;"></i> ${iconPE.displayName}
                                         </a>

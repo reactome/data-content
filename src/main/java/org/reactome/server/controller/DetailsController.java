@@ -70,6 +70,13 @@ class DetailsController {
         lowerCaseExp = Pattern.compile("[a-z]+");
     }
 
+    @RequestMapping(value = "/detail/test/{id:.*}", method = RequestMethod.GET)
+    public String details(@PathVariable String id,
+                          ModelMap model) {
+        model.addAttribute("id", id);
+        return "graph/widgetTest";
+    }
+
     /**
      * * Shows detailed information of an entry
      *
@@ -85,108 +92,7 @@ class DetailsController {
                          HttpServletRequest request,
                          HttpServletResponse response) {
 
-        try {
-            if (lowerCaseExp.matcher(id).find()) return "redirect:/detail/" + id.toUpperCase();
-            if (id.startsWith("R-ICO-")) return iconsController.iconDetails(id, model, response);
-
-            UAgentInfo u = new UAgentInfo(request.getHeader("User-Agent"), null);
-
-            boolean interactorPage = StringUtils.isNotEmpty(interactor);
-
-            ContentDetails contentDetails = detailsService.getContentDetails(id, interactorPage);
-
-            if (contentDetails != null && contentDetails.getDatabaseObject() != null) {
-                DatabaseObject databaseObject = contentDetails.getDatabaseObject();
-                String superClass = getSuperClass(databaseObject);
-                if (superClass == null) {
-                    /*
-                     * The database object contains already all outgoing relationships.
-                     * To complete the object for the instance/browser view all incoming relationships have to be loaded.
-                     * The Mapping will be done automatically by Spring.
-                     */
-                    advancedDatabaseObjectService.findById(databaseObject.getDbId(), RelationshipDirection.INCOMING);
-                    model.addAttribute("map", DatabaseObjectUtils.getAllFields(databaseObject));
-                    return "redirect:/schema/instance/browser/" + id;
-                } else {
-                    Set<PathwayBrowserNode> topLevelNodes = contentDetails.getNodes();
-
-                    Collection<String> names = databaseObject.fetchMultiValue("name");
-                    String title = names == null || names.isEmpty() ? databaseObject.getDisplayName() : names.iterator().next();
-
-                    model.addAttribute(TITLE, title);
-
-                    model.addAttribute("databaseObject", databaseObject);
-                    model.addAttribute("clazz", superClass);
-                    model.addAttribute("topLevelNodes", topLevelNodes);
-                    model.addAttribute("availableSpecies", PathwayBrowserLocationsUtils.getAvailableSpecies(topLevelNodes));
-                    model.addAttribute("componentOf", contentDetails.getComponentOf());
-                    model.addAttribute("otherFormsOfThisMolecule", contentDetails.getOtherFormsOfThisMolecule());
-                    model.addAttribute("orthologousEvents", getSortedOrthologousEvent(databaseObject));
-                    model.addAttribute("inferredTo", getSortedInferredTo(databaseObject));
-
-                    //RegulatedBy moved to RLE without distinction in the types (now it needs to be done here)
-                    List<NegativeRegulation> negativeRegulations = new ArrayList<>();
-                    List<PositiveRegulation> positiveRegulations = new ArrayList<>();
-                    List<Requirement> requirements = new ArrayList<>();
-                    if (databaseObject instanceof ReactionLikeEvent) {
-                        ReactionLikeEvent rle = (ReactionLikeEvent) databaseObject;
-                        if (rle.getRegulatedBy() != null) {
-                            for (Regulation regulation : rle.getRegulatedBy()) {
-                                if (regulation instanceof NegativeRegulation) {
-                                    negativeRegulations.add((NegativeRegulation) regulation);
-                                } else if (regulation instanceof Requirement) {
-                                    requirements.add((Requirement) regulation);
-                                } else {
-                                    positiveRegulations.add((PositiveRegulation) regulation);
-                                }
-                            }
-                        }
-                    }
-                    model.addAttribute("negativelyRegulatedBy", negativeRegulations);
-                    model.addAttribute("requirements", requirements);
-                    model.addAttribute("positivelyRegulatedBy", positiveRegulations);
-
-                    List<DatabaseIdentifier> crossReferences = getCrossReference(databaseObject);
-                    setClassAttributes(databaseObject, model);
-                    if (databaseObject instanceof EntityWithAccessionedSequence) {
-                        EntityWithAccessionedSequence ewas = (EntityWithAccessionedSequence) databaseObject;
-                        List<Interaction> interactions = interactionsService.getInteractions(ewas.getReferenceEntity().getIdentifier());
-                        model.addAttribute("interactions", interactions);
-                        crossReferences.addAll(getCrossReference(ewas.getReferenceEntity()));
-                            model.addAttribute("isReferenceSequence", true);
-                    }
-                    model.addAttribute("crossReferences", groupCrossReferences(crossReferences));
-
-                    if (databaseObject instanceof ReactionLikeEvent) {
-                        ReactionLikeEvent rle = (ReactionLikeEvent)databaseObject;
-                        model.addAttribute("rleCategory", rle.getCategory());
-                    }
-
-                    // extras
-                    String referenceIdentifier = getReferenceEntityIdentifier(databaseObject);
-                    model.addAttribute("flg", referenceIdentifier);
-                    model.addAttribute("relatedSpecies", getRelatedSpecies(databaseObject));
-                    model.addAttribute("jsonLd", eventDiscovery(contentDetails.getDatabaseObject()));
-                    model.addAttribute("icon", IconPhysicalEntityCache.getIconsMapping().get(referenceIdentifier));
-
-                    // sets a preview url for reactions and pathways (differentiating EHLD from "normal" pathways)
-                    setPreviewURL(databaseObject, model);
-                    model.addAttribute("isEHLD", databaseObject instanceof Pathway ? ((Pathway) databaseObject).getHasEHLD() : false);
-
-                    // responsive design, avoid loading same content twice on screen
-                    // instead hiding using CSS, java will detect and the content won't be processed.
-                    model.addAttribute("isMobile", u.detectMobileQuick());
-
-                    infoLogger.info("DatabaseObject for id: {} was found", id);
-                    return "graph/detail";
-                }
-            }
-            infoLogger.info("DatabaseObject for id: {} was not found", id);
-            return noDetailsFound(model, response, id);
-        } catch (Throwable t) {
-            // Catch any exception that could happen in the details page and pass it to the  GlobalExceptionHandler
-            throw new ViewException(t);
-        }
+        return getDetail(id, model, interactor, request, response);
     }
 
     /**
@@ -204,6 +110,14 @@ class DetailsController {
                           HttpServletRequest request,
                           HttpServletResponse response) {
 
+        model.addAttribute("widget", "widget");
+        return getDetail(id, model, interactor, request, response);
+    }
+
+    private String getDetail(String id, ModelMap model,
+                             String interactor,
+                             HttpServletRequest request,
+                             HttpServletResponse response ){
         try {
             if (lowerCaseExp.matcher(id).find()) return "redirect:/detail/" + id.toUpperCase();
             if (id.startsWith("R-ICO-")) return iconsController.iconDetails(id, model, response);
@@ -297,7 +211,13 @@ class DetailsController {
                     model.addAttribute("isMobile", u.detectMobileQuick());
 
                     infoLogger.info("DatabaseObject for id: {} was found", id);
-                    return "widgets/detailWidget";
+
+                    //check if a widget
+                    if(model.get("widget") != null){
+                        return "graph/detailWidget";
+                    } else{
+                        return "graph/detail";
+                    }
                 }
             }
             infoLogger.info("DatabaseObject for id: {} was not found", id);

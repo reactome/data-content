@@ -3,7 +3,7 @@
 <%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 
 <c:if test="${clazz != 'Regulation'}">
-
+    <c:set var="detailRequestPrefix" value="${pageContext.request.contextPath}/detail/"/>
      <c:if test="${not empty databaseObject.disease}">
      <div class="favth-clearfix">
         <fieldset class="fieldset-details">
@@ -71,10 +71,10 @@
                         <div class="favth-col-lg-3 favth-col-md-3 favth-col-sm-6 favth-col-xs-12 text-overflow">
                             <c:choose>
                                 <c:when test="${not empty person.orcidId}">
-                                    <a href="../detail/person/${person.orcidId}" class="" title="${person.displayName}" >${person.displayName} &nbsp;(<fmt:formatDate pattern = "yyyy-MM-dd" value = "${date}"/>)</a>
+                                    <a href="${detailRequestPrefix}person/${person.orcidId}" class="" title="${person.displayName}"  <c:if test="${not empty widget}">target="_blank"</c:if> >${person.displayName} &nbsp;(<fmt:formatDate pattern = "yyyy-MM-dd" value = "${date}"/>)</a>
                                 </c:when>
                                 <c:otherwise>
-                                    <a href="../detail/person/${person.dbId}" class="" title="${person.displayName}" >${person.displayName} &nbsp;(<fmt:formatDate pattern = "yyyy-MM-dd" value = "${date}"/>)</a>
+                                    <a href="${detailRequestPrefix}person/${person.dbId}" class="" title="${person.displayName}"  <c:if test="${not empty widget}">target="_blank"</c:if> >${person.displayName} &nbsp;(<fmt:formatDate pattern = "yyyy-MM-dd" value = "${date}"/>)</a>
                                 </c:otherwise>
                             </c:choose>
                         </div>
@@ -94,10 +94,10 @@
                         <div class="favth-col-lg-3 favth-col-md-3 favth-col-sm-6 favth-col-xs-12 text-overflow">
                             <c:choose>
                                 <c:when test="${not empty person.orcidId}">
-                                    <a href="../detail/person/${person.orcidId}" class="" title="${person.displayName}" >${person.displayName} &nbsp;(<fmt:formatDate pattern = "yyyy-MM-dd" value = "${date}"/>)</a>
+                                    <a href="${detailRequestPrefix}person/${person.orcidId}" class="" title="${person.displayName}"  <c:if test="${not empty widget}">target="_blank"</c:if>>${person.displayName} &nbsp;(<fmt:formatDate pattern = "yyyy-MM-dd" value = "${date}"/>)</a>
                                 </c:when>
                                 <c:otherwise>
-                                    <a href="../detail/person/${person.dbId}" class="" title="${person.displayName}" >${person.displayName} &nbsp;(<fmt:formatDate pattern = "yyyy-MM-dd" value = "${date}"/>)</a>
+                                    <a href="${detailRequestPrefix}person/${person.dbId}" class="" title="${person.displayName}"  <c:if test="${not empty widget}">target="_blank"</c:if>>${person.displayName} &nbsp;(<fmt:formatDate pattern = "yyyy-MM-dd" value = "${date}"/>)</a>
                                 </c:otherwise>
                             </c:choose>
                         </div>
@@ -116,10 +116,10 @@
                     <div class="favth-col-xs-12 text-overflow">
                         <c:choose>
                             <c:when test="${not empty person.orcidId}">
-                                <a href="../detail/person/${person.orcidId}" class="" title="${person.displayName}" >${person.displayName} &nbsp;(<fmt:formatDate pattern = "yyyy-MM-dd" value = "${date}"/>)</a>
+                                <a href="${detailRequestPrefix}person/${person.orcidId}" class="" title="${person.displayName}"  <c:if test="${not empty widget}">target="_blank"</c:if>>${person.displayName} &nbsp;(<fmt:formatDate pattern = "yyyy-MM-dd" value = "${date}"/>)</a>
                             </c:when>
                             <c:otherwise>
-                                <a href="../detail/person/${person.dbId}" class="" title="${person.displayName}" >${person.displayName} &nbsp;(<fmt:formatDate pattern = "yyyy-MM-dd" value = "${date}"/>)</a>
+                                <a href="${detailRequestPrefix}person/${person.dbId}" class="" title="${person.displayName}"  <c:if test="${not empty widget}">target="_blank"</c:if>>${person.displayName} &nbsp;(<fmt:formatDate pattern = "yyyy-MM-dd" value = "${date}"/>)</a>
                             </c:otherwise>
                         </c:choose>
                     </div>

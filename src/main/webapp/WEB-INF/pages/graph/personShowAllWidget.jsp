@@ -238,11 +238,11 @@
         <c:if test="${not empty person}">
             <c:choose>
                 <c:when test="${not empty person.orcidId}">
-                    <a href="${detailRequestPrefix}/widget/person/${person.orcidId}" class="" title="Return to person details">
+                    <a href="${detailRequestPrefix}widget/person/${person.orcidId}" class="" title="Return to person details">
                         <<< Go back</a>
                 </c:when>
                 <c:otherwise>
-                    <a href="${detailRequestPrefix}/widget/person/${person.dbId}" class="" title="Return to person details"> <<<
+                    <a href="${detailRequestPrefix}widget/person/${person.dbId}" class="" title="Return to person details"> <<<
                         Go back</a>
                 </c:otherwise>
             </c:choose>

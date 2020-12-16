@@ -6,6 +6,7 @@
     <fieldset class="fieldset-details">
         <legend>Interactors (${fn:length(interactions)})</legend>
         <div id="r-responsive-table" class="details-wrap interactors-table enlarge-table">
+            <c:set var="detailRequestPrefix" value="${pageContext.request.contextPath}/detail/"/>
             <table class="reactome">
                 <thead>
                     <tr>
@@ -21,7 +22,7 @@
                     <c:set var="interactor" value="${interaction.interactor[0]}" />
                     <tr>
                         <td data-label="Accession">
-                            <a href="./interactor/${interactor.identifier}" class="" title="Show Interactor Details" ><i class="sprite sprite-Interactor"></i>&nbsp;${interactor.displayName}&nbsp;</a>
+                            <a href="${detailRequestPrefix}interactor/${interactor.identifier}" class="" title="Show Interactor Details" <c:if test="${not empty widget}">target="_blank"</c:if> ><i class="sprite sprite-Interactor"></i>&nbsp;${interactor.displayName}&nbsp;</a>
                             <a href="${interactor.url}"
                                title="Go to ${interactor.displayName}"
                                target="_blank"><i class="fa fa-external-link" style="font-size: 13px;"></i></a>
@@ -43,7 +44,7 @@
                                         <c:forEach var="pe" items="${interactor.physicalEntity}">
                                             <li>
                                                 <i class="sprite sprite-${pe.schemaClass}" title="${pe.schemaClass}"></i>
-                                                <a href="/content/detail/${pe.stId}" title="Show Details" target="_blank" >${pe.displayName}<span> (${pe.stId})</span></a>
+                                                <a href="${detailRequestPrefix}${pe.stId}" title="Show Details"  <c:if test="${not empty widget}">target="_blank"</c:if>>${pe.displayName}<span> (${pe.stId})</span></a>
                                             </li>
                                         </c:forEach>
                                     </ul>

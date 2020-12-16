@@ -2,54 +2,21 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
-<c:set var="req" value="${pageContext.request.contextPath}" />
 
 <head>
-    <base href="${req}">
     <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
-    <meta name="keywords" content="pathway,reactions,graph,bioinformatics"/>
-    <meta name="robots" content="index, follow"/>
-    <meta name="description"
-          content="Reactome is pathway database which provides intuitive bioinformatics tools for the visualisation, interpretation and analysis of pathway knowledge."/>
-    <meta name="generator" content="Joomla! - Open Source Content Management"/>
-   <%-- <title>Reactome | ${title}</title>--%>
-
-
-    <%--  <link href="/templates/favourite/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon"/>
-    <link href="/plugins/system/jce/css/content.css?187a710698aa64b0eb900d4ce9391c44" rel="stylesheet" type="text/css"/>--%>
 
     <%--needed for header style--%>
     <link href="/media/jui/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
     <link href="/media/jui/css/bootstrap-responsive.css" rel="stylesheet" type="text/css"/>
     <link href="/templates/favourite/bootstrap/favth-bootstrap.css" rel="stylesheet" type="text/css"/>
-   <%-- <link href="/modules/mod_favsocial/theme/css/favsocial.css" rel="stylesheet" type="text/css"/>
-    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
-          type="text/css"/>--%>
-    <%-- <script type="application/json" class="joomla-script-options new">{
-         "csrf.token": "129e90fabcc91b97a06cf539e9d25a4e",
-         "system.paths": {
-             "root": "",
-             "base": ""
-         }
-     }</script>--%>
 
     <%-- Expand All function--%>
     <script src="/media/jui/js/jquery.min.js?187a710698aa64b0eb900d4ce9391c44" type="text/javascript"></script>
-    <%-- <script src="/media/jui/js/jquery-noconflict.js?187a710698aa64b0eb900d4ce9391c44" type="text/javascript"></script>
-     <script src="/media/jui/js/jquery-migrate.min.js?187a710698aa64b0eb900d4ce9391c44" type="text/javascript"></script>
-    <script src="/media/system/js/caption.js?187a710698aa64b0eb900d4ce9391c44" type="text/javascript"></script>
-     <script src="/media/system/js/core.js?187a710698aa64b0eb900d4ce9391c44" type="text/javascript"></script>--%>
-    <%-- <script src="/media/jui/js/bootstrap.min.js?187a710698aa64b0eb900d4ce9391c44" type="text/javascript"></script>--%>
     <script src="/templates/favourite/bootstrap/favth-bootstrap.js" type="text/javascript"></script>
     <script src="/templates/favourite/js/clipboard.min.js" type="text/javascript"></script>
-    <%--<script src="/templates/favourite/js/citation-query.js" type="text/javascript"></script>--%>
     <script src="/media/jui/js/jquery.autocomplete.min.js?187a710698aa64b0eb900d4ce9391c44"
             type="text/javascript"></script>
-    <%--  <script type="text/javascript">
-          jQuery(window).on('load', function () {
-              new JCaption('img.caption');
-          });
-      </script>--%>
 
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -179,15 +146,6 @@
             font-style: normal;
         }
 
-        #fav-offlinewrap {
-            background-repeat: no-repeat;
-            background-attachment: fixed;
-            -webkit-background-size: cover;
-            -moz-background-size: cover;
-            -o-background-size: cover;
-            background-size: cover;;
-        }
-
         body {
             background-repeat: repeat;
             background-attachment: initial;
@@ -197,241 +155,20 @@
             background-size: auto;;
         }
 
-        #fav-noticewrap.fav-module-block-color {
-            background-color: #FCF8E3;
-        }
-
         #fav-noticewrap p {
             color: #8A6D3B;
-        }
-
-        #fav-topbarwrap.fav-module-block-clear {
-            background-repeat: repeat;
-            background-attachment: initial;
-            -webkit-background-size: auto;
-            -moz-background-size: auto;
-            -o-background-size: auto;
-            background-size: auto;;
-        }
-
-        #fav-topbarwrap.fav-module-block-color {
-            background-color: #F2DEDE;
         }
 
         #fav-topbarwrap p {
             color: #A94442;
         }
 
-        #fav-slidewrap.fav-module-block-clear {
-            background-repeat: repeat;
-            background-attachment: initial;
-            -webkit-background-size: auto;
-            -moz-background-size: auto;
-            -o-background-size: auto;
-            background-size: auto;;
-        }
-
-        #fav-slidewrap.fav-module-block-color {
-            background-color: #F0F0F0;
-        }
-
-        #fav-introwrap.fav-module-block-clear {
-            background-repeat: no-repeat;
-            background-attachment: fixed;
-            -webkit-background-size: cover;
-            -moz-background-size: cover;
-            -o-background-size: cover;
-            background-size: cover;;
-        }
-
-        #fav-breadcrumbswrap.fav-module-block-clear {
-            background-repeat: repeat;
-            background-attachment: initial;
-            -webkit-background-size: auto;
-            -moz-background-size: auto;
-            -o-background-size: auto;
-            background-size: auto;;
-        }
-
-        #fav-leadwrap.fav-module-block-clear {
-            background-repeat: repeat;
-            background-attachment: initial;
-            -webkit-background-size: auto;
-            -moz-background-size: auto;
-            -o-background-size: auto;
-            background-size: auto;;
-        }
-
-        #fav-promowrap.fav-module-block-clear {
-            background-repeat: repeat;
-            background-attachment: initial;
-            -webkit-background-size: auto;
-            -moz-background-size: auto;
-            -o-background-size: auto;
-            background-size: auto;;
-        }
-
-        #fav-primewrap.fav-module-block-clear {
-            background-repeat: no-repeat;
-            background-attachment: fixed;
-            -webkit-background-size: cover;
-            -moz-background-size: cover;
-            -o-background-size: cover;
-            background-size: cover;;
-        }
-
-        #fav-primewrap.fav-module-block-color {
-            background-color: #FFFFFF;
-        }
-
-        #fav-showcasewrap.fav-module-block-clear {
-            background-repeat: repeat;
-            background-attachment: initial;
-            -webkit-background-size: auto;
-            -moz-background-size: auto;
-            -o-background-size: auto;
-            background-size: auto;;
-        }
-
-        #fav-showcasewrap.fav-module-block-color {
-            background-color: #111111;
-        }
-
-        #fav-featurewrap.fav-module-block-clear {
-            background-repeat: repeat;
-            background-attachment: initial;
-            -webkit-background-size: auto;
-            -moz-background-size: auto;
-            -o-background-size: auto;
-            background-size: auto;;
-        }
-
-        #fav-focuswrap.fav-module-block-clear {
-            background-repeat: repeat;
-            background-attachment: initial;
-            -webkit-background-size: auto;
-            -moz-background-size: auto;
-            -o-background-size: auto;
-            background-size: auto;;
-        }
-
-        #fav-portfoliowrap.fav-module-block-clear {
-            background-repeat: repeat;
-            background-attachment: initial;
-            -webkit-background-size: auto;
-            -moz-background-size: auto;
-            -o-background-size: auto;
-            background-size: auto;;
-        }
-
-        #fav-screenwrap.fav-module-block-clear {
-            background-repeat: no-repeat;
-            background-attachment: fixed;
-            -webkit-background-size: cover;
-            -moz-background-size: cover;
-            -o-background-size: cover;
-            background-size: cover;;
-        }
-
-        #fav-screenwrap.fav-module-block-color {
-            background-color: #F0F0F0;
-        }
-
         #fav-screenwrap h3:first-of-type {
             color: #444444;
         }
 
-        #fav-topwrap.fav-module-block-clear {
-            background-repeat: repeat;
-            background-attachment: initial;
-            -webkit-background-size: auto;
-            -moz-background-size: auto;
-            -o-background-size: auto;
-            background-size: auto;;
-        }
-
         #fav-topwrap h3:first-of-type {
             color: #444444;
-        }
-
-        #fav-maintopwrap.fav-module-block-clear {
-            background-repeat: repeat;
-            background-attachment: initial;
-            -webkit-background-size: auto;
-            -moz-background-size: auto;
-            -o-background-size: auto;
-            background-size: auto;;
-        }
-
-        #fav-mainbottomwrap.fav-module-block-clear {
-            background-repeat: repeat;
-            background-attachment: initial;
-            -webkit-background-size: auto;
-            -moz-background-size: auto;
-            -o-background-size: auto;
-            background-size: auto;;
-        }
-
-        #fav-bottomwrap.fav-module-block-clear {
-            background-repeat: repeat;
-            background-attachment: initial;
-            -webkit-background-size: auto;
-            -moz-background-size: auto;
-            -o-background-size: auto;
-            background-size: auto;;
-        }
-
-        #fav-notewrap.fav-module-block-clear {
-            background-repeat: repeat;
-            background-attachment: initial;
-            -webkit-background-size: auto;
-            -moz-background-size: auto;
-            -o-background-size: auto;
-            background-size: auto;;
-        }
-
-        #fav-basewrap.fav-module-block-clear {
-            background-repeat: no-repeat;
-            background-attachment: fixed;
-            -webkit-background-size: cover;
-            -moz-background-size: cover;
-            -o-background-size: cover;
-            background-size: cover;;
-        }
-
-        #fav-blockwrap.fav-module-block-clear {
-            background-repeat: repeat;
-            background-attachment: initial;
-            -webkit-background-size: auto;
-            -moz-background-size: auto;
-            -o-background-size: auto;
-            background-size: auto;;
-        }
-
-        #fav-userwrap.fav-module-block-clear {
-            background-repeat: repeat;
-            background-attachment: initial;
-            -webkit-background-size: auto;
-            -moz-background-size: auto;
-            -o-background-size: auto;
-            background-size: auto;;
-        }
-
-        #fav-userwrap.fav-module-block-color {
-            background-color: #F0F0F0;
-        }
-
-        #fav-footerwrap.fav-module-block-clear {
-            background-repeat: repeat;
-            background-attachment: initial;
-            -webkit-background-size: auto;
-            -moz-background-size: auto;
-            -o-background-size: auto;
-            background-size: auto;;
-        }
-
-        #fav-footerwrap.fav-module-block-color {
-            background-color: #58C3E5;
         }
 
         #fav-footerwrap p {
@@ -471,26 +208,6 @@
             margin: 6px 0 0 0;
         }
 
-        .slogan {
-            line-height: 14px;
-        }
-
-        .retina-logo {
-            height: 52px;
-        }
-
-        .retina-logo {
-            width: 188px;
-        }
-
-        .retina-logo {
-            padding: 0px;
-        }
-
-        .retina-logo {
-            margin: 0px;
-        }
-
         @media (max-width: 480px) {
             p {
                 font-size: 12px;
@@ -499,54 +216,9 @@
 
     </style>
 
-    <!-- GOOGLE ANALYTICS TRACKING CODE -->
-
-    <%--    <!-- Custom: Global Site Tag (gtag.js) - Google Analytics -->
-        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-42985898-2"></script>
-        <script>
-            window.dataLayer = window.dataLayer || [];
-
-            function gtag() {
-                dataLayer.push(arguments)
-            };
-            gtag('js', new Date());
-            gtag('config', 'UA-42985898-2');
-        </script>--%>
-
     <!-- FAVTH SCRIPTS -->
     <script src="/templates/favourite/js/favth-scripts.js"></script>
-
-    <!-- Google Webmaster Tools -->
-    <%--    <meta name="google-site-verification" content="RTiL6uaaS_DH5XmjYzK76jixDNHfH2KicYr2jT2y1Cw"/>
-        <script type="application/ld+json">
-            {
-                "@context": "http://schema.org",
-                "@type": "WebSite",
-                "url": "https://reactome.org/",
-                "potentialAction": {
-                    "@type": "SearchAction",
-                    "target": "https://reactome.org/content/query?q={term}",
-                    "query-input": "required name=term"
-                }
-            }
-        </script>--%>
-
-    <%--    <script type="application/ld+json">
-            {
-                "@context": "http://schema.org",
-                "@type": "Organization",
-                "url": "https://reactome.org",
-                "logo": "https://reactome.org/templates/favourite/images/logo/logo.png",
-                "email": "help@reactome.org"
-            }
-        </script>--%>
-
-    <%--
-    <link rel="stylesheet" href="/content/resources/css/main.css?v=20180710" type="text/css"/>
-         <link rel="stylesheet" href="/content/resources/css/icon-lib.css?v=20180712" type="text/css"/>--%>
-
     <link rel="stylesheet" href="/content/resources/css/main.css" type="text/css"/>
-    <%-- <link href="<c:url value="/resources/css/main.css" />" rel="stylesheet">--%>
     <link rel="stylesheet" href="/content/resources/css/icon-lib.css" type="text/css"/>
 
     <%--    <jsp:include page="json-ld.jsp"/>--%>
@@ -554,14 +226,14 @@
     <script type="text/javascript" src="/content/resources/js/data-content.js?v=3.2"></script>
 </head>
 
-
 <div id="fav-container" class="fav-container">
     <div class="favth-container" style="margin: 0; width:100%">
         <div class="favth-col-xs-12">
-            <c:import url="../graph/title.jsp"/>
+
+            <c:import url="title.jsp"/>
 
             <c:if test="${not empty topLevelNodes}">
-                <c:import url="../graph/locationsInThePWB.jsp"/>
+                <c:import url="locationsInThePWB.jsp"/>
             </c:if>
 
             <c:if test="${not empty previewURL || not empty databaseObject.summation}">
@@ -638,7 +310,8 @@
                                         </c:when>
                                         <c:otherwise>
                                             <div class="text-center margin0 top" style="min-height: 300px;">
-                                                <a href="/PathwayBrowser/#/${databaseObject.stId}">
+                                                <a href="/PathwayBrowser/#/${databaseObject.stId}"
+                                                   <c:if test="${not empty widget}">target="_blank"</c:if>>
                                                     <img src="${previewURL}?title=false"
                                                          alt="${databaseObject.displayName}"
                                                          title="Open '${databaseObject.displayName}' in the Pathway Browser"
@@ -648,7 +321,8 @@
                                             <div class="text-center margin0 bottom">
                                             <span style="font-size: smaller">
                                                 Click the image above or <a
-                                                    href="/PathwayBrowser/#/${databaseObject.stId}">here</a> to open this ${fn:toLowerCase(fn:replace(databaseObject.className, "TopLevel", ""))} in the Pathway Browser
+                                                    href="/PathwayBrowser/#/${databaseObject.stId}"
+                                                    <c:if test="${not empty widget}">target="_blank"</c:if>>here</a> to open this ${fn:toLowerCase(fn:replace(databaseObject.className, "TopLevel", ""))} in the Pathway Browser
                                                 <c:if test="${databaseObject.className == 'Reaction'}">
                                                     <br/><i class="fa fa-info-circle"
                                                             style="color: #2F9EC2; font-size: 15px;"></i>The layout of this reaction may differ from that in the pathway view due to the constraints in pathway layout
@@ -672,26 +346,26 @@
             </c:if>
 
             <c:if test="${not empty databaseObject.literatureReference}">
-                <c:import url="../graph/literatureReferences.jsp"/>
+                <c:import url="literatureReferences.jsp"/>
             </c:if>
 
             <c:if test="${clazz == 'PhysicalEntity'}">
-                <c:import url="../graph/physicalEntityDetails.jsp"/>
+                <c:import url="physicalEntityDetails.jsp"/>
             </c:if>
 
             <c:if test="${clazz == 'Event'}">
-                <c:import url="../graph/eventDetails.jsp"/>
+                <c:import url="eventDetails.jsp"/>
             </c:if>
 
-            <c:import url="../graph/generalAttributes.jsp"/>
+            <c:import url="generalAttributes.jsp"/>
 
             <c:if test="${clazz == 'Regulation'}">
-                <c:import url="../graph/regulationDetails.jsp"/>
+                <c:import url="regulationDetails.jsp"/>
             </c:if>
 
             <%--For those that ARE in Reactome, for those that ARE NOT in Reactome, check graph/interactors.jsp--%>
             <c:if test="${not empty interactions}">
-                <c:import url="../graph/interactionDetails.jsp"/>
+                <c:import url="interactionDetails.jsp"/>
             </c:if>
         </div>
     </div>

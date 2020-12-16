@@ -368,7 +368,7 @@
                                             </td>
                                             <td data-label="Identifier">
                                                 <a href="${detailRequestPrefix}${item.stId}"
-                                                   title="Go to Pathway bhbh ${item.stId}"  <c:if test="${not empty widget}">target="_blank"</c:if> > ${item.stId}</a>
+                                                   title="Go to Pathway ${item.stId}"  <c:if test="${not empty widget}">target="_blank"</c:if> > ${item.stId}</a>
                                             </td>
                                             <td data-label="Pathway">
                                                 <span>${item.displayName}</span>
@@ -444,8 +444,8 @@
                                                 <span><fmt:formatDate pattern="yyyy-MM-dd" value="${date}"/></span>
                                             </td>
                                             <td data-label="Identifier">
-                                                <a href="/${authoredReaction.stId}"
-                                                   title="Go to Pathway ${authoredReaction.stId}"> ${authoredReaction.stId}</a>
+                                                <a href="${detailRequestPrefix}${authoredReaction.stId}"
+                                                   title="Go to Reaction ${authoredReaction.stId}"  <c:if test="${not empty widget}">target="_blank"</c:if> > ${authoredReaction.stId}</a>
                                             </td>
                                             <td data-label="Reaction">
                                                 <span>${authoredReaction.displayName}</span>
@@ -521,8 +521,8 @@
                                                 <span><fmt:formatDate pattern="yyyy-MM-dd" value="${date}"/></span>
                                             </td>
                                             <td data-label="Identifier">
-                                                <a href="/${reviewedPathway.stId}"
-                                                   title="Go to Pathway ${reviewedPathway.stId}">${reviewedPathway.stId}</a>
+                                                <a href="${detailRequestPrefix}${reviewedPathway.stId}"
+                                                   title="Go to Pathway ${reviewedPathway.stId}"  <c:if test="${not empty widget}">target="_blank"</c:if>>${reviewedPathway.stId}</a>
                                             </td>
                                             <td data-label="Pathway">
                                                 <span>${reviewedPathway.displayName}</span>
@@ -599,8 +599,8 @@
                                                 <span><fmt:formatDate pattern="yyyy-MM-dd" value="${date}"/></span>
                                             </td>
                                             <td data-label="Identifier">
-                                                <a href="/${reviewedReaction.stId}"
-                                                   title="Go to Pathway ${reviewedReaction.stId}">${reviewedReaction.stId}</a>
+                                                <a href="${detailRequestPrefix}${reviewedReaction.stId}"
+                                                   title="Go to Reaction ${reviewedReaction.stId}"  <c:if test="${not empty widget}">target="_blank"</c:if>>${reviewedReaction.stId}</a>
                                             </td>
                                             <td data-label="Reaction">
                                                 <span>${reviewedReaction.displayName}</span>
