@@ -75,6 +75,7 @@ class IconLibraryController {
         urlMapping.put("OPL",               "http://purl.obolibrary.org/obo/OPL_###ID###");
         urlMapping.put("UBERON",            "http://purl.obolibrary.org/obo/UBERON_###ID###");
         urlMapping.put("NCBI",              "https://www.ncbi.nlm.nih.gov/protein/###ID###");
+        urlMapping.put("IUPHAR",            "https://www.guidetopharmacology.org/GRAC/LigandDisplayForward?ligandId=###ID###");
     }
 
     private SearchService searchService;
