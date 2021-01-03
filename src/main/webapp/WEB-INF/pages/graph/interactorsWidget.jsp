@@ -237,7 +237,13 @@
         <%-- Interactors Intermediate Page--%>
         <c:if test="${not empty interactions}">
 
-            <c:set var="detailRequestPrefix" value="${pageContext.request.contextPath}/detail/"/>
+            <c:set var="ori" value="${pageContext.request.getHeader('Referer')}"/>
+            <c:if test="${not empty ori}">
+                <c:out value="${ori}"/>
+                <a href="#" onclick="history.go(-1)"> <<< Go Back</a>
+            </c:if>
+
+            <c:set var="detailRequestPrefix" value="${pageContext.request.contextPath}/detail/widget/"/>
 
             <div class="favth-col-xs-12 ">
                 <h3 class="details-title">
@@ -309,7 +315,7 @@
                                                     <i class="sprite sprite-${interactor.schemaClass}"
                                                        title="${interactor.schemaClass}"></i>
                                                     <a href=${detailRequestPrefix}${interactor.stId}?interactor=${referenceEntity.displayName}"
-                                                       title="Show Details" <c:if test="${not empty widget}">target="_blank"</c:if>>${interactor.displayName}<span> (${interactor.stId})</span></a>
+                                                       title="Show Details" >${interactor.displayName}<span> (${interactor.stId})</span></a>
                                                 </li>
                                             </c:forEach>
                                         </ul>

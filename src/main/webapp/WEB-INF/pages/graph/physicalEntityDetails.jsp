@@ -3,7 +3,16 @@
 
 <c:if test="${hasReferenceEntity}">
     <c:if test="${not empty databaseObject.referenceEntity}">
-        <c:set var="detailRequestPrefix" value="${pageContext.request.contextPath}/detail/"/>
+
+        <c:choose>
+            <c:when test="${not empty widget}">
+                <c:set var="detailRequestPrefix" value="${pageContext.request.contextPath}/detail/widget/"/>
+            </c:when>
+            <c:otherwise>
+                <c:set var="detailRequestPrefix" value="${pageContext.request.contextPath}/detail/"/>
+            </c:otherwise>
+        </c:choose>
+
         <div class="favth-clearfix">
             <fieldset class="fieldset-details">
                 <legend>External Reference Information</legend>
@@ -136,7 +145,7 @@
                                             <c:if test="${hasComponent.stoichiometry gt 1}">${hasComponent.stoichiometry} x </c:if>
                                             <a href="${detailRequestPrefix}${hasComponent.object.stId}" class=""
                                                title="Show Details"
-                                               <c:if test="${not empty widget}">target="_blank"</c:if>>${hasComponent.object.displayName}
+                                               >${hasComponent.object.displayName}
                                                 <c:if test="${not empty hasComponent.object.speciesName}">(${hasComponent.object.speciesName})</c:if></a>
                                         </li>
                                     </c:forEach>
@@ -165,7 +174,7 @@
                                             <c:if test="${repeatedUnit.stoichiometry gt 1}">${repeatedUnit.stoichiometry} x </c:if>
                                             <a href="${detailRequestPrefix}${repeatedUnit.object.stId}" class=""
                                                title="Show Details"
-                                               <c:if test="${not empty widget}">target="_blank"</c:if>>${repeatedUnit.object.displayName}
+                                               >${repeatedUnit.object.displayName}
                                                 <c:if test="${not empty repeatedUnit.object.speciesName}">(${repeatedUnit.object.speciesName})</c:if></a>
                                         </li>
                                     </c:forEach>
@@ -192,7 +201,7 @@
                                             <i class="sprite sprite-resize sprite-${hasMember.schemaClass} sprite-position"
                                                title="${hasMember.schemaClass}"></i>
                                             <a href="${detailRequestPrefix}${hasMember.stId}" class="" title="Show Details"
-                                               <c:if test="${not empty widget}">target="_blank"</c:if>>${hasMember.displayName}
+                                               >${hasMember.displayName}
                                                 <c:if test="${not empty hasMember.speciesName}">(${hasMember.speciesName})</c:if></a>
                                         </li>
                                     </c:forEach>
@@ -219,7 +228,7 @@
                                             <i class="sprite sprite-resize sprite-${hasCandidate.schemaClass} sprite-position"
                                                title="${hasCandidate.schemaClass}"></i>
                                             <a href="${detailRequestPrefix}${hasCandidate.stId}" title="Show Details"
-                                               <c:if test="${not empty widget}">target="_blank"</c:if>>${hasCandidate.displayName}
+                                               >${hasCandidate.displayName}
                                                 <c:if test="${not empty hasCandidate.speciesName}">(${hasCandidate.speciesName})</c:if></a>
                                         </li>
                                     </c:forEach>
@@ -253,7 +262,7 @@
                                            title="${negativelyRegulates.regulatedEntity.schemaClass}"></i>
                                         <a href="${detailRequestPrefix}${negativelyRegulates.regulatedEntity.stId}" class=""
                                            title="Show Details"
-                                           <c:if test="${not empty widget}">target="_blank"</c:if> >${negativelyRegulates.regulatedEntity.displayName}</a>
+                                            >${negativelyRegulates.regulatedEntity.displayName}</a>
                                     </li>
                                 </c:forEach>
                             </ul>
@@ -276,7 +285,7 @@
                                            title="${positivelyRegulates.regulatedEntity.schemaClass}"></i>
                                         <a href="${detailRequestPrefix}${positivelyRegulates.regulatedEntity.stId}" class=""
                                            title="Show Details"
-                                           <c:if test="${not empty widget}">target="_blank"</c:if>>${positivelyRegulates.regulatedEntity.displayName}</a>
+                                           >${positivelyRegulates.regulatedEntity.displayName}</a>
                                     </li>
                                 </c:forEach>
                             </ul>
@@ -295,7 +304,7 @@
             <c:forEach var="derivedEwas" items="${otherFormsOfThisMolecule}" varStatus="loop">
                 <div class="favth-col-lg-6 favth-col-md-6 favth-col-sm-12 favth-col-xs-12 text-overflow">
                     <a href="${detailRequestPrefix}${derivedEwas.stId}" title="Open ${derivedEwas.displayName}"
-                       <c:if test="${not empty widget}">target="_blank"</c:if>>${derivedEwas.displayName}</a>
+                       >${derivedEwas.displayName}</a>
                 </div>
             </c:forEach>
         </div>
@@ -308,8 +317,7 @@
         <div class="wrap overflow favth-clearfix">
             <c:forEach var="inferredFrom" items="${databaseObject.inferredFrom}">
                 <div class="favth-col-lg-6 favth-col-md-6 favth-col-sm-12 favth-col-xs-12 text-overflow">
-                    <a href="${detailRequestPrefix}${inferredFrom.stId}" class="" title="Show Details"
-                       <c:if test="${not empty widget}">target="_blank"</c:if> >${inferredFrom.displayName} <c:if
+                    <a href="${detailRequestPrefix}${inferredFrom.stId}" class="" title="Show Details"> ${inferredFrom.displayName} <c:if
                             test="${not empty inferredFrom.speciesName}"> (${inferredFrom.speciesName})</c:if></a>
                 </div>
             </c:forEach>
@@ -325,7 +333,7 @@
                 <c:forEach items="${inferredToMap.value}" var="inferredTo">
                     <div class="favth-col-lg-6 favth-col-md-6 favth-col-sm-12 favth-col-xs-12 text-overflow">
                         <a href="${detailRequestPrefix}${inferredTo.stId}" class="" title="Show Details"
-                           <c:if test="${not empty widget}">target="_blank"</c:if>>${inferredTo.displayName} <c:if
+                           >${inferredTo.displayName} <c:if
                                 test="${not empty inferredTo.speciesName}"> (${inferredTo.speciesName})</c:if></a>
                     </div>
                 </c:forEach>
@@ -369,7 +377,7 @@
                                         <c:choose>
                                             <c:when test="${empty hasUrl}">
                                                 <a href="${detailRequestPrefix}${url}" class="" title="Show Details"
-                                                   <c:if test="${not empty widget}">target="_blank"</c:if> >${modifiedResidue.modification.displayName}</a>
+                                                    >${modifiedResidue.modification.displayName}</a>
                                             </c:when>
                                             <c:otherwise>
                                                 ${modifiedResidue.modification.displayName}

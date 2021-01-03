@@ -230,6 +230,19 @@
     <div class="favth-container" style="margin: 0; width:100%">
         <div class="favth-col-xs-12">
 
+            <c:set var="pre" value="${pageContext.request.getHeader('Referer')}"/>
+            <c:set var ="forw" value="${pageContext.request.getAttribute('javax.servlet.forward.request_uri')}" />
+            <c:out value="pre: ${pre}"/>
+            <c:out value="forward: ${forw}"/>
+
+            <c:if test="${not empty pre}">
+                <c:if test="${not empty forw}">
+                <a href="#" onclick="history.go(-1)"> <<< Go Back</a>
+                    </c:if>
+            </c:if>
+
+            <c:set var="detailRequestPrefix" value="${pageContext.request.contextPath}/detail/widget/"/>
+
             <c:import url="title.jsp"/>
 
             <c:if test="${not empty topLevelNodes}">

@@ -3,7 +3,14 @@
 <fieldset class="fieldset-details">
     <legend>Participants</legend>
 
-    <c:set var="detailRequestPrefix" value="${pageContext.request.contextPath}/detail/"/>
+    <c:choose>
+        <c:when test="${not empty widget}">
+            <c:set var="detailRequestPrefix" value="${pageContext.request.contextPath}/detail/widget/"/>
+        </c:when>
+        <c:otherwise>
+            <c:set var="detailRequestPrefix" value="${pageContext.request.contextPath}/detail/"/>
+        </c:otherwise>
+    </c:choose>
 
     <c:if test="${databaseObject.schemaClass == 'Pathway' || databaseObject.schemaClass == 'TopLevelPathway'}">
         <c:if test="${not empty databaseObject.hasEvent}">
@@ -20,7 +27,7 @@
                                     <i class="sprite sprite-resize sprite-${hasEvent.schemaClass} sprite-position"
                                        title="${hasEvent.schemaClass}"></i>
                                     <a href="${detailRequestPrefix}${hasEvent.stId}" class="" title="Show Details"
-                                       <c:if test="${not empty widget}">target="_blank"</c:if> >${hasEvent.displayName}
+                                       > ${hasEvent.displayName}
                                         <c:if test="${not empty hasEvent.speciesName}">(${hasEvent.speciesName})</c:if></a>
                                 </li>
                             </c:forEach>
@@ -49,7 +56,7 @@
                                         <c:if test="${input.stoichiometry gt 1}">${input.stoichiometry} x </c:if>
                                         <a href="${detailRequestPrefix}${input.object.stId}" class=""
                                            title="Show Details"
-                                           <c:if test="${not empty widget}">target="_blank"</c:if> >${input.object.displayName}
+                                           > ${input.object.displayName}
                                             <c:if test="${not empty input.object.speciesName}">(${input.object.speciesName})</c:if></a>
                                     </li>
                                 </c:forEach>
@@ -73,7 +80,7 @@
                                         <c:if test="${output.stoichiometry gt 1}">${output.stoichiometry} x </c:if>
                                         <a href="${detailRequestPrefix}${output.object.stId}" class=""
                                            title="Show Details"
-                                           <c:if test="${not empty widget}">target="_blank"</c:if>>${output.object.displayName}
+                                           >${output.object.displayName}
                                             <c:if test="${not empty output.object.speciesName}">(${output.object.speciesName})</c:if></a>
                                     </li>
                                 </c:forEach>
@@ -97,7 +104,7 @@
                                                title="${entityOnOtherCell.schemaClass}"></i>
                                             <a href="${detailRequestPrefix}${entityOnOtherCell.stId}" class=""
                                                title="Show Details"
-                                               <c:if test="${not empty widget}">target="_blank"</c:if>>${entityOnOtherCell.displayName}
+                                               >${entityOnOtherCell.displayName}
                                                 <c:if test="${not empty entityOnOtherCell.speciesName}">(${entityOnOtherCell.speciesName})</c:if></a>
                                         </li>
                                     </c:forEach>
@@ -136,7 +143,7 @@
                     <div class="favth-col-lg-10 favth-col-md-10 favth-col-sm-9 favth-col-xs-12 details-field">
                         <span><a href="${detailRequestPrefix}${databaseObject.reverseReaction.stId}" class=""
                                  title="Show Details"
-                                 <c:if test="${not empty widget}">target="_blank"</c:if>>${databaseObject.reverseReaction.displayName} <c:if
+                                 >${databaseObject.reverseReaction.displayName} <c:if
                                 test="${not empty databaseObject.reverseReaction.speciesName}">(${databaseObject.reverseReaction.speciesName})</c:if></a></span>
                     </div>
                 </c:if>
@@ -172,7 +179,7 @@
                                        title="${catalystActivity.physicalEntity.schemaClass}"></i>
                                     <a href="${detailRequestPrefix}${catalystActivity.physicalEntity.stId}" class=""
                                        title="show Reactome ${catalystActivity.physicalEntity.stId}"
-                                       <c:if test="${not empty widget}">target="_blank"</c:if> >${catalystActivity.physicalEntity.displayName}</a>
+                                       > ${catalystActivity.physicalEntity.displayName}</a>
                                 </div>
                             </c:if>
 
@@ -211,7 +218,7 @@
                                        title="${negativelyRegulatedBy.regulator.schemaClass}"></i>
                                     <a href="${detailRequestPrefix}${negativelyRegulatedBy.regulator.stId}" class=""
                                        title="Show Details"
-                                       <c:if test="${not empty widget}">target="_blank"</c:if>>${negativelyRegulatedBy.regulator.displayName}</a>
+                                       >${negativelyRegulatedBy.regulator.displayName}</a>
                                 </li>
                             </c:forEach>
                         </ul>
@@ -233,7 +240,6 @@
                                        title="${positivelyRegulatedBy.regulator.schemaClass}"></i>
                                     <a href="${detailRequestPrefix}${positivelyRegulatedBy.regulator.stId}" class=""
                                        title="Show Details"
-                                       <c:if test="${not empty widget}">target="_blank"</c:if>
                                     >${positivelyRegulatedBy.regulator.displayName}</a>
                                 </li>
                             </c:forEach>
@@ -253,7 +259,7 @@
                             <c:forEach var="requirement" items="${requirements}">
                                 <li>
                                     <a href="${detailRequestPrefix}${requirement.stId}" class="" title="Show Details"
-                                       <c:if test="${not empty widget}">target="_blank"</c:if> >${requirement.displayName}</a>
+                                       > ${requirement.displayName}</a>
                                 </li>
                             </c:forEach>
                         </ul>
@@ -274,7 +280,7 @@
                    title="${databaseObject.normalReaction.schemaClass}"></i>
                 <a href="${detailRequestPrefix}${databaseObject.normalReaction.stId}" class=""
                    title="${databaseObject.normalReaction.displayName} (${databaseObject.normalReaction.speciesName})"
-                   <c:if test="${not empty widget}">target="_blank"</c:if>>${databaseObject.normalReaction.displayName}
+                   >${databaseObject.normalReaction.displayName}
                     (${databaseObject.normalReaction.speciesName})</a>
             </div>
         </div>
@@ -289,7 +295,7 @@
                 <div class="favth-col-lg-6 favth-col-md-6 favth-col-sm-12 favth-col-xs-12 text-overflow">
                     <a href="${detailRequestPrefix}${inferredFrom.stId}" class=""
                        title="${inferredFrom.displayName} (${inferredFrom.speciesName})"
-                       <c:if test="${not empty widget}">target="_blank"</c:if>>${inferredFrom.displayName}
+                       >${inferredFrom.displayName}
                         (${inferredFrom.speciesName})</a>
                 </div>
             </c:forEach>
@@ -306,7 +312,7 @@
                     <div class="favth-col-lg-6 favth-col-md-6 favth-col-sm-12 favth-col-xs-12 text-overflow">
                         <a href="${detailRequestPrefix}${orthologousEvent.stId}"
                            title="${orthologousEvent.displayName} (${orthologousEvent.speciesName})"
-                           <c:if test="${not empty widget}">target="_blank"</c:if>>${orthologousEvent.displayName}
+                           >${orthologousEvent.displayName}
                             (${orthologousEvent.speciesName})</a>
                     </div>
                 </c:forEach>

@@ -2,7 +2,15 @@
 
 <c:if test="${not empty componentOf}">
 
-    <c:set var="detailRequestPrefix" value="${pageContext.request.contextPath}/detail/"/>
+    <c:choose>
+        <c:when test="${not empty widget}">
+            <c:set var="detailRequestPrefix" value="${pageContext.request.contextPath}/detail/widget/"/>
+        </c:when>
+        <c:otherwise>
+            <c:set var="detailRequestPrefix" value="${pageContext.request.contextPath}/detail/"/>
+        </c:otherwise>
+    </c:choose>
+
     <%-- TODO: Separate them into complex, entity set, etc --%>
     <fieldset class="fieldset-details">
         <legend>Participant Of</legend>
@@ -22,7 +30,7 @@
                                         <c:if test="${not empty component.stIds}"><a
                                                 href="${detailRequestPrefix}${component.stIds.get(loop.index)}" class=""
                                                 title="Show Details"
-                                                <c:if test="${not empty widget}">target="_blank"</c:if>>${names}</a></c:if>
+                                        >${names}</a></c:if>
                                     </li>
                                 </c:forEach>
                             </ul>

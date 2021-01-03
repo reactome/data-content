@@ -232,13 +232,16 @@
 
 <div id="fav-container" class="fav-container">
     <div class="favth-container" style="margin: 0; width:100%">
-
-      <%--  <a href="#" onclick="history.go(-1)"> <<< Go Back</a>--%>
-
         <%-- Person Page--%>
         <c:if test="${not empty person}">
 
-            <c:set var="detailRequestPrefix" value="${pageContext.request.contextPath}/detail/"/>
+            <c:set var="ori" value="${pageContext.request.getHeader('Referer')}"/>
+            <c:if test="${not empty ori}">
+                <c:out value="${ori}"/>
+                <a href="#" onclick="history.go(-1)"> <<< Go Back</a>
+            </c:if>
+
+            <c:set var="detailRequestPrefix" value="${pageContext.request.contextPath}/detail/widget/"/>
 
             <div class="favth-col-xs-12 ">
                 <h3 class="details-title">
@@ -368,7 +371,7 @@
                                             </td>
                                             <td data-label="Identifier">
                                                 <a href="${detailRequestPrefix}${item.stId}"
-                                                   title="Go to Pathway ${item.stId}"  <c:if test="${not empty widget}">target="_blank"</c:if> > ${item.stId}</a>
+                                                   title="Go to Pathway ${item.stId}" > ${item.stId}</a>
                                             </td>
                                             <td data-label="Pathway">
                                                 <span>${item.displayName}</span>
@@ -387,11 +390,11 @@
                                      style="padding: 5px 0 0 14px;">
                                     <c:choose>
                                         <c:when test="${not empty person.orcidId}">
-                                            <a href="./${person.orcidId}/pathways/authored" class="" title="Show all">Show
+                                            <a href="${pageContext.request.contextPath}/detail/person/${person.orcidId}/pathways/authored" class="" title="Show all" <c:if test="${not empty widget}">target="_blank"</c:if>>Show
                                                 all authored pathways...</a>
                                         </c:when>
                                         <c:otherwise>
-                                            <a href="./${person.dbId}/pathways/authored" class="" title="Show all">Show
+                                            <a href="${pageContext.request.contextPath}/detail/person/${person.dbId}/pathways/authored" class="" title="Show all" <c:if test="${not empty widget}">target="_blank"</c:if>>Show
                                                 all authored pathways...</a>
                                         </c:otherwise>
                                     </c:choose>
@@ -445,7 +448,7 @@
                                             </td>
                                             <td data-label="Identifier">
                                                 <a href="${detailRequestPrefix}${authoredReaction.stId}"
-                                                   title="Go to Reaction ${authoredReaction.stId}"  <c:if test="${not empty widget}">target="_blank"</c:if> > ${authoredReaction.stId}</a>
+                                                   title="Go to Reaction ${authoredReaction.stId}"  > ${authoredReaction.stId}</a>
                                             </td>
                                             <td data-label="Reaction">
                                                 <span>${authoredReaction.displayName}</span>
@@ -464,11 +467,11 @@
                                      style="padding: 5px 0 0 14px;">
                                     <c:choose>
                                         <c:when test="${not empty person.orcidId}">
-                                            <a href="./${person.orcidId}/reactions/authored" class="" title="Show all">Show
+                                            <a href="${pageContext.request.contextPath}/detail/person/${person.orcidId}/reactions/authored" class="" title="Show all" <c:if test="${not empty widget}">target="_blank"</c:if>>Show
                                                 all authored reactions...</a>
                                         </c:when>
                                         <c:otherwise>
-                                            <a href="./${person.dbId}/reactions/authored" class="" title="Show all">Show
+                                            <a href="${pageContext.request.contextPath}/detail/person/${person.dbId}/reactions/authored" class="" title="Show all" <c:if test="${not empty widget}">target="_blank"</c:if>>Show
                                                 all authored reactions...</a>
                                         </c:otherwise>
                                     </c:choose>
@@ -522,7 +525,7 @@
                                             </td>
                                             <td data-label="Identifier">
                                                 <a href="${detailRequestPrefix}${reviewedPathway.stId}"
-                                                   title="Go to Pathway ${reviewedPathway.stId}"  <c:if test="${not empty widget}">target="_blank"</c:if>>${reviewedPathway.stId}</a>
+                                                   title="Go to Pathway ${reviewedPathway.stId}" >${reviewedPathway.stId}</a>
                                             </td>
                                             <td data-label="Pathway">
                                                 <span>${reviewedPathway.displayName}</span>
@@ -541,11 +544,11 @@
                                      style="padding: 5px 0 0 14px;">
                                     <c:choose>
                                         <c:when test="${not empty person.orcidId}">
-                                            <a href="./${person.orcidId}/pathways/reviewed" class="" title="Show all">Show
+                                            <a href="${pageContext.request.contextPath}/detail/person/${person.orcidId}/pathways/reviewed" class="" title="Show all" <c:if test="${not empty widget}">target="_blank"</c:if> >Show
                                                 all reviewed pathways...</a>
                                         </c:when>
                                         <c:otherwise>
-                                            <a href="./${person.dbId}/pathways/reviewed" class="" title="Show all">Show
+                                            <a href="${pageContext.request.contextPath}/detail/person/${person.dbId}/pathways/reviewed" class="" title="Show all" <c:if test="${not empty widget}">target="_blank"</c:if> >Show
                                                 all reviewed pathways...</a>
                                         </c:otherwise>
                                     </c:choose>
@@ -600,7 +603,7 @@
                                             </td>
                                             <td data-label="Identifier">
                                                 <a href="${detailRequestPrefix}${reviewedReaction.stId}"
-                                                   title="Go to Reaction ${reviewedReaction.stId}"  <c:if test="${not empty widget}">target="_blank"</c:if>>${reviewedReaction.stId}</a>
+                                                   title="Go to Reaction ${reviewedReaction.stId}" >${reviewedReaction.stId}</a>
                                             </td>
                                             <td data-label="Reaction">
                                                 <span>${reviewedReaction.displayName}</span>
@@ -619,11 +622,11 @@
                                      style="padding: 5px 0 0 14px;">
                                     <c:choose>
                                         <c:when test="${not empty person.orcidId}">
-                                            <a href="./${person.orcidId}/reactions/reviewed" class="" title="Show all">Show
+                                            <a href="${pageContext.request.contextPath}/detail/${person.orcidId}/reactions/reviewed" class="" title="Show all" <c:if test="${not empty widget}">target="_blank"</c:if>>Show
                                                 all reviewed reactions...</a>
                                         </c:when>
                                         <c:otherwise>
-                                            <a href="./${person.dbId}/reactions/reviewed" class="" title="Show all">Show
+                                            <a href="${pageContext.request.contextPath}/detail/${person.dbId}/reactions/reviewed" class="" title="Show all" <c:if test="${not empty widget}">target="_blank"</c:if>>Show
                                                 all reviewed reactions...</a>
                                         </c:otherwise>
                                     </c:choose>

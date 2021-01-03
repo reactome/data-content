@@ -228,7 +228,22 @@
 <div id="fav-container" class="fav-container">
     <div class="favth-container" style="margin: 0; width:100%">
 
-        <c:set var="detailRequestPrefix" value="${pageContext.request.contextPath}/detail/"/>
+     <%--   <c:set var="ori" value="${pageContext.request.getHeader('Referer')}"/>
+        <c:if test="${not empty ori}">
+            <c:out value="${ori}"/>
+            <a href="#" onclick="history.go(-1)"> <<< Go Back</a>
+        </c:if>--%>
+
+    <%--    <c:choose>
+            <c:when test="${not empty widget}">
+                <c:set var="detailRequestPrefix" value="${pageContext.request.contextPath}/detail/widget/"/>
+            </c:when>
+            <c:otherwise>
+                <c:set var="detailRequestPrefix" value="${pageContext.request.contextPath}/detail/"/>
+            </c:otherwise>
+        </c:choose>--%>
+
+         <c:set var="detailRequestPrefix" value="/${pageContext.request.contextPath}/detail/"/>
 
         <c:set value="${pageContext.session.getAttribute('orcidToken')}" var="tokenSession"/>
         <c:set value="${showOrcidBtn && not empty tokenSession && (person.orcidId == tokenSession.orcid)}"
@@ -238,11 +253,11 @@
         <c:if test="${not empty person}">
             <c:choose>
                 <c:when test="${not empty person.orcidId}">
-                    <a href="${detailRequestPrefix}widget/person/${person.orcidId}" class="" title="Return to person details">
+                    <a href="${detailRequestPrefix}/person/${person.orcidId}" class="" title="Return to person details">
                         <<< Go back</a>
                 </c:when>
                 <c:otherwise>
-                    <a href="${detailRequestPrefix}widget/person/${person.dbId}" class="" title="Return to person details"> <<<
+                    <a href="${detailRequestPrefix}/person/${person.dbId}" class="" title="Return to person details"> <<<
                         Go back</a>
                 </c:otherwise>
             </c:choose>

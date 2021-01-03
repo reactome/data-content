@@ -43,7 +43,14 @@
     <c:set var="hasIcon" value="true" />
 </c:if>
 
-<c:set var="detailRequestPrefix" value="${pageContext.request.contextPath}/detail/"/>
+<c:choose>
+    <c:when test="${not empty widget}">
+        <c:set var="detailRequestPrefix" value="${pageContext.request.contextPath}/detail/widget/"/>
+    </c:when>
+    <c:otherwise>
+        <c:set var="detailRequestPrefix" value="${pageContext.request.contextPath}/detail/"/>
+    </c:otherwise>
+</c:choose>
 
 <div class="extended-header favth-clearfix">
     <div class="${columnsCss}">
@@ -137,7 +144,7 @@
         </c:if>
     </div>
     <c:if test="${hasIcon}"> <%-- #hidden-xs --%>
-        <a href="${detailRequestPrefix}${icon}" title="Open icon detail" <c:if test="${not empty widget}">target="_blank"</c:if>>
+        <a href="${detailRequestPrefix}${icon}" title="Open icon detail" >
             <div class="favth-col-lg-2 favth-col-md-2 favth-col-sm-2 favth-col-xs-12 text-center favth-hidden-xs details-icon-pe">
                 <img style="width: 200px; height: 85px;" src="/icon/${icon}.svg" alt="${databaseObject.displayName} icon"/>
             </div>
