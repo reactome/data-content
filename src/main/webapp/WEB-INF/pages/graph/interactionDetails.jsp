@@ -1,20 +1,19 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
+<c:choose>
+    <c:when test="${not empty widget}">
+        <c:set var="detailRequestPrefix" value="${pageContext.request.contextPath}/detail/widget/"/>
+    </c:when>
+    <c:otherwise>
+        <c:set var="detailRequestPrefix" value="${pageContext.request.contextPath}/detail/"/>
+    </c:otherwise>
+</c:choose>
 <%-- Interactors in the Details Page--%>
 <div class="clearfix">
     <fieldset class="fieldset-details">
         <legend>Interactors (${fn:length(interactions)})</legend>
         <div id="r-responsive-table" class="details-wrap interactors-table enlarge-table">
-            <c:choose>
-                <c:when test="${not empty widget}">
-                    <c:set var="detailRequestPrefix" value="${pageContext.request.contextPath}/detail/widget/"/>
-                </c:when>
-                <c:otherwise>
-                    <c:set var="detailRequestPrefix" value="${pageContext.request.contextPath}/detail/"/>
-                </c:otherwise>
-            </c:choose>
-
             <table class="reactome">
                 <thead>
                     <tr>

@@ -29,7 +29,6 @@ import static org.reactome.server.util.WebUtils.noDetailsFound;
  */
 @SuppressWarnings("unused")
 @Controller
-/*@RequestMapping(value = "/detail/person")*/
 @RequestMapping(value = "/detail")
 class AuthorReviewedController {
 
@@ -66,20 +65,9 @@ class AuthorReviewedController {
         Person person = personService.findPerson(id);
         if (person != null) {
             Collection<Pathway> authoredPathways = personService.getAuthoredPathways(id);
-
             addAttributesToModel(model,person, "Authored Pathways", "pa", "Pathway", "reviewed");
             model.addAttribute("list", authoredPathways);
             model.addAttribute("authoredPathwaysSize", authoredPathways.size());
-
-         /*   model.addAttribute(TITLE, person.getDisplayName());
-            model.addAttribute("person", person);
-            model.addAttribute("label", "Authored Pathways");
-            model.addAttribute("claimyourworkpath", "pa");
-            model.addAttribute("type", "Pathway");
-            model.addAttribute("attribute", "reviewed");
-            model.addAttribute("list", authoredPathways);
-            model.addAttribute("authoredPathwaysSize", authoredPathways.size());
-            model.addAttribute(SHOW_ORCID_BTN, matchesHostname(hostname));*/
             return "graph/personShowAll";
         } else {
             infoLogger.info("Search request for id: {} was not found", id);
@@ -95,16 +83,6 @@ class AuthorReviewedController {
             addAttributesToModel(model,person, "Reviewed Pathways", "pr", "Pathway", "reviewed");
             model.addAttribute("list", reviewedPathways);
             model.addAttribute("authoredPathwaysSize", reviewedPathways.size());
-
-         /*   model.addAttribute(TITLE, person.getDisplayName());
-            model.addAttribute("person", person);
-            model.addAttribute("label", "Reviewed Pathways");
-            model.addAttribute("claimyourworkpath", "pr");
-            model.addAttribute("type", "Pathway");
-            model.addAttribute("attribute", "reviewed");
-            model.addAttribute("list", reviewedPathways);
-            model.addAttribute("reviewedPathwaysSize", reviewedPathways.size());
-            model.addAttribute(SHOW_ORCID_BTN, matchesHostname(hostname));*/
             return "graph/personShowAll";
         } else {
             infoLogger.info("Search request for id: {} was not found", id);
@@ -120,16 +98,6 @@ class AuthorReviewedController {
             addAttributesToModel(model,person, "Authored Reactions", "ra", "Reaction", "authored");
             model.addAttribute("list", authoredReactions);
             model.addAttribute("authoredPathwaysSize", authoredReactions.size());
-
-         /*   model.addAttribute(TITLE, person.getDisplayName());
-            model.addAttribute("person", person);
-            model.addAttribute("label", "Authored Reactions");
-            model.addAttribute("claimyourworkpath", "ra");
-            model.addAttribute("type", "Reaction");
-            model.addAttribute("attribute", "authored");
-            model.addAttribute("list", authoredReactions);
-            model.addAttribute("authoredReactionsSize", authoredReactions.size());
-            model.addAttribute(SHOW_ORCID_BTN, matchesHostname(hostname));*/
             return "graph/personShowAll";
         } else {
             infoLogger.info("Search request for id: {} was not found", id);
@@ -142,16 +110,9 @@ class AuthorReviewedController {
         Person person = personService.findPerson(id);
         if (person != null) {
             Collection<ReactionLikeEvent> reviewedReactions = personService.getReviewedReactions(id);
-          /*  model.addAttribute(TITLE, person.getDisplayName());
-            model.addAttribute("person", person);
-            model.addAttribute("label", "Reviewed Reactions");
-            model.addAttribute("claimyourworkpath", "rr");
-            model.addAttribute("type", "Reaction");
-            model.addAttribute("attribute", "reviewed");*/
             addAttributesToModel(model,person, "Reviewed Reactions", "rr", "Reaction", "reviewed");
             model.addAttribute("list", reviewedReactions);
             model.addAttribute("reviewedReactionsSize", reviewedReactions.size());
-
             return "graph/personShowAll";
         } else {
             infoLogger.info("Search request for id: {} was not found", id);
@@ -165,18 +126,10 @@ class AuthorReviewedController {
         Person person = personService.findPerson(id);
         if (person != null) {
             Collection<Pathway> authoredPathways = personService.getAuthoredPathways(id);
-          /*  model.addAttribute(TITLE, person.getDisplayName());
-            model.addAttribute("person", person);
-            model.addAttribute("label", "Authored Pathways");
-            model.addAttribute("claimyourworkpath", "pa");
-            model.addAttribute("type", "Pathway");
-            model.addAttribute("attribute", "reviewed");*/
             addAttributesToModel(model,person, "Authored Pathways", "pa", "Pathway", "reviewed");
             model.addAttribute("list", authoredPathways);
             model.addAttribute("authoredPathwaysSize", authoredPathways.size());
-
             model.addAttribute("widget", "widget");
-
             return "graph/personShowAllWidget";
         } else {
             infoLogger.info("Search request for id: {} was not found", id);
@@ -189,19 +142,10 @@ class AuthorReviewedController {
         Person person = personService.findPerson(id);
         if (person != null) {
             Collection<Pathway> reviewedPathways = personService.getReviewedPathways(id);
-          /*  model.addAttribute(TITLE, person.getDisplayName());
-            model.addAttribute("person", person);
-            model.addAttribute("label", "Reviewed Pathways");
-            model.addAttribute("claimyourworkpath", "pr");
-            model.addAttribute("type", "Pathway");
-            model.addAttribute("attribute", "reviewed");*/
             addAttributesToModel(model,person, "Reviewed Pathways", "pr", "Pathway", "reviewed");
             model.addAttribute("list", reviewedPathways);
             model.addAttribute("reviewedPathwaysSize", reviewedPathways.size());
-
-
             model.addAttribute("widget", "widget");
-
             return "graph/personShowAllWidget";
         } else {
             infoLogger.info("Search request for id: {} was not found", id);
@@ -214,18 +158,10 @@ class AuthorReviewedController {
         Person person = personService.findPerson(id);
         if (person != null) {
             Collection<ReactionLikeEvent> authoredReactions = personService.getAuthoredReactions(id);
-        /*    model.addAttribute(TITLE, person.getDisplayName());
-            model.addAttribute("person", person);
-            model.addAttribute("label", "Authored Reactions");
-            model.addAttribute("claimyourworkpath", "ra");
-            model.addAttribute("type", "Reaction");
-            model.addAttribute("attribute", "authored");*/
             addAttributesToModel(model,person, "Authored Reactions", "ra", "Reaction", "authored");
             model.addAttribute("list", authoredReactions);
             model.addAttribute("authoredReactionsSize", authoredReactions.size());
-
             model.addAttribute("widget", "widget");
-
             return "graph/personShowAllWidget";
         } else {
             infoLogger.info("Search request for id: {} was not found", id);
@@ -238,19 +174,11 @@ class AuthorReviewedController {
         Person person = personService.findPerson(id);
         if (person != null) {
             Collection<ReactionLikeEvent> reviewedReactions = personService.getReviewedReactions(id);
-       /*     model.addAttribute(TITLE, person.getDisplayName());
-            model.addAttribute("person", person);
-            model.addAttribute("label", "Reviewed Reactions");
-            model.addAttribute("claimyourworkpath", "rr");
-            model.addAttribute("type", "Reaction");
-            model.addAttribute("attribute", "reviewed");*/
             addAttributesToModel(model,person, "Reviewed Reactions", "rr", "Reaction", "reviewed");
             model.addAttribute("list", reviewedReactions);
             model.addAttribute("reviewedReactionsSize", reviewedReactions.size());
             model.addAttribute(SHOW_ORCID_BTN, matchesHostname(hostname));
-
             model.addAttribute("widget", "widget");
-
             return "graph/personShowAllWidget";
         } else {
             infoLogger.info("Search request for id: {} was not found", id);

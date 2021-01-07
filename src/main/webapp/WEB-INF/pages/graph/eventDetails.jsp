@@ -1,17 +1,16 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
+<c:choose>
+    <c:when test="${not empty widget}">
+        <c:set var="detailRequestPrefix" value="${pageContext.request.contextPath}/detail/widget/"/>
+    </c:when>
+    <c:otherwise>
+        <c:set var="detailRequestPrefix" value="${pageContext.request.contextPath}/detail/"/>
+    </c:otherwise>
+</c:choose>
+
 <fieldset class="fieldset-details">
     <legend>Participants</legend>
-
-    <c:choose>
-        <c:when test="${not empty widget}">
-            <c:set var="detailRequestPrefix" value="${pageContext.request.contextPath}/detail/widget/"/>
-        </c:when>
-        <c:otherwise>
-            <c:set var="detailRequestPrefix" value="${pageContext.request.contextPath}/detail/"/>
-        </c:otherwise>
-    </c:choose>
-
     <c:if test="${databaseObject.schemaClass == 'Pathway' || databaseObject.schemaClass == 'TopLevelPathway'}">
         <c:if test="${not empty databaseObject.hasEvent}">
 

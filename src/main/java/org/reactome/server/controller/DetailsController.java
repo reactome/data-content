@@ -70,13 +70,6 @@ class DetailsController {
         lowerCaseExp = Pattern.compile("[a-z]+");
     }
 
-    @RequestMapping(value = "/detail/test/{id:.*}", method = RequestMethod.GET)
-    public String details(@PathVariable String id,
-                          ModelMap model) {
-        model.addAttribute("id", id);
-        return "graph/widgetTest";
-    }
-
     /**
      * * Shows detailed information of an entry
      *
@@ -91,7 +84,6 @@ class DetailsController {
                          ModelMap model,
                          HttpServletRequest request,
                          HttpServletResponse response) {
-
         return getDetail(id, model, interactor, request, response);
     }
 
