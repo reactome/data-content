@@ -8,7 +8,7 @@
 <div id="fav-container" class="fav-container">
     <div class="favth-container" style="margin: 0; width:100%">
         <c:if test="${not empty interactions}">
-            <c:if test="${not empty preUrl}">
+            <c:if test="${(not empty preUrl) and (fn:contains(preUrl, 'reactome.org'))}">
                 <a href="#" onclick="history.go(-1)"> <<< Go Back</a>
             </c:if>
             <%-- Interactors Intermediate Page--%>

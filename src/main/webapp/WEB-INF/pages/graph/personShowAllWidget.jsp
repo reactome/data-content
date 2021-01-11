@@ -10,12 +10,12 @@
         <c:if test="${not empty person}">
             <c:choose>
                 <c:when test="${not empty person.orcidId}">
-                    <c:if test="${not empty preUrl}">
+                    <c:if test="${(not empty preUrl) and (fn:contains(preUrl, 'reactome.org'))}">
                         <a href="#" onclick="history.go(-1)"> <<< Go Back</a>
                     </c:if>
                 </c:when>
                 <c:otherwise>
-                    <c:if test="${not empty preUrl}">
+                    <c:if test="${(not empty preUrl) and (fn:contains(preUrl, 'reactome.org'))}">
                         <a href="#" onclick="history.go(-1)"> <<< Go Back</a>
                     </c:if>
                 </c:otherwise>

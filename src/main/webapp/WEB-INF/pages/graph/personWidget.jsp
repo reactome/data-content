@@ -10,7 +10,7 @@
     <div class="favth-container" style="margin: 0; width:100%">
         <%-- Person Page--%>
         <c:if test="${not empty person}">
-            <c:if test="${not empty preUrl}">
+            <c:if test="${(not empty preUrl) and (fn:contains(preUrl, 'reactome.org'))}">
                 <a href="#" onclick="history.go(-1)"> <<< Go Back</a>
             </c:if>
             <c:import url="personTableCommon.jsp"/>
