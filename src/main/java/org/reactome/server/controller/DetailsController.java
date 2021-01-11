@@ -84,7 +84,32 @@ class DetailsController {
                          ModelMap model,
                          HttpServletRequest request,
                          HttpServletResponse response) {
+        return getDetail(id, model, interactor, request, response);
+    }
 
+    /**
+     * * Shows a widget version of an entry detailed information
+     *
+     * @param id    StId or DbId
+     * @param model SpringModel
+     * @return Detailed page
+     * @throws ViewException Runtime exception when building the details page
+     */
+    @RequestMapping(value = "/detail/widget/{id:.*}", method = RequestMethod.GET)
+    public String widgetDetails(@PathVariable String id,
+                          @RequestParam(required = false, defaultValue = "") String interactor,
+                          ModelMap model,
+                          HttpServletRequest request,
+                          HttpServletResponse response) {
+
+        model.addAttribute("widget", "widget");
+        return getDetail(id, model, interactor, request, response);
+    }
+
+    private String getDetail(String id, ModelMap model,
+                             String interactor,
+                             HttpServletRequest request,
+                             HttpServletResponse response ){
         try {
             if (lowerCaseExp.matcher(id).find()) return "redirect:/detail/" + id.toUpperCase();
             if (id.startsWith("R-ICO-")) return iconsController.iconDetails(id, model, response);
@@ -153,7 +178,7 @@ class DetailsController {
                         List<Interaction> interactions = interactionsService.getInteractions(ewas.getReferenceEntity().getIdentifier());
                         model.addAttribute("interactions", interactions);
                         crossReferences.addAll(getCrossReference(ewas.getReferenceEntity()));
-                            model.addAttribute("isReferenceSequence", true);
+                        model.addAttribute("isReferenceSequence", true);
                     }
                     model.addAttribute("crossReferences", groupCrossReferences(crossReferences));
 
@@ -178,7 +203,13 @@ class DetailsController {
                     model.addAttribute("isMobile", u.detectMobileQuick());
 
                     infoLogger.info("DatabaseObject for id: {} was found", id);
-                    return "graph/detail";
+
+                    //check if a widget
+                    if(model.get("widget") != null){
+                        return "graph/detailWidget";
+                    } else{
+                        return "graph/detail";
+                    }
                 }
             }
             infoLogger.info("DatabaseObject for id: {} was not found", id);

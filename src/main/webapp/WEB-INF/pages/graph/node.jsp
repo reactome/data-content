@@ -1,4 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <%-- called by locationsInThePWB.jsp --%>
 <ul class="tree">
@@ -8,7 +9,7 @@
                 <span style="font-size:13px"><i class="sprite-resize sprite sprite-${node.type}" title="${node.type}"></i></span>
                 <c:choose>
                     <c:when test="${node.clickable}">
-                        <a href="${node.url}<c:if test="${not empty flg}">&FLG=${flg}</c:if>" <c:if test="${node.highlighted}">class="tree-highlighted-item"</c:if>  title="Show Details" >${node.name} <c:if test="${not empty node.species}">(${node.species})</c:if></a>
+                        <a href="${node.url}<c:if test="${not empty flg}">&FLG=${flg}</c:if>" <c:if test="${node.highlighted}">class="tree-highlighted-item"</c:if>  title="Show Details" <c:if test="${not empty widget}">target="_blank"</c:if> >${node.name} <c:if test="${not empty node.species}">(${node.species})</c:if></a>
                     </c:when>
                     <c:otherwise>
                         <span class="tree-grayedout-item">${node.name} <c:if test="${not empty node.species}">(${node.species})</c:if></span>

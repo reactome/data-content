@@ -40,6 +40,16 @@ public class InteractionsController {
 
     @RequestMapping(value = "/detail/interactor/{id:.*}", method = RequestMethod.GET)
     public String interactorDetail(@PathVariable String id, ModelMap model, HttpServletResponse response) {
+       return getInteractions(id, model,response);
+    }
+
+    @RequestMapping(value = "/detail/widget/interactor/{id:.*}", method = RequestMethod.GET)
+    public String interactorDetaiWidget(@PathVariable String id, ModelMap model, HttpServletResponse response) {
+        model.addAttribute("widget", "widget");
+        return getInteractions(id, model, response);
+    }
+
+    private String getInteractions(String id, ModelMap model, HttpServletResponse response){
         Collection<CustomInteraction> customInteractions = getCustomInteractions(id);
         if (customInteractions != null && !customInteractions.isEmpty()) {
             model.addAttribute(INTERACTIONS, customInteractions);
@@ -51,8 +61,12 @@ public class InteractionsController {
                 model.addAttribute(RE_SYNONYMS, getSynonym(re));
                 model.addAttribute(RE_TYPE, getType(re));
             }
-            infoLogger.info("Search request for id: {} was found", id);
-            return "graph/interactors";
+            if(model.get("widget") != null){
+                return "graph/interactorsWidget";
+            }else{
+                infoLogger.info("Search request for id: {} was found", id);
+                return "graph/interactors";
+            }
         } else {
             autoFillDetailsPage(model, id);
             infoLogger.info("Search request for id: {} was not found", id);
