@@ -133,10 +133,10 @@
             <%-- This is visible on phones only, if you change something here, consider changing also #hidden-xs --%>
             <c:if test="${hasIcon}">
                 <div class="details-label favth-col-lg-2 favth-col-md-3 favth-col-sm-3 favth-col-xs-12 favth-visible-xs">
-                    <a href="../detail/${icon}" title="Open icon detail">Icon</a>
+                    <a href="${detailRequestPrefix}${icon}" title="Open icon detail">Icon</a>
                 </div>
                 <div class="details-field favth-col-lg-10 favth-col-md-9 favth-col-sm-9 favth-col-xs-12 favth-visible-xs">
-                    <a href="../detail/${icon}" title="Open icon detail">
+                    <a href="${detailRequestPrefix}${icon}" title="Open icon detail">
                         <img style="width: 100px; height: 50px;" src="/icon/${icon}.svg" alt="${databaseObject.displayName} icon" />
                     </a>
                 </div>
