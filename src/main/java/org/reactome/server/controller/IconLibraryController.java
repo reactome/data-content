@@ -47,6 +47,7 @@ class IconLibraryController {
     private static final String ICONS_LIBRARY_ENTRY_PAGE = "icon/library";
     private static final String ICONS_PAGE = "icon/icons";
     private static final String ICONS_DETAILS = "icon/details";
+    private static final String ICONS_DETAILS_WIDGET = "icon/detailsWidget";
     private static final String PAGE_NO_ICON_FOUND = "search/noIconFound";
     private static final String PAGE = "page";
     private static final String MAX_PAGE = "maxpage";
@@ -157,7 +158,12 @@ class IconLibraryController {
                     ehldPwbTree.add(nodes.stream().sorted().collect(Collectors.toCollection(LinkedHashSet::new)));
                 }
                 model.addAttribute(PWB_TREE, ehldPwbTree);
-                return ICONS_DETAILS;
+
+                if(model.get("widget") != null){
+                    return ICONS_DETAILS_WIDGET;
+                } else{
+                    return ICONS_DETAILS;
+                }
             }
         }
 

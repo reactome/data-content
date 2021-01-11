@@ -29,7 +29,7 @@ import static org.reactome.server.util.WebUtils.noDetailsFound;
  */
 @SuppressWarnings("unused")
 @Controller
-@RequestMapping(value = "/detail/person")
+@RequestMapping(value = "/detail")
 class AuthorReviewedController {
 
     private static final Logger infoLogger = LoggerFactory.getLogger("infoLogger");
@@ -45,9 +45,148 @@ class AuthorReviewedController {
     @Value("${orcid.server}")
     private String hostname;
 
-    @RequestMapping(value = "/{id:.*}", method = RequestMethod.GET)
+    @RequestMapping(value = "/person/{id:.*}", method = RequestMethod.GET)
     public String personDetail(@PathVariable String id, ModelMap model, HttpServletResponse response,
                                @RequestParam(defaultValue = "false") Boolean showAll) {
+
+        return getPersonDetail(id, model, response, showAll);
+    }
+
+    @RequestMapping(value = "/widget/person/{id:.*}", method = RequestMethod.GET)
+    public String personDetailWidget(@PathVariable String id, ModelMap model, HttpServletResponse response,
+                                     @RequestParam(defaultValue = "false") Boolean showAll) {
+
+        model.addAttribute("widget", "widget");
+        return getPersonDetail(id, model, response, showAll);
+    }
+
+    @RequestMapping(value = "/person/{id:.*}/pathways/authored", method = RequestMethod.GET)
+    public String personPathwaysAuthored(@PathVariable String id, ModelMap model, HttpServletResponse response) {
+        Person person = personService.findPerson(id);
+        if (person != null) {
+            Collection<Pathway> authoredPathways = personService.getAuthoredPathways(id);
+            addAttributesToModel(model,person, "Authored Pathways", "pa", "Pathway", "reviewed");
+            model.addAttribute("list", authoredPathways);
+            model.addAttribute("authoredPathwaysSize", authoredPathways.size());
+            return "graph/personShowAll";
+        } else {
+            infoLogger.info("Search request for id: {} was not found", id);
+            return noDetailsFound(model, response, id);
+        }
+    }
+
+    @RequestMapping(value = "/person/{id:.*}/pathways/reviewed", method = RequestMethod.GET)
+    public String personPathwaysReviewed(@PathVariable String id, ModelMap model, HttpServletResponse response) {
+        Person person = personService.findPerson(id);
+        if (person != null) {
+            Collection<Pathway> reviewedPathways = personService.getReviewedPathways(id);
+            addAttributesToModel(model,person, "Reviewed Pathways", "pr", "Pathway", "reviewed");
+            model.addAttribute("list", reviewedPathways);
+            model.addAttribute("authoredPathwaysSize", reviewedPathways.size());
+            return "graph/personShowAll";
+        } else {
+            infoLogger.info("Search request for id: {} was not found", id);
+            return noDetailsFound(model, response, id);
+        }
+    }
+
+    @RequestMapping(value = "/person/{id:.*}/reactions/authored", method = RequestMethod.GET)
+    public String personReactionsAuthored(@PathVariable String id, ModelMap model, HttpServletResponse response) {
+        Person person = personService.findPerson(id);
+        if (person != null) {
+            Collection<ReactionLikeEvent> authoredReactions = personService.getAuthoredReactions(id);
+            addAttributesToModel(model,person, "Authored Reactions", "ra", "Reaction", "authored");
+            model.addAttribute("list", authoredReactions);
+            model.addAttribute("authoredPathwaysSize", authoredReactions.size());
+            return "graph/personShowAll";
+        } else {
+            infoLogger.info("Search request for id: {} was not found", id);
+            return noDetailsFound(model, response, id);
+        }
+    }
+
+    @RequestMapping(value = "/person/{id:.*}/reactions/reviewed", method = RequestMethod.GET)
+    public String personReactionsReviewed(@PathVariable String id, ModelMap model, HttpServletResponse response) {
+        Person person = personService.findPerson(id);
+        if (person != null) {
+            Collection<ReactionLikeEvent> reviewedReactions = personService.getReviewedReactions(id);
+            addAttributesToModel(model,person, "Reviewed Reactions", "rr", "Reaction", "reviewed");
+            model.addAttribute("list", reviewedReactions);
+            model.addAttribute("reviewedReactionsSize", reviewedReactions.size());
+            return "graph/personShowAll";
+        } else {
+            infoLogger.info("Search request for id: {} was not found", id);
+            return noDetailsFound(model, response, id);
+        }
+    }
+
+
+    @RequestMapping(value = "/widget/person/{id:.*}/pathways/authored", method = RequestMethod.GET)
+    public String personPathwaysAuthoredWidget(@PathVariable String id, ModelMap model, HttpServletResponse response) {
+        Person person = personService.findPerson(id);
+        if (person != null) {
+            Collection<Pathway> authoredPathways = personService.getAuthoredPathways(id);
+            addAttributesToModel(model,person, "Authored Pathways", "pa", "Pathway", "reviewed");
+            model.addAttribute("list", authoredPathways);
+            model.addAttribute("authoredPathwaysSize", authoredPathways.size());
+            model.addAttribute("widget", "widget");
+            return "graph/personShowAllWidget";
+        } else {
+            infoLogger.info("Search request for id: {} was not found", id);
+            return noDetailsFound(model, response, id);
+        }
+    }
+
+    @RequestMapping(value = "/widget/person/{id:.*}/pathways/reviewed", method = RequestMethod.GET)
+    public String personPathwaysReviewedWidget(@PathVariable String id, ModelMap model, HttpServletResponse response) {
+        Person person = personService.findPerson(id);
+        if (person != null) {
+            Collection<Pathway> reviewedPathways = personService.getReviewedPathways(id);
+            addAttributesToModel(model,person, "Reviewed Pathways", "pr", "Pathway", "reviewed");
+            model.addAttribute("list", reviewedPathways);
+            model.addAttribute("reviewedPathwaysSize", reviewedPathways.size());
+            model.addAttribute("widget", "widget");
+            return "graph/personShowAllWidget";
+        } else {
+            infoLogger.info("Search request for id: {} was not found", id);
+            return noDetailsFound(model, response, id);
+        }
+    }
+
+    @RequestMapping(value = "/widget/person/{id:.*}/reactions/authored", method = RequestMethod.GET)
+    public String personReactionsAuthoredWidget(@PathVariable String id, ModelMap model, HttpServletResponse response) {
+        Person person = personService.findPerson(id);
+        if (person != null) {
+            Collection<ReactionLikeEvent> authoredReactions = personService.getAuthoredReactions(id);
+            addAttributesToModel(model,person, "Authored Reactions", "ra", "Reaction", "authored");
+            model.addAttribute("list", authoredReactions);
+            model.addAttribute("authoredReactionsSize", authoredReactions.size());
+            model.addAttribute("widget", "widget");
+            return "graph/personShowAllWidget";
+        } else {
+            infoLogger.info("Search request for id: {} was not found", id);
+            return noDetailsFound(model, response, id);
+        }
+    }
+
+    @RequestMapping(value = "/widget/person/{id:.*}/reactions/reviewed", method = RequestMethod.GET)
+    public String personReactionsReviewedWidget(@PathVariable String id, ModelMap model, HttpServletResponse response) {
+        Person person = personService.findPerson(id);
+        if (person != null) {
+            Collection<ReactionLikeEvent> reviewedReactions = personService.getReviewedReactions(id);
+            addAttributesToModel(model,person, "Reviewed Reactions", "rr", "Reaction", "reviewed");
+            model.addAttribute("list", reviewedReactions);
+            model.addAttribute("reviewedReactionsSize", reviewedReactions.size());
+            model.addAttribute(SHOW_ORCID_BTN, matchesHostname(hostname));
+            model.addAttribute("widget", "widget");
+            return "graph/personShowAllWidget";
+        } else {
+            infoLogger.info("Search request for id: {} was not found", id);
+            return noDetailsFound(model, response, id);
+        }
+    }
+
+    private String getPersonDetail(String id, ModelMap model, HttpServletResponse response, Boolean showAll) {
         Person person = personService.findPerson(id);
         if (person != null) {
             model.addAttribute(TITLE, person.getDisplayName());
@@ -71,110 +210,32 @@ class AuthorReviewedController {
 
             model.addAttribute(SHOW_ORCID_BTN, matchesHostname(hostname));
 
-            if(authoredPathways.size() + authoredReactions.size() + reviewedPathways.size() + reviewedReactions.size() == 0) return noDetailsFound(model, response, id);
-
-            infoLogger.info("Search request for id: {} was found", id);
-            return "graph/person";
+            if (model.get("widget") != null) {
+                return "graph/personWidget";
+            } else {
+                infoLogger.info("Search request for id: {} was found", id);
+                return "graph/person";
+            }
         } else {
             infoLogger.info("Search request for id: {} was not found", id);
             return noDetailsFound(model, response, id);
         }
     }
 
-    @RequestMapping(value = "/{id:.*}/pathways/authored", method = RequestMethod.GET)
-    public String personPathwaysAuthored(@PathVariable String id, ModelMap model, HttpServletResponse response) {
-        Person person = personService.findPerson(id);
-        if (person != null) {
-            Collection<Pathway> authoredPathways = personService.getAuthoredPathways(id);
-            model.addAttribute(TITLE, person.getDisplayName());
-            model.addAttribute("person", person);
-            model.addAttribute("label", "Authored Pathways");
-            model.addAttribute("claimyourworkpath", "pa");
-            model.addAttribute("type", "Pathway");
-            model.addAttribute("attribute", "reviewed");
-            model.addAttribute("list", authoredPathways);
-            model.addAttribute("authoredPathwaysSize", authoredPathways.size());
-            model.addAttribute(SHOW_ORCID_BTN, matchesHostname(hostname));
-
-            if(authoredPathways.isEmpty()) return noDetailsFound(model, response, id);
-
-            return "graph/personShowAll";
-        } else {
-            infoLogger.info("Search request for id: {} was not found", id);
-            return noDetailsFound(model, response, id);
-        }
-    }
-
-    @RequestMapping(value = "/{id:.*}/pathways/reviewed", method = RequestMethod.GET)
-    public String personPathwaysReviewed(@PathVariable String id, ModelMap model, HttpServletResponse response) {
-        Person person = personService.findPerson(id);
-        if (person != null) {
-            Collection<Pathway> reviewedPathways = personService.getReviewedPathways(id);
-            model.addAttribute(TITLE, person.getDisplayName());
-            model.addAttribute("person", person);
-            model.addAttribute("label", "Reviewed Pathways");
-            model.addAttribute("claimyourworkpath", "pr");
-            model.addAttribute("type", "Pathway");
-            model.addAttribute("attribute", "reviewed");
-            model.addAttribute("list", reviewedPathways);
-            model.addAttribute("reviewedPathwaysSize", reviewedPathways.size());
-            model.addAttribute(SHOW_ORCID_BTN, matchesHostname(hostname));
-
-            if(reviewedPathways.isEmpty()) return noDetailsFound(model, response, id);
-
-            return "graph/personShowAll";
-        } else {
-            infoLogger.info("Search request for id: {} was not found", id);
-            return noDetailsFound(model, response, id);
-        }
-    }
-
-    @RequestMapping(value = "/{id:.*}/reactions/authored", method = RequestMethod.GET)
-    public String personReactionsAuthored(@PathVariable String id, ModelMap model, HttpServletResponse response) {
-        Person person = personService.findPerson(id);
-        if (person != null) {
-            Collection<ReactionLikeEvent> authoredReactions = personService.getAuthoredReactions(id);
-            model.addAttribute(TITLE, person.getDisplayName());
-            model.addAttribute("person", person);
-            model.addAttribute("label", "Authored Reactions");
-            model.addAttribute("claimyourworkpath", "ra");
-            model.addAttribute("type", "Reaction");
-            model.addAttribute("attribute", "authored");
-            model.addAttribute("list", authoredReactions);
-            model.addAttribute("authoredReactionsSize", authoredReactions.size());
-            model.addAttribute(SHOW_ORCID_BTN, matchesHostname(hostname));
-
-            if(authoredReactions.isEmpty()) return noDetailsFound(model, response, id);
-
-            return "graph/personShowAll";
-        } else {
-            infoLogger.info("Search request for id: {} was not found", id);
-            return noDetailsFound(model, response, id);
-        }
-    }
-
-    @RequestMapping(value = "/{id:.*}/reactions/reviewed", method = RequestMethod.GET)
-    public String personReactionsReviewed(@PathVariable String id, ModelMap model, HttpServletResponse response) {
-        Person person = personService.findPerson(id);
-        if (person != null) {
-            Collection<ReactionLikeEvent> reviewedReactions = personService.getReviewedReactions(id);
-            model.addAttribute(TITLE, person.getDisplayName());
-            model.addAttribute("person", person);
-            model.addAttribute("label", "Reviewed Reactions");
-            model.addAttribute("claimyourworkpath", "rr");
-            model.addAttribute("type", "Reaction");
-            model.addAttribute("attribute", "reviewed");
-            model.addAttribute("list", reviewedReactions);
-            model.addAttribute("reviewedReactionsSize", reviewedReactions.size());
-            model.addAttribute(SHOW_ORCID_BTN, matchesHostname(hostname));
-
-            if(reviewedReactions.isEmpty()) return noDetailsFound(model, response, id);
-
-            return "graph/personShowAll";
-        } else {
-            infoLogger.info("Search request for id: {} was not found", id);
-            return noDetailsFound(model, response, id);
-        }
+    private ModelMap addAttributesToModel(ModelMap model,
+                                          Person person,
+                                          String label,
+                                          String claimYourWorkPath,
+                                          String type,
+                                          String attribute) {
+        model.addAttribute(TITLE, person.getDisplayName());
+        model.addAttribute("person", person);
+        model.addAttribute("label", label);
+        model.addAttribute("claimyourworkpath", claimYourWorkPath);
+        model.addAttribute("type", type);
+        model.addAttribute("attribute", attribute);
+        model.addAttribute(SHOW_ORCID_BTN, matchesHostname(hostname));
+        return model;
     }
 
     // ### KEEP IT FOR THE MOMENT ###
