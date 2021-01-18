@@ -40,6 +40,15 @@ public class WebUtils {
         return "graph/noDetailsFound";
     }
 
+    public static String noDetailsFound(ModelMap model, HttpServletResponse response, String term, String notFoundClassName ) {
+        model.addAttribute("term", term);
+        model.addAttribute("title", "No details found for " + term);
+        model.addAttribute("notFoundClassName",  notFoundClassName);
+        response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+        return "graph/noDetailsFound";
+    }
+
+
     public static boolean matchesHostname(String hostname) {
         try {
             return hostname.equalsIgnoreCase(InetAddress.getLocalHost().getHostName());
