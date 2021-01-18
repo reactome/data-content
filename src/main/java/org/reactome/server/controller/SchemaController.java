@@ -154,7 +154,8 @@ class SchemaController {
             model.addAttribute("className", className);
             return "graph/schema";
         } catch (ClassNotFoundException ex) {
-            return noDetailsFound(model, response, className);
+            String notFoundClassName = ex.getMessage().substring(ex.getMessage().lastIndexOf('.') + 1);
+            return noDetailsFound(model, response, className, notFoundClassName);
         } catch (Throwable t) {
             // Catch any exception that could happen in the schema page and pass it to the GlobalExceptionHandler
             throw new ViewException(t);
