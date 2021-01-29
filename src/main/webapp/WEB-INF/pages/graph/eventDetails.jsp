@@ -206,21 +206,50 @@
         <c:if test="${not empty negativelyRegulatedBy}">
             <div class="fieldset-pair-container">
                 <div class="favth-clearfix">
-                    <div class="favth-col-lg-2 favth-col-md-2 favth-col-sm-3 favth-col-xs-12 details-label">Negatively
-                        by
-                    </div>
+                    <div class="favth-col-lg-2 favth-col-md-2 favth-col-sm-3 favth-col-xs-12 details-label">Negatively by</div>
                     <div class="favth-col-lg-10 favth-col-md-10 favth-col-sm-9 favth-col-xs-12 details-field">
-                        <ul class="list">
-                            <c:forEach var="negativelyRegulatedBy" items="${negativelyRegulatedBy}">
-                                <li>
+                        <c:forEach var="negativelyRegulatedBy" items="${negativelyRegulatedBy}">
+                            <div class="favth-clearfix modified-residue">
+                                <div class="favth-col-lg-2 favth-col-md-3 favth-col-sm-12 favth-col-xs-12 details-label mr-label">Regulator</div>
+                                <div class="favth-col-lg-10 favth-col-md-9 favth-col-sm-12 favth-col-xs-12 details-field mr-field">
                                     <i class="sprite sprite-resize sprite-${negativelyRegulatedBy.regulator.schemaClass} sprite-position"
                                        title="${negativelyRegulatedBy.regulator.schemaClass}"></i>
-                                    <a href="${detailRequestPrefix}${negativelyRegulatedBy.regulator.stId}" class=""
-                                       title="Show Details"
-                                       >${negativelyRegulatedBy.regulator.displayName}</a>
-                                </li>
-                            </c:forEach>
-                        </ul>
+                                    <a href="${detailRequestPrefix}${negativelyRegulatedBy.regulator.stId}"
+                                       class="" title="Show Details"
+                                    >${negativelyRegulatedBy.regulator.displayName}</a>
+                                </div>
+                                <c:if test="${not empty negativelyRegulatedBy.summation}">
+                                    <div class="favth-col-lg-2 favth-col-md-3 favth-col-sm-12 favth-col-xs-12 details-label mr-label">
+                                        Summation
+                                    </div>
+                                    <div class="favth-col-lg-10 favth-col-md-9 favth-col-sm-12 favth-col-xs-12 details-field mr-field">
+                                        <div class="wrap">
+                                            <c:forEach var="summation" items="${negativelyRegulatedBy.summation}">
+                                                <p>${summation.text}</p>
+                                            </c:forEach>
+                                        </div>
+                                    </div>
+                                </c:if>
+                                <c:if test="${not empty negativelyRegulatedBy.activeUnit}">
+                                    <div class="favth-col-lg-2 favth-col-md-3 favth-col-sm-12 favth-col-xs-12 details-label mr-label">
+                                        Active Unit
+                                    </div>
+                                    <div class="favth-col-lg-10 favth-col-md-9 favth-col-sm-12 favth-col-xs-12 details-field mr-field">
+                                        <div class="wrap">
+                                            <c:forEach var="activeUnit"
+                                                       items="${negativelyRegulatedBy.activeUnit}">
+                                                <div class="favth-col-lg-6 favth-col-md-6 favth-col-sm-12 favth-col-xs-12 text-overflow">
+                                                    <i class="sprite sprite-resize sprite-${activeUnit.schemaClass} sprite-position"
+                                                       title="${activeUnit.schemaClass}"></i>
+                                                    <a href="${detailRequestPrefix}${activeUnit.stId}" class=""
+                                                       title="Show Details active unit"> ${activeUnit.displayName}</a>
+                                                </div>
+                                            </c:forEach>
+                                        </div>
+                                    </div>
+                                </c:if>
+                            </div>
+                        </c:forEach>
                     </div>
                 </div>
             </div>
@@ -228,21 +257,52 @@
         <c:if test="${not empty positivelyRegulatedBy}">
             <div class="fieldset-pair-container">
                 <div class="favth-clearfix">
-                    <div class="favth-col-lg-2 favth-col-md-2 favth-col-sm-3 favth-col-xs-12 details-label">Positively
-                        by
-                    </div>
+                    <div class="favth-col-lg-2 favth-col-md-2 favth-col-sm-3 favth-col-xs-12 details-label">Positively by</div>
                     <div class="favth-col-lg-10 favth-col-md-10 favth-col-sm-9 favth-col-xs-12 details-field">
-                        <ul class="list">
-                            <c:forEach var="positivelyRegulatedBy" items="${positivelyRegulatedBy}">
-                                <li>
+                        <c:forEach var="positivelyRegulatedBy" items="${positivelyRegulatedBy}">
+                            <div class="favth-clearfix modified-residue">
+                                <div class="favth-col-lg-2 favth-col-md-3 favth-col-sm-12 favth-col-xs-12 details-label mr-label">
+                                    Regulator
+                                </div>
+                                <div class="favth-col-lg-10 favth-col-md-9 favth-col-sm-12 favth-col-xs-12 details-field mr-field">
                                     <i class="sprite sprite-resize sprite-${positivelyRegulatedBy.regulator.schemaClass} sprite-position"
                                        title="${positivelyRegulatedBy.regulator.schemaClass}"></i>
-                                    <a href="${detailRequestPrefix}${positivelyRegulatedBy.regulator.stId}" class=""
-                                       title="Show Details"
+                                    <a href="${detailRequestPrefix}${positivelyRegulatedBy.regulator.stId}"
+                                       class="" title="Show Details"
                                     >${positivelyRegulatedBy.regulator.displayName}</a>
-                                </li>
-                            </c:forEach>
-                        </ul>
+                                </div>
+                                <c:if test="${not empty positivelyRegulatedBy.summation}">
+                                    <div class="favth-col-lg-2 favth-col-md-3 favth-col-sm-12 favth-col-xs-12 details-label mr-label">
+                                        Summation
+                                    </div>
+                                    <div class="favth-col-lg-10 favth-col-md-9 favth-col-sm-12 favth-col-xs-12 details-field mr-field">
+                                        <div class="wrap">
+                                            <c:forEach var="summation" items="${positivelyRegulatedBy.summation}">
+                                                <p>${summation.text}</p>
+                                            </c:forEach>
+                                        </div>
+                                    </div>
+                                </c:if>
+                                <c:if test="${not empty positivelyRegulatedBy.activeUnit}">
+                                    <div class="favth-col-lg-2 favth-col-md-3 favth-col-sm-12 favth-col-xs-12 details-label mr-label">
+                                        Active Unit
+                                    </div>
+                                    <div class="favth-col-lg-10 favth-col-md-9 favth-col-sm-12 favth-col-xs-12 details-field mr-field">
+                                        <div class="wrap">
+                                            <c:forEach var="activeUnit"
+                                                       items="${positivelyRegulatedBy.activeUnit}">
+                                                <div class="favth-col-lg-6 favth-col-md-6 favth-col-sm-12 favth-col-xs-12 text-overflow">
+                                                    <i class="sprite sprite-resize sprite-${activeUnit.schemaClass} sprite-position"
+                                                       title="${activeUnit.schemaClass}"></i>
+                                                    <a href="${detailRequestPrefix}${activeUnit.stId}" class=""
+                                                       title="Show Details active unit"> ${activeUnit.displayName}</a>
+                                                </div>
+                                            </c:forEach>
+                                        </div>
+                                    </div>
+                                </c:if>
+                            </div>
+                        </c:forEach>
                     </div>
                 </div>
             </div>
