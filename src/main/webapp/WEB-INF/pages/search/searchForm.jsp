@@ -1,6 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
-<c:set var="placeholder" value="e.g. O95631, NTN1, signaling by EGFR, glucose" />
+<c:set var="placeholder" value="e.g. O95631, NTN1, signaling by EGFR, glucose, GO:0043293" />
 <c:if test="${iconsSearch}">
     <c:set var="placeholder" value="e.g. P06241, liver, CFTR, protein" />
 </c:if>
