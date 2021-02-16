@@ -60,7 +60,7 @@ class SearchController {
     private static final String SUGGESTIONS = "suggestions";
     private static final String PAGE = "page";
     private static final String MAX_PAGE = "maxpage";
-    private static final String CLUSTER = "cluster";
+    private static final String GROUPED = "grouped";
     private static final String MAIL_SUBJECT = "subject";
     private static final String MAIL_SUBJECT_PLACEHOLDER = "No results found for ";
     private static final String MAIL_MESSAGE = "message";
@@ -149,7 +149,7 @@ class SearchController {
             model.addAttribute(TYPES, types);
             model.addAttribute(COMPARTMENTS, compartments);
             model.addAttribute(KEYWORDS, keywords);
-            model.addAttribute(CLUSTER, cluster);
+            model.addAttribute(GROUPED, cluster);
             model.addAttribute(PAGE, page);
 
             String stIdMatch = null;

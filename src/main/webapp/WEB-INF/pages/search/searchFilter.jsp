@@ -1,20 +1,23 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <div class="filter-wrapper">
-    <form  action="./query" method="get">
+    <form action="./query" method="get">
         <input type="hidden" name="q" value="<c:out value='${q}'/>"/>
         <%-- SPECIES --%>
-        <div class="facet" >
+        <div class="facet">
             <h4>Species</h4>
             <ul class="term-list">
                 <c:forEach var="selected" items="${species_facet.selected}">
                     <li class="term-item">
-                        <label><input type="checkbox" onclick="this.form.submit();" name="species" value="${selected.name}" checked> ${selected.name} (${selected.count})</label></li>
+                        <label><input type="checkbox" onclick="this.form.submit();" name="species"
+                                      value="${selected.name}" checked> ${selected.name} (${selected.count})</label>
+                    </li>
                 </c:forEach>
                 <c:forEach var="available" items="${species_facet.available}">
                     <li class="term-item">
                         <label>
-                            <input type="checkbox" onclick="this.form.submit();" name="species" value="${available.name}"> ${available.name} (${available.count})
+                            <input type="checkbox" onclick="this.form.submit();" name="species"
+                                   value="${available.name}"> ${available.name} (${available.count})
                         </label>
                     </li>
                 </c:forEach>
@@ -23,20 +26,22 @@
 
         <%-- TYPES --%>
         <c:if test="${not empty type_facet.available || not empty type_facet.selected }">
-            <div class="facet" >
+            <div class="facet">
                 <h4>Types</h4>
                 <ul class="term-list">
                     <c:forEach var="selected" items="${type_facet.selected}">
                         <li class="term-item">
                             <label>
-                                <input type="checkbox" onclick="this.form.submit();" name="types" value="${selected.name}" checked> ${selected.name} (${selected.count})
+                                <input type="checkbox" onclick="this.form.submit();" name="types"
+                                       value="${selected.name}" checked> ${selected.name} (${selected.count})
                             </label>
                         </li>
                     </c:forEach>
                     <c:forEach var="available" items="${type_facet.available}">
                         <li class="term-item">
                             <label>
-                                <input type="checkbox" onclick="this.form.submit();" name="types" value="${available.name}"> ${available.name} (${available.count})
+                                <input type="checkbox" onclick="this.form.submit();" name="types"
+                                       value="${available.name}"> ${available.name} (${available.count})
                             </label>
                         </li>
                     </c:forEach>
@@ -52,14 +57,16 @@
                     <c:forEach var="selected" items="${compartment_facet.selected}">
                         <li class="term-item">
                             <label>
-                                <input type="checkbox" onclick="this.form.submit();" name="compartments" value="${selected.name}" checked> ${selected.name} (${selected.count})
+                                <input type="checkbox" onclick="this.form.submit();" name="compartments"
+                                       value="${selected.name}" checked> ${selected.name} (${selected.count})
                             </label>
                         </li>
                     </c:forEach>
                     <c:forEach var="available" items="${compartment_facet.available}">
                         <li class="term-item">
                             <label>
-                                <input type="checkbox" onclick="this.form.submit();" name="compartments" value="${available.name}"> ${available.name} (${available.count})
+                                <input type="checkbox" onclick="this.form.submit();" name="compartments"
+                                       value="${available.name}"> ${available.name} (${available.count})
                             </label>
                         </li>
                     </c:forEach>
@@ -75,37 +82,45 @@
                     <c:forEach var="selected" items="${keyword_facet.selected}">
                         <li class="term-item">
                             <label>
-                                <input type="checkbox" onclick="this.form.submit();" name="keywords" value="${selected.name}" checked> ${selected.name} (${selected.count})
+                                <input type="checkbox" onclick="this.form.submit();" name="keywords"
+                                       value="${selected.name}" checked> ${selected.name} (${selected.count})
                             </label>
                         </li>
                     </c:forEach>
                     <c:forEach var="available" items="${keyword_facet.available}">
                         <li class="term-item">
                             <label>
-                                <input type="checkbox" onclick="this.form.submit();" name="keywords" value="${available.name}"> ${available.name} (${available.count})
+                                <input type="checkbox" onclick="this.form.submit();" name="keywords"
+                                       value="${available.name}"> ${available.name} (${available.count})
                             </label>
                         </li>
                     </c:forEach>
                 </ul>
             </div>
         </c:if>
-        <%-- CLUSTERED --%>
+        <%-- GROUPED --%>
         <div class="facet">
             <h4>Search properties</h4>
             <ul class="term-list">
                 <c:choose>
-                    <c:when test="${cluster}">
-                        <li class="term-item"><label>
-                            <input type="checkbox" onclick="this.form.submit();" name="cluster"
-                                   value="true" checked></label> clustered Search</li>
+                    <c:when test="${grouped}">
+                        <li class="term-item">
+                            <label>
+                                <input type="checkbox" onclick="this.form.submit();" name="cluster" value="true"
+                                       checked>
+                                Group by type
+                            </label>
+                        </li>
                     </c:when>
                     <c:otherwise>
-                        <li class="term-item"><label>
-                            <input type="checkbox" onclick="this.form.submit();" name="cluster"
-                                   value="true" ></label> clustered Search</li>
+                        <li class="term-item">
+                            <label>
+                                <input type="checkbox" onclick="this.form.submit();" name="cluster" value="true">
+                                Group by type
+                            </label>
+                        </li>
                     </c:otherwise>
                 </c:choose>
-
             </ul>
         </div>
     </form>
