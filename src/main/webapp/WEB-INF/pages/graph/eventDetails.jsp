@@ -134,48 +134,36 @@
 <c:if test="${isReactionLikeEvent && not empty databaseObject.catalystActivity}">
     <fieldset class="fieldset-details">
         <legend>Catalyst Activity</legend>
-        <div class="fieldset-pair-container">
-            <div class="favth-clearfix">
-                <div class="favth-col-lg-2 favth-col-md-2 favth-col-sm-3 favth-col-xs-12 details-label">Catalyst
-                    Activity
-                </div>
-                <div class="favth-col-lg-10 favth-col-md-10 favth-col-sm-9 favth-col-xs-12 details-field">
-                    <c:forEach var="catalystActivity" items="${databaseObject.catalystActivity}">
-                        <div class="favth-row">
-                            <div class="favth-col-lg-2 favth-col-md-3 favth-col-sm-12 favth-col-xs-12 details-label ca-label">
-                                Title
-                            </div>
-                            <div class="favth-col-lg-10 favth-col-md-9 favth-col-sm-12 favth-col-xs-12 details-field ca-field">
-                                    ${catalystActivity.displayName}
-                            </div>
+        <div class="overflow" id="catalyst-activity-container">
 
-                            <c:if test="${not empty catalystActivity.physicalEntity}">
-                                <div class="favth-col-lg-2 favth-col-md-3 favth-col-sm-12 favth-col-xs-12 details-label ca-label">
-                                    Physical Entity
-                                </div>
-                                <div class="favth-col-lg-10 favth-col-md-9 favth-col-sm-12 favth-col-xs-12 details-field ca-field">
-                                    <i class="sprite sprite-resize sprite-${catalystActivity.physicalEntity.schemaClass} sprite-position"
-                                       title="${catalystActivity.physicalEntity.schemaClass}"></i>
-                                    <a href="${detailRequestPrefix}${catalystActivity.physicalEntity.stId}" class=""
-                                       title="show Reactome ${catalystActivity.physicalEntity.stId}"
-                                       > ${catalystActivity.physicalEntity.displayName}</a>
-                                </div>
-                            </c:if>
+            <c:forEach var="catalystActivity" items="${databaseObject.catalystActivity}">
+                <p class="wrap"> ${catalystActivity.displayName} </p>
+                <div class="fieldset-pair-container">
+                    <div class="favth-clearfix">
+                        <c:if test="${not empty catalystActivity.physicalEntity}">
+                            <div class="favth-col-lg-2 favth-col-md-2 favth-col-sm-3 favth-col-xs-12 details-label">
+                                Physical Entity
+                            </div>
+                            <div class="favth-col-lg-10 favth-col-md-10 favth-col-sm-9 favth-col-xs-12 details-field">
+                                <m:link object="${catalystActivity.physicalEntity}" detailRequestPrefix="${detailRequestPrefix}"/>
+                            </div>
+                        </c:if>
 
-                            <c:if test="${not empty catalystActivity.activity}">
-                                <div class="favth-col-lg-2 favth-col-md-3 favth-col-sm-12 favth-col-xs-12 details-label ca-label">
-                                    Activity
-                                </div>
-                                <div class="favth-col-lg-10 favth-col-md-9 favth-col-sm-12 favth-col-xs-12 details-field ca-field">
-                                    <a href="${catalystActivity.activity.url}" class=""
-                                       title="show ${catalystActivity.activity.databaseName}">${catalystActivity.activity.displayName}
-                                        (${catalystActivity.activity.accession})</a>
-                                </div>
-                            </c:if>
-                        </div>
-                    </c:forEach>
+                        <c:if test="${not empty catalystActivity.activity}">
+                            <div class="favth-col-lg-2 favth-col-md-2 favth-col-sm-3 favth-col-xs-12 details-label">
+                                Activity
+                            </div>
+                            <div class="favth-col-lg-10 favth-col-md-10 favth-col-sm-9 favth-col-xs-12 details-field">
+                                <a href="${catalystActivity.activity.url}"
+                                   title="${catalystActivity.activity.definition}">
+                                        ${catalystActivity.activity.displayName}
+                                    (${catalystActivity.activity.databaseName}:${catalystActivity.activity.accession})
+                                </a>
+                            </div>
+                        </c:if>
+                    </div>
                 </div>
-            </div>
+            </c:forEach>
         </div>
     </fieldset>
 </c:if>
@@ -310,6 +298,84 @@
             </div>
         </div>
     </fieldset>
+</c:if>
+
+<c:if test="${not empty databaseObject.entityFunctionalStatus}">
+    <div class="favth-clearfix">
+        <fieldset class="fieldset-details">
+            <legend>Functional status</legend>
+            <div class="overflow">
+
+                <c:forEach var="entityFunctionalStatus" items="${databaseObject.entityFunctionalStatus}">
+
+                    <c:set var="functionalStatusName"
+                           value="${fn:replace(entityFunctionalStatus.displayName, '_',' ')}"/>
+                    <p class="wrap">${fn:toUpperCase(fn:substring(functionalStatusName, 0, 1))}${fn:substring(functionalStatusName, 1, fn:length(functionalStatusName))}</p>
+
+                    <c:if test="${not empty entityFunctionalStatus.normalEntity}">
+                        <c:set var="normalEntity" value="${entityFunctionalStatus.normalEntity}"/>
+                        <div class="fieldset-pair-container">
+                            <div class="favth-clearfix">
+                                <div class="favth-col-lg-2 favth-col-md-2 favth-col-sm-3 favth-col-xs-12 details-label">
+                                    Normal Entity
+                                </div>
+                                <div class="favth-col-lg-10 favth-col-md-10 favth-col-sm-9 favth-col-xs-12 details-field">
+                                    <div>
+                                        <m:link object="${normalEntity}" detailRequestPrefix="${detailRequestPrefix}"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </c:if>
+
+                    <c:if test="${not empty entityFunctionalStatus.diseaseEntity}">
+                        <c:set var="diseaseEntity" value="${entityFunctionalStatus.diseaseEntity}"/>
+                        <div class="fieldset-pair-container">
+                            <div class="favth-clearfix">
+                                <div class="favth-col-lg-2 favth-col-md-2 favth-col-sm-3 favth-col-xs-12 details-label">
+                                    Disease Entity
+                                </div>
+                                <div class="favth-col-lg-10 favth-col-md-10 favth-col-sm-9 favth-col-xs-12 details-field">
+                                    <div>
+                                        <m:link object="${normalEntity}" detailRequestPrefix="${detailRequestPrefix}"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </c:if>
+
+                    <c:if test="${not empty entityFunctionalStatus.functionalStatus}">
+                        <div class="fieldset-pair-container">
+                        <div class="favth-clearfix">
+                            <div class="favth-col-lg-2 favth-col-md-2 favth-col-sm-3 favth-col-xs-12 details-label">
+                                Status
+                            </div>
+                            <div class="favth-col-lg-10 favth-col-md-10 favth-col-sm-9 favth-col-xs-12 details-field">
+                                <ul>
+                                    <c:forEach var="status" items="${entityFunctionalStatus.functionalStatus}">
+                                        <li>
+                                        <span data-toggle="tooltip"
+                                              title="${status.functionalStatusType.definition}">
+                                                ${fn:replace(status.functionalStatusType.displayName, '_',' ')}
+                                        </span>
+                                            via
+                                            <a data-toggle="tooltip" title="${status.structuralVariant.definition}"
+                                               href="${status.structuralVariant.url}" target="_blank">
+                                                    ${fn:replace(status.structuralVariant.displayName, '_',' ')}
+
+                                            </a>
+                                        </li>
+                                    </c:forEach>
+                                </ul>
+                            </div>
+                        </div>
+                    </c:if>
+
+                    </div>
+                </c:forEach>
+            </div>
+        </fieldset>
+    </div>
 </c:if>
 
 <c:if test="${not empty databaseObject.inferredFrom}">
