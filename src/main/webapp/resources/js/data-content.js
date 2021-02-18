@@ -12,6 +12,7 @@ jQuery(document).ready(function() {
     var moretext = "Read more";
     var lesstext = " Show less";
 
+    jQuery('[data-toggle="tooltip"]').tooltip();
     // Show summation up to 200 chars.
     jQuery('.summation').each(function() {
         var showCharNumber = 200;
