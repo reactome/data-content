@@ -1,4 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="/WEB-INF/tags/modelTags.tld" prefix="m" %>
 
 <c:if test="${not empty databaseObject.regulatedEntity || not empty databaseObject.regulator}">
     <c:choose>
@@ -21,8 +22,7 @@
             <div class="fieldset-pair-container">
                 <div class="favth-col-lg-2 favth-col-md-2 favth-col-sm-3 favth-col-xs-12 details-label">Regulated entity</div>
                 <div class="favth-col-lg-10 favth-col-md-10 favth-col-sm-9 favth-col-xs-12 details-field">
-                    <i class="sprite sprite-resize sprite-${databaseObject.regulatedEntity.schemaClass} sprite-position" title="${databaseObject.regulatedEntity.schemaClass}"></i>
-                    <a href="${detailRequestPrefix}${databaseObject.regulatedEntity.stId}" class="" title="Show Details" >${databaseObject.regulatedEntity.displayName}</a>
+                    <m:link object="${databaseObject.regulatedEntity}" detailRequestPrefix="${detailRequestPrefix}" displaySpecies="false"/>
                 </div>
             </div>
         </c:if>
@@ -30,8 +30,7 @@
             <div class="fieldset-pair-container">
                 <div class="favth-col-lg-2 favth-col-md-2 favth-col-sm-3 favth-col-xs-12 details-label">Regulator</div>
                 <div class="favth-col-lg-10 favth-col-md-10 favth-col-sm-9 favth-col-xs-12 details-field">
-                    <i class="sprite sprite-resize sprite-${databaseObject.regulator.schemaClass} sprite-position" title="${databaseObject.regulator.schemaClass}"></i>
-                    <a href="${detailRequestPrefix}${databaseObject.regulator.stId}" class="" title="Show Details"  >${databaseObject.regulator.displayName}</a>
+                    <m:link object="${databaseObject.regulator}" detailRequestPrefix="${detailRequestPrefix}" displaySpecies="false"/>
                 </div>
             </div>
         </c:if>

@@ -1,5 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib uri="/WEB-INF/tags/modelTags.tld" prefix="m" %>
 <c:choose>
     <c:when test="${not empty widget}">
         <c:set var="detailRequestPrefix" value="${pageContext.request.contextPath}/detail/widget/"/>
@@ -23,11 +24,7 @@
                         <ul class="list">
                             <c:forEach var="hasEvent" items="${databaseObject.hasEvent}">
                                 <li>
-                                    <i class="sprite sprite-resize sprite-${hasEvent.schemaClass} sprite-position"
-                                       title="${hasEvent.schemaClass}"></i>
-                                    <a href="${detailRequestPrefix}${hasEvent.stId}" class="" title="Show Details"
-                                       > ${hasEvent.displayName}
-                                        <c:if test="${not empty hasEvent.speciesName}">(${hasEvent.speciesName})</c:if></a>
+                                    <m:link object="${hasEvent}" detailRequestPrefix="${detailRequestPrefix}"/>
                                 </li>
                             </c:forEach>
                         </ul>
@@ -50,13 +47,7 @@
                             <ul class="list">
                                 <c:forEach var="input" items="${databaseObject.fetchInput()}">
                                     <li>
-                                        <i class="sprite sprite-resize sprite-${input.object.schemaClass} sprite-position"
-                                           title="${input.object.schemaClass}"></i>
-                                        <c:if test="${input.stoichiometry gt 1}">${input.stoichiometry} x </c:if>
-                                        <a href="${detailRequestPrefix}${input.object.stId}" class=""
-                                           title="Show Details"
-                                           > ${input.object.displayName}
-                                            <c:if test="${not empty input.object.speciesName}">(${input.object.speciesName})</c:if></a>
+                                        <m:link object="${input.object}" detailRequestPrefix="${detailRequestPrefix}" amount="${input.stoichiometry}"/>
                                     </li>
                                 </c:forEach>
                             </ul>
@@ -74,13 +65,7 @@
                             <ul class="list">
                                 <c:forEach var="output" items="${databaseObject.fetchOutput()}">
                                     <li>
-                                        <i class="sprite sprite-resize sprite-${output.object.schemaClass} sprite-position"
-                                           title="${output.object.schemaClass}"></i>
-                                        <c:if test="${output.stoichiometry gt 1}">${output.stoichiometry} x </c:if>
-                                        <a href="${detailRequestPrefix}${output.object.stId}" class=""
-                                           title="Show Details"
-                                           >${output.object.displayName}
-                                            <c:if test="${not empty output.object.speciesName}">(${output.object.speciesName})</c:if></a>
+                                        <m:link object="${output.object}" detailRequestPrefix="${detailRequestPrefix}" amount="${output.stoichiometry}"/>
                                     </li>
                                 </c:forEach>
                             </ul>
@@ -99,12 +84,7 @@
                                 <ul class="list">
                                     <c:forEach var="entityOnOtherCell" items="${databaseObject.entityOnOtherCell}">
                                         <li>
-                                            <i class="sprite sprite-resize sprite-${entityOnOtherCell.schemaClass} sprite-position"
-                                               title="${entityOnOtherCell.schemaClass}"></i>
-                                            <a href="${detailRequestPrefix}${entityOnOtherCell.stId}" class=""
-                                               title="Show Details"
-                                               >${entityOnOtherCell.displayName}
-                                                <c:if test="${not empty entityOnOtherCell.speciesName}">(${entityOnOtherCell.speciesName})</c:if></a>
+                                            <m:link object="${entityOnOtherCell}" detailRequestPrefix="${detailRequestPrefix}"/>
                                         </li>
                                     </c:forEach>
                                 </ul>
@@ -142,7 +122,7 @@
                     <div class="favth-col-lg-10 favth-col-md-10 favth-col-sm-9 favth-col-xs-12 details-field">
                         <span><a href="${detailRequestPrefix}${databaseObject.reverseReaction.stId}" class=""
                                  title="Show Details"
-                                 >${databaseObject.reverseReaction.displayName} <c:if
+                        >${databaseObject.reverseReaction.displayName} <c:if
                                 test="${not empty databaseObject.reverseReaction.speciesName}">(${databaseObject.reverseReaction.speciesName})</c:if></a></span>
                     </div>
                 </c:if>
@@ -206,17 +186,17 @@
         <c:if test="${not empty negativelyRegulatedBy}">
             <div class="fieldset-pair-container">
                 <div class="favth-clearfix">
-                    <div class="favth-col-lg-2 favth-col-md-2 favth-col-sm-3 favth-col-xs-12 details-label">Negatively by</div>
+                    <div class="favth-col-lg-2 favth-col-md-2 favth-col-sm-3 favth-col-xs-12 details-label">
+                        Negatively by
+                    </div>
                     <div class="favth-col-lg-10 favth-col-md-10 favth-col-sm-9 favth-col-xs-12 details-field">
                         <c:forEach var="negativelyRegulatedBy" items="${negativelyRegulatedBy}">
                             <div class="favth-clearfix modified-residue">
-                                <div class="favth-col-lg-2 favth-col-md-3 favth-col-sm-12 favth-col-xs-12 details-label mr-label">Regulator</div>
+                                <div class="favth-col-lg-2 favth-col-md-3 favth-col-sm-12 favth-col-xs-12 details-label mr-label">
+                                    Regulator
+                                </div>
                                 <div class="favth-col-lg-10 favth-col-md-9 favth-col-sm-12 favth-col-xs-12 details-field mr-field">
-                                    <i class="sprite sprite-resize sprite-${negativelyRegulatedBy.regulator.schemaClass} sprite-position"
-                                       title="${negativelyRegulatedBy.regulator.schemaClass}"></i>
-                                    <a href="${detailRequestPrefix}${negativelyRegulatedBy.regulator.stId}"
-                                       class="" title="Show Details"
-                                    >${negativelyRegulatedBy.regulator.displayName}</a>
+                                    <m:link object="${negativelyRegulatedBy.regulator}" detailRequestPrefix="${detailRequestPrefix}"/>
                                 </div>
                                 <c:if test="${not empty negativelyRegulatedBy.summation}">
                                     <div class="favth-col-lg-2 favth-col-md-3 favth-col-sm-12 favth-col-xs-12 details-label mr-label">
@@ -239,10 +219,7 @@
                                             <c:forEach var="activeUnit"
                                                        items="${negativelyRegulatedBy.activeUnit}">
                                                 <div class="favth-col-lg-6 favth-col-md-6 favth-col-sm-12 favth-col-xs-12 text-overflow">
-                                                    <i class="sprite sprite-resize sprite-${activeUnit.schemaClass} sprite-position"
-                                                       title="${activeUnit.schemaClass}"></i>
-                                                    <a href="${detailRequestPrefix}${activeUnit.stId}" class=""
-                                                       title="Show Details active unit"> ${activeUnit.displayName}</a>
+                                                    <m:link object="${activeUnit}" detailRequestPrefix="${detailRequestPrefix}"/>
                                                 </div>
                                             </c:forEach>
                                         </div>
@@ -257,7 +234,9 @@
         <c:if test="${not empty positivelyRegulatedBy}">
             <div class="fieldset-pair-container">
                 <div class="favth-clearfix">
-                    <div class="favth-col-lg-2 favth-col-md-2 favth-col-sm-3 favth-col-xs-12 details-label">Positively by</div>
+                    <div class="favth-col-lg-2 favth-col-md-2 favth-col-sm-3 favth-col-xs-12 details-label">
+                        Positively  by
+                    </div>
                     <div class="favth-col-lg-10 favth-col-md-10 favth-col-sm-9 favth-col-xs-12 details-field">
                         <c:forEach var="positivelyRegulatedBy" items="${positivelyRegulatedBy}">
                             <div class="favth-clearfix modified-residue">
@@ -265,11 +244,8 @@
                                     Regulator
                                 </div>
                                 <div class="favth-col-lg-10 favth-col-md-9 favth-col-sm-12 favth-col-xs-12 details-field mr-field">
-                                    <i class="sprite sprite-resize sprite-${positivelyRegulatedBy.regulator.schemaClass} sprite-position"
-                                       title="${positivelyRegulatedBy.regulator.schemaClass}"></i>
-                                    <a href="${detailRequestPrefix}${positivelyRegulatedBy.regulator.stId}"
-                                       class="" title="Show Details"
-                                    >${positivelyRegulatedBy.regulator.displayName}</a>
+                                    <m:link object="${positivelyRegulatedBy.regulator}" detailRequestPrefix="${detailRequestPrefix}"/>
+
                                 </div>
                                 <c:if test="${not empty positivelyRegulatedBy.summation}">
                                     <div class="favth-col-lg-2 favth-col-md-3 favth-col-sm-12 favth-col-xs-12 details-label mr-label">
@@ -291,12 +267,7 @@
                                         <div class="wrap">
                                             <c:forEach var="activeUnit"
                                                        items="${positivelyRegulatedBy.activeUnit}">
-                                                <div class="favth-col-lg-6 favth-col-md-6 favth-col-sm-12 favth-col-xs-12 text-overflow">
-                                                    <i class="sprite sprite-resize sprite-${activeUnit.schemaClass} sprite-position"
-                                                       title="${activeUnit.schemaClass}"></i>
-                                                    <a href="${detailRequestPrefix}${activeUnit.stId}" class=""
-                                                       title="Show Details active unit"> ${activeUnit.displayName}</a>
-                                                </div>
+                                                <m:link object="${activeUnit}" detailRequestPrefix="${detailRequestPrefix}"/>
                                             </c:forEach>
                                         </div>
                                     </div>
@@ -318,7 +289,7 @@
                             <c:forEach var="requirement" items="${requirements}">
                                 <li>
                                     <a href="${detailRequestPrefix}${requirement.stId}" class="" title="Show Details"
-                                       > ${requirement.displayName}</a>
+                                    > ${requirement.displayName}</a>
                                 </li>
                             </c:forEach>
                         </ul>
@@ -335,12 +306,7 @@
         <legend>Normal reaction</legend>
         <div class="wrap overflow">
             <div class="favth-col-lg-6 favth-col-md-6 favth-col-sm-12 favth-col-xs-12 text-overflow">
-                <i class="sprite sprite-resize sprite-${databaseObject.normalReaction.schemaClass} sprite-position"
-                   title="${databaseObject.normalReaction.schemaClass}"></i>
-                <a href="${detailRequestPrefix}${databaseObject.normalReaction.stId}" class=""
-                   title="${databaseObject.normalReaction.displayName} (${databaseObject.normalReaction.speciesName})"
-                   >${databaseObject.normalReaction.displayName}
-                    (${databaseObject.normalReaction.speciesName})</a>
+                <m:link object="${databaseObject.normalReaction}" detailRequestPrefix="${detailRequestPrefix}"/>
             </div>
         </div>
     </fieldset>
@@ -354,7 +320,7 @@
                 <div class="favth-col-lg-6 favth-col-md-6 favth-col-sm-12 favth-col-xs-12 text-overflow">
                     <a href="${detailRequestPrefix}${inferredFrom.stId}" class=""
                        title="${inferredFrom.displayName} (${inferredFrom.speciesName})"
-                       >${inferredFrom.displayName}
+                    >${inferredFrom.displayName}
                         (${inferredFrom.speciesName})</a>
                 </div>
             </c:forEach>
@@ -371,7 +337,7 @@
                     <div class="favth-col-lg-6 favth-col-md-6 favth-col-sm-12 favth-col-xs-12 text-overflow">
                         <a href="${detailRequestPrefix}${orthologousEvent.stId}"
                            title="${orthologousEvent.displayName} (${orthologousEvent.speciesName})"
-                           >${orthologousEvent.displayName}
+                        >${orthologousEvent.displayName}
                             (${orthologousEvent.speciesName})</a>
                     </div>
                 </c:forEach>

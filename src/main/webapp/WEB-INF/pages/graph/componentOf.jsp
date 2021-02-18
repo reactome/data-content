@@ -28,7 +28,7 @@
                                         <i class="sprite sprite-resize sprite-${component.schemaClasses.get(loop.index)} sprite-position"
                                            title="${component.schemaClasses.get(loop.index)}"></i>
                                         <c:if test="${not empty component.stIds}"><a
-                                                href="${detailRequestPrefix}${component.stIds.get(loop.index)}" class=""
+                                                href="${detailRequestPrefix}${component.stIds.get(loop.index)}"
                                                 title="Show Details"
                                         >${names}</a></c:if>
                                     </li>
