@@ -23,14 +23,19 @@
                     <div class="favth-col-lg-10 favth-col-md-10 favth-col-sm-9 favth-col-xs-12 details-field">
                         <div>
                             <ul class="list">
-                                <c:forEach var="names" items="${component.names}" varStatus="loop">
+                                <c:forEach var="name" items="${component.names}" varStatus="loop">
                                     <li>
                                         <i class="sprite sprite-resize sprite-${component.schemaClasses.get(loop.index)} sprite-position"
                                            title="${component.schemaClasses.get(loop.index)}"></i>
-                                        <c:if test="${not empty component.stIds}"><a
-                                                href="${detailRequestPrefix}${component.stIds.get(loop.index)}"
-                                                title="Show Details"
-                                        >${names}</a></c:if>
+                                        <c:if test="${not empty component.stIds}">
+                                            <a href="${detailRequestPrefix}${component.stIds.get(loop.index)}"
+                                               title="Show Details"
+                                            >${name}
+                                                <c:if test="${not empty component.species}"
+                                                > (${component.species.get(loop.index)})
+                                                </c:if>
+                                            </a>
+                                        </c:if>
                                     </li>
                                 </c:forEach>
                             </ul>
