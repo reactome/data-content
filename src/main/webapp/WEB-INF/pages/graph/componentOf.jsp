@@ -1,4 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="/WEB-INF/tags/modelTags.tld" prefix="m" %>
 
 <c:if test="${not empty componentOf}">
 
@@ -27,11 +28,11 @@
                                     <li>
                                         <i class="sprite sprite-resize sprite-${component.schemaClasses.get(loop.index)} sprite-position"
                                            title="${component.schemaClasses.get(loop.index)}"></i>
-                                        <c:if test="${not empty component.stIds}">
+                                        <c:if test="${not empty component.stIds.get(loop.index)}">
                                             <a href="${detailRequestPrefix}${component.stIds.get(loop.index)}"
                                                title="Show Details"
                                             >${name}
-                                                <c:if test="${not empty component.species}"
+                                                <c:if test="${not empty component.species.get(loop.index)}"
                                                 > (${component.species.get(loop.index)})
                                                 </c:if>
                                             </a>
