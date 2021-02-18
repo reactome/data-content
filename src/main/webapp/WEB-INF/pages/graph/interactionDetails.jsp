@@ -1,5 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib uri="/WEB-INF/tags/modelTags.tld" prefix="m" %>
 
 <c:choose>
     <c:when test="${not empty widget}">
@@ -50,8 +51,7 @@
                                     <ul class="list">
                                         <c:forEach var="pe" items="${interactor.physicalEntity}">
                                             <li>
-                                                <i class="sprite sprite-${pe.schemaClass}" title="${pe.schemaClass}"></i>
-                                                <a href="${detailRequestPrefix}${pe.stId}" title="Show Details"  >${pe.displayName}<span> (${pe.stId})</span></a>
+                                                <m:link object="${pe}" detailRequestPrefix="${detailRequestPrefix}" displayStId="true"/>
                                             </li>
                                         </c:forEach>
                                     </ul>

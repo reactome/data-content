@@ -1,5 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="do" uri="/WEB-INF/tags/sortTag.tld" %>
+<%@ taglib prefix="m" uri="/WEB-INF/tags/modelTags.tld" %>
 
 <c:if test="${hasReferenceEntity}">
     <c:if test="${not empty databaseObject.referenceEntity}">
@@ -140,13 +141,9 @@
                                 <ul class="list">
                                     <c:forEach var="hasComponent" items="${databaseObject.fetchHasComponent()}">
                                         <li>
-                                            <i class="sprite sprite-resize sprite-${hasComponent.object.schemaClass} sprite-position"
-                                               title="${hasComponent.object.schemaClass}"></i>
-                                            <c:if test="${hasComponent.stoichiometry gt 1}">${hasComponent.stoichiometry} x </c:if>
-                                            <a href="${detailRequestPrefix}${hasComponent.object.stId}" class=""
-                                               title="Show Details"
-                                               >${hasComponent.object.displayName}
-                                                <c:if test="${not empty hasComponent.object.speciesName}">(${hasComponent.object.speciesName})</c:if></a>
+                                            <m:link object="${hasComponent.object}"
+                                                    detailRequestPrefix="${detailRequestPrefix}"
+                                                    amount="${hasComponent.stoichiometry}"/>
                                         </li>
                                     </c:forEach>
                                 </ul>
@@ -169,13 +166,9 @@
                                 <ul class="list">
                                     <c:forEach var="repeatedUnit" items="${databaseObject.fetchRepeatedUnit()}">
                                         <li>
-                                            <i class="sprite sprite-resize sprite-${repeatedUnit.object.schemaClass} sprite-position"
-                                               title="${repeatedUnit.object.schemaClass}"></i>
-                                            <c:if test="${repeatedUnit.stoichiometry gt 1}">${repeatedUnit.stoichiometry} x </c:if>
-                                            <a href="${detailRequestPrefix}${repeatedUnit.object.stId}" class=""
-                                               title="Show Details"
-                                               >${repeatedUnit.object.displayName}
-                                                <c:if test="${not empty repeatedUnit.object.speciesName}">(${repeatedUnit.object.speciesName})</c:if></a>
+                                            <m:link object="${repeatedUnit.object}"
+                                                    detailRequestPrefix="${detailRequestPrefix}"
+                                                    amount="${repeatedUnit.stoichiometry}"/>
                                         </li>
                                     </c:forEach>
                                 </ul>
@@ -198,11 +191,7 @@
                                 <ul class="list">
                                     <c:forEach var="hasMember" items="${databaseObject.hasMember}">
                                         <li>
-                                            <i class="sprite sprite-resize sprite-${hasMember.schemaClass} sprite-position"
-                                               title="${hasMember.schemaClass}"></i>
-                                            <a href="${detailRequestPrefix}${hasMember.stId}" class="" title="Show Details"
-                                               >${hasMember.displayName}
-                                                <c:if test="${not empty hasMember.speciesName}">(${hasMember.speciesName})</c:if></a>
+                                            <m:link object="${hasMember}" detailRequestPrefix="${detailRequestPrefix}"/>
                                         </li>
                                     </c:forEach>
                                 </ul>
@@ -225,11 +214,8 @@
                                 <ul class="list">
                                     <c:forEach var="hasCandidate" items="${databaseObject.hasCandidate}">
                                         <li>
-                                            <i class="sprite sprite-resize sprite-${hasCandidate.schemaClass} sprite-position"
-                                               title="${hasCandidate.schemaClass}"></i>
-                                            <a href="${detailRequestPrefix}${hasCandidate.stId}" title="Show Details"
-                                               >${hasCandidate.displayName}
-                                                <c:if test="${not empty hasCandidate.speciesName}">(${hasCandidate.speciesName})</c:if></a>
+                                            <m:link object="${hasCandidate}"
+                                                    detailRequestPrefix="${detailRequestPrefix}"/>
                                         </li>
                                     </c:forEach>
                                 </ul>
@@ -258,11 +244,8 @@
                             <ul class="list">
                                 <c:forEach var="negativelyRegulates" items="${databaseObject.negativelyRegulates}">
                                     <li>
-                                        <i class="sprite sprite-resize sprite-${negativelyRegulates.regulatedEntity.schemaClass} sprite-position"
-                                           title="${negativelyRegulates.regulatedEntity.schemaClass}"></i>
-                                        <a href="${detailRequestPrefix}${negativelyRegulates.regulatedEntity.stId}" class=""
-                                           title="Show Details"
-                                            >${negativelyRegulates.regulatedEntity.displayName}</a>
+                                        <m:link object="${negativelyRegulates.regulatedEntity}"
+                                                detailRequestPrefix="${detailRequestPrefix}"/>
                                     </li>
                                 </c:forEach>
                             </ul>
@@ -281,11 +264,8 @@
                             <ul class="list">
                                 <c:forEach var="positivelyRegulates" items="${databaseObject.positivelyRegulates}">
                                     <li>
-                                        <i class="sprite sprite-resize sprite-${positivelyRegulates.regulatedEntity.schemaClass} sprite-position"
-                                           title="${positivelyRegulates.regulatedEntity.schemaClass}"></i>
-                                        <a href="${detailRequestPrefix}${positivelyRegulates.regulatedEntity.stId}" class=""
-                                           title="Show Details"
-                                           >${positivelyRegulates.regulatedEntity.displayName}</a>
+                                        <m:link object="${positivelyRegulates.regulatedEntity}"
+                                                detailRequestPrefix="${detailRequestPrefix}"/>
                                     </li>
                                 </c:forEach>
                             </ul>
@@ -303,8 +283,7 @@
         <div class="wrap overflow favth-clearfix">
             <c:forEach var="derivedEwas" items="${otherFormsOfThisMolecule}" varStatus="loop">
                 <div class="favth-col-lg-6 favth-col-md-6 favth-col-sm-12 favth-col-xs-12 text-overflow">
-                    <a href="${detailRequestPrefix}${derivedEwas.stId}" title="Open ${derivedEwas.displayName}"
-                       >${derivedEwas.displayName}</a>
+                    <m:link object="${derivedEwas}" detailRequestPrefix="${detailRequestPrefix}" displayIcon="false" displaySpecies="false"/>
                 </div>
             </c:forEach>
         </div>
@@ -317,8 +296,7 @@
         <div class="wrap overflow favth-clearfix">
             <c:forEach var="inferredFrom" items="${databaseObject.inferredFrom}">
                 <div class="favth-col-lg-6 favth-col-md-6 favth-col-sm-12 favth-col-xs-12 text-overflow">
-                    <a href="${detailRequestPrefix}${inferredFrom.stId}" class="" title="Show Details"> ${inferredFrom.displayName} <c:if
-                            test="${not empty inferredFrom.speciesName}"> (${inferredFrom.speciesName})</c:if></a>
+                    <m:link object="${inferredFrom}" detailRequestPrefix="${detailRequestPrefix}" displayIcon="false" displaySpecies="false"/>
                 </div>
             </c:forEach>
         </div>
@@ -332,9 +310,7 @@
             <c:forEach items="${inferredTo}" var="inferredToMap">
                 <c:forEach items="${inferredToMap.value}" var="inferredTo">
                     <div class="favth-col-lg-6 favth-col-md-6 favth-col-sm-12 favth-col-xs-12 text-overflow">
-                        <a href="${detailRequestPrefix}${inferredTo.stId}" class="" title="Show Details"
-                           >${inferredTo.displayName} <c:if
-                                test="${not empty inferredTo.speciesName}"> (${inferredTo.speciesName})</c:if></a>
+                        <m:link object="${inferredTo}" detailRequestPrefix="${detailRequestPrefix}" displayIcon="false" displaySpecies="false"/>
                     </div>
                 </c:forEach>
             </c:forEach>
@@ -377,7 +353,7 @@
                                         <c:choose>
                                             <c:when test="${empty hasUrl}">
                                                 <a href="${detailRequestPrefix}${url}" class="" title="Show Details"
-                                                    >${modifiedResidue.modification.displayName}</a>
+                                                >${modifiedResidue.modification.displayName}</a>
                                             </c:when>
                                             <c:otherwise>
                                                 ${modifiedResidue.modification.displayName}
