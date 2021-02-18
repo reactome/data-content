@@ -59,4 +59,40 @@
             <rtexprvalue>true</rtexprvalue>
         </attribute>
     </tag>
+    
+    <tag>
+        <name>participant-of-type</name>
+        <tag-class>org.reactome.server.util.tags.ParticipantOfTypeTag</tag-class>
+        <body-content>empty</body-content>
+        <attribute>
+            <name>type</name>
+            <rtexprvalue>true</rtexprvalue>
+            <required>true</required>
+        </attribute>
+    </tag>
+
+    <tag>
+        <name>split-camel</name>
+        <tag-class>org.reactome.server.util.tags.ParticipantOfTypeTag</tag-class>
+        <body-content>empty</body-content>
+        <attribute>
+            <name>value</name>
+            <rtexprvalue>true</rtexprvalue>
+            <required>true</required>
+        </attribute>
+
+        <attribute>
+            <name>capitalizeFirst</name>
+            <type>boolean</type>
+            <rtexprvalue>true</rtexprvalue>
+            <required>false</required>
+        </attribute>
+
+        <attribute>
+            <name>capitalizeAll</name>
+            <type>boolean</type>
+            <rtexprvalue>true</rtexprvalue>
+            <required>false</required>
+        </attribute>
+    </tag>
 </taglib>

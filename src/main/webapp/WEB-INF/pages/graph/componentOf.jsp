@@ -14,12 +14,12 @@
 
     <%-- TODO: Separate them into complex, entity set, etc --%>
     <fieldset class="fieldset-details">
-        <legend>Participant Of</legend>
+        <legend>Participates</legend>
         <c:forEach var="component" items="${componentOf}">
             <div class="fieldset-pair-container">
                 <div class="favth-clearfix">
                     <div class="favth-col-lg-2 favth-col-md-2 favth-col-sm-3 favth-col-xs-12 details-label">
-                            ${component.type}
+                        <m:participant-of-type type="${component.type}"/>
                     </div>
                     <div class="favth-col-lg-10 favth-col-md-10 favth-col-sm-9 favth-col-xs-12 details-field">
                         <div>
