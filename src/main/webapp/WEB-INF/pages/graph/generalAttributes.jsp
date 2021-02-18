@@ -30,8 +30,13 @@
                             <tr>
                                 <td data-label="Name"><a href="${disease.url}" class="" target="_blank"
                                                          title="Show Details">${disease.displayName} </a></td>
-                                <td data-label="Identifier"><c:if
-                                        test="${not empty disease.identifier}">${disease.identifier}</c:if></td>
+                                <td data-label="Identifier">
+                                    <c:if test="${not empty disease.identifier}">
+                                        <a href="${disease.url}" title="Show Details" target="_blank">
+                                                ${disease.databaseName}:${disease.identifier}
+                                        </a>
+                                    </c:if>
+                                </td>
                                 <td data-label="Synonyms">
                                     <c:forEach var="synonym" items="${disease.synonym}" varStatus="loop">
                                         ${synonym}<c:if test="${!loop.last}">, </c:if>
