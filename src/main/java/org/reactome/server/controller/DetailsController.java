@@ -130,7 +130,7 @@ class DetailsController {
                      * The Mapping will be done automatically by Spring.
                      */
                     advancedDatabaseObjectService.findById(databaseObject.getDbId(), RelationshipDirection.INCOMING);
-                    model.addAttribute("map", DatabaseObjectUtils.getAllFields(databaseObject));
+                    model.addAttribute("map", DatabaseObjectUtils.getAllFields(databaseObject, false));
                     return "redirect:/schema/instance/browser/" + id;
                 } else {
                     Set<PathwayBrowserNode> topLevelNodes = contentDetails.getNodes();

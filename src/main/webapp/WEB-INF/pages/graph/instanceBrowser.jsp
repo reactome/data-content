@@ -1,4 +1,4 @@
-<%@ taglib prefix="c"  uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <c:import url="../header.jsp"/>
@@ -10,18 +10,31 @@
     <div>
         <div class="breadcrumbs clearfix">
             <a href="${pageContext.request.contextPath}/schema/">Schema</a> &gt;
-            <a href="${pageContext.request.contextPath}/schema/${breadcrumbSchemaClass}">${breadcrumbSchemaClass}</a> &gt;
+            <a href="${pageContext.request.contextPath}/schema/${breadcrumbSchemaClass}">${breadcrumbSchemaClass}</a>
+            &gt;
             <a href="${pageContext.request.contextPath}/schema/objects/${breadcrumbSchemaClass}">Entries</a>
         </div>
     </div>
 
     <h3 class="details-title padding0 top">
-        ${map.get('displayName')}<c:catch><c:if test="${not empty map.get('speciesName')}"> [${map.get('speciesName')}]</c:if></c:catch>
+        ${map.get('displayName')}
+        <c:catch>
+            <c:if test="${not empty map.get('speciesName')}"> [${map.get('speciesName')}]</c:if>
+        </c:catch>
+
+        <label style="float: right" class="margin0">
+            <input type="checkbox" name="displayNull" onclick="toggleDisplayNull(${!displayNull})"
+                   <c:if test="${displayNull}">checked</c:if> class="margin0">
+            Display null values
+        </label>
+
     </h3>
 
     <c:if test="${linkToDetailsPage}">
         <div>
-            <a href="${pageContext.request.contextPath}/detail/${id}" class="btn btn-info goto-details-light">Go to Details</a>
+            <a href="${pageContext.request.contextPath}/detail/${id}" class="btn btn-info goto-details-light">
+                Go to Details
+            </a>
         </div>
     </c:if>
 
@@ -55,7 +68,12 @@
                                 <c:if test="${!empty list.getStId()}">
                                     <c:set var="id" value="${list.getStId()}"/>
                                 </c:if>
-                                <c:if test="${entry.value.stoichiometry gt 1}">${entry.value.stoichiometry} &times; </c:if><a href="./${id}" title="${entry.value.object.getDisplayName()}">[${entry.value.object.getSchemaClass()}:${id}] ${entry.value.object.getDisplayName()}<c:catch><c:if test="${not empty list.getSpeciesName()}"> - ${list.getSpeciesName()}</c:if></c:catch></a>
+                                <c:if test="${entry.value.stoichiometry gt 1}">${entry.value.stoichiometry} &times; </c:if><a
+                                    href="./${id}"
+                                    title="${entry.value.object.getDisplayName()}">[${entry.value.object.getSchemaClass()}:${id}] ${entry.value.object.getDisplayName()}
+                                <c:catch>
+                                    <c:if test="${not empty list.getSpeciesName()}"> - ${list.getSpeciesName()}</c:if>
+                                </c:catch></a>
                             </c:when>
                             <c:when test="${entry.value.getClass().getSimpleName() == 'ArrayList' ||
                                             entry.value.getClass().getSimpleName() == 'HashSet' ||
@@ -78,7 +96,14 @@
                                                     <c:if test="${!empty list.object.getStId()}">
                                                         <c:set var="id" value="${list.object.getStId()}"/>
                                                     </c:if>
-                                                    <c:if test="${list.stoichiometry gt 1}"> <span title="Stoichiometry">${list.stoichiometry} &times;</span></c:if> <a href="./${id}" title="${list.object.getDisplayName()}">[${list.object.getSchemaClass()}:${id}] ${list.object.getDisplayName()}<c:catch><c:if test="${not empty list.getSpeciesName()}"> - ${list.getSpeciesName()}</c:if></c:catch> </a>
+                                                    <c:if test="${list.stoichiometry gt 1}"> <span
+                                                            title="Stoichiometry">${list.stoichiometry} &times;</span></c:if>
+                                                    <a href="./${id}"
+                                                       title="${list.object.getDisplayName()}">[${list.object.getSchemaClass()}:${id}] ${list.object.getDisplayName()}
+                                                        <c:catch>
+                                                            <c:if test="${not empty list.getSpeciesName()}">
+                                                                - ${list.getSpeciesName()}</c:if>
+                                                        </c:catch> </a>
                                                 </c:when>
                                                 <c:otherwise>
                                                     <c:catch>
@@ -87,7 +112,12 @@
                                                             <c:if test="${!empty list.getStId()}">
                                                                 <c:set var="id" value="${list.getStId()}"/>
                                                             </c:if>
-                                                            <a href="./${id}" title="${list.getDisplayName()}">[${list.getSchemaClass()}:${id}] ${list.getDisplayName()}<c:catch><c:if test="${not empty list.getSpeciesName()}"> - ${list.getSpeciesName()}</c:if></c:catch></a>
+                                                            <a href="./${id}"
+                                                               title="${list.getDisplayName()}">[${list.getSchemaClass()}:${id}] ${list.getDisplayName()}
+                                                                <c:catch>
+                                                                    <c:if test="${not empty list.getSpeciesName()}">
+                                                                        - ${list.getSpeciesName()}</c:if>
+                                                                </c:catch></a>
                                                         </c:if>
                                                     </c:catch>
                                                 </c:otherwise>
@@ -103,7 +133,12 @@
                                         <c:if test="${!empty entry.value.stId}">
                                             <c:set var="id" value="${entry.value.stId}"/>
                                         </c:if>
-                                        <a href="./${id}" title="${entry.value.getDisplayName()}">[${entry.value.getSchemaClass()}:${id}] ${entry.value.getDisplayName()}<c:catch><c:if test="${not empty list.getSpeciesName()}"> - ${list.getSpeciesName()}</c:if></c:catch></a>
+                                        <a href="./${id}"
+                                           title="${entry.value.getDisplayName()}">[${entry.value.getSchemaClass()}:${id}] ${entry.value.getDisplayName()}
+                                            <c:catch>
+                                                <c:if test="${not empty list.getSpeciesName()}">
+                                                    - ${list.getSpeciesName()}</c:if>
+                                            </c:catch></a>
                                     </c:if>
                                 </c:catch>
                             </c:otherwise>
@@ -120,26 +155,30 @@
             <h3>Referrals</h3>
             <table class="reactome instance-table margin0">
                 <tbody>
-                    <c:forEach var="entry" items="${referrals}">
-                        <tr>
-                            <td class="favth-col-lg-2 favth-col-md-2 favth-col-sm-2">
-                                <u>(${entry.referral})</u>
-                            </td>
-                            <td class="favth-col-lg-10 favth-col-md-10 favth-col-sm-10">
-                                <ul class="list">
-                                    <c:forEach var="list" items="${entry.objects}">
-                                        <c:if test="${!empty list.getDbId()}">
-                                            <c:set var="id" value="${list.getDbId()}"/>
-                                            <c:if test="${!empty list.getStId()}">
-                                                <c:set var="id" value="${list.getStId()}"/>
-                                            </c:if>
-                                            <li><a href="./${id}" title="${list.getDisplayName()}">[${list.getSchemaClass()}:${id}] ${list.getDisplayName()}<c:catch><c:if test="${not empty list.getSpeciesName()}"> - ${list.getSpeciesName()}</c:if></c:catch></a></li>
+                <c:forEach var="entry" items="${referrals}">
+                    <tr>
+                        <td class="favth-col-lg-2 favth-col-md-2 favth-col-sm-2">
+                            <u>(${entry.referral})</u>
+                        </td>
+                        <td class="favth-col-lg-10 favth-col-md-10 favth-col-sm-10">
+                            <ul class="list">
+                                <c:forEach var="list" items="${entry.objects}">
+                                    <c:if test="${!empty list.getDbId()}">
+                                        <c:set var="id" value="${list.getDbId()}"/>
+                                        <c:if test="${!empty list.getStId()}">
+                                            <c:set var="id" value="${list.getStId()}"/>
                                         </c:if>
-                                    </c:forEach>
-                                </ul>
-                            </td>
-                        </tr>
-                    </c:forEach>
+                                        <li><a href="./${id}" title="${list.getDisplayName()}">[${list.getSchemaClass()}:${id}] ${list.getDisplayName()}
+                                            <c:catch>
+                                                <c:if test="${not empty list.getSpeciesName()}">
+                                                    - ${list.getSpeciesName()}</c:if>
+                                            </c:catch></a></li>
+                                    </c:if>
+                                </c:forEach>
+                            </ul>
+                        </td>
+                    </tr>
+                </c:forEach>
                 </tbody>
             </table>
         </div>

@@ -12,10 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.lang.reflect.Method;
@@ -39,6 +36,7 @@ class SchemaController {
     private static final Logger errorLogger = LoggerFactory.getLogger("errorLogger");
 
     private static final String TITLE = "title";
+    private static final String DISPLAY_NULL = "displayNull";
 
     private static final int OFFSET = 55;
     private final Set<String> ehlds = new HashSet<>();
@@ -57,6 +55,7 @@ class SchemaController {
 
     @RequestMapping(value = "/schema/instance/browser/{id}", method = RequestMethod.GET)
     public String objectDetail(@PathVariable String id,
+                               @CookieValue(required = false) Boolean displayNull,
                                ModelMap model,
                                HttpServletResponse response) throws ViewException {
         try {
@@ -67,9 +66,12 @@ class SchemaController {
                 infoLogger.info("DatabaseObject for id: {} was not found", id);
                 return noDetailsFound(model, response, id);
             }
+
+            if (displayNull == null) displayNull = false;
             model.addAttribute(TITLE, databaseObject.getDisplayName());
+            model.addAttribute(DISPLAY_NULL, displayNull);
             model.addAttribute("breadcrumbSchemaClass", databaseObject.getSchemaClass());
-            model.addAttribute("map", DatabaseObjectUtils.getAllFields(databaseObject));
+            model.addAttribute("map", DatabaseObjectUtils.getAllFields(databaseObject, displayNull));
             model.addAttribute("referrals", advancedLinkageService.getReferralsTo(id));
 
             if (databaseObject instanceof PhysicalEntity || databaseObject instanceof Event || databaseObject instanceof Regulation) {
