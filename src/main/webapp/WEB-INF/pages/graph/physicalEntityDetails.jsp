@@ -296,7 +296,7 @@
         <div class="wrap overflow favth-clearfix">
             <c:forEach var="inferredFrom" items="${databaseObject.inferredFrom}">
                 <div class="favth-col-lg-6 favth-col-md-6 favth-col-sm-12 favth-col-xs-12 text-overflow">
-                    <m:link object="${inferredFrom}" detailRequestPrefix="${detailRequestPrefix}" displayIcon="false" displaySpecies="false"/>
+                    <m:link object="${inferredFrom}" detailRequestPrefix="${detailRequestPrefix}" displayIcon="false"/>
                 </div>
             </c:forEach>
         </div>
@@ -310,7 +310,7 @@
             <c:forEach items="${inferredTo}" var="inferredToMap">
                 <c:forEach items="${inferredToMap.value}" var="inferredTo">
                     <div class="favth-col-lg-6 favth-col-md-6 favth-col-sm-12 favth-col-xs-12 text-overflow">
-                        <m:link object="${inferredTo}" detailRequestPrefix="${detailRequestPrefix}" displayIcon="false" displaySpecies="false"/>
+                        <m:link object="${inferredTo}" detailRequestPrefix="${detailRequestPrefix}" displayIcon="false"/>
                     </div>
                 </c:forEach>
             </c:forEach>
