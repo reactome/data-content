@@ -1,6 +1,6 @@
 package org.reactome.server.util.tags;
 
-import org.reactome.server.graph.domain.model.DatabaseObject;
+import org.reactome.server.graph.domain.result.DatabaseObjectLike;
 import org.reactome.server.graph.domain.model.Event;
 import org.reactome.server.graph.domain.model.PhysicalEntity;
 
@@ -10,7 +10,7 @@ import javax.servlet.jsp.tagext.SimpleTagSupport;
 import java.io.IOException;
 
 public class DbObjectLink extends SimpleTagSupport {
-    protected DatabaseObject object;
+    protected DatabaseObjectLike object;
     private String detailRequestPrefix;
     private String getParameters = "";
     private int amount = 1;
@@ -18,7 +18,7 @@ public class DbObjectLink extends SimpleTagSupport {
     private boolean displaySpecies = true;
     private boolean displayIcon = true;
 
-    public void setObject(DatabaseObject object) {
+    public void setObject(DatabaseObjectLike object) {
         this.object = object;
     }
 
