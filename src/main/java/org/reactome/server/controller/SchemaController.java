@@ -36,7 +36,7 @@ class SchemaController {
     private static final Logger errorLogger = LoggerFactory.getLogger("errorLogger");
 
     private static final String TITLE = "title";
-    private static final String DISPLAY_NULL = "displayNull";
+    private static final String DISPLAY_MISSING_ATTRIBUTES = "displayMissingAttributes";
 
     private static final int OFFSET = 55;
     private final Set<String> ehlds = new HashSet<>();
@@ -55,7 +55,7 @@ class SchemaController {
 
     @RequestMapping(value = "/schema/instance/browser/{id}", method = RequestMethod.GET)
     public String objectDetail(@PathVariable String id,
-                               @CookieValue(required = false) Boolean displayNull,
+                               @CookieValue(required = false) Boolean displayMissingAttributes,
                                ModelMap model,
                                HttpServletResponse response) throws ViewException {
         try {
@@ -67,11 +67,11 @@ class SchemaController {
                 return noDetailsFound(model, response, id);
             }
 
-            if (displayNull == null) displayNull = false;
+            if (displayMissingAttributes == null) displayMissingAttributes = false;
             model.addAttribute(TITLE, databaseObject.getDisplayName());
-            model.addAttribute(DISPLAY_NULL, displayNull);
+            model.addAttribute(DISPLAY_MISSING_ATTRIBUTES, displayMissingAttributes);
             model.addAttribute("breadcrumbSchemaClass", databaseObject.getSchemaClass());
-            model.addAttribute("map", DatabaseObjectUtils.getAllFields(databaseObject, displayNull));
+            model.addAttribute("map", DatabaseObjectUtils.getAllFields(databaseObject, displayMissingAttributes));
             model.addAttribute("referrals", advancedLinkageService.getReferralsTo(id));
 
             if (databaseObject instanceof PhysicalEntity || databaseObject instanceof Event || databaseObject instanceof Regulation) {

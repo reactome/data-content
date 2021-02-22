@@ -1,5 +1,5 @@
 var PWB_COOKIE = "_Search_Result_PWB_Tree";
-var DISPLAY_NULL = "displayNull";
+var DISPLAY_MISSING_ATTRIBUTES = "displayMissingAttributes";
 var EXPAND = "expand-all";
 var COLLAPSE = "collapse-all"; // default value for the Location in PWB
 
@@ -218,9 +218,8 @@ function togglePwbTree(action) {
     }
 }
 
-function toggleDisplayNull(displayNull) {
-    writeCookie(DISPLAY_NULL, displayNull);
-    console.log("display null = " + displayNull);
+function toggleDisplayMissingAttributes(displayMissingAttributes) {
+    writeCookie(DISPLAY_MISSING_ATTRIBUTES, displayMissingAttributes);
     location.reload()
 }
 
