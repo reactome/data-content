@@ -300,7 +300,7 @@
     </fieldset>
 </c:if>
 
-<c:if test="${not empty databaseObject.entityFunctionalStatus}">
+<c:if test="${isReactionLikeEvent && not empty databaseObject.entityFunctionalStatus}">
     <div class="favth-clearfix">
         <fieldset class="fieldset-details">
             <legend>Functional status</legend>
