@@ -10,7 +10,9 @@ import java.util.Arrays;
 import java.util.List;
 
 public class ParticipantOfTypeTag extends SimpleTagSupport {
-    private static final List<Character> anChars = Arrays.asList('a', 'e', 'i', 'o');
+    private static final List<Character> anChars = Arrays.asList(
+            'a', 'e', 'i', 'o',
+            'A', 'E', 'I', 'O');
     private String type;
 
     public void setType(String type) {
