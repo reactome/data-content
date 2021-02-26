@@ -173,10 +173,11 @@ class SearchController {
 
             SearchResult searchResult = searchService.getSearchResult(queryObject, rowCount, page, cluster);
             if (searchResult != null && (searchResult.getTargetResults() == null || searchResult.getTargetResults().isEmpty())) {
-                model.addAttribute(SPECIES_FACET, searchResult.getFacetMapping().getSpeciesFacet());
-                model.addAttribute(TYPES_FACET, searchResult.getFacetMapping().getTypeFacet());
-                model.addAttribute(KEYWORDS_FACET, searchResult.getFacetMapping().getKeywordFacet());
-                model.addAttribute(COMPARTMENTS_FACET, searchResult.getFacetMapping().getCompartmentFacet());
+                FacetMapping facetMapping = searchResult.getFacetMapping();
+                model.addAttribute(SPECIES_FACET, facetMapping.getSpeciesFacet());
+                model.addAttribute(TYPES_FACET, facetMapping.getTypeFacet());
+                model.addAttribute(KEYWORDS_FACET, facetMapping.getKeywordFacet());
+                model.addAttribute(COMPARTMENTS_FACET, facetMapping.getCompartmentFacet());
                 model.addAttribute(MAX_PAGE, (int) Math.ceil(searchResult.getResultCount() / searchResult.getRows()));
                 model.addAttribute(GROUPED_RESULT, searchResult.getGroupedResult());
                 if(searchResult.getGroupedResult() == null || searchResult.getGroupedResult().getRowCount() == 0) {

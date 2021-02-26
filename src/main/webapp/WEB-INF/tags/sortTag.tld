@@ -11,13 +11,13 @@
 
     <function>
         <name>sortByDisplayName</name>
-        <function-class>org.reactome.server.util.DatabaseObjectSort</function-class>
+        <function-class>org.reactome.server.util.tags.DatabaseObjectSort</function-class>
         <function-signature>java.util.List sortByDisplayName(java.util.List)</function-signature>
     </function>
 
     <function>
         <name>sortList</name>
-        <function-class>org.reactome.server.util.DatabaseObjectSort</function-class>
+        <function-class>org.reactome.server.util.tags.DatabaseObjectSort</function-class>
         <function-signature>java.util.List sortList(java.util.List)</function-signature>
     </function>
 

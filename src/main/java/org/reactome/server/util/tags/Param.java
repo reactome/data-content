@@ -1,4 +1,4 @@
-package org.reactome.server.util;
+package org.reactome.server.util.tags;
 
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;

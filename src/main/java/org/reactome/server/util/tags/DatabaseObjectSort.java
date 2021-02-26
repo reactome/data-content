@@ -1,4 +1,4 @@
-package org.reactome.server.util;
+package org.reactome.server.util.tags;
 
 import org.reactome.server.graph.domain.model.DatabaseObject;
 
