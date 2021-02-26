@@ -1,5 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib uri="/WEB-INF/tags/modelTags.tld" prefix="m" %>
 <c:choose>
     <c:when test="${not empty widget}">
         <c:set var="detailRequestPrefix" value="${pageContext.request.contextPath}/detail/widget/"/>
@@ -23,11 +24,7 @@
                         <ul class="list">
                             <c:forEach var="hasEvent" items="${databaseObject.hasEvent}">
                                 <li>
-                                    <i class="sprite sprite-resize sprite-${hasEvent.schemaClass} sprite-position"
-                                       title="${hasEvent.schemaClass}"></i>
-                                    <a href="${detailRequestPrefix}${hasEvent.stId}" class="" title="Show Details"
-                                       > ${hasEvent.displayName}
-                                        <c:if test="${not empty hasEvent.speciesName}">(${hasEvent.speciesName})</c:if></a>
+                                    <m:link object="${hasEvent}" detailRequestPrefix="${detailRequestPrefix}"/>
                                 </li>
                             </c:forEach>
                         </ul>
@@ -50,13 +47,7 @@
                             <ul class="list">
                                 <c:forEach var="input" items="${databaseObject.fetchInput()}">
                                     <li>
-                                        <i class="sprite sprite-resize sprite-${input.object.schemaClass} sprite-position"
-                                           title="${input.object.schemaClass}"></i>
-                                        <c:if test="${input.stoichiometry gt 1}">${input.stoichiometry} x </c:if>
-                                        <a href="${detailRequestPrefix}${input.object.stId}" class=""
-                                           title="Show Details"
-                                           > ${input.object.displayName}
-                                            <c:if test="${not empty input.object.speciesName}">(${input.object.speciesName})</c:if></a>
+                                        <m:link object="${input.object}" detailRequestPrefix="${detailRequestPrefix}" amount="${input.stoichiometry}"/>
                                     </li>
                                 </c:forEach>
                             </ul>
@@ -74,13 +65,7 @@
                             <ul class="list">
                                 <c:forEach var="output" items="${databaseObject.fetchOutput()}">
                                     <li>
-                                        <i class="sprite sprite-resize sprite-${output.object.schemaClass} sprite-position"
-                                           title="${output.object.schemaClass}"></i>
-                                        <c:if test="${output.stoichiometry gt 1}">${output.stoichiometry} x </c:if>
-                                        <a href="${detailRequestPrefix}${output.object.stId}" class=""
-                                           title="Show Details"
-                                           >${output.object.displayName}
-                                            <c:if test="${not empty output.object.speciesName}">(${output.object.speciesName})</c:if></a>
+                                        <m:link object="${output.object}" detailRequestPrefix="${detailRequestPrefix}" amount="${output.stoichiometry}"/>
                                     </li>
                                 </c:forEach>
                             </ul>
@@ -99,12 +84,7 @@
                                 <ul class="list">
                                     <c:forEach var="entityOnOtherCell" items="${databaseObject.entityOnOtherCell}">
                                         <li>
-                                            <i class="sprite sprite-resize sprite-${entityOnOtherCell.schemaClass} sprite-position"
-                                               title="${entityOnOtherCell.schemaClass}"></i>
-                                            <a href="${detailRequestPrefix}${entityOnOtherCell.stId}" class=""
-                                               title="Show Details"
-                                               >${entityOnOtherCell.displayName}
-                                                <c:if test="${not empty entityOnOtherCell.speciesName}">(${entityOnOtherCell.speciesName})</c:if></a>
+                                            <m:link object="${entityOnOtherCell}" detailRequestPrefix="${detailRequestPrefix}"/>
                                         </li>
                                     </c:forEach>
                                 </ul>
@@ -142,7 +122,7 @@
                     <div class="favth-col-lg-10 favth-col-md-10 favth-col-sm-9 favth-col-xs-12 details-field">
                         <span><a href="${detailRequestPrefix}${databaseObject.reverseReaction.stId}" class=""
                                  title="Show Details"
-                                 >${databaseObject.reverseReaction.displayName} <c:if
+                        >${databaseObject.reverseReaction.displayName} <c:if
                                 test="${not empty databaseObject.reverseReaction.speciesName}">(${databaseObject.reverseReaction.speciesName})</c:if></a></span>
                     </div>
                 </c:if>
@@ -154,48 +134,36 @@
 <c:if test="${isReactionLikeEvent && not empty databaseObject.catalystActivity}">
     <fieldset class="fieldset-details">
         <legend>Catalyst Activity</legend>
-        <div class="fieldset-pair-container">
-            <div class="favth-clearfix">
-                <div class="favth-col-lg-2 favth-col-md-2 favth-col-sm-3 favth-col-xs-12 details-label">Catalyst
-                    Activity
-                </div>
-                <div class="favth-col-lg-10 favth-col-md-10 favth-col-sm-9 favth-col-xs-12 details-field">
-                    <c:forEach var="catalystActivity" items="${databaseObject.catalystActivity}">
-                        <div class="favth-row">
-                            <div class="favth-col-lg-2 favth-col-md-3 favth-col-sm-12 favth-col-xs-12 details-label ca-label">
-                                Title
-                            </div>
-                            <div class="favth-col-lg-10 favth-col-md-9 favth-col-sm-12 favth-col-xs-12 details-field ca-field">
-                                    ${catalystActivity.displayName}
-                            </div>
+        <div class="overflow" id="catalyst-activity-container">
 
-                            <c:if test="${not empty catalystActivity.physicalEntity}">
-                                <div class="favth-col-lg-2 favth-col-md-3 favth-col-sm-12 favth-col-xs-12 details-label ca-label">
-                                    Physical Entity
-                                </div>
-                                <div class="favth-col-lg-10 favth-col-md-9 favth-col-sm-12 favth-col-xs-12 details-field ca-field">
-                                    <i class="sprite sprite-resize sprite-${catalystActivity.physicalEntity.schemaClass} sprite-position"
-                                       title="${catalystActivity.physicalEntity.schemaClass}"></i>
-                                    <a href="${detailRequestPrefix}${catalystActivity.physicalEntity.stId}" class=""
-                                       title="show Reactome ${catalystActivity.physicalEntity.stId}"
-                                       > ${catalystActivity.physicalEntity.displayName}</a>
-                                </div>
-                            </c:if>
+            <c:forEach var="catalystActivity" items="${databaseObject.catalystActivity}">
+                <p class="wrap"> ${catalystActivity.displayName} </p>
+                <div class="fieldset-pair-container">
+                    <div class="favth-clearfix">
+                        <c:if test="${not empty catalystActivity.physicalEntity}">
+                            <div class="favth-col-lg-2 favth-col-md-2 favth-col-sm-3 favth-col-xs-12 details-label">
+                                Physical Entity
+                            </div>
+                            <div class="favth-col-lg-10 favth-col-md-10 favth-col-sm-9 favth-col-xs-12 details-field">
+                                <m:link object="${catalystActivity.physicalEntity}" detailRequestPrefix="${detailRequestPrefix}"/>
+                            </div>
+                        </c:if>
 
-                            <c:if test="${not empty catalystActivity.activity}">
-                                <div class="favth-col-lg-2 favth-col-md-3 favth-col-sm-12 favth-col-xs-12 details-label ca-label">
-                                    Activity
-                                </div>
-                                <div class="favth-col-lg-10 favth-col-md-9 favth-col-sm-12 favth-col-xs-12 details-field ca-field">
-                                    <a href="${catalystActivity.activity.url}" class=""
-                                       title="show ${catalystActivity.activity.databaseName}">${catalystActivity.activity.displayName}
-                                        (${catalystActivity.activity.accession})</a>
-                                </div>
-                            </c:if>
-                        </div>
-                    </c:forEach>
+                        <c:if test="${not empty catalystActivity.activity}">
+                            <div class="favth-col-lg-2 favth-col-md-2 favth-col-sm-3 favth-col-xs-12 details-label">
+                                Activity
+                            </div>
+                            <div class="favth-col-lg-10 favth-col-md-10 favth-col-sm-9 favth-col-xs-12 details-field">
+                                <a href="${catalystActivity.activity.url}"
+                                   title="${catalystActivity.activity.definition}">
+                                        ${catalystActivity.activity.displayName}
+                                    (${catalystActivity.activity.databaseName}:${catalystActivity.activity.accession})
+                                </a>
+                            </div>
+                        </c:if>
+                    </div>
                 </div>
-            </div>
+            </c:forEach>
         </div>
     </fieldset>
 </c:if>
@@ -206,21 +174,47 @@
         <c:if test="${not empty negativelyRegulatedBy}">
             <div class="fieldset-pair-container">
                 <div class="favth-clearfix">
-                    <div class="favth-col-lg-2 favth-col-md-2 favth-col-sm-3 favth-col-xs-12 details-label">Negatively
-                        by
+                    <div class="favth-col-lg-2 favth-col-md-2 favth-col-sm-3 favth-col-xs-12 details-label">
+                        Negatively by
                     </div>
                     <div class="favth-col-lg-10 favth-col-md-10 favth-col-sm-9 favth-col-xs-12 details-field">
-                        <ul class="list">
-                            <c:forEach var="negativelyRegulatedBy" items="${negativelyRegulatedBy}">
-                                <li>
-                                    <i class="sprite sprite-resize sprite-${negativelyRegulatedBy.regulator.schemaClass} sprite-position"
-                                       title="${negativelyRegulatedBy.regulator.schemaClass}"></i>
-                                    <a href="${detailRequestPrefix}${negativelyRegulatedBy.regulator.stId}" class=""
-                                       title="Show Details"
-                                       >${negativelyRegulatedBy.regulator.displayName}</a>
-                                </li>
-                            </c:forEach>
-                        </ul>
+                        <c:forEach var="negativelyRegulatedBy" items="${negativelyRegulatedBy}">
+                            <div class="favth-clearfix modified-residue">
+                                <div class="favth-col-lg-2 favth-col-md-3 favth-col-sm-12 favth-col-xs-12 details-label mr-label">
+                                    Regulator
+                                </div>
+                                <div class="favth-col-lg-10 favth-col-md-9 favth-col-sm-12 favth-col-xs-12 details-field mr-field">
+                                    <m:link object="${negativelyRegulatedBy.regulator}" detailRequestPrefix="${detailRequestPrefix}"/>
+                                </div>
+                                <c:if test="${not empty negativelyRegulatedBy.summation}">
+                                    <div class="favth-col-lg-2 favth-col-md-3 favth-col-sm-12 favth-col-xs-12 details-label mr-label">
+                                        Summation
+                                    </div>
+                                    <div class="favth-col-lg-10 favth-col-md-9 favth-col-sm-12 favth-col-xs-12 details-field mr-field">
+                                        <div class="wrap">
+                                            <c:forEach var="summation" items="${negativelyRegulatedBy.summation}">
+                                                <p>${summation.text}</p>
+                                            </c:forEach>
+                                        </div>
+                                    </div>
+                                </c:if>
+                                <c:if test="${not empty negativelyRegulatedBy.activeUnit}">
+                                    <div class="favth-col-lg-2 favth-col-md-3 favth-col-sm-12 favth-col-xs-12 details-label mr-label">
+                                        Active Unit
+                                    </div>
+                                    <div class="favth-col-lg-10 favth-col-md-9 favth-col-sm-12 favth-col-xs-12 details-field mr-field">
+                                        <div class="wrap">
+                                            <c:forEach var="activeUnit"
+                                                       items="${negativelyRegulatedBy.activeUnit}">
+                                                <div class="favth-col-lg-6 favth-col-md-6 favth-col-sm-12 favth-col-xs-12 text-overflow">
+                                                    <m:link object="${activeUnit}" detailRequestPrefix="${detailRequestPrefix}"/>
+                                                </div>
+                                            </c:forEach>
+                                        </div>
+                                    </div>
+                                </c:if>
+                            </div>
+                        </c:forEach>
                     </div>
                 </div>
             </div>
@@ -228,21 +222,46 @@
         <c:if test="${not empty positivelyRegulatedBy}">
             <div class="fieldset-pair-container">
                 <div class="favth-clearfix">
-                    <div class="favth-col-lg-2 favth-col-md-2 favth-col-sm-3 favth-col-xs-12 details-label">Positively
-                        by
+                    <div class="favth-col-lg-2 favth-col-md-2 favth-col-sm-3 favth-col-xs-12 details-label">
+                        Positively  by
                     </div>
                     <div class="favth-col-lg-10 favth-col-md-10 favth-col-sm-9 favth-col-xs-12 details-field">
-                        <ul class="list">
-                            <c:forEach var="positivelyRegulatedBy" items="${positivelyRegulatedBy}">
-                                <li>
-                                    <i class="sprite sprite-resize sprite-${positivelyRegulatedBy.regulator.schemaClass} sprite-position"
-                                       title="${positivelyRegulatedBy.regulator.schemaClass}"></i>
-                                    <a href="${detailRequestPrefix}${positivelyRegulatedBy.regulator.stId}" class=""
-                                       title="Show Details"
-                                    >${positivelyRegulatedBy.regulator.displayName}</a>
-                                </li>
-                            </c:forEach>
-                        </ul>
+                        <c:forEach var="positivelyRegulatedBy" items="${positivelyRegulatedBy}">
+                            <div class="favth-clearfix modified-residue">
+                                <div class="favth-col-lg-2 favth-col-md-3 favth-col-sm-12 favth-col-xs-12 details-label mr-label">
+                                    Regulator
+                                </div>
+                                <div class="favth-col-lg-10 favth-col-md-9 favth-col-sm-12 favth-col-xs-12 details-field mr-field">
+                                    <m:link object="${positivelyRegulatedBy.regulator}" detailRequestPrefix="${detailRequestPrefix}"/>
+
+                                </div>
+                                <c:if test="${not empty positivelyRegulatedBy.summation}">
+                                    <div class="favth-col-lg-2 favth-col-md-3 favth-col-sm-12 favth-col-xs-12 details-label mr-label">
+                                        Summation
+                                    </div>
+                                    <div class="favth-col-lg-10 favth-col-md-9 favth-col-sm-12 favth-col-xs-12 details-field mr-field">
+                                        <div class="wrap">
+                                            <c:forEach var="summation" items="${positivelyRegulatedBy.summation}">
+                                                <p>${summation.text}</p>
+                                            </c:forEach>
+                                        </div>
+                                    </div>
+                                </c:if>
+                                <c:if test="${not empty positivelyRegulatedBy.activeUnit}">
+                                    <div class="favth-col-lg-2 favth-col-md-3 favth-col-sm-12 favth-col-xs-12 details-label mr-label">
+                                        Active Unit
+                                    </div>
+                                    <div class="favth-col-lg-10 favth-col-md-9 favth-col-sm-12 favth-col-xs-12 details-field mr-field">
+                                        <div class="wrap">
+                                            <c:forEach var="activeUnit"
+                                                       items="${positivelyRegulatedBy.activeUnit}">
+                                                <m:link object="${activeUnit}" detailRequestPrefix="${detailRequestPrefix}"/>
+                                            </c:forEach>
+                                        </div>
+                                    </div>
+                                </c:if>
+                            </div>
+                        </c:forEach>
                     </div>
                 </div>
             </div>
@@ -258,7 +277,7 @@
                             <c:forEach var="requirement" items="${requirements}">
                                 <li>
                                     <a href="${detailRequestPrefix}${requirement.stId}" class="" title="Show Details"
-                                       > ${requirement.displayName}</a>
+                                    > ${requirement.displayName}</a>
                                 </li>
                             </c:forEach>
                         </ul>
@@ -275,15 +294,88 @@
         <legend>Normal reaction</legend>
         <div class="wrap overflow">
             <div class="favth-col-lg-6 favth-col-md-6 favth-col-sm-12 favth-col-xs-12 text-overflow">
-                <i class="sprite sprite-resize sprite-${databaseObject.normalReaction.schemaClass} sprite-position"
-                   title="${databaseObject.normalReaction.schemaClass}"></i>
-                <a href="${detailRequestPrefix}${databaseObject.normalReaction.stId}" class=""
-                   title="${databaseObject.normalReaction.displayName} (${databaseObject.normalReaction.speciesName})"
-                   >${databaseObject.normalReaction.displayName}
-                    (${databaseObject.normalReaction.speciesName})</a>
+                <m:link object="${databaseObject.normalReaction}" detailRequestPrefix="${detailRequestPrefix}"/>
             </div>
         </div>
     </fieldset>
+</c:if>
+
+<c:if test="${isReactionLikeEvent && not empty databaseObject.entityFunctionalStatus}">
+    <div class="favth-clearfix">
+        <fieldset class="fieldset-details">
+            <legend>Functional status</legend>
+            <div class="overflow">
+
+                <c:forEach var="entityFunctionalStatus" items="${databaseObject.entityFunctionalStatus}">
+
+                    <c:set var="functionalStatusName"
+                           value="${fn:replace(entityFunctionalStatus.displayName, '_',' ')}"/>
+                    <p class="wrap">${fn:toUpperCase(fn:substring(functionalStatusName, 0, 1))}${fn:substring(functionalStatusName, 1, fn:length(functionalStatusName))}</p>
+
+                    <c:if test="${not empty entityFunctionalStatus.normalEntity}">
+                        <c:set var="normalEntity" value="${entityFunctionalStatus.normalEntity}"/>
+                        <div class="fieldset-pair-container">
+                            <div class="favth-clearfix">
+                                <div class="favth-col-lg-2 favth-col-md-2 favth-col-sm-3 favth-col-xs-12 details-label">
+                                    Normal Entity
+                                </div>
+                                <div class="favth-col-lg-10 favth-col-md-10 favth-col-sm-9 favth-col-xs-12 details-field">
+                                    <div>
+                                        <m:link object="${normalEntity}" detailRequestPrefix="${detailRequestPrefix}"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </c:if>
+
+                    <c:if test="${not empty entityFunctionalStatus.diseaseEntity}">
+                        <c:set var="diseaseEntity" value="${entityFunctionalStatus.diseaseEntity}"/>
+                        <div class="fieldset-pair-container">
+                            <div class="favth-clearfix">
+                                <div class="favth-col-lg-2 favth-col-md-2 favth-col-sm-3 favth-col-xs-12 details-label">
+                                    Disease Entity
+                                </div>
+                                <div class="favth-col-lg-10 favth-col-md-10 favth-col-sm-9 favth-col-xs-12 details-field">
+                                    <div>
+                                        <m:link object="${normalEntity}" detailRequestPrefix="${detailRequestPrefix}"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </c:if>
+
+                    <c:if test="${not empty entityFunctionalStatus.functionalStatus}">
+                        <div class="fieldset-pair-container">
+                        <div class="favth-clearfix">
+                            <div class="favth-col-lg-2 favth-col-md-2 favth-col-sm-3 favth-col-xs-12 details-label">
+                                Status
+                            </div>
+                            <div class="favth-col-lg-10 favth-col-md-10 favth-col-sm-9 favth-col-xs-12 details-field">
+                                <ul>
+                                    <c:forEach var="status" items="${entityFunctionalStatus.functionalStatus}">
+                                        <li>
+                                        <span data-toggle="tooltip"
+                                              title="${status.functionalStatusType.definition}">
+                                                ${fn:replace(status.functionalStatusType.displayName, '_',' ')}
+                                        </span>
+                                            via
+                                            <a data-toggle="tooltip" title="${status.structuralVariant.definition}"
+                                               href="${status.structuralVariant.url}" target="_blank">
+                                                    ${fn:replace(status.structuralVariant.displayName, '_',' ')}
+
+                                            </a>
+                                        </li>
+                                    </c:forEach>
+                                </ul>
+                            </div>
+                        </div>
+                    </c:if>
+
+                    </div>
+                </c:forEach>
+            </div>
+        </fieldset>
+    </div>
 </c:if>
 
 <c:if test="${not empty databaseObject.inferredFrom}">
@@ -294,7 +386,7 @@
                 <div class="favth-col-lg-6 favth-col-md-6 favth-col-sm-12 favth-col-xs-12 text-overflow">
                     <a href="${detailRequestPrefix}${inferredFrom.stId}" class=""
                        title="${inferredFrom.displayName} (${inferredFrom.speciesName})"
-                       >${inferredFrom.displayName}
+                    >${inferredFrom.displayName}
                         (${inferredFrom.speciesName})</a>
                 </div>
             </c:forEach>
@@ -311,7 +403,7 @@
                     <div class="favth-col-lg-6 favth-col-md-6 favth-col-sm-12 favth-col-xs-12 text-overflow">
                         <a href="${detailRequestPrefix}${orthologousEvent.stId}"
                            title="${orthologousEvent.displayName} (${orthologousEvent.speciesName})"
-                           >${orthologousEvent.displayName}
+                        >${orthologousEvent.displayName}
                             (${orthologousEvent.speciesName})</a>
                     </div>
                 </c:forEach>

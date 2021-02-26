@@ -5,8 +5,8 @@
     <artifactId>data-content</artifactId>
 
     <packaging>war</packaging>
-    <version>2.0.0</version>
-    <name>content</name>
+    <version>2.0.2</version>
+    <name>data-content</name>
 
     <description>
         The Reactome Data Content provides access to the search features plus the schema classes definition and instance browsers among others
@@ -40,8 +40,8 @@
 
     <properties>
         <deploymentPath>/</deploymentPath>
-        <graph.core>1.1.22</graph.core>
-        <reactome.search.core>1.4.1</reactome.search.core>
+        <graph.core>1.1.23</graph.core>
+        <reactome.search.core>1.4.3</reactome.search.core>
         <spring.version>5.1.6.RELEASE</spring.version>
         <javax.servlet.version>4.0.1</javax.servlet.version>
         <jackson.version>2.9.8</jackson.version>

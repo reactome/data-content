@@ -4,7 +4,7 @@
     <short-name>My Custom Tag</short-name>
     <tag>
         <name>linkEscape</name>
-        <tag-class>org.reactome.server.util.Param</tag-class>
+        <tag-class>org.reactome.server.util.tags.Param</tag-class>
         <body-content>empty</body-content>
         <attribute>
             <name>name</name>
@@ -16,4 +16,6 @@
             <rtexprvalue>true</rtexprvalue>
         </attribute>
     </tag>
+
+
 </taglib>

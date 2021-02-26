@@ -66,7 +66,7 @@ class IconLibraryController {
         urlMapping.put("INTERPRO",          "https://www.ebi.ac.uk/interpro/entry/###ID###");
         urlMapping.put("KEGG",              "https://www.kegg.jp/entry/###ID###");
         urlMapping.put("ENA",               "https://www.ebi.ac.uk/ena/data/view/###ID###");
-        urlMapping.put("SO",                "http://www.sequenceontology.org/browser/current_svn/term/SO:###ID###");
+        urlMapping.put("SO",                "https://www.ebi.ac.uk/ols/ontologies/so/terms?obo_id=SO:###ID###");
         urlMapping.put("COMPLEXPORTAL",     "https://www.ebi.ac.uk/complexportal/complex/###ID###");
         urlMapping.put("BTO",               "http://purl.obolibrary.org/obo/BTO_###ID###");
         urlMapping.put("CL",                "http://purl.obolibrary.org/obo/CL_###ID###");
@@ -77,6 +77,7 @@ class IconLibraryController {
         urlMapping.put("UBERON",            "http://purl.obolibrary.org/obo/UBERON_###ID###");
         urlMapping.put("NCBI",              "https://www.ncbi.nlm.nih.gov/protein/###ID###");
         urlMapping.put("IUPHAR",            "https://www.guidetopharmacology.org/GRAC/LigandDisplayForward?ligandId=###ID###");
+        urlMapping.put("FMA",               "https://www.ebi.ac.uk/ols/ontologies/fma/terms?obo_id=FMA:###ID###");
     }
 
     private SearchService searchService;
