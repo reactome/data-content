@@ -619,6 +619,7 @@ span.secondary-identifiers {
     box-shadow: 0 0 10px 6px #f1f1f1;
 
 }
+
 /* Orcid widget and progress bar */
 .ui-widget .ui-widget {
     font-size: 0.7em !important;
@@ -626,7 +627,7 @@ span.secondary-identifiers {
 
 .ui-widget-overlay {
     background: repeat-x scroll 50% 50% #AAA !important;
-    opacity:0.3;
+    opacity: 0.3;
 }
 
 .ui-widget-header {
@@ -658,19 +659,23 @@ button[id^="claim-your-work"] {
 }
 
 button[id^="connect-orcid-button"]:hover,
-button[id^="claim-your-work"]:hover{
+button[id^="claim-your-work"]:hover {
     border: 1px solid #338caf;
     color: #338caf;
 }
 
 img[id^="orcid-id-icon"],
-img[id^="claim-your-work"]{
+img[id^="claim-your-work"] {
     width: 20px;
     height: 20px;
     display: block;
     margin: 0 .5em 0 0;
     padding: 0;
     float: left;
+}
+
+#catalyst-activity-container {
+    max-height: 78px;
 }
 
 /* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
@@ -772,6 +777,7 @@ img[id^="claim-your-work"]{
         line-height: 15px;
         font-size: 12px;
     }
+
     ul.tree li {
         margin: 0;
         font-size: 12px;
@@ -783,6 +789,10 @@ img[id^="claim-your-work"]{
         text-overflow: ellipsis;
         width: 99%;
         padding: 0 0 0 12px;
+    }
+
+    #catalyst-activity-container {
+        max-height: 160px;
     }
 }
 
@@ -951,6 +961,7 @@ img[id^="claim-your-work"]{
         font-size: 12px;
     }
 }
+
 .png-dropdown,
 .biopax-dropdown {
     display: inline;

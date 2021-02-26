@@ -1,27 +1,29 @@
-var PWB_COOKIE="_Search_Result_PWB_Tree";
+var PWB_COOKIE = "_Search_Result_PWB_Tree";
+var DISPLAY_MISSING_ATTRIBUTES = "displayMissingAttributes";
 var EXPAND = "expand-all";
 var COLLAPSE = "collapse-all"; // default value for the Location in PWB
 
-jQuery(document).ready(function() {
+jQuery(document).ready(function () {
     togglePwbTree(readCookie(PWB_COOKIE));
 });
 
-jQuery(document).ready(function() {
+jQuery(document).ready(function () {
     // Configure/customize these variables.
     var ellipsestext = "... ";
     var moretext = "Read more";
     var lesstext = " Show less";
 
+    jQuery('[data-toggle="tooltip"]').tooltip();
     // Show summation up to 200 chars.
-    jQuery('.summation').each(function() {
+    jQuery('.summation').each(function () {
         var showCharNumber = 200;
         // summation text only. The highlighting is lost and it will be done again after.
         var content = jQuery(this).text();
 
-        if(content.length > showCharNumber) {
+        if (content.length > showCharNumber) {
             var showing = shorten(content, showCharNumber);
 
-            if(showing.length !== content.length) {
+            if (showing.length !== content.length) {
                 var hiding = content.substr(showing.length, content.length - showing.length);
                 var html = jQuery.trim(showing) + '<span class="moreellipses">' + ellipsestext + '</span><span class="morecontent"><span>' + hiding + '</span><a href="javascript:void(0);" class="morelink">' + moretext + '</a></span>';
 
@@ -39,21 +41,21 @@ jQuery(document).ready(function() {
         }
     });
 
-    jQuery('.details-summation').each(function() {
+    jQuery('.details-summation').each(function () {
         var showCharNumber = 1000;
         var content = jQuery.trim(jQuery(this).text());
 
-        if(content.length > showCharNumber) {
+        if (content.length > showCharNumber) {
             var showing = shorten(content, showCharNumber);
             var hiding = content.substr(showing.length, content.length - showing.length);
 
-            var html = jQuery.trim(showing) + '<span class="moreellipses">' + ellipsestext+ '</span><span class="morecontent"><span>' + hiding + '</span><a href="javascript:void(0);" class="morelink">' + moretext + '</a></span>';
+            var html = jQuery.trim(showing) + '<span class="moreellipses">' + ellipsestext + '</span><span class="morecontent"><span>' + hiding + '</span><a href="javascript:void(0);" class="morelink">' + moretext + '</a></span>';
             jQuery(this).html(html);
         }
     });
 
-    jQuery(".morelink").click(function(){
-        if(jQuery(this).hasClass("less")) {
+    jQuery(".morelink").click(function () {
+        if (jQuery(this).hasClass("less")) {
             jQuery(this).removeClass("less");
             jQuery(this).html(moretext);
         } else {
@@ -177,10 +179,11 @@ jQuery(document).ready(function () {
 
 /*----------------------*/
 /* JAVASCRIPT FUNCTIONS */
+
 /*----------------------*/
 function shorten(sentence, chars) {
     // Shortening a sentence without breaking a word.
-    return (sentence.match(new RegExp(".{" + chars + "}\\S*"))||[sentence])[0];
+    return (sentence.match(new RegExp(".{" + chars + "}\\S*")) || [sentence])[0];
 }
 
 function highlighter(word, text) {
@@ -188,12 +191,12 @@ function highlighter(word, text) {
         var rgxp = new RegExp("(\\b" + word + "\\b)", "gim");
         var repl = '<span class="highlighting" style="display: inline-block">' + word + '</span>';
         return text.replace(rgxp, repl);
-    } catch(err) {
+    } catch (err) {
         return text;
     }
 }
 
-function togglePwbTree(action){
+function togglePwbTree(action) {
     var treeLpwb = jQuery("div.tree-lpwb");
     treeLpwb.each(function (index, element) {
         if (action === EXPAND) {
@@ -215,13 +218,18 @@ function togglePwbTree(action){
     }
 }
 
+function toggleDisplayMissingAttributes(displayMissingAttributes) {
+    writeCookie(DISPLAY_MISSING_ATTRIBUTES, displayMissingAttributes);
+    location.reload()
+}
+
 function readCookie(name) {
     var nameEQ = name + "=";
     var ca = document.cookie.split(';');
     for (var i = 0; i < ca.length; i++) {
         var c = ca[i];
-        while (c.charAt(0) === ' ') c = c.substring(1,c.length);
-        if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length,c.length);
+        while (c.charAt(0) === ' ') c = c.substring(1, c.length);
+        if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
     }
     return null;
 }
@@ -231,37 +239,37 @@ function writeCookie(key, value) {
     // Default at 365 days.
     var days = 365;
     // Get unix milliseconds at current time plus number of days
-    date.setTime(+ date + (days * 86400000)); //24 * 60 * 60 * 1000
+    date.setTime(+date + (days * 86400000)); //24 * 60 * 60 * 1000
     document.cookie = key + "=" + value + "; expires=" + date.toGMTString() + ";";
 }
 
 function openSideNav() {
-    jQuery("#search-filter-sidenav").css({width: "310px", left: "0" });
+    jQuery("#search-filter-sidenav").css({width: "310px", left: "0"});
     jQuery(".sidenav-bg").css('display', 'block');
     lockBackground();
 }
 
 /* Set the width of the side navigation to 0 */
 function closeSideNav() {
-    jQuery("#search-filter-sidenav").css({width: "0", left: "" });
+    jQuery("#search-filter-sidenav").css({width: "0", left: ""});
     jQuery(".sidenav-bg").css('display', 'none');
     releaseBackground();
 }
 
 function openSchemaSideNav() {
-    var width="350px";
+    var width = "350px";
     if (window.matchMedia('screen and (max-width: 500px)').matches) {
-        width="100%";
+        width = "100%";
     }
     jQuery(".schema-tree-mobile").html(jQuery(".schema-tree-ph").html());
-    jQuery("#schema-sidenav").css({width: width, left: "0" });
+    jQuery("#schema-sidenav").css({width: width, left: "0"});
     jQuery(".sidenav-bg").css('display', 'block');
     lockBackground();
 }
 
 /* Set the width of the side navigation to 0 */
 function closeSchemaSideNav() {
-    jQuery("#schema-sidenav").css({width: "0", left: "" });
+    jQuery("#schema-sidenav").css({width: "0", left: ""});
     jQuery(".sidenav-bg").css('display', 'none');
     releaseBackground();
 }
