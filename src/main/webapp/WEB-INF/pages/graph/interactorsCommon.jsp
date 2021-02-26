@@ -1,6 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib uri="/WEB-INF/tags/modelTags.tld" prefix="m" %>
 
 <c:choose>
     <c:when test="${not empty widget}">
@@ -78,11 +79,9 @@
                             <ul class="list">
                                 <c:forEach var="interactor" items="${interaction.physicalEntity}">
                                     <li>
-                                        <i class="sprite sprite-${interactor.schemaClass}"
-                                           title="${interactor.schemaClass}"></i>
-                                        <a href=${detailRequestPrefix}${interactor.stId}?interactor=${referenceEntity.displayName}"
-                                           title="Show Details">${interactor.displayName}<span> (${interactor.stId})</span>
-                                        </a>
+                                        <m:link object="${interactor}" detailRequestPrefix="${detailRequestPrefix}"
+                                                   displayStId="true"
+                                                   getParameters="interactor=${referenceEntity.displayName}"/>
                                     </li>
                                 </c:forEach>
                             </ul>
