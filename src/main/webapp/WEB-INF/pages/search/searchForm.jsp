@@ -35,7 +35,7 @@
                 <input type="hidden" name="keywords" value="${item}"/>
             </c:forEach>
         </c:if>
-        <input type="hidden" name="cluster" value="true"/>
+        <input type="hidden" name="cluster" value="${grouped == null || grouped}"/>
         <button class="button btn btn-primary btn-info">Go!</button>
         <c:if test="${iconsSearch}">
             <input type="hidden" name="types" value="Icon"/>
