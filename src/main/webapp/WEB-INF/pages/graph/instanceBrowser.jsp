@@ -23,9 +23,9 @@
         </c:catch>
 
         <label style="float: right" class="margin0">
-            <input type="checkbox" name="displayMissingAttributes" onclick="toggleDisplayMissingAttributes(${!displayMissingAttributes})"
-                   <c:if test="${displayMissingAttributes}">checked</c:if> class="margin0">
-            Display missing attributes
+            <input type="checkbox" name="showUndefinedAttributes" onclick="toggleShowUndefinedAttributes(${!showUndefinedAttributes})"
+                   <c:if test="${showUndefinedAttributes}">checked</c:if> class="margin0">
+            Show undefined attributes
         </label>
 
     </h3>

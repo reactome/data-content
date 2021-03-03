@@ -36,7 +36,7 @@ class SchemaController {
     private static final Logger errorLogger = LoggerFactory.getLogger("errorLogger");
 
     private static final String TITLE = "title";
-    private static final String DISPLAY_MISSING_ATTRIBUTES = "displayMissingAttributes";
+    private static final String SHOW_UNDEFINED_ATTRIBUTES = "showUndefinedAttributes";
 
     private static final int OFFSET = 55;
     private final Set<String> ehlds = new HashSet<>();
@@ -55,7 +55,7 @@ class SchemaController {
 
     @RequestMapping(value = "/schema/instance/browser/{id}", method = RequestMethod.GET)
     public String objectDetail(@PathVariable String id,
-                               @CookieValue(required = false) Boolean displayMissingAttributes,
+                               @CookieValue(required = false) Boolean showUndefinedAttributes,
                                ModelMap model,
                                HttpServletResponse response) throws ViewException {
         try {
@@ -67,11 +67,11 @@ class SchemaController {
                 return noDetailsFound(model, response, id);
             }
 
-            if (displayMissingAttributes == null) displayMissingAttributes = false;
+            if (showUndefinedAttributes == null) showUndefinedAttributes = false;
             model.addAttribute(TITLE, databaseObject.getDisplayName());
-            model.addAttribute(DISPLAY_MISSING_ATTRIBUTES, displayMissingAttributes);
+            model.addAttribute(SHOW_UNDEFINED_ATTRIBUTES, showUndefinedAttributes);
             model.addAttribute("breadcrumbSchemaClass", databaseObject.getSchemaClass());
-            model.addAttribute("map", DatabaseObjectUtils.getAllFields(databaseObject, displayMissingAttributes));
+            model.addAttribute("map", DatabaseObjectUtils.getAllFields(databaseObject, showUndefinedAttributes));
             model.addAttribute("referrals", advancedLinkageService.getReferralsTo(id));
 
             if (databaseObject instanceof PhysicalEntity || databaseObject instanceof Event || databaseObject instanceof Regulation) {
