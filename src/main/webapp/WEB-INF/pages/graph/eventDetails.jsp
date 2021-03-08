@@ -207,7 +207,7 @@
                                             <c:forEach var="activeUnit"
                                                        items="${negativelyRegulatedBy.activeUnit}">
                                                 <div class="favth-col-lg-6 favth-col-md-6 favth-col-sm-12 favth-col-xs-12 text-overflow">
-                                                    <m:link object="${activeUnit}" detailRequestPrefix="${detailRequestPrefix}"/>
+                                                    <m:link object="${activeUnit}" detailRequestPrefix="${detailRequestPrefix}" displaySpecies="false"/>
                                                 </div>
                                             </c:forEach>
                                         </div>
@@ -255,7 +255,9 @@
                                         <div class="wrap">
                                             <c:forEach var="activeUnit"
                                                        items="${positivelyRegulatedBy.activeUnit}">
-                                                <m:link object="${activeUnit}" detailRequestPrefix="${detailRequestPrefix}"/>
+                                                <div class="favth-col-lg-6 favth-col-md-6 favth-col-sm-12 favth-col-xs-12 text-overflow">
+                                                    <m:link object="${activeUnit}" detailRequestPrefix="${detailRequestPrefix}" displaySpecies="false"/>
+                                                </div>
                                             </c:forEach>
                                         </div>
                                     </div>
