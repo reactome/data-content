@@ -351,15 +351,16 @@
                                 Status
                             </div>
                             <div class="favth-col-lg-10 favth-col-md-10 favth-col-sm-9 favth-col-xs-12 details-field">
-                                <ul>
+                                <ul class="list">
                                     <c:forEach var="status" items="${entityFunctionalStatus.functionalStatus}">
                                         <li>
-                                        <span data-toggle="tooltip"
+                                        <span data-toggle="tooltip" data-placement="right"
                                               title="${status.functionalStatusType.definition}">
                                                 ${fn:replace(status.functionalStatusType.displayName, '_',' ')}
                                         </span>
                                             via
-                                            <a data-toggle="tooltip" title="${status.structuralVariant.definition}"
+                                            <a data-toggle="tooltip" data-placement="right"
+                                               title="${status.structuralVariant.definition}"
                                                href="${status.structuralVariant.url}" target="_blank">
                                                     ${fn:replace(status.structuralVariant.displayName, '_',' ')}
 
