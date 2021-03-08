@@ -675,7 +675,7 @@ img[id^="claim-your-work"] {
 }
 
 #catalyst-activity-container {
-    max-height: 78px;
+    max-height: 200px;
 }
 
 /* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
