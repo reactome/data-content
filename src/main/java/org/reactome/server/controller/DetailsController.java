@@ -225,7 +225,7 @@ class DetailsController {
             model.addAttribute("isReactionLikeEvent", true);
         } else if (databaseObject instanceof EntitySet) {
             model.addAttribute("isEntitySet", true);
-        } else if (databaseObject instanceof EntityWithAccessionedSequence || databaseObject instanceof SimpleEntity) {
+        } else if (databaseObject instanceof EntityWithAccessionedSequence || databaseObject instanceof SimpleEntity || databaseObject instanceof Drug) {
             model.addAttribute("hasReferenceEntity", true);
         }
     }

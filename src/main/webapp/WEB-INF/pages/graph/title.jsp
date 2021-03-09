@@ -4,7 +4,7 @@
 
 <h3 class="details-title">
     <c:choose>
-        <c:when test="${hasReferenceEntity}">
+        <c:when test="${hasReferenceEntity && (databaseObject.schemaClass == 'EntityWithAccessionedSequence' || databaseObject.schemaClass == 'SimpleEntity')}">
             <i class="sprite sprite-${databaseObject.referenceType}" title="${databaseObject.referenceType}"></i>
         </c:when>
         <c:otherwise>

@@ -20,8 +20,8 @@
 
                 <div class="fieldset-pair-container">
                     <div class="favth-clearfix">
-                        <div class="favth-col-lg-2 favth-col-md-2 favth-col-sm-3 favth-col-xs-12 details-label">External
-                            Reference
+                        <div class="favth-col-lg-2 favth-col-md-2 favth-col-sm-3 favth-col-xs-12 details-label">
+                            External Reference
                         </div>
                         <div class="favth-col-lg-10 favth-col-md-10 favth-col-sm-9 favth-col-xs-12 details-field">
                             <a href="${databaseObject.referenceEntity.url}" class="" target="_blank"
@@ -47,59 +47,61 @@
                         </c:if>
                     </c:if>
 
-                    <c:if test="${databaseObject.referenceType == 'ReferenceGeneProduct'}">
-                        <c:if test="${not empty databaseObject.referenceEntity.chain}">
-                            <div class="favth-clearfix">
-                                <div class="favth-col-lg-2 favth-col-md-2 favth-col-sm-3 favth-col-xs-12 details-label">
-                                    Chain
-                                </div>
-                                <div class="favth-col-lg-10 favth-col-md-10 favth-col-sm-9 favth-col-xs-12 details-field">
-                                    <div>
-                                        <c:forEach var="chain" items="${databaseObject.referenceEntity.chain}"
-                                                   varStatus="loop">
-                                            ${chain}<c:if test="${!loop.last}">, </c:if>
-                                        </c:forEach>
+                    <c:if test="${databaseObject.schemaClass == 'EntityWithAccessionedSequence' || databaseObject.schemaClass == 'SimpleEntity'}">
+                        <c:if test="${databaseObject.referenceType == 'ReferenceGeneProduct'}">
+                            <c:if test="${not empty databaseObject.referenceEntity.chain}">
+                                <div class="favth-clearfix">
+                                    <div class="favth-col-lg-2 favth-col-md-2 favth-col-sm-3 favth-col-xs-12 details-label">
+                                        Chain
                                     </div>
-                                </div>
-                            </div>
-                        </c:if>
-                        <c:if test="${not empty databaseObject.referenceEntity.referenceGene}">
-                            <div class="favth-clearfix">
-                                <div class="favth-col-lg-2 favth-col-md-2 favth-col-sm-3 favth-col-xs-12 details-label">
-                                    Reference Genes
-                                </div>
-                                <div class="favth-col-lg-10 favth-col-md-10 favth-col-sm-9 favth-col-xs-12 details-field">
-                                    <div class="wrap">
-                                        <c:forEach var="referenceGene"
-                                                   items="${do:sortByDisplayName(databaseObject.referenceEntity.referenceGene)}"
-                                                   varStatus="loop">
-                                            <div class="favth-col-lg-3 favth-col-md-3 favth-col-sm-9 favth-col-xs-12 text-overflow">
-                                                <a href="${referenceGene.url}" target="_blank"
-                                                   title="show ${referenceGene.displayName}">${referenceGene.displayName}</a>
-                                            </div>
-                                        </c:forEach>
-                                    </div>
-                                </div>
-                            </div>
-                        </c:if>
-                        <c:if test="${not empty databaseObject.referenceEntity.referenceTranscript}">
-                            <div class="favth-clearfix">
-                                <div class="favth-col-lg-2 favth-col-md-2 favth-col-sm-3 favth-col-xs-12 details-label">
-                                    Reference Transcript
-                                </div>
-                                <div class="favth-col-lg-10 favth-col-md-10 favth-col-sm-9 favth-col-xs-12 details-field">
-                                    <div>
-                                        <ul class="list">
-                                            <c:forEach var="referenceTranscript"
-                                                       items="${databaseObject.referenceEntity.referenceTranscript}">
-                                                <li><a href="${referenceTranscript.url}" target="_blank"
-                                                       title="show ${referenceTranscript.displayName}">${referenceTranscript.displayName}</a>
-                                                </li>
+                                    <div class="favth-col-lg-10 favth-col-md-10 favth-col-sm-9 favth-col-xs-12 details-field">
+                                        <div>
+                                            <c:forEach var="chain" items="${databaseObject.referenceEntity.chain}"
+                                                       varStatus="loop">
+                                                ${chain}<c:if test="${!loop.last}">, </c:if>
                                             </c:forEach>
-                                        </ul>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                            </c:if>
+                            <c:if test="${not empty databaseObject.referenceEntity.referenceGene}">
+                                <div class="favth-clearfix">
+                                    <div class="favth-col-lg-2 favth-col-md-2 favth-col-sm-3 favth-col-xs-12 details-label">
+                                        Reference Genes
+                                    </div>
+                                    <div class="favth-col-lg-10 favth-col-md-10 favth-col-sm-9 favth-col-xs-12 details-field">
+                                        <div class="wrap">
+                                            <c:forEach var="referenceGene"
+                                                       items="${do:sortByDisplayName(databaseObject.referenceEntity.referenceGene)}"
+                                                       varStatus="loop">
+                                                <div class="favth-col-lg-3 favth-col-md-3 favth-col-sm-9 favth-col-xs-12 text-overflow">
+                                                    <a href="${referenceGene.url}" target="_blank"
+                                                       title="show ${referenceGene.displayName}">${referenceGene.displayName}</a>
+                                                </div>
+                                            </c:forEach>
+                                        </div>
+                                    </div>
+                                </div>
+                            </c:if>
+                            <c:if test="${not empty databaseObject.referenceEntity.referenceTranscript}">
+                                <div class="favth-clearfix">
+                                    <div class="favth-col-lg-2 favth-col-md-2 favth-col-sm-3 favth-col-xs-12 details-label">
+                                        Reference Transcript
+                                    </div>
+                                    <div class="favth-col-lg-10 favth-col-md-10 favth-col-sm-9 favth-col-xs-12 details-field">
+                                        <div>
+                                            <ul class="list">
+                                                <c:forEach var="referenceTranscript"
+                                                           items="${databaseObject.referenceEntity.referenceTranscript}">
+                                                    <li><a href="${referenceTranscript.url}" target="_blank"
+                                                           title="show ${referenceTranscript.displayName}">${referenceTranscript.displayName}</a>
+                                                    </li>
+                                                </c:forEach>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </c:if>
                         </c:if>
                     </c:if>
 
