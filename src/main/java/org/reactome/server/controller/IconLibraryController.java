@@ -66,18 +66,18 @@ class IconLibraryController {
         urlMapping.put("INTERPRO",          "https://www.ebi.ac.uk/interpro/entry/###ID###");
         urlMapping.put("KEGG",              "https://www.kegg.jp/entry/###ID###");
         urlMapping.put("ENA",               "https://www.ebi.ac.uk/ena/data/view/###ID###");
-        urlMapping.put("SO",                "https://www.ebi.ac.uk/ols/ontologies/so/terms?obo_id=SO:###ID###");
         urlMapping.put("COMPLEXPORTAL",     "https://www.ebi.ac.uk/complexportal/complex/###ID###");
-        urlMapping.put("BTO",               "http://purl.obolibrary.org/obo/BTO_###ID###");
-        urlMapping.put("CL",                "http://purl.obolibrary.org/obo/CL_###ID###");
-        urlMapping.put("DOID",              "http://purl.obolibrary.org/obo/DOID_###ID###");
-        urlMapping.put("NCIT",              "http://purl.obolibrary.org/obo/NCIT_###ID###");
-        urlMapping.put("OMIT",              "http://purl.obolibrary.org/obo/OMIT_###ID###");
-        urlMapping.put("OPL",               "http://purl.obolibrary.org/obo/OPL_###ID###");
-        urlMapping.put("UBERON",            "http://purl.obolibrary.org/obo/UBERON_###ID###");
+        urlMapping.put("SO",                "https://www.ebi.ac.uk/ols/ontologies/so/terms?obo_id=SO:###ID###");
+        urlMapping.put("BTO",               "https://www.ebi.ac.uk/ols/ontologies/bto/terms?obo_id=BTO:###ID###");
+        urlMapping.put("CL",                "https://www.ebi.ac.uk/ols/ontologies/cl/terms?obo_id=CL:###ID###");
+        urlMapping.put("DOID",              "https://www.ebi.ac.uk/ols/ontologies/doid/terms?obo_id=DOID:###ID###");
+        urlMapping.put("NCIT",              "https://www.ebi.ac.uk/ols/ontologies/ncit/terms?obo_id=NCIT:###ID###");
+        urlMapping.put("OMIT",              "https://www.ebi.ac.uk/ols/ontologies/omit/terms?obo_id=OMIT:###ID###");
+        urlMapping.put("OPL",               "https://www.ebi.ac.uk/ols/ontologies/opl/terms?obo_id=OPL:###ID###");
+        urlMapping.put("UBERON",            "https://www.ebi.ac.uk/ols/ontologies/uberon/terms?obo_id=UBERON:###ID###");
+        urlMapping.put("FMA",               "https://www.ebi.ac.uk/ols/ontologies/fma/terms?obo_id=FMA:###ID###");
         urlMapping.put("NCBI",              "https://www.ncbi.nlm.nih.gov/protein/###ID###");
         urlMapping.put("IUPHAR",            "https://www.guidetopharmacology.org/GRAC/LigandDisplayForward?ligandId=###ID###");
-        urlMapping.put("FMA",               "https://www.ebi.ac.uk/ols/ontologies/fma/terms?obo_id=FMA:###ID###");
     }
 
     private SearchService searchService;
