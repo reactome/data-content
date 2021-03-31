@@ -98,7 +98,7 @@
         </div>
     </fieldset>
 
-    <c:if test="${not empty pwbTree && not fn:containsIgnoreCase(entry.iconCategories, 'arrow')}">
+    <c:if test="${not empty pwbTree && fn:length(pwbTree[0]) > 0 && not fn:containsIgnoreCase(entry.iconCategories, 'arrow')}">
         <div class="clearfix">
             <fieldset class="fieldset-details">
                 <legend>Locations in the PathwayBrowser</legend>
@@ -124,16 +124,16 @@
                             <c:choose>
                                 <c:when test="${empty topLvl.children}">
                                     <div id="tpla_${topLvl.stId}" class="tplSpe_">
-                            <span class="tree-root tree-root-overflow"
-                                  title="click here to expand or collapse the tree">
-                                <i class="fa fa-square-o" style="vertical-align: middle"></i>
-                                <i class="sprite-resize sprite sprite-Pathway" title="${topLvl.type}"
-                                   style="vertical-align: middle"></i>
-                                <a href="${topLvl.url}"
-                                   <c:if test="${topLvl.highlighted}">class="tree-highlighted-item"</c:if>
-                                   title="goto Reactome Pathway Browser" <c:if
-                                        test="${not empty widget}"> target="_blank" </c:if> >${topLvl.name} (${topLvl.stId})</a>
-                            </span>
+                                        <span class="tree-root tree-root-overflow"
+                                              title="click here to expand or collapse the tree">
+                                            <i class="fa fa-square-o" style="vertical-align: middle"></i>
+                                            <i class="sprite-resize sprite sprite-Pathway" title="${topLvl.type}"
+                                               style="vertical-align: middle"></i>
+                                            <a href="${topLvl.url}"
+                                               <c:if test="${topLvl.highlighted}">class="tree-highlighted-item"</c:if>
+                                               title="goto Reactome Pathway Browser" <c:if
+                                                    test="${not empty widget}"> target="_blank" </c:if> >${topLvl.name} (${topLvl.stId})</a>
+                                        </span>
                                     </div>
                                 </c:when>
                                 <c:otherwise>
