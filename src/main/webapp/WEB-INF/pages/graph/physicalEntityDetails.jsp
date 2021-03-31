@@ -343,7 +343,9 @@
                                 <div class="favth-col-lg-10 favth-col-md-9 favth-col-sm-12 favth-col-xs-12 details-field mr-field">${modifiedResidue.coordinate}</div>
                             </c:if>
 
-                            <c:if test="${modifiedResidue.schemaClass == 'CrosslinkedResidue' || modifiedResidue.schemaClass == 'GroupModifiedResidue'}">
+                            <c:if test="${modifiedResidue.schemaClass == 'CrosslinkedResidue' ||
+                                          modifiedResidue.schemaClass == 'GroupModifiedResidue' ||
+                                          modifiedResidue.schemaClass == 'ModifiedNucleotide'}">
                                 <c:if test="${not empty modifiedResidue.modification.displayName}">
                                     <div class="favth-col-lg-2 favth-col-md-3 favth-col-sm-12 favth-col-xs-12 details-label mr-label">
                                         Modification
@@ -365,53 +367,55 @@
                                 </c:if>
                             </c:if>
 
-                            <c:choose>
-                                <c:when test="${modifiedResidue.psiMod.getClass().getSimpleName() == 'ArrayList'}">
-                                    <div class="favth-col-lg-2 favth-col-md-3 favth-col-sm-12 favth-col-xs-12 details-label mr-label">
-                                        PsiMod
-                                    </div>
-                                    <div class="favth-col-lg-10 favth-col-md-9 favth-col-sm-12 favth-col-xs-12 details-field mr-field">
-                                        <c:forEach var="psiMod" items="${modifiedResidue.psiMod}" varStatus="loop">
-                                            <div class="favth-col-xs-12 details-field mr-field mr-psi-field"
-                                                 style="border-top: 1px dotted #c8c8c8;">
-                                                <div class="favth-col-lg-4 favth-col-md-12 favth-col-sm-12 favth-col-xs-12 details-field mr-field  mr-psi-field">
-                                                    <c:if test="${not empty psiMod.displayName}">
-                                                        <a href="${psiMod.url}" class=""
-                                                           title="Show Details">${psiMod.displayName}</a>
-                                                    </c:if>
+                            <c:if test="${modifiedResidue.schemaClass != 'ModifiedNucleotide'}">
+                                <c:choose>
+                                    <c:when test="${modifiedResidue.psiMod.getClass().getSimpleName() == 'ArrayList'}">
+                                        <div class="favth-col-lg-2 favth-col-md-3 favth-col-sm-12 favth-col-xs-12 details-label mr-label">
+                                            PsiMod
+                                        </div>
+                                        <div class="favth-col-lg-10 favth-col-md-9 favth-col-sm-12 favth-col-xs-12 details-field mr-field">
+                                            <c:forEach var="psiMod" items="${modifiedResidue.psiMod}" varStatus="loop">
+                                                <div class="favth-col-xs-12 details-field mr-field mr-psi-field"
+                                                     style="border-top: 1px dotted #c8c8c8;">
+                                                    <div class="favth-col-lg-4 favth-col-md-12 favth-col-sm-12 favth-col-xs-12 details-field mr-field  mr-psi-field">
+                                                        <c:if test="${not empty psiMod.displayName}">
+                                                            <a href="${psiMod.url}" class=""
+                                                               title="Show Details">${psiMod.displayName}</a>
+                                                        </c:if>
+                                                    </div>
+                                                    <div class="favth-col-lg-8 favth-col-md-12 favth-col-sm-12 favth-col-xs-12 details-field mr-field  mr-psi-field">
+                                                        <c:if test="${not empty psiMod.definition}">
+                                                            ${psiMod.definition}
+                                                        </c:if>
+                                                    </div>
                                                 </div>
-                                                <div class="favth-col-lg-8 favth-col-md-12 favth-col-sm-12 favth-col-xs-12 details-field mr-field  mr-psi-field">
-                                                    <c:if test="${not empty psiMod.definition}">
-                                                        ${psiMod.definition}
-                                                    </c:if>
-                                                </div>
-                                            </div>
-                                        </c:forEach>
-                                    </div>
+                                            </c:forEach>
+                                        </div>
 
-                                </c:when>
-                                <c:otherwise>
-                                    <div class="favth-row favth-clearfix">
-                                        <div class="favth-col-lg-2 favth-col-md-3 favth-col-sm-12 favth-col-xs-12 details-label mr-label">
-                                            PsiMod Name
+                                    </c:when>
+                                    <c:otherwise>
+                                        <div class="favth-row favth-clearfix">
+                                            <div class="favth-col-lg-2 favth-col-md-3 favth-col-sm-12 favth-col-xs-12 details-label mr-label">
+                                                PsiMod Name
+                                            </div>
+                                            <div class="favth-col-lg-10 favth-col-md-12 favth-col-sm-12 favth-col-xs-12 details-field mr-field">
+                                                <c:if test="${not empty modifiedResidue.psiMod.displayName}">
+                                                    <a href="${modifiedResidue.psiMod.url}" class=""
+                                                       title="Show Details">${modifiedResidue.psiMod.displayName}</a>
+                                                </c:if>
+                                            </div>
+                                            <div class="favth-col-lg-2 favth-col-md-3 favth-col-sm-12 favth-col-xs-12 details-label mr-label">
+                                                PsiMod Definition
+                                            </div>
+                                            <div class="favth-col-lg-10 favth-col-md-12 favth-col-sm-12 favth-col-xs-12 details-field mr-field">
+                                                <c:if test="${not empty modifiedResidue.psiMod.definition}">
+                                                    ${modifiedResidue.psiMod.definition}
+                                                </c:if>
+                                            </div>
                                         </div>
-                                        <div class="favth-col-lg-10 favth-col-md-12 favth-col-sm-12 favth-col-xs-12 details-field mr-field">
-                                            <c:if test="${not empty modifiedResidue.psiMod.displayName}">
-                                                <a href="${modifiedResidue.psiMod.url}" class=""
-                                                   title="Show Details">${modifiedResidue.psiMod.displayName}</a>
-                                            </c:if>
-                                        </div>
-                                        <div class="favth-col-lg-2 favth-col-md-3 favth-col-sm-12 favth-col-xs-12 details-label mr-label">
-                                            PsiMod Definition
-                                        </div>
-                                        <div class="favth-col-lg-10 favth-col-md-12 favth-col-sm-12 favth-col-xs-12 details-field mr-field">
-                                            <c:if test="${not empty modifiedResidue.psiMod.definition}">
-                                                ${modifiedResidue.psiMod.definition}
-                                            </c:if>
-                                        </div>
-                                    </div>
-                                </c:otherwise>
-                            </c:choose>
+                                    </c:otherwise>
+                                </c:choose>
+                            </c:if>
                         </c:if>
 
                         <c:if test="${modifiedResidue.schemaClass == 'FragmentInsertionModification'}">
