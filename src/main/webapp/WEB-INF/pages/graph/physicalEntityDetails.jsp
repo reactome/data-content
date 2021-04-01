@@ -356,7 +356,7 @@
                                         </c:catch>
                                         <c:choose>
                                             <c:when test="${empty hasUrl}">
-                                                <a href="${detailRequestPrefix}${url}" class="" title="Show Details"
+                                                <a href="${url}" class="" title="Show Details"
                                                 >${modifiedResidue.modification.displayName}</a>
                                             </c:when>
                                             <c:otherwise>
