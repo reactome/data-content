@@ -1,6 +1,6 @@
 package org.reactome.server.controller;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.reactome.server.graph.service.GeneralService;
 import org.reactome.server.orcid.domain.OrcidToken;
 import org.reactome.server.orcid.util.OrcidHelper;

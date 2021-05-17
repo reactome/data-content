@@ -1,7 +1,7 @@
 package org.reactome.server.controller;
 
-import org.apache.commons.lang.StringUtils;
-import org.apache.commons.lang.WordUtils;
+import org.apache.commons.text.WordUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.reactome.server.graph.service.DetailsService;
 import org.reactome.server.graph.service.helper.PathwayBrowserNode;
 import org.reactome.server.search.domain.*;
@@ -155,8 +155,8 @@ class IconLibraryController {
 
                 List<Set<PathwayBrowserNode>> ehldPwbTree = new ArrayList<>();
                 if (iconEntry.getIconEhlds() != null && !iconEntry.getIconCategories().contains("arrow")) {
-                    Set<PathwayBrowserNode> nodes = detailsService.getLocationInPathwayBrowserForPathways(iconEntry.getIconEhlds());
-                    ehldPwbTree.add(nodes.stream().sorted().collect(Collectors.toCollection(LinkedHashSet::new)));
+//                    Set<PathwayBrowserNode> nodes = detailsService.getLocationInPathwayBrowserForPathways(iconEntry.getIconEhlds());
+//                    ehldPwbTree.add(nodes.stream().sorted().collect(Collectors.toCollection(LinkedHashSet::new)));
                 }
                 model.addAttribute(PWB_TREE, ehldPwbTree);
 

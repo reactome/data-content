@@ -23,7 +23,7 @@ public class TocPathwayCache {
     @PostConstruct
     public void getTocPathwayResult() {
         if (tocPathways == null) {
-            tocPathways = tocService.getAllTocPathway();
+//            tocPathways = tocService.getAllTocPathway();
         }
     }
 

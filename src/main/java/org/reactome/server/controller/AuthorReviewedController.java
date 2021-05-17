@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,6 +31,7 @@ import static org.reactome.server.util.WebUtils.noDetailsFound;
 @SuppressWarnings("unused")
 @Controller
 @RequestMapping(value = "/detail")
+@PropertySource("classpath:core.properties")
 class AuthorReviewedController {
 
     private static final Logger infoLogger = LoggerFactory.getLogger("infoLogger");

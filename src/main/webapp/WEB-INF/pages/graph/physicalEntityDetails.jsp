@@ -1,6 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib prefix="do" uri="/WEB-INF/tags/sortTag.tld" %>
-<%@ taglib prefix="m" uri="/WEB-INF/tags/modelTags.tld" %>
+<%@ taglib prefix="do" uri="/WEB-INF/tld/sortTag.tld" %>
+<%@ taglib prefix="m" uri="/WEB-INF/tld/modelTags.tld" %>
 
 <c:if test="${hasReferenceEntity}">
     <c:if test="${not empty databaseObject.referenceEntity}">

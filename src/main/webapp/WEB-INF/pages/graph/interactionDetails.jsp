@@ -1,6 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<%@ taglib uri="/WEB-INF/tags/modelTags.tld" prefix="m" %>
+<%@ taglib uri="/WEB-INF/tld/modelTags.tld" prefix="m" %>
 
 <c:choose>
     <c:when test="${not empty widget}">
