@@ -3,6 +3,7 @@ package org.reactome.server.controller;
 import org.reactome.server.graph.domain.model.DatabaseObject;
 import org.reactome.server.graph.domain.model.ReferenceEntity;
 import org.reactome.server.graph.exception.CustomQueryException;
+import org.reactome.server.graph.service.AdvancedLinkageService;
 import org.reactome.server.graph.service.AdvancedDatabaseObjectService;
 import org.reactome.server.result.CustomInteraction;
 import org.slf4j.Logger;
@@ -36,11 +37,12 @@ public class InteractionsController {
     private static final String INTERACTIONS = "interactions";
     private static final String SEARCH = "search";
 
+    private AdvancedLinkageService advancedLinkageService;
     private AdvancedDatabaseObjectService advancedDatabaseObjectService;
 
     @RequestMapping(value = "/detail/interactor/{id:.*}", method = RequestMethod.GET)
     public String interactorDetail(@PathVariable String id, ModelMap model, HttpServletResponse response) {
-       return getInteractions(id, model,response);
+        return getInteractions(id, model, response);
     }
 
     @RequestMapping(value = "/detail/widget/interactor/{id:.*}", method = RequestMethod.GET)
@@ -49,7 +51,7 @@ public class InteractionsController {
         return getInteractions(id, model, response);
     }
 
-    private String getInteractions(String id, ModelMap model, HttpServletResponse response){
+    private String getInteractions(String id, ModelMap model, HttpServletResponse response) {
         Collection<CustomInteraction> customInteractions = getCustomInteractions(id);
         if (customInteractions != null && !customInteractions.isEmpty()) {
             model.addAttribute(INTERACTIONS, customInteractions);
@@ -61,9 +63,9 @@ public class InteractionsController {
                 model.addAttribute(RE_SYNONYMS, getSynonym(re));
                 model.addAttribute(RE_TYPE, getType(re));
             }
-            if(model.get("widget") != null){
+            if (model.get("widget") != null) {
                 return "graph/interactorsWidget";
-            }else{
+            } else {
                 infoLogger.info("Search request for id: {} was found", id);
                 return "graph/interactors";
             }
@@ -131,7 +133,7 @@ public class InteractionsController {
     private List<String> getSynonym(DatabaseObject databaseObject) {
         try {
             // even though we are getting synonyms (alternative names in Uniprot), this field is called SecondaryIdentifier in the domain model.
-            List<String> secIds = (List<String>)databaseObject.getClass().getMethod("getSecondaryIdentifier").invoke(databaseObject);
+            List<String> secIds = (List<String>) databaseObject.getClass().getMethod("getSecondaryIdentifier").invoke(databaseObject);
             return secIds.stream().distinct().collect(Collectors.toList());
         } catch (NullPointerException | NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
             // Nothing here

@@ -1,8 +1,12 @@
 package org.reactome.server.controller;
 
+//import com.fasterxml.jackson.core.JsonProcessingException;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
+import org.apache.commons.lang3.StringUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.apache.commons.lang.StringUtils;
+
+//import org.apache.htrace.shaded.fasterxml.jackson.databind.ObjectMapper;
 import org.reactome.server.exception.ViewException;
 import org.reactome.server.graph.domain.model.*;
 import org.reactome.server.graph.domain.schema.SchemaDataSet;
@@ -203,7 +207,7 @@ class DetailsController {
                     model.addAttribute("isMobile", u.detectMobileQuick());
 
                     infoLogger.info("DatabaseObject for id: {} was found", id);
-
+                    System.out.println("inside get detail");
                     //check if a widget
                     if(model.get("widget") != null){
                         return "graph/detailWidget";

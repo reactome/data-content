@@ -23,7 +23,7 @@ public class DoiPathwayCache {
     @PostConstruct
     public void getDoiPathwayResult() {
         if (doiPathways == null) {
-            doiPathways = doiService.getAllDoiPathway();
+//            doiPathways = doiService.getAllDoiPathway();
         }
     }
 
