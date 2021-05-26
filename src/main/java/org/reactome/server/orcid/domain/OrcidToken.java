@@ -1,8 +1,8 @@
 package org.reactome.server.orcid.domain;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.springframework.lang.NonNull;
 
-import javax.annotation.Nonnull;
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -23,9 +23,10 @@ public class OrcidToken implements Serializable, Comparable<OrcidToken> {
     private String error;
     private String errorDescription;
 
-    public OrcidToken() {}
+    public OrcidToken() {
+    }
 
-    public OrcidToken(String errorDescription){
+    public OrcidToken(String errorDescription) {
         this.errorDescription = errorDescription;
     }
 
@@ -135,7 +136,7 @@ public class OrcidToken implements Serializable, Comparable<OrcidToken> {
     }
 
     @Override
-    public int compareTo(@Nonnull OrcidToken o) {
+    public int compareTo(@NonNull OrcidToken o) {
         return this.orcid.compareTo(o.getOrcid());
     }
 }
