@@ -19,8 +19,7 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.apache.http.ssl.SSLContexts;
-import org.reactome.server.graph.domain.model.Event;
-import org.reactome.server.graph.domain.model.Pathway;
+import org.reactome.server.graph.domain.result.SimpleEventProjection;
 import org.reactome.server.orcid.domain.*;
 import org.reactome.server.orcid.exception.OrcidAuthorisationException;
 import org.reactome.server.orcid.exception.OrcidOAuthException;
@@ -47,7 +46,7 @@ public class OrcidHelper {
     private static final Integer MAX_BULK_POST = 100; // Orcid API won't accept more than 100 per call
 
     @Value("${orcid.api.baseurl}")
-    private  String ORCID_API_URI;
+    private String ORCID_API_URI;
     private static final String ORCID_API_VERSION = "v2.1/";
     private static final String ORCID_ALL_WORKS = "##ORCID##/works"; //GET or POST
 
@@ -60,21 +59,21 @@ public class OrcidHelper {
         AUTHORED, REVIEWED, BOTH
     }
 
-    private Work createWork(Event event, ContributionRole contributionRole) {
+    private Work createWork(SimpleEventProjection event, ContributionRole contributionRole) {
         Work work = new Work();
         work.setWorkTitle(new WorkTitle(event.getDisplayName()));
-        work.setShortDescription((event instanceof Pathway ? "Pathway" : "Reaction"));
+        boolean isPathway = event.getLabels().contains("Pathway");
+        work.setShortDescription((isPathway ? "Pathway" : "Reaction"));
         work.setType("DATA_SET");
-        if(event.getCreated() != null) { // create date can be empty!
-            work.setPublicationDate(new PublicationDate(event.getCreated().getDateTime()));
+        if (event.getDateTime() != null) { // create date can be empty!
+            work.setPublicationDate(new PublicationDate(event.getDateTime()));
         }
         work.setUrl(DETAILS_URL.replace("##ID##", event.getStId()));
 
         work.addExternalId(new ExternalId(ExternalIdType.OTHERID.getName(), event.getStId(), PWB_URL.replace("##ID##", event.getStId()), "SELF"));
-        if (event instanceof Pathway) {
-            Pathway p = (Pathway) event;
-            if (StringUtils.isNotEmpty(p.getDoi()) || StringUtils.isNotBlank(p.getDoi())) {
-                work.addExternalId(new ExternalId(ExternalIdType.DOI.getName(), p.getDoi(), DOI_URL.replace("##ID##", p.getDoi()), "SELF"));
+        if (isPathway) {
+            if (event.getDoi() != null && (StringUtils.isNotEmpty(event.getDoi()) || StringUtils.isNotBlank(event.getDoi()))) {
+                work.addExternalId(new ExternalId(ExternalIdType.DOI.getName(), event.getDoi(), DOI_URL.replace("##ID##", event.getDoi()), "SELF"));
             }
         }
 
@@ -116,11 +115,11 @@ public class OrcidHelper {
         }
     }
 
-    public int bulkPostWork(OrcidToken tokenSession, Collection<? extends Event> events, ContributionRole contributionRole, WorkBulkResponse workBulkResponse) throws IOException, WorkClaimException, OrcidOAuthException, NoSuchAlgorithmException, KeyStoreException, KeyManagementException {
+    public int bulkPostWork(OrcidToken tokenSession, Collection<SimpleEventProjection> events, ContributionRole contributionRole, WorkBulkResponse workBulkResponse) throws IOException, WorkClaimException, OrcidOAuthException, NoSuchAlgorithmException, KeyStoreException, KeyManagementException {
         int totalExecuted = 0;
         WorkBulk workBulk = new WorkBulk();
         List<Work> bulkWork = new ArrayList<>(MAX_BULK_POST);
-        for (Event event : events) {
+        for (SimpleEventProjection event : events) {
             Work work = createWork(event, contributionRole);
             bulkWork.add(work);
 
@@ -180,14 +179,15 @@ public class OrcidHelper {
 
     public <T> List<T> marshaller(String json) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
-        return mapper.readValue(json, new TypeReference<List<T>>(){});
+        return mapper.readValue(json, new TypeReference<List<T>>() {
+        });
     }
 
     /**
      * Hostname is used in the redirect_uri on the authorisation flow.
      * Our servers must be registered in Orcid API.
      */
-    public String getHostname(HttpServletRequest request){
+    public String getHostname(HttpServletRequest request) {
         String url = request.getRequestURL().toString();
         String protocol = "https://";
         if (!url.contains("reactome.org")) protocol = "http://";
@@ -196,14 +196,14 @@ public class OrcidHelper {
 
     public PoolingHttpClientConnectionManager getSSLConnectionManager() throws KeyStoreException, NoSuchAlgorithmException, KeyManagementException {
 //        try {
-            SSLContext sslContext = SSLContexts.custom().loadTrustMaterial((chain, authType) -> true).build();
-            SSLConnectionSocketFactory sslConnectionSocketFactory = new SSLConnectionSocketFactory(sslContext, new String[]
-                    {"SSLv2Hello", "SSLv3", "TLSv1", "TLSv1.1", "TLSv1.2"}, null, NoopHostnameVerifier.INSTANCE);
+        SSLContext sslContext = SSLContexts.custom().loadTrustMaterial((chain, authType) -> true).build();
+        SSLConnectionSocketFactory sslConnectionSocketFactory = new SSLConnectionSocketFactory(sslContext, new String[]
+                {"SSLv2Hello", "SSLv3", "TLSv1", "TLSv1.1", "TLSv1.2"}, null, NoopHostnameVerifier.INSTANCE);
 
-            return new PoolingHttpClientConnectionManager(
-                    RegistryBuilder.<ConnectionSocketFactory>create()
-                            .register("http", PlainConnectionSocketFactory.getSocketFactory())
-                            .register("https", sslConnectionSocketFactory).build());
+        return new PoolingHttpClientConnectionManager(
+                RegistryBuilder.<ConnectionSocketFactory>create()
+                        .register("http", PlainConnectionSocketFactory.getSocketFactory())
+                        .register("https", sslConnectionSocketFactory).build());
 //        } catch (KeyStoreException | NoSuchAlgorithmException | KeyManagementException e) {
 //            return null;
 //

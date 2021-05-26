@@ -137,7 +137,7 @@
                             <tr>
                                 <td data-label="Date">
                                     <fmt:parseDate pattern="yyyy-MM-dd H:m:s.S"
-                                                   value="${item.authored[0].dateTime}" var="date"/>
+                                                   value="${item.dateTime}" var="date"/>
                                     <span><fmt:formatDate pattern="yyyy-MM-dd" value="${date}"/></span>
                                 </td>
                                 <td data-label="Identifier">
@@ -215,7 +215,7 @@
                             <tr>
                                 <td data-label="Date">
                                     <fmt:parseDate pattern="yyyy-MM-dd H:m:s.S"
-                                                   value="${authoredReaction.authored[0].dateTime}"
+                                                   value="${authoredReaction.dateTime}"
                                                    var="date"/>
                                     <span><fmt:formatDate pattern="yyyy-MM-dd" value="${date}"/></span>
                                 </td>
@@ -294,7 +294,7 @@
                             <tr>
                                 <td data-label="Date">
                                     <fmt:parseDate pattern="yyyy-MM-dd H:m:s.S"
-                                                   value="${reviewedPathway.reviewed[0].dateTime}"
+                                                   value="${reviewedPathway.dateTime}"
                                                    var="date"/>
                                     <span><fmt:formatDate pattern="yyyy-MM-dd" value="${date}"/></span>
                                 </td>
@@ -374,7 +374,7 @@
                             <tr>
                                 <td data-label="Date">
                                     <fmt:parseDate pattern="yyyy-MM-dd H:m:s.S"
-                                                   value="${reviewedReaction.reviewed[0].dateTime}"
+                                                   value="${reviewedReaction.dateTime}"
                                                    var="date"/>
                                     <span><fmt:formatDate pattern="yyyy-MM-dd" value="${date}"/></span>
                                 </td>

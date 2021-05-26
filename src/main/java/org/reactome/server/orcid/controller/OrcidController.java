@@ -1,8 +1,7 @@
 package org.reactome.server.orcid.controller;
 
-import org.reactome.server.graph.domain.model.Pathway;
 import org.reactome.server.graph.domain.model.Person;
-import org.reactome.server.graph.domain.model.ReactionLikeEvent;
+import org.reactome.server.graph.domain.result.SimpleEventProjection;
 import org.reactome.server.graph.service.PersonService;
 import org.reactome.server.orcid.dao.OrcidReportDAO;
 import org.reactome.server.orcid.domain.ClaimingSummary;
@@ -46,14 +45,14 @@ public class OrcidController {
         validatePerson(tokenSession, personId);
 
         WorkBulkResponse workBulkResponse = new WorkBulkResponse();
-        Collection<Pathway> authoredPathways = personService.getAuthoredPathways(personId);
-        Collection<ReactionLikeEvent> authoredReactions = personService.getAuthoredReactions(personId);
-        Collection<Pathway> reviewedPathways = personService.getReviewedPathways(personId);
-        Collection<ReactionLikeEvent> reviewedReactions = personService.getReviewedReactions(personId);
+        Collection<SimpleEventProjection> authoredPathways = personService.getAuthoredPathways(personId);
+        Collection<SimpleEventProjection> authoredReactions = personService.getAuthoredReactions(personId);
+        Collection<SimpleEventProjection> reviewedPathways = personService.getReviewedPathways(personId);
+        Collection<SimpleEventProjection> reviewedReactions = personService.getReviewedReactions(personId);
 
         // Some users are author and reviewer in certain pathways or reaction. We claim it once.
-        List<Pathway> authoredAndReviewedPathways = authoredPathways.stream().filter(reviewedPathways::contains).collect(Collectors.toList());
-        List<ReactionLikeEvent> authoredAndReviewedReactions = authoredReactions.stream().filter(reviewedReactions::contains).collect(Collectors.toList());
+        List<SimpleEventProjection> authoredAndReviewedPathways = authoredPathways.stream().filter(reviewedPathways::contains).collect(Collectors.toList());
+        List<SimpleEventProjection> authoredAndReviewedReactions = authoredReactions.stream().filter(reviewedReactions::contains).collect(Collectors.toList());
         if (!authoredAndReviewedPathways.isEmpty()) {
             authoredPathways.removeAll(authoredAndReviewedPathways);
             reviewedPathways.removeAll(authoredAndReviewedPathways);
@@ -83,7 +82,7 @@ public class OrcidController {
         validatePerson(tokenSession, personId);
 
         WorkBulkResponse workBulkResponse = new WorkBulkResponse();
-        Collection<Pathway> authoredPathways = personService.getAuthoredPathways(personId);
+        Collection<SimpleEventProjection> authoredPathways = personService.getAuthoredPathways(personId);
 
         int totalExecuted = orcidHelper.bulkPostWork(tokenSession, authoredPathways, ContributionRole.AUTHORED, workBulkResponse);
         orcidReportDAO.asyncPersistResponse(tokenSession, workBulkResponse);
@@ -96,7 +95,7 @@ public class OrcidController {
         validatePerson(tokenSession, personId);
 
         WorkBulkResponse workBulkResponse = new WorkBulkResponse();
-        Collection<Pathway> reviewedPathways = personService.getReviewedPathways(personId);
+        Collection<SimpleEventProjection> reviewedPathways = personService.getReviewedPathways(personId);
 
         int totalExecuted = orcidHelper.bulkPostWork(tokenSession, reviewedPathways, ContributionRole.REVIEWED, workBulkResponse);
         orcidReportDAO.asyncPersistResponse(tokenSession, workBulkResponse);
@@ -109,7 +108,7 @@ public class OrcidController {
         validatePerson(tokenSession, personId);
 
         WorkBulkResponse workBulkResponse = new WorkBulkResponse();
-        Collection<ReactionLikeEvent> authoredReactions = personService.getAuthoredReactions(personId);
+        Collection<SimpleEventProjection> authoredReactions = personService.getAuthoredReactions(personId);
 
         int totalExecuted = orcidHelper.bulkPostWork(tokenSession, authoredReactions, ContributionRole.AUTHORED, workBulkResponse);
         orcidReportDAO.asyncPersistResponse(tokenSession, workBulkResponse);
@@ -122,7 +121,7 @@ public class OrcidController {
         validatePerson(tokenSession, personId);
 
         WorkBulkResponse workBulkResponse = new WorkBulkResponse();
-        Collection<ReactionLikeEvent> reviewedReactions = personService.getReviewedReactions(personId);
+        Collection<SimpleEventProjection> reviewedReactions = personService.getReviewedReactions(personId);
         int totalExecuted = orcidHelper.bulkPostWork(tokenSession, reviewedReactions, ContributionRole.REVIEWED, workBulkResponse);
         orcidReportDAO.asyncPersistResponse(tokenSession, workBulkResponse);
         return new ClaimingSummary(reviewedReactions.size(), totalExecuted, workBulkResponse);
