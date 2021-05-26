@@ -2,8 +2,9 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
-<c:set value="${pageContext.session.getAttribute('orcidToken')}" var="tokenSession" />
-<c:set value="${showOrcidBtn && not empty tokenSession && (person.orcidId == tokenSession.orcid)}" var="isAuthenticated" />
+<c:set value="${pageContext.session.getAttribute('orcidToken')}" var="tokenSession"/>
+<c:set value="${showOrcidBtn && not empty tokenSession && (person.orcidId == tokenSession.orcid)}"
+       var="isAuthenticated"/>
 <c:choose>
     <c:when test="${not empty widget}">
         <c:set var="detailRequestPrefix" value="${pageContext.request.contextPath}/detail/widget/"/>
@@ -116,16 +117,8 @@
                     <c:forEach var="item" items="${list}">
                         <tr>
                             <td data-label="Date">
-                                <c:choose>
-                                    <c:when test="${attribute eq 'authored'}">
-                                        <fmt:parseDate pattern="yyyy-MM-dd H:m:s.S"
-                                                       value="${item.authored[0].dateTime}" var="date"/>
-                                    </c:when>
-                                    <c:otherwise>
-                                        <fmt:parseDate pattern="yyyy-MM-dd H:m:s.S"
-                                                       value="${item.reviewed[0].dateTime}" var="date"/>
-                                    </c:otherwise>
-                                </c:choose>
+                                <fmt:parseDate pattern="yyyy-MM-dd H:m:s.S"
+                                               value="${item.dateTime}" var="date"/>
                                 <span><fmt:formatDate pattern="yyyy-MM-dd" value="${date}"/></span>
                             </td>
                             <td data-label="Identifier">

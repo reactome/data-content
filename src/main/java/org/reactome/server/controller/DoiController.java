@@ -1,9 +1,7 @@
 package org.reactome.server.controller;
 
 
-import org.reactome.server.graph.domain.result.PathwayResult;
-import org.reactome.server.graph.service.DoiService;
-
+import org.reactome.server.graph.domain.result.DoiPathwayDTO;
 import org.reactome.server.util.DoiPathwayCache;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -33,7 +31,7 @@ class DoiController {
 
     @RequestMapping(value = "/doi", method = RequestMethod.GET)
     public String doiTable(ModelMap model) {
-        Collection<PathwayResult> doiPathways = doiPathwayCache.getDoiPathwayCache();
+        Collection<DoiPathwayDTO> doiPathways = doiPathwayCache.getDoiPathwayCache();
         model.addAttribute(TITLE, "DOI Table");
         model.addAttribute(DOIPATHWAYS, doiPathways);
         return "graph/doi";

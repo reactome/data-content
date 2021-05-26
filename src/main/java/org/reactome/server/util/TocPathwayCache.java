@@ -1,6 +1,6 @@
 package org.reactome.server.util;
 
-import org.reactome.server.graph.domain.result.PathwayResult;
+import org.reactome.server.graph.domain.result.TocPathwayDTO;
 import org.reactome.server.graph.service.TocService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -13,7 +13,7 @@ public class TocPathwayCache {
 
     private TocService tocService;
 
-    private Collection<PathwayResult> tocPathways;
+    private Collection<TocPathwayDTO> tocPathways;
 
     @Autowired
     public void setTocService(TocService tocService) {
@@ -23,11 +23,11 @@ public class TocPathwayCache {
     @PostConstruct
     public void getTocPathwayResult() {
         if (tocPathways == null) {
-//            tocPathways = tocService.getAllTocPathway();
+            tocPathways = tocService.getAllTocPathway();
         }
     }
 
-    public Collection<PathwayResult> getTocPathwayCache() {
+    public Collection<TocPathwayDTO> getTocPathwayCache() {
         return tocPathways;
     }
 }
