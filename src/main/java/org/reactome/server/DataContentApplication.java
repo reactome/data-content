@@ -7,7 +7,7 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 
 @SpringBootApplication(scanBasePackages = {"org.reactome.server"})
-@EntityScan("org.reactome.server.graph.model")
+@EntityScan("org.reactome.server.graph.domain.model")
 public class DataContentApplication extends SpringBootServletInitializer {
 
     @Override
