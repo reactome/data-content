@@ -52,7 +52,7 @@
         <reactome.search.core>1.4.4-SNAPSHOT</reactome.search.core>
         <javax.servlet.version>4.0.1</javax.servlet.version>
         <!--        <jackson.version>2.12.0</jackson.version>-->
-        <maven.compiler.version>3.0</maven.compiler.version>
+        <maven.compiler.version>3.8.1</maven.compiler.version>
         <maven.war.version>2.6</maven.war.version>
         <jdk.version>11</jdk.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -242,7 +242,7 @@
             </plugin>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.0</version>
+                <version>${maven.compiler.version}</version>
                 <configuration>
                     <source>${jdk.version}</source>
                     <target>${jdk.version}</target>
