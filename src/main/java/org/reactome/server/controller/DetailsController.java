@@ -203,7 +203,6 @@ class DetailsController {
                     model.addAttribute("isMobile", u.detectMobileQuick());
 
                     infoLogger.info("DatabaseObject for id: {} was found", id);
-                    System.out.println("inside get detail");
                     //check if a widget
                     if (model.get("widget") != null) {
                         return "graph/detailWidget";
