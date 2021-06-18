@@ -35,7 +35,7 @@ import java.util.List;
 public class OrcidReportDAO {
 
     private static final Logger infoLogger = LoggerFactory.getLogger("infoLogger");
-    private static final String REPORT_ENDPOINT = "http://localhost:8080/report/orcid/";
+    private static final String REPORT_ENDPOINT = "/report/orcid/";
 
     // URLs
     private static final String REPORT_ORCIDCLAIMREGISTER = "claim/register";
@@ -45,6 +45,8 @@ public class OrcidReportDAO {
 
     private static List<OrcidClaimRecord> pendingList = new ArrayList<>();
 
+    @Value("${report.url:http://localhost:8080}")
+    private String reportUrl;
     @Value("${report.user:default}")
     private String reportUser;
     @Value("${report.password:default}")
@@ -130,7 +132,7 @@ public class OrcidReportDAO {
         int ret = -1;
         try {
             CloseableHttpClient client = getHttpClient();
-            HttpPost httpPost = new HttpPost(REPORT_ENDPOINT + pathMapping);
+            HttpPost httpPost = new HttpPost(reportUrl + REPORT_ENDPOINT + pathMapping);
             httpPost.setHeader("Content-Type", "application/json");
             httpPost.setHeader("Accept", "application/json");
             httpPost.setEntity(new StringEntity(orcidHelper.unmarshaller(entity)));
