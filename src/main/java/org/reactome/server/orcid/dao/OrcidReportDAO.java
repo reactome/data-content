@@ -23,6 +23,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -107,7 +108,7 @@ public class OrcidReportDAO {
             CloseableHttpResponse response = client.execute(httpGet);
             int statusCode = response.getStatusLine().getStatusCode();
             if (statusCode != 200) {
-                String json = IOUtils.toString(response.getEntity().getContent());
+                String json = IOUtils.toString(response.getEntity().getContent(), StandardCharsets.UTF_8);
                 return orcidHelper.marshaller(json);
             }
         } catch (IOException e) {

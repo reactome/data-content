@@ -30,6 +30,7 @@ import org.springframework.stereotype.Component;
 import javax.net.ssl.SSLContext;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.security.KeyManagementException;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
@@ -100,16 +101,16 @@ public class OrcidHelper {
         HttpResponse response = httpclient.execute(httpPost); // the client executes the request and gets a response
         ObjectMapper mm = new ObjectMapper();
         if (response.getStatusLine().getStatusCode() == 200) {
-            String output = IOUtils.toString(response.getEntity().getContent());
+            String output = IOUtils.toString(response.getEntity().getContent(), StandardCharsets.UTF_8);
             WorkBulkResponse wbr = mm.readValue(output, WorkBulkResponse.class);
             workBulkResponse.getBulk().addAll(wbr.getBulk());
             workBulkResponse.getErrors().addAll(wbr.getErrors());
         } else if (response.getStatusLine().getStatusCode() == 401) {
-            String output = IOUtils.toString(response.getEntity().getContent());
+            String output = IOUtils.toString(response.getEntity().getContent(), StandardCharsets.UTF_8);
             OrcidToken orcidToken = mm.readValue(output, OrcidToken.class);
             throw new OrcidOAuthException("HTTP Not Authorised {401}", orcidToken);
         } else {
-            String output = IOUtils.toString(response.getEntity().getContent());
+            String output = IOUtils.toString(response.getEntity().getContent(), StandardCharsets.UTF_8);
             ResponseError responseError = mm.readValue(output, ResponseError.class);
             throw new WorkClaimException("Unexpected error from the API in orcid.org", responseError);
         }
@@ -153,11 +154,11 @@ public class OrcidHelper {
         HttpResponse response = httpclient.execute(httpGet); // the client executes the request and gets a response
         if (response.getStatusLine().getStatusCode() == 200) {
             ObjectMapper mm = new ObjectMapper();
-            String output = IOUtils.toString(response.getEntity().getContent());
+            String output = IOUtils.toString(response.getEntity().getContent(), StandardCharsets.UTF_8);
             ret = mm.readValue(output, Works.class);
         } else {
             ObjectMapper mapper = new ObjectMapper();
-            String output = IOUtils.toString(response.getEntity().getContent());
+            String output = IOUtils.toString(response.getEntity().getContent(), StandardCharsets.UTF_8);
             ResponseError responseError = mapper.readValue(output, ResponseError.class);
             throw new WorkClaimException("Unexpected error from the API in orcid.org", responseError);
         }
