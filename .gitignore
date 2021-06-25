@@ -11,4 +11,4 @@ footer.jsp
 *.war
 *.ear
 *.class
-
+*.log
