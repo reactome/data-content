@@ -1,74 +1,113 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
+
     <groupId>org.reactome.server</groupId>
     <artifactId>data-content</artifactId>
-
-    <packaging>war</packaging>
     <version>2.0.2</version>
-    <name>data-content</name>
+    <packaging>war</packaging>
 
+    <name>${project.groupId}:${project.artifactId}</name>
     <description>
         The Reactome Data Content provides access to the search features plus the schema classes definition and instance browsers among others
     </description>
-    <url>https://github.com/reactome-pwp/data-content</url>
+    <url>https://github.com/reactome/data-content</url>
+
     <organization>
-        <name>The European Bioinformatics Institute</name>
-        <url>http://www.ebi.ac.uk/</url>
+        <name>Reactome</name>
+        <url>https://reactome.org/</url>
     </organization>
+
+    <licenses>
+        <license>
+            <name></name>
+            <url></url>
+        </license>
+    </licenses>
 
     <developers>
         <developer>
             <id>gviteri</id>
             <name>Guilherme Viteri</name>
             <email>gviteri@ebi.ac.uk</email>
-            <organization>http://www.ebi.ac.uk/</organization>
+            <organization>The European Bioinformatics Institute</organization>
+            <organizationUrl>https://www.ebi.ac.uk/</organizationUrl>
         </developer>
+
         <developer>
             <id>fabregat</id>
             <name>Antonio Fabregat</name>
-            <email>fabregat@ebi.ac.uk</email>
-            <organization>http://www.ebi.ac.uk/</organization>
+            <roles>
+                <role>alumni</role>
+            </roles>
         </developer>
+
         <developer>
             <id>fkorn</id>
             <name>Florian Korninger</name>
-            <email>fkorn@ebi.ac.uk</email>
-            <organization>http://www.ebi.ac.uk/</organization>
+            <roles>
+                <role>alumni</role>
+            </roles>
         </developer>
     </developers>
 
+    <scm>
+        <connection>scm:git:git://github.com/reactome/data-content.git</connection>
+        <developerConnection>scm:git:ssh://github.com:reactome/data-content.git</developerConnection>
+        <url>https://github.com/reactome/data-content/tree/master</url>
+    </scm>
+
     <properties>
-        <deploymentPath>/</deploymentPath>
-        <graph.core>1.1.24</graph.core>
-        <reactome.search.core>1.4.3</reactome.search.core>
-        <spring.version>5.1.6.RELEASE</spring.version>
-        <javax.servlet.version>4.0.1</javax.servlet.version>
+        <!-- dependencies -->
         <jackson.version>2.9.8</jackson.version>
-        <maven.compiler.version>3.0</maven.compiler.version>
-        <maven.war.version>2.6</maven.war.version>
+        <javax.mail.api.version>1.5.6</javax.mail.api.version>
+        <javax.servlet.version>4.0.1</javax.servlet.version>
+        <jsoup.version>1.10.2</jsoup.version>
+        <jsp.api.version>2.1</jsp.api.version>
+        <jstl.version>1.2</jstl.version>
+        <logback.classic.version>1.1.10</logback.classic.version>
+        <reactome.graph.core.version>1.1.24</reactome.graph.core.version>
+        <reactome.search.core.version>1.4.3</reactome.search.core.version>
+        <reactome.utils.version>1.0.2</reactome.utils.version>
+        <spring.mobile.device.version>1.1.5.RELEASE</spring.mobile.device.version>
+        <spring.version>5.1.6.RELEASE</spring.version>
+
+        <!-- build -->
+        <deploymentPath>/</deploymentPath>
         <jdk.version>1.8</jdk.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <tomcat7.port>8484</tomcat7.port>
 
-        <maven.site.version>3.4</maven.site.version>
+        <!-- maven build and plugins -->
         <jackrabbit.version>2.10</jackrabbit.version>
-        <maven.javadoc.version>2.10.3</maven.javadoc.version>
+        <maven.compiler.version>3.0</maven.compiler.version>
+        <maven.gpg.version>1.5</maven.gpg.version>
         <maven.info.report.version>2.8.1</maven.info.report.version>
-        <pmd.version>3.6</pmd.version>
+        <maven.javadoc.version>2.10.3</maven.javadoc.version>
+        <maven.pmd.version>3.6</maven.pmd.version>
+        <maven.release.version>2.5.3</maven.release.version>
+        <maven.resources.version>3.0.1</maven.resources.version>
+        <maven.site.version>3.4</maven.site.version>
+        <maven.source.version>2.4</maven.source.version>
+        <maven.tomcat7.version>2.2</maven.tomcat7.version>
+        <maven.war.version>2.6</maven.war.version>
+        <nexus-staging-maven-plugin>1.6.7</nexus-staging-maven-plugin>
     </properties>
 
     <dependencies>
-        <!--Reactome data-->
+        <!-- Reactome data -->
         <dependency>
             <groupId>org.reactome.server.graph</groupId>
             <artifactId>graph-core</artifactId>
-            <version>${graph.core}</version>
+            <version>${reactome.graph.core.version}</version>
         </dependency>
-        <!--Reactome search-->
+
+        <!-- Reactome search -->
         <dependency>
             <groupId>org.reactome.server.search</groupId>
             <artifactId>search-core</artifactId>
-            <version>${reactome.search.core}</version>
+            <version>${reactome.search.core.version}</version>
             <exclusions>
                 <exclusion>
                     <groupId>org.springframework</groupId>
@@ -76,75 +115,80 @@
                 </exclusion>
             </exclusions>
         </dependency>
-        <!--Spring-->
+
+        <!-- Spring -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-webmvc</artifactId>
             <version>${spring.version}</version>
         </dependency>
+
         <!-- Enable Mailing Features -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context-support</artifactId>
             <version>${spring.version}</version>
         </dependency>
-        <!--Javax servlet api-->
+
+        <!-- Javax servlet api -->
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
             <version>${javax.servlet.version}</version>
             <scope>provided</scope>
         </dependency>
-        <!--Jsp Servlets -->
+
+        <!-- Jsp Servlets -->
         <dependency>
             <groupId>javax.servlet.jsp</groupId>
             <artifactId>jsp-api</artifactId>
-            <version>2.1</version>
+            <version>${jsp.api.version}</version>
             <scope>provided</scope>
         </dependency>
+
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>jstl</artifactId>
-            <version>1.2</version>
+            <version>${jstl.version}</version>
         </dependency>
 
-        <!--Jackson-->
+        <!-- Jackson -->
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
             <version>${jackson.version}</version>
         </dependency>
+
         <!-- Java Mail -->
         <dependency>
             <groupId>javax.mail</groupId>
             <artifactId>javax.mail-api</artifactId>
-            <version>1.5.6</version>
+            <version>${javax.mail.api.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.jsoup</groupId>
             <artifactId>jsoup</artifactId>
-            <version>1.10.2</version>
+            <version>${jsoup.version}</version>
         </dependency>
 
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
-            <version>1.1.10</version>
+            <version>${logback.classic.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.reactome.server.utils</groupId>
             <artifactId>reactome-utils</artifactId>
-            <version>1.0.2</version>
+            <version>${reactome.utils.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.springframework.mobile</groupId>
             <artifactId>spring-mobile-device</artifactId>
-            <version>1.1.5.RELEASE</version>
+            <version>${spring.mobile.device.version}</version>
         </dependency>
-
     </dependencies>
 
     <repositories>
@@ -160,6 +204,7 @@
                 <enabled>false</enabled>
             </snapshots>
         </repository>
+
         <!-- EBI SNAPSHOT repo -->
         <repository>
             <id>nexus-ebi-snapshot-repo</id>
@@ -174,39 +219,61 @@
         </repository>
     </repositories>
 
+    <!-- Configures the distribution to nexus repository -->
+    <distributionManagement>
+        <!-- Sonatype Release repo -->
+        <repository>
+            <id>ossrh</id>
+            <name>Sonatype Release Repository</name>
+            <url>https://s01.oss.sonatype.org/service/local/staging/deploy/maven2</url>
+        </repository>
+
+        <!-- Sonatype SNAPSHOT repo -->
+        <snapshotRepository>
+            <id>ossrh</id>
+            <name>Sonatype Snapshot Repository</name>
+            <url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+    </distributionManagement>
+
     <build>
-        <finalName>content</finalName>
+        <finalName>${project.artifactId}</finalName>
+
         <resources>
             <resource>
                 <directory>src/main/resources</directory>
                 <filtering>true</filtering>
             </resource>
         </resources>
+
         <plugins>
-            <!--Plugin needed to force maven resources to latest version. Default version contains a bug-->
-            <!--preventing maven to filter resources containing a @ symbol-->
+            <!-- Plugin needed to force maven resources to latest version. Default version contains a bug -->
+            <!-- preventing maven to filter resources containing a @ symbol -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-resources-plugin</artifactId>
-                <version>3.0.1</version>
+                <version>${maven.resources.version}</version>
             </plugin>
+
             <plugin>
                 <groupId>org.apache.tomcat.maven</groupId>
                 <artifactId>tomcat7-maven-plugin</artifactId>
-                <version>2.2</version>
+                <version>${maven.tomcat7.version}</version>
                 <configuration>
                     <path>${deploymentPath}</path>
-                    <port>8484</port>
+                    <port>${tomcat7.port}</port>
                 </configuration>
             </plugin>
+
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.0</version>
+                <version>${maven.compiler.version}</version>
                 <configuration>
                     <source>${jdk.version}</source>
                     <target>${jdk.version}</target>
                 </configuration>
             </plugin>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-site-plugin</artifactId>
@@ -218,6 +285,78 @@
                         <version>${jackrabbit.version}</version>
                     </dependency>
                 </dependencies>
+            </plugin>
+
+            <!-- Nexus staging plugin for Sonatype deployment -->
+            <plugin>
+                <groupId>org.sonatype.plugins</groupId>
+                <artifactId>nexus-staging-maven-plugin</artifactId>
+                <version>${nexus-staging-maven-plugin}</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <serverId>ossrh</serverId>
+                    <nexusUrl>https://s01.oss.sonatype.org/</nexusUrl>
+                    <autoReleaseAfterClose>true</autoReleaseAfterClose>
+                </configuration>
+            </plugin>
+
+            <!-- Generate source jar file -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>${maven.source.version}</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- Generate JavaDoc jar file -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>${maven.javadoc.version}</version>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- Signs deployed jar, source jar, and JavaDoc jar with GPG -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-gpg-plugin</artifactId>
+                <version>${maven.gpg.version}</version>
+                <executions>
+                    <execution>
+                        <id>sign-artifacts</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>sign</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- Allows "release" mvn goal to deploy a SNAPSHOT or version release to Sonatype -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-release-plugin</artifactId>
+                <version>${maven.release.version}</version>
+                <configuration>
+                    <autoVersionSubmodules>true</autoVersionSubmodules>
+                    <useReleaseProfile>false</useReleaseProfile>
+                    <releaseProfiles>release</releaseProfiles>
+                    <goals>deploy</goals>
+                </configuration>
             </plugin>
         </plugins>
     </build>
@@ -240,15 +379,17 @@
                     </reportSet>
                 </reportSets>
             </plugin>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-project-info-reports-plugin</artifactId>
                 <version>${maven.info.report.version}</version>
             </plugin>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-pmd-plugin</artifactId>
-                <version>${pmd.version}</version>
+                <version>${maven.pmd.version}</version>
                 <configuration>
                     <skipEmptyReport>false</skipEmptyReport>
                     <linkXRef>false</linkXRef>
@@ -258,5 +399,4 @@
             </plugin>
         </plugins>
     </reporting>
-
 </project>
