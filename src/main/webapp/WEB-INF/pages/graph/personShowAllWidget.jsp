@@ -21,7 +21,7 @@
                 </c:otherwise>
             </c:choose>
             <%-- Person Page--%>
-            <c:import url="perShowAllCommon.jsp"/>
+            <c:import url="personShowAllCommon.jsp"/>
         </c:if>
 
         <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
