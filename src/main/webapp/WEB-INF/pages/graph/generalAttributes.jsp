@@ -83,7 +83,8 @@
             <legend>Authored</legend>
             <div class="wrap overflow">
                 <c:forEach var="authored" items="${databaseObject.authored}">
-                    <fmt:parseDate pattern="yyyy-MM-dd H:m:s.S" value="${authored.dateTime}" var="date"/>
+                    <c:out value="${authored.dateTime}"/>
+                    <fmt:parseDate pattern="yyyy-MM-dd" value="${authored.dateTime}" var="date"/>
                     <c:forEach var="person" items="${authored.author}">
                         <div class="favth-col-lg-3 favth-col-md-3 favth-col-sm-6 favth-col-xs-12 text-overflow">
                             <c:choose>
@@ -110,7 +111,7 @@
             <legend>Reviewed</legend>
             <div class="wrap overflow">
                 <c:forEach var="reviewed" items="${databaseObject.reviewed}">
-                    <fmt:parseDate pattern="yyyy-MM-dd H:m:s.S" value="${reviewed.dateTime}" var="date"/>
+                    <fmt:parseDate pattern="yyyy-MM-dd H:m:s" value="${reviewed.dateTime}" var="date"/>
                     <c:forEach var="person" items="${reviewed.author}">
                         <div class="favth-col-lg-3 favth-col-md-3 favth-col-sm-6 favth-col-xs-12 text-overflow">
                             <c:choose>
@@ -135,7 +136,7 @@
     <c:if test="${not empty databaseObject.created}">
         <fieldset class="fieldset-details">
             <legend>Created</legend>
-            <fmt:parseDate pattern="yyyy-MM-dd H:m:s.S" value="${databaseObject.created.dateTime}" var="date"/>
+            <fmt:parseDate pattern="yyyy-MM-dd H:m:s" value="${databaseObject.created.dateTime}" var="date"/>
             <div class="wrap overflow">
                 <c:forEach var="person" items="${databaseObject.created.author}">
                     <div class="favth-col-xs-12 text-overflow">

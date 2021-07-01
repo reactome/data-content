@@ -117,7 +117,7 @@
                     <c:forEach var="item" items="${list}">
                         <tr>
                             <td data-label="Date">
-                                <fmt:parseDate pattern="yyyy-MM-dd H:m:s.S"
+                                <fmt:parseDate pattern="yyyy-MM-dd H:m:s"
                                                value="${item.dateTime}" var="date"/>
                                 <span><fmt:formatDate pattern="yyyy-MM-dd" value="${date}"/></span>
                             </td>

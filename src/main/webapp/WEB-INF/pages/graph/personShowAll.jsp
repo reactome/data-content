@@ -15,7 +15,7 @@
                title="Return to person details"> <<< Go back</a>
         </c:otherwise>
     </c:choose>
-    <c:import url="perShowAllCommon.jsp"/>
+    <c:import url="personShowAllCommon.jsp"/>
 
 </c:if>
 
