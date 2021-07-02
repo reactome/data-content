@@ -3,8 +3,8 @@ package org.reactome.server.controller;
 import org.reactome.server.graph.domain.model.DatabaseObject;
 import org.reactome.server.graph.domain.model.ReferenceEntity;
 import org.reactome.server.graph.exception.CustomQueryException;
-import org.reactome.server.graph.service.AdvancedLinkageService;
 import org.reactome.server.graph.service.AdvancedDatabaseObjectService;
+import org.reactome.server.graph.service.AdvancedLinkageService;
 import org.reactome.server.result.CustomInteraction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,9 +22,6 @@ import java.util.stream.Collectors;
 
 import static org.reactome.server.util.WebUtils.noDetailsFound;
 
-/**
- * @author Antonio Fabregat (fabregat@ebi.ac.uk)
- */
 @Controller
 public class InteractionsController {
     private static final Logger infoLogger = LoggerFactory.getLogger("infoLogger");
@@ -87,8 +84,7 @@ public class InteractionsController {
                 "MATCH (s:ReferenceEntity)<-[:interactor]-(it:Interaction), " +
                 "      (it)-[ir:interactor]->(in:ReferenceEntity)<-[re:referenceEntity]-(pe:PhysicalEntity), " +
                 "      (:ReactionLikeEvent)-[:input|output|catalystActivity|physicalEntity|entityFunctionalStatus|diseaseEntity|regulatedBy|regulator*]->(pe) " +
-                "WHERE s.variantIdentifier = {accession} OR (s.variantIdentifier IS NULL AND s.identifier = {accession}) " +
-//                "      AND NOT ()-[:referenceEntity]->(s) " +
+                "WHERE s.variantIdentifier = $accession OR (s.variantIdentifier IS NULL AND s.identifier = $accession) " +
                 "RETURN DISTINCT it.score AS score, in.identifier AS accession, in.url AS accessionURL, " +
                 "                COLLECT(DISTINCT{ " +
                 "                         dbId: pe.dbId, " +
@@ -116,8 +112,8 @@ public class InteractionsController {
     private ReferenceEntity getReferenceEntity(String id) {
         String query = "" +
                 "MATCH (s:ReferenceEntity)<-[:interactor]-() " +
-                "WHERE s.variantIdentifier = {accession} OR (s.variantIdentifier IS NULL AND s.identifier = {accession}) " +
-                "RETURN s";
+                "WHERE s.variantIdentifier = $accession OR (s.variantIdentifier IS NULL AND s.identifier = $accession) " +
+                "RETURN distinct s";
         Map<String, Object> params = new HashMap<>();
         params.put("accession", id);
         ReferenceEntity re = null;
