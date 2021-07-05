@@ -245,10 +245,12 @@
                         <div>
                             <ul class="list">
                                 <c:forEach var="negativelyRegulates" items="${databaseObject.negativelyRegulates}">
+                                    <c:forEach var="negRegulatedEntity" items="${negativelyRegulates.regulatedEntity}">
                                     <li>
-                                        <m:link object="${negativelyRegulates.regulatedEntity}"
+                                        <m:link object="${negRegulatedEntity}"
                                                 detailRequestPrefix="${detailRequestPrefix}"/>
                                     </li>
+                                    </c:forEach>
                                 </c:forEach>
                             </ul>
                         </div>
@@ -265,10 +267,12 @@
                         <div>
                             <ul class="list">
                                 <c:forEach var="positivelyRegulates" items="${databaseObject.positivelyRegulates}">
-                                    <li>
-                                        <m:link object="${positivelyRegulates.regulatedEntity}"
-                                                detailRequestPrefix="${detailRequestPrefix}"/>
-                                    </li>
+                                    <c:forEach var="posRegulatedEntity" items="${positivelyRegulates.regulatedEntity}">
+                                        <li>
+                                            <m:link object="${posRegulatedEntity}"
+                                                    detailRequestPrefix="${detailRequestPrefix}"/>
+                                        </li>
+                                    </c:forEach>
                                 </c:forEach>
                             </ul>
                         </div>
