@@ -1,7 +1,7 @@
 package org.reactome.server.controller;
 
-import org.apache.commons.text.WordUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.text.WordUtils;
 import org.reactome.server.graph.service.DetailsService;
 import org.reactome.server.graph.service.helper.PathwayBrowserNode;
 import org.reactome.server.search.domain.*;
@@ -111,7 +111,7 @@ class IconLibraryController {
             cleanCategoryParam = cleanCategoryParam.toLowerCase().replaceAll("\\s+", "_");
             String formattedCategory = StringUtils.capitalize(cleanCategoryParam).replaceAll("_", " ");
 
-            Query queryObject = new Query.Builder("{!term f=iconCategories}" + cleanCategoryParam).build();
+            Query queryObject = new Query.Builder("iconCategories: " + cleanCategoryParam).build();
             Result result = searchService.getIconsResult(queryObject, ICONS_PER_PAGE, page);
 
             model.addAttribute(TITLE, formattedCategory);
@@ -155,8 +155,8 @@ class IconLibraryController {
 
                 List<Set<PathwayBrowserNode>> ehldPwbTree = new ArrayList<>();
                 if (iconEntry.getIconEhlds() != null && !iconEntry.getIconCategories().contains("arrow")) {
-//                    Set<PathwayBrowserNode> nodes = detailsService.getLocationInPathwayBrowserForPathways(iconEntry.getIconEhlds());
-//                    ehldPwbTree.add(nodes.stream().sorted().collect(Collectors.toCollection(LinkedHashSet::new)));
+                    Set<PathwayBrowserNode> nodes = detailsService.getLocationInPathwayBrowserForPathways(iconEntry.getIconEhlds());
+                    ehldPwbTree.add(nodes.stream().sorted().collect(Collectors.toCollection(LinkedHashSet::new)));
                 }
                 model.addAttribute(PWB_TREE, ehldPwbTree);
 
