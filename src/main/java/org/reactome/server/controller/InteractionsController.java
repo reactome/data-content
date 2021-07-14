@@ -2,9 +2,10 @@ package org.reactome.server.controller;
 
 import org.reactome.server.graph.domain.model.DatabaseObject;
 import org.reactome.server.graph.domain.model.ReferenceEntity;
+import org.reactome.server.graph.domain.model.UndirectedInteraction;
 import org.reactome.server.graph.exception.CustomQueryException;
 import org.reactome.server.graph.service.AdvancedDatabaseObjectService;
-import org.reactome.server.graph.service.AdvancedLinkageService;
+import org.reactome.server.graph.service.InteractionsService;
 import org.reactome.server.result.CustomInteraction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,8 +35,8 @@ public class InteractionsController {
     private static final String INTERACTIONS = "interactions";
     private static final String SEARCH = "search";
 
-    private AdvancedLinkageService advancedLinkageService;
     private AdvancedDatabaseObjectService advancedDatabaseObjectService;
+    private InteractionsService interactionsService;
 
     @RequestMapping(value = "/detail/interactor/{id:.*}", method = RequestMethod.GET)
     public String interactorDetail(@PathVariable String id, ModelMap model, HttpServletResponse response) {
@@ -46,6 +47,14 @@ public class InteractionsController {
     public String interactorDetaiWidget(@PathVariable String id, ModelMap model, HttpServletResponse response) {
         model.addAttribute("widget", "widget");
         return getInteractions(id, model, response);
+    }
+
+    @RequestMapping(value = "/detail/interaction/{idA:.*}/{idB:.*}", method = RequestMethod.GET)
+    public String interactorDetail(@PathVariable String idA, @PathVariable String idB, ModelMap model, HttpServletResponse response) {
+        UndirectedInteraction interaction = (UndirectedInteraction) interactionsService.getSingleInteractionDetails(idA, idB);
+        List<ReferenceEntity> referenceEntities = interaction.getInteractor();
+        // TODO CREATE JSP PAGE TO TACKLE THAT.
+        return "";
     }
 
     private String getInteractions(String id, ModelMap model, HttpServletResponse response) {
@@ -77,7 +86,7 @@ public class InteractionsController {
      * Retrieve interactions of a given accession that are NOT in Reactome
      * but interacts with something in Reactome
      */
-    private Collection<CustomInteraction> getCustomInteractions(String accession) {
+    public Collection<CustomInteraction> getCustomInteractions(String accession) {
         Collection<CustomInteraction> rtn;
 
         String query = "" +
@@ -161,5 +170,10 @@ public class InteractionsController {
     @Autowired
     public void setAdvancedDatabaseObjectService(AdvancedDatabaseObjectService advancedDatabaseObjectService) {
         this.advancedDatabaseObjectService = advancedDatabaseObjectService;
+    }
+
+    @Autowired
+    public void setInteractionsService(InteractionsService interactionsService) {
+        this.interactionsService = interactionsService;
     }
 }
