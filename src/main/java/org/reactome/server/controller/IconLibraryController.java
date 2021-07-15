@@ -111,7 +111,7 @@ class IconLibraryController {
             cleanCategoryParam = cleanCategoryParam.toLowerCase().replaceAll("\\s+", "_");
             String formattedCategory = StringUtils.capitalize(cleanCategoryParam).replaceAll("_", " ");
 
-            Query queryObject = new Query.Builder("iconCategories: " + cleanCategoryParam).build();
+            Query queryObject = new Query.Builder("iconCategories_facet:" + cleanCategoryParam).build();
             Result result = searchService.getIconsResult(queryObject, ICONS_PER_PAGE, page);
 
             model.addAttribute(TITLE, formattedCategory);
