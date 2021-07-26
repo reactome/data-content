@@ -16,6 +16,7 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
+import java.nio.charset.StandardCharsets;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
@@ -24,7 +25,7 @@ import java.security.cert.X509Certificate;
 /**
  * Generates the header and the footer every MINUTES defined below.
  * The header.jsp and footer.jsp are placed under jsp folder in WEB-INF
- *
+ * <p>
  * IMPORTANT
  * ---------
  * We assume the war file runs exploded, because there is no way of writing
@@ -54,7 +55,7 @@ public class HeaderFooterCacher extends Thread {
     private static final String ICON_CSS = "<link rel=\"stylesheet\" href=\"/content/resources/css/icon-lib.css?v=20180712\" type=\"text/css\" />";
 
     private static final String HEADER_CLOSE = "</head>";
-    private static final String HEADER_CLOSE_REPLACE = MAIN_CSS + "\n" + ICON_CSS + "\n"+ "<jsp:include page=\"graph/json-ld.jsp\"/>\n</head>";
+    private static final String HEADER_CLOSE_REPLACE = MAIN_CSS + "\n" + ICON_CSS + "\n" + "<jsp:include page=\"graph/json-ld.jsp\"/>\n</head>";
 
     private static final Integer MINUTES = 15;
 
@@ -110,7 +111,7 @@ public class HeaderFooterCacher extends Thread {
     private String getTemplate() {
         String templateURL = this.server + TEMPLATE_PAGE;
         try {
-            String rtn = IOUtils.toString(getTemplateInputStream(templateURL));
+            String rtn = IOUtils.toString(getTemplateInputStream(templateURL), StandardCharsets.UTF_8);
 
             // Add search form
             rtn = getReplaced(rtn, SEARCH_OPEN, SEARCH_CLOSE, SEARCH_REPLACE);
@@ -155,16 +156,16 @@ public class HeaderFooterCacher extends Thread {
         }
     }
 
-    private InputStream getTemplateInputStream(String url){
+    private InputStream getTemplateInputStream(String url) {
         try {
             HttpURLConnection conn;
             URL aux = new URL(url);
-            if(aux.getProtocol().contains("https")){
+            if (aux.getProtocol().contains("https")) {
                 doTrustToCertificates(); //accepting the certificate by default
                 conn = (HttpsURLConnection) aux.openConnection();
                 conn.setInstanceFollowRedirects(true);  //you still need to handle redirect manully.
                 HttpURLConnection.setFollowRedirects(true);
-            }else{
+            } else {
                 URLConnection tmpConn = aux.openConnection();
                 conn = (HttpURLConnection) tmpConn;
             }
@@ -184,8 +185,12 @@ public class HeaderFooterCacher extends Thread {
                     public X509Certificate[] getAcceptedIssuers() {
                         return null;
                     }
-                    public void checkServerTrusted(X509Certificate[] certs, String authType) {}
-                    public void checkClientTrusted(X509Certificate[] certs, String authType) {}
+
+                    public void checkServerTrusted(X509Certificate[] certs, String authType) {
+                    }
+
+                    public void checkClientTrusted(X509Certificate[] certs, String authType) {
+                    }
                 }
         };
 
