@@ -83,7 +83,6 @@
             <legend>Authored</legend>
             <div class="wrap overflow">
                 <c:forEach var="authored" items="${databaseObject.authored}">
-                    <c:out value="${authored.dateTime}"/>
                     <fmt:parseDate pattern="yyyy-MM-dd" value="${authored.dateTime}" var="date"/>
                     <c:forEach var="person" items="${authored.author}">
                         <div class="favth-col-lg-3 favth-col-md-3 favth-col-sm-6 favth-col-xs-12 text-overflow">
