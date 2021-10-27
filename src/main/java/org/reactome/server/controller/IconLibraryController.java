@@ -1,7 +1,7 @@
 package org.reactome.server.controller;
 
-import org.apache.commons.lang.StringUtils;
-import org.apache.commons.lang.WordUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.text.WordUtils;
 import org.reactome.server.graph.service.DetailsService;
 import org.reactome.server.graph.service.helper.PathwayBrowserNode;
 import org.reactome.server.search.domain.*;
@@ -111,7 +111,7 @@ class IconLibraryController {
             cleanCategoryParam = cleanCategoryParam.toLowerCase().replaceAll("\\s+", "_");
             String formattedCategory = StringUtils.capitalize(cleanCategoryParam).replaceAll("_", " ");
 
-            Query queryObject = new Query.Builder("{!term f=iconCategories}" + cleanCategoryParam).build();
+            Query queryObject = new Query.Builder("iconCategories_facet:" + cleanCategoryParam).build();
             Result result = searchService.getIconsResult(queryObject, ICONS_PER_PAGE, page);
 
             model.addAttribute(TITLE, formattedCategory);

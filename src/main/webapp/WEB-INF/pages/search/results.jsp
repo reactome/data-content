@@ -1,9 +1,10 @@
 <%@page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
-<%@ taglib prefix="mytag" uri="/WEB-INF/tags/customTag.tld" %>
+<%@ taglib prefix="mytag" uri="/WEB-INF/tld/customTag.tld" %>
 
 <c:import url="../header.jsp"/>
+
 
 <div class="favth-col-xs-12" id="search-headers">
     <div>
@@ -44,7 +45,7 @@
                     <div class="result-category">
                         <div class="favth-rows">
                             <input type="hidden" id="js_search-term" name="js_search-term"
-                                   value="${fn:replace(q, '\"', '')}"/>
+                                   value="${fn:replace(q, "\"", '')}"/>
                             <c:url var="url" value="">
                                 <c:param name="q" value="${q}"/>
                             </c:url>

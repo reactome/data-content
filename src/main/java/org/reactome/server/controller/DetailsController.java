@@ -2,7 +2,7 @@ package org.reactome.server.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.reactome.server.exception.ViewException;
 import org.reactome.server.graph.domain.model.*;
 import org.reactome.server.graph.domain.schema.SchemaDataSet;
@@ -80,10 +80,10 @@ class DetailsController {
      */
     @RequestMapping(value = "/detail/{id:.*}", method = RequestMethod.GET)
     public String details(@PathVariable String id,
-                         @RequestParam(required = false, defaultValue = "") String interactor,
-                         ModelMap model,
-                         HttpServletRequest request,
-                         HttpServletResponse response) {
+                          @RequestParam(required = false, defaultValue = "") String interactor,
+                          ModelMap model,
+                          HttpServletRequest request,
+                          HttpServletResponse response) {
         return getDetail(id, model, interactor, request, response);
     }
 
@@ -97,10 +97,10 @@ class DetailsController {
      */
     @RequestMapping(value = "/detail/widget/{id:.*}", method = RequestMethod.GET)
     public String widgetDetails(@PathVariable String id,
-                          @RequestParam(required = false, defaultValue = "") String interactor,
-                          ModelMap model,
-                          HttpServletRequest request,
-                          HttpServletResponse response) {
+                                @RequestParam(required = false, defaultValue = "") String interactor,
+                                ModelMap model,
+                                HttpServletRequest request,
+                                HttpServletResponse response) {
 
         model.addAttribute("widget", "widget");
         return getDetail(id, model, interactor, request, response);
@@ -109,7 +109,7 @@ class DetailsController {
     private String getDetail(String id, ModelMap model,
                              String interactor,
                              HttpServletRequest request,
-                             HttpServletResponse response ){
+                             HttpServletResponse response) {
         try {
             if (lowerCaseExp.matcher(id).find()) return "redirect:/detail/" + id.toUpperCase();
             if (id.startsWith("R-ICO-")) return iconsController.iconDetails(id, model, response);
@@ -183,7 +183,7 @@ class DetailsController {
                     model.addAttribute("crossReferences", groupCrossReferences(crossReferences));
 
                     if (databaseObject instanceof ReactionLikeEvent) {
-                        ReactionLikeEvent rle = (ReactionLikeEvent)databaseObject;
+                        ReactionLikeEvent rle = (ReactionLikeEvent) databaseObject;
                         model.addAttribute("rleCategory", rle.getCategory());
                     }
 
@@ -203,11 +203,10 @@ class DetailsController {
                     model.addAttribute("isMobile", u.detectMobileQuick());
 
                     infoLogger.info("DatabaseObject for id: {} was found", id);
-
                     //check if a widget
-                    if(model.get("widget") != null){
+                    if (model.get("widget") != null) {
                         return "graph/detailWidget";
-                    } else{
+                    } else {
                         return "graph/detail";
                     }
                 }
@@ -230,7 +229,7 @@ class DetailsController {
         }
     }
 
-    private void setPreviewURL(DatabaseObject databaseObject, ModelMap model){
+    private void setPreviewURL(DatabaseObject databaseObject, ModelMap model) {
         String previewURL = null;
         if (databaseObject instanceof ReactionLikeEvent) {
             previewURL = RXN_URL;
