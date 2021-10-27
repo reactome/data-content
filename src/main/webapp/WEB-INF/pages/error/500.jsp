@@ -10,7 +10,7 @@
         <c:set var="cause" value="${index.first ? '' : cause}##C##${currentItem}" />
     </c:forEach>
 
-    <c:import url="contactForm.jsp">
+    <c:import url="../common/contactForm.jsp">
         <c:param name="source" value="E"/>
         <c:param name="exception" value="${stacktrace}#Caused by:${cause}"/>
     </c:import>

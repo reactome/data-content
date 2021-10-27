@@ -23,11 +23,11 @@
                 <div class="favth-clearfix svg-container">
                     <div class="favth-col-xs-12 svg-component">
                         <a href="${pageContext.request.contextPath}/detail/${entry.stId}">
-                            <img src="/icon/${entry.stId}.svg" alt="${entry.name}" />
+                            <img src="/icon/${entry.stId}.svg" alt="${entry.iconName}" />
                         </a>
                     </div>
                     <div class="favth-col-xs-12 svg-moreinfo">
-                        <a href="${pageContext.request.contextPath}/detail/${entry.stId}" title="${entry.name}"><span class="text-lg-overflow">${entry.name}</span></a>
+                        <a href="${pageContext.request.contextPath}/detail/${entry.stId}" title="${entry.iconName}"><span class="text-lg-overflow">${entry.iconName}</span></a>
                     </div>
                 </div>
             </div>

@@ -1,8 +1,7 @@
 package org.reactome.server.controller;
 
 
-import org.reactome.server.graph.domain.result.PathwayResult;
-
+import org.reactome.server.graph.domain.result.TocPathwayDTO;
 import org.reactome.server.util.TocPathwayCache;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -32,7 +31,7 @@ class TocController {
 
     @RequestMapping(value = "/toc", method = RequestMethod.GET)
     public String tocTable(ModelMap model) {
-        Collection<PathwayResult> tocPathways = tocPathwayCache.getTocPathwayCache();
+        Collection<TocPathwayDTO> tocPathways = tocPathwayCache.getTocPathwayCache();
         model.addAttribute(TITLE, "Table of Contents");
         model.addAttribute(TOCPATHWAYS, tocPathways);
         return "graph/toc";

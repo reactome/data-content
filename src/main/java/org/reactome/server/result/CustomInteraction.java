@@ -1,15 +1,14 @@
 package org.reactome.server.result;
 
+import org.neo4j.driver.Record;
+import org.reactome.server.graph.domain.result.CustomQuery;
 import org.reactome.server.graph.domain.result.SimpleDatabaseObject;
 
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.stream.Collectors;
 
-/**
- * @author Antonio Fabregat (fabregat@ebi.ac.uk)
- */
-public class CustomInteraction {
+public class CustomInteraction implements CustomQuery {
     private Double score;
     private String accession;
     private String accessionURL;
@@ -66,5 +65,17 @@ public class CustomInteraction {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    @Override
+    public CustomQuery build(Record r) {
+        CustomInteraction ci = new CustomInteraction();
+        ci.setAccession(r.get("accession").asString(null));
+        ci.setAccessionURL(r.get("accessionURL").asString(null));
+        ci.setEvidences(r.get("evidences").asInt(0));
+        ci.setScore(r.get("score").asDouble(0));
+        ci.setUrl(r.get("url").asString(null));
+        ci.setPhysicalEntity(r.get("physicalEntity").asList(SimpleDatabaseObject::build));
+        return ci;
     }
 }
