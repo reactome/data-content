@@ -1,8 +1,8 @@
 package org.reactome.server.util.tags;
 
-import org.reactome.server.graph.domain.result.DatabaseObjectLike;
 import org.reactome.server.graph.domain.model.Event;
 import org.reactome.server.graph.domain.model.PhysicalEntity;
+import org.reactome.server.graph.domain.result.DatabaseObjectLike;
 
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
@@ -48,10 +48,10 @@ public class DbObjectLink extends SimpleTagSupport {
 
     @Override
     public void doTag() throws JspException, IOException {
-        if (object == null) throw new JspException("Entity must not be null");
+        if (object == null) return; //throw new JspException("Entity must not be null");
         JspWriter out = getJspContext().getOut();
 
-        out.print(String.format("%s <a href=\"%s\" title=\"Show Reactome %s\">%s</a>",
+        out.print(String.format("%s <a href=\"%s\" title=\"Show %s\">%s</a>",
                 getIcon(),
                 getURL(),
                 object.getStId(),
