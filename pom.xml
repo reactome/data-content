@@ -60,7 +60,7 @@
         <jackrabbit.version>2.10</jackrabbit.version>
         <pmd.version>3.6</pmd.version>
         <jsoup.version>1.10.2</jsoup.version>
-        <logback-classic.version>1.1.10</logback-classic.version>
+        <logback-classic.version>1.2.0</logback-classic.version>
 
         <spring.boot.version>2.5.2</spring.boot.version>
         <maven.war.version>2.6</maven.war.version>
