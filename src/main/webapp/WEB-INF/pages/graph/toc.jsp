@@ -45,7 +45,7 @@
                                     </c:if>
                                 </span>
                             <ul class="level1">
-                                <c:forEach var="childPathway" items="${pathway.subPathway}">
+                                <c:forEach var="childPathway" items="${pathway.subpathways}">
                                     <li>
                                         -<a class="sidebar" href="/content/detail/${childPathway.stId}"
                                            title="Show ${childPathway.displayName}">

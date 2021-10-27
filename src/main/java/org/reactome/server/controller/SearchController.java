@@ -1,6 +1,6 @@
 package org.reactome.server.controller;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.reactome.server.graph.service.GeneralService;
 import org.reactome.server.orcid.domain.OrcidToken;
 import org.reactome.server.orcid.util.OrcidHelper;
@@ -158,8 +158,7 @@ class SearchController {
                 stIdMatch = "oldStId:" + q + " OR stId:" + q;
             }
 
-            Query queryObject =
-                    new Query.Builder(q)
+            Query queryObject = new Query.Builder(q)
                     .forSpecies(species)
                     .withTypes(types)
                     .withKeywords(keywords)
@@ -167,7 +166,7 @@ class SearchController {
                     .withReportInfo(getReportInformation(request))
                     .build();
 
-            if(stIdMatch != null) {
+            if (stIdMatch != null) {
                 queryObject.setQuery(stIdMatch);
             }
 
@@ -180,7 +179,7 @@ class SearchController {
                 model.addAttribute(COMPARTMENTS_FACET, facetMapping.getCompartmentFacet());
                 model.addAttribute(MAX_PAGE, (int) Math.ceil(searchResult.getResultCount() / searchResult.getRows()));
                 model.addAttribute(GROUPED_RESULT, searchResult.getGroupedResult());
-                if(searchResult.getGroupedResult() == null || searchResult.getGroupedResult().getRowCount() == 0) {
+                if (searchResult.getGroupedResult() == null || searchResult.getGroupedResult().getRowCount() == 0) {
                     response.setStatus(HttpServletResponse.SC_NOT_FOUND);
                 }
                 infoLogger.info("Search request for query: {} was found", q);
@@ -221,7 +220,7 @@ class SearchController {
         if (source.equals("E")) {
             subject = "Unexpected error occurred [" + url + "]";
             message = message.concat("\nFailed URL: " + url);
-            message = message.concat("\nException: " + exception.replaceAll("##C##","\n\t\t").replaceAll("#", "\n\t"));
+            message = message.concat("\nException: " + exception.replaceAll("##C##", "\n\t\t").replaceAll("#", "\n\t"));
             mailService.error(contactName, mailAddress, subject, message);
         } else if (source.equals("O")) {
             OrcidToken tokenSession = (OrcidToken) request.getSession().getAttribute(OrcidHelper.ORCID_TOKEN);

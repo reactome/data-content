@@ -24,8 +24,8 @@
                                     <div class="biopax-dropdown">
                                         <a style="cursor: pointer">BioPAX</a>
                                         <div class="biopax-version-tooltip">
-                                            <a href="/ReactomeRESTfulAPI/RESTfulWS/biopaxExporter/Level2/${databaseObject.dbId}">Level 2</a>
-                                            <a href="/ReactomeRESTfulAPI/RESTfulWS/biopaxExporter/Level3/${databaseObject.dbId}">Level 3</a>
+                                            <a href="/ReactomeRESTfulAPI/RESTfulWS/biopaxExporter/Level2/${databaseObject.dbId}" download="${databaseObject.stId}_level2.owl">Level 2</a>
+                                            <a href="/ReactomeRESTfulAPI/RESTfulWS/biopaxExporter/Level3/${databaseObject.dbId}" download="${databaseObject.stId}_level3.owl">Level 3</a>
                                         </div>
                                     </div>
                                     <c:if test="${not (empty topLevelNodes && databaseObject.schemaClass=='Pathway')}">

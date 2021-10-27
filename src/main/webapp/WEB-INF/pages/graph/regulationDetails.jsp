@@ -1,5 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib uri="/WEB-INF/tags/modelTags.tld" prefix="m" %>
+<%@ taglib uri="/WEB-INF/tld/modelTags.tld" prefix="m" %>
 
 <c:if test="${not empty databaseObject.regulatedEntity || not empty databaseObject.regulator}">
     <c:choose>

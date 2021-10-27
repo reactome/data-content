@@ -73,7 +73,7 @@
 
     <tag>
         <name>split-camel</name>
-        <tag-class>org.reactome.server.util.tags.ParticipantOfTypeTag</tag-class>
+        <tag-class>org.reactome.server.util.tags.SplitCamelCaseTag</tag-class>
         <body-content>empty</body-content>
         <attribute>
             <name>value</name>
