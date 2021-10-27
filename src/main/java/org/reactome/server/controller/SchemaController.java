@@ -1,6 +1,6 @@
 package org.reactome.server.controller;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.reactome.server.exception.ViewException;
 import org.reactome.server.graph.domain.model.*;
 import org.reactome.server.graph.service.*;

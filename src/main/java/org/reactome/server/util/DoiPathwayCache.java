@@ -1,6 +1,6 @@
 package org.reactome.server.util;
 
-import org.reactome.server.graph.domain.result.PathwayResult;
+import org.reactome.server.graph.domain.result.DoiPathwayDTO;
 import org.reactome.server.graph.service.DoiService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -13,7 +13,7 @@ public class DoiPathwayCache {
 
     private DoiService doiService;
 
-    private Collection<PathwayResult> doiPathways;
+    private Collection<DoiPathwayDTO> doiPathways;
 
     @Autowired
     public void setDoiService(DoiService doiService) {
@@ -27,7 +27,7 @@ public class DoiPathwayCache {
         }
     }
 
-    public Collection<PathwayResult> getDoiPathwayCache() {
+    public Collection<DoiPathwayDTO> getDoiPathwayCache() {
         return doiPathways;
     }
 }

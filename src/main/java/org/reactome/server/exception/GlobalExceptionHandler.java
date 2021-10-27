@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -44,16 +45,21 @@ class GlobalExceptionHandler {
     private static final String MESSAGE = "message";
     private static final String TITLE = "title";
 
-    private static final String PAGE = "common/errorPage";
+    private static final String PAGE = "error/500";
 
     @ExceptionHandler(SolrSearcherException.class)
     public ModelAndView handleSolrSearcherException(HttpServletRequest request, SolrSearcherException e) {
-        return buildModelView(request, e);
+        return buildModelView(request, e, PAGE);
     }
 
     @ExceptionHandler(ViewException.class)
     public ModelAndView handleViewException(HttpServletRequest request, ViewException e) {
-        return buildModelView(request, e);
+        return buildModelView(request, e, PAGE);
+    }
+
+    @ExceptionHandler(MissingServletRequestParameterException.class)
+    public ModelAndView handleMissingServletRequestParameter(HttpServletRequest request, MissingServletRequestParameterException e) {
+        return buildModelView(request, e, "error/404");
     }
 
     @ResponseStatus(value = HttpStatus.NOT_FOUND, reason = "IOException occurred")
@@ -94,12 +100,12 @@ class GlobalExceptionHandler {
         errorLogger.error("SSL Exception handler executed.", e);
     }
 
-    private ModelAndView buildModelView(HttpServletRequest request, Exception e) {
+    private ModelAndView buildModelView(HttpServletRequest request, Exception e, String page) {
         String finalUrl = (request.getQueryString() != null) ? String.join("", request.getRequestURL(),"?" , request.getQueryString()) : request.getRequestURL().toString();
 
         errorLogger.error("Exception occurred when requesting the URL [" + finalUrl + "]", e);
 
-        ModelAndView model = new ModelAndView(PAGE);
+        ModelAndView model = new ModelAndView(page);
         model.addObject(EXCEPTION, e);
         model.addObject(URL, finalUrl);
         model.addObject(SUBJECT, "Unexpected error occurred.");
