@@ -24,7 +24,7 @@
             <div class="favth-row">
                 <div class="favth-col-xs-12">
                     <c:forEach var="available" items="${icons.available}">
-                        <div class="favth-col-lg-3 favth-col-md-4 favth-col-sm-6 favth-col-xs-12 favth-text-center">
+                        <div class="favth-col-lg-2-4 favth-col-md-6 favth-col-xs-12 favth-text-center">
                             <div class="category">
                                 <%-- To be used in the url, so it doesn't go with space --%>
                                 <c:set var="category" value="${fn:replace(available.name, ' ', '_')}" />
