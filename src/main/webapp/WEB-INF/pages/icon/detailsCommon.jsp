@@ -67,7 +67,7 @@
             </div>
         </c:if>
 
-        <c:if test="${not empty entry.iconDesignerName}">
+        <c:if test="${not empty entry.summation}">
             <div class="details-label favth-col-lg-2 favth-col-md-2 favth-col-sm-3 favth-col-xs-12">
                 <span>Description</span>
             </div>
