@@ -21,4 +21,12 @@
         <function-signature>java.util.List sortList(java.util.List)</function-signature>
     </function>
 
+    <function>
+        <description>Join elements of an Iterable into a string.</description>
+        <display-name>Join</display-name>
+        <name>join</name>
+        <function-class>org.reactome.server.util.StringUtils</function-class>
+        <function-signature>java.lang.String join(java.lang.Iterable, java.lang.CharSequence)</function-signature>
+    </function>
+
 </taglib>
