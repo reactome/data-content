@@ -59,6 +59,7 @@ class IconLibraryController {
         urlMapping.put("CHEBI",             "http://www.ebi.ac.uk/chebi/searchId.do?chebiId=CHEBI:###ID###");
         urlMapping.put("ENSEMBL",           "http://www.ensembl.org/Homo_sapiens/geneview?gene=###ID###");
         urlMapping.put("GO",                "https://www.ebi.ac.uk/QuickGO/term/GO:###ID###");
+        urlMapping.put("ECO",               "https://www.ebi.ac.uk/QuickGO/term/ECO:###ID###");
         urlMapping.put("RFAM",              "http://rfam.org/family/###ID###");
         urlMapping.put("PFAM",              "http://pfam.xfam.org/family/###ID###");
         urlMapping.put("MESH",              "https://www.ncbi.nlm.nih.gov/mesh/###ID###");
@@ -147,7 +148,7 @@ class IconLibraryController {
                 model.addAttribute(TITLE, iconEntry.getIconName());
                 model.addAttribute(ENTRY, iconEntry);
                 // capitalise and remove underline for all categories
-                model.addAttribute(CATEGORIES, iconEntry.getIconCategories().stream().map(WordUtils::capitalize).map(cat -> cat.replaceAll("_", " ")).collect(Collectors.toList()));
+                model.addAttribute(CATEGORIES, iconEntry.getIconCategories().stream().map(WordUtils::capitalize).map(cat -> cat.replaceAll("_", " ")).toArray());
 
                 if (iconEntry.getIconReferences() != null) {
                     model.addAttribute(REFERENCES, prepareReferences(iconEntry));
