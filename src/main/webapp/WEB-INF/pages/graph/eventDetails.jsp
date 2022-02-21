@@ -39,36 +39,40 @@
         <c:if test="${not empty databaseObject.input || not empty databaseObject.output || not empty databaseObject.entityOnOtherCell}">
             <c:if test="${not empty databaseObject.input}">
                 <div class="fieldset-pair-container">
-                    <div class="favth-col-lg-2 favth-col-md-2 favth-col-sm-3 favth-col-xs-12 details-label">
-                        Input
-                    </div>
-                    <div class="favth-col-lg-10 favth-col-md-10 favth-col-sm-9 favth-col-xs-12 details-field">
-                        <div>
-                            <ul class="list">
-                                <c:forEach var="input" items="${databaseObject.fetchInput()}">
-                                    <li>
-                                        <m:link object="${input.object}" detailRequestPrefix="${detailRequestPrefix}" amount="${input.stoichiometry}"/>
-                                    </li>
-                                </c:forEach>
-                            </ul>
+                    <div class="favth-clearfix">
+                        <div class="favth-col-lg-2 favth-col-md-2 favth-col-sm-3 favth-col-xs-12 details-label">
+                            Input
+                        </div>
+                        <div class="favth-col-lg-10 favth-col-md-10 favth-col-sm-9 favth-col-xs-12 details-field">
+                            <div>
+                                <ul class="list">
+                                    <c:forEach var="input" items="${databaseObject.fetchInput()}">
+                                        <li>
+                                            <m:link object="${input.object}" detailRequestPrefix="${detailRequestPrefix}" amount="${input.stoichiometry}"/>
+                                        </li>
+                                    </c:forEach>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
             </c:if>
             <c:if test="${not empty databaseObject.output}">
                 <div class="fieldset-pair-container">
-                    <div class="favth-col-lg-2 favth-col-md-2 favth-col-sm-3 favth-col-xs-12 details-label">
-                        Output
-                    </div>
-                    <div class="favth-col-lg-10 favth-col-md-10 favth-col-sm-9 favth-col-xs-12 details-field">
-                        <div>
-                            <ul class="list">
-                                <c:forEach var="output" items="${databaseObject.fetchOutput()}">
-                                    <li>
-                                        <m:link object="${output.object}" detailRequestPrefix="${detailRequestPrefix}" amount="${output.stoichiometry}"/>
-                                    </li>
-                                </c:forEach>
-                            </ul>
+                    <div class="favth-clearfix">
+                        <div class="favth-col-lg-2 favth-col-md-2 favth-col-sm-3 favth-col-xs-12 details-label">
+                            Output
+                        </div>
+                        <div class="favth-col-lg-10 favth-col-md-10 favth-col-sm-9 favth-col-xs-12 details-field">
+                            <div>
+                                <ul class="list">
+                                    <c:forEach var="output" items="${databaseObject.fetchOutput()}">
+                                        <li>
+                                            <m:link object="${output.object}" detailRequestPrefix="${detailRequestPrefix}" amount="${output.stoichiometry}"/>
+                                        </li>
+                                    </c:forEach>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
