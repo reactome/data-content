@@ -369,7 +369,7 @@ class DetailsController {
             if (re == null) { //Check referenceTherapeutic slot for ProteinDrug
                 re = (ReferenceEntity) databaseObject.getClass().getMethod("getReferenceTherapeutic").invoke(databaseObject);
             }
-            ret = re.getIdentifier();
+            ret = re.getSimplifiedDatabaseName() + ":" + re.getIdentifier();
         } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException | NullPointerException e) {
             // nothing here
         }
