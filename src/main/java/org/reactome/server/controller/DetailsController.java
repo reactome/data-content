@@ -188,11 +188,11 @@ class DetailsController {
                     }
 
                     // extras
-                    String referenceIdentifier = getReferenceEntityIdentifier(databaseObject);
-                    model.addAttribute("flg", referenceIdentifier);
+                    ReferenceIdentifier referenceIdentifier = getReferenceEntityIdentifier(databaseObject);
+                    model.addAttribute("flg", referenceIdentifier.dbSpecific);
                     model.addAttribute("relatedSpecies", getRelatedSpecies(databaseObject));
                     model.addAttribute("jsonLd", eventDiscovery(contentDetails.getDatabaseObject()));
-                    model.addAttribute("icon", IconPhysicalEntityCache.getIconsMapping().get(referenceIdentifier));
+                    model.addAttribute("icon", IconPhysicalEntityCache.getIconsMapping().get(referenceIdentifier.raw));
 
                     // sets a preview url for reactions and pathways (differentiating EHLD from "normal" pathways)
                     setPreviewURL(databaseObject, model);
@@ -356,20 +356,26 @@ class DetailsController {
         return ret;
     }
 
+    private static class ReferenceIdentifier {
+        String raw;
+        String dbSpecific;
+    }
+
     /**
      * Return the Reference Entity Identifier. Later it will be used to build the link to the PWB in order to flag
      * the instance.
      *
      * @return the identifier
      */
-    private String getReferenceEntityIdentifier(DatabaseObject databaseObject) {
-        String ret = "";
+    private ReferenceIdentifier getReferenceEntityIdentifier(DatabaseObject databaseObject) {
+        ReferenceIdentifier ret = new ReferenceIdentifier();
         try {
             ReferenceEntity re = (ReferenceEntity) databaseObject.getClass().getMethod("getReferenceEntity").invoke(databaseObject);
             if (re == null) { //Check referenceTherapeutic slot for ProteinDrug
                 re = (ReferenceEntity) databaseObject.getClass().getMethod("getReferenceTherapeutic").invoke(databaseObject);
             }
-            ret = re.getSimplifiedDatabaseName() + ":" + re.getIdentifier();
+            ret.raw = re.getIdentifier();
+            ret.dbSpecific = re.getSimplifiedDatabaseName() + ":" + re.getIdentifier();
         } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException | NullPointerException e) {
             // nothing here
         }
