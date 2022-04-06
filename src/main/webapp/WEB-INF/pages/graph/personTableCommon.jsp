@@ -148,7 +148,7 @@
                                     <span>${item.displayName}</span>
                                 </td>
                                 <td data-label="Reference">
-                                    <a href="/cgi-bin/bibtex?DB_ID=${item.dbId};personId=${person.dbId}"
+                                    <a href="/ContentService/citation/export/${item.stId}?ext=bib"
                                        title="Export to BibTex" target="_blank">BibTex</a>
                                 </td>
                             </tr>
@@ -227,7 +227,7 @@
                                     <span>${authoredReaction.displayName}</span>
                                 </td>
                                 <td data-label="Reference">
-                                    <a href="/cgi-bin/bibtex?DB_ID=${authoredReaction.dbId};personId=${person.dbId}"
+                                    <a href="/ContentService/citation/export/${authoredReaction.stId}?ext=bib"
                                        title="Export to BibTex" target="_blank">BibTex</a>
                                 </td>
                             </tr>
@@ -306,7 +306,7 @@
                                     <span>${reviewedPathway.displayName}</span>
                                 </td>
                                 <td data-label="Reference">
-                                    <a href="/cgi-bin/bibtex?DB_ID=${reviewedPathway.dbId};personId=${person.dbId}"
+                                    <a href="/ContentService/citation/export/${reviewedPathway.stId}?ext=bib"
                                        title="Export to BibTex" target="_blank">BibTex</a>
                                 </td>
                             </tr>
@@ -386,7 +386,7 @@
                                     <span>${reviewedReaction.displayName}</span>
                                 </td>
                                 <td data-label="Reference">
-                                    <a href="/cgi-bin/bibtex?DB_ID=${reviewedReaction.dbId};personId=${person.dbId}"
+                                    <a href="/ContentService/citation/export/${reviewedReaction.stId}?ext=bib"
                                        title="Export to BibTex" target="_blank">BibTex</a>
                                 </td>
                             </tr>

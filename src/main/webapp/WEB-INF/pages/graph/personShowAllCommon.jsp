@@ -130,7 +130,7 @@
                                 <span>${item.displayName}</span>
                             </td>
                             <td data-label="Reference">
-                                <a href="/cgi-bin/bibtex?DB_ID=${item.dbId};personId=${person.dbId}"
+                                <a href="/ContentService/citation/export/${item.stId}?ext=bib"
                                    title="Export to BibTex" target="_blank">BibTex</a>
                             </td>
                         </tr>
