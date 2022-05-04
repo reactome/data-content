@@ -12,6 +12,8 @@ import org.reactome.server.orcid.exception.OrcidOAuthException;
 import org.reactome.server.orcid.exception.WorkClaimException;
 import org.reactome.server.orcid.util.OrcidHelper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -33,11 +35,17 @@ import static org.reactome.server.orcid.util.OrcidHelper.ContributionRole;
  */
 @Controller
 @RequestMapping("/orcid")
+@PropertySource("classpath:core.properties")
 public class OrcidController {
 
     private PersonService personService;
     private OrcidReportDAO orcidReportDAO;
     private OrcidHelper orcidHelper;
+
+    private static final String CAPTCHA_SITE_KEY = "captchaSiteKey";
+
+    @Value("${captcha.site.key}")
+    private String captchaSiteKey;
 
     @RequestMapping(value = "/claim/all", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody ClaimingSummary claimAll(@RequestBody String personId, HttpServletRequest request) throws IOException, WorkClaimException, OrcidOAuthException, NoSuchAlgorithmException, KeyStoreException, KeyManagementException {
@@ -144,6 +152,7 @@ public class OrcidController {
         model.addAttribute("message", String.format(MAIL_MESSAGE_PLACEHOLDER, tokenSession.getOrcid()));
         model.addAttribute("title", "Let us know your orcid");
         model.addAttribute("tokenSession", tokenSession);
+        model.addAttribute(CAPTCHA_SITE_KEY, captchaSiteKey);
         return "orcid/shareYourOrcid";
     }
 

@@ -9,6 +9,8 @@ import org.reactome.server.orcid.exception.WorkClaimException;
 import org.reactome.server.search.exception.SolrSearcherException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -35,6 +37,7 @@ import java.security.NoSuchAlgorithmException;
  */
 @SuppressWarnings("SameReturnValue")
 @ControllerAdvice
+@PropertySource("classpath:core.properties")
 class GlobalExceptionHandler {
 
     private static final Logger errorLogger = LoggerFactory.getLogger("errorLogger");
@@ -44,8 +47,12 @@ class GlobalExceptionHandler {
     private static final String SUBJECT = "subject";
     private static final String MESSAGE = "message";
     private static final String TITLE = "title";
+    private static final String CAPTCHA_SITE_KEY = "captchaSiteKey";
 
     private static final String PAGE = "error/500";
+
+    @Value("${captcha.site.key}")
+    private String captchaSiteKey;
 
     @ExceptionHandler(SolrSearcherException.class)
     public ModelAndView handleSolrSearcherException(HttpServletRequest request, SolrSearcherException e) {
@@ -101,7 +108,7 @@ class GlobalExceptionHandler {
     }
 
     private ModelAndView buildModelView(HttpServletRequest request, Exception e, String page) {
-        String finalUrl = (request.getQueryString() != null) ? String.join("", request.getRequestURL(),"?" , request.getQueryString()) : request.getRequestURL().toString();
+        String finalUrl = (request.getQueryString() != null) ? String.join("", request.getRequestURL(), "?", request.getQueryString()) : request.getRequestURL().toString();
 
         errorLogger.error("Exception occurred when requesting the URL [" + finalUrl + "]", e);
 
@@ -109,6 +116,7 @@ class GlobalExceptionHandler {
         model.addObject(EXCEPTION, e);
         model.addObject(URL, finalUrl);
         model.addObject(SUBJECT, "Unexpected error occurred.");
+        model.addObject(CAPTCHA_SITE_KEY, captchaSiteKey);
 
         @SuppressWarnings("StringBufferReplaceableByString")
         StringBuilder sb = new StringBuilder();

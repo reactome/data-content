@@ -1,6 +1,8 @@
 package org.reactome.server.controller;
 
 import org.apache.commons.lang3.StringUtils;
+import org.reactome.server.captcha.InvalidReCaptchaTokenException;
+import org.reactome.server.captcha.ReCaptchaResponseV3Handler;
 import org.reactome.server.graph.service.GeneralService;
 import org.reactome.server.orcid.domain.OrcidToken;
 import org.reactome.server.orcid.util.OrcidHelper;
@@ -14,6 +16,8 @@ import org.reactome.server.util.MailService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,8 +25,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -41,6 +47,7 @@ import static org.reactome.server.util.WebUtils.cleanReceivedParameters;
  * @version 1.0
  */
 @Controller
+@PropertySource("classpath:core.properties")
 class SearchController {
 
     private static final Logger errorLogger = LoggerFactory.getLogger("errorLogger");
@@ -61,6 +68,7 @@ class SearchController {
     private static final String PAGE = "page";
     private static final String MAX_PAGE = "maxpage";
     private static final String GROUPED = "grouped";
+    private static final String CAPTCHA_SITE_KEY = "captchaSiteKey";
     private static final String MAIL_SUBJECT = "subject";
     private static final String MAIL_SUBJECT_PLACEHOLDER = "No results found for ";
     private static final String MAIL_MESSAGE = "message";
@@ -73,6 +81,11 @@ class SearchController {
 
     private SearchService searchService;
     private MailService mailService;
+
+    private ReCaptchaResponseV3Handler captchaHandler;
+
+    @Value("${captcha.site.key}")
+    private String captchaSiteKey;
 
     @Autowired
     public SearchController(GeneralService generalService) {
@@ -195,6 +208,7 @@ class SearchController {
             }
         }
 
+        model.addAttribute(CAPTCHA_SITE_KEY, captchaSiteKey);
         autoFillContactForm(model, q);
         infoLogger.info("Search request for query: {} was NOT found", q);
         response.setStatus(HttpServletResponse.SC_NOT_FOUND);
@@ -210,7 +224,19 @@ class SearchController {
                           @RequestParam String url,
                           @RequestParam String subject,
                           @RequestParam String source,
+                          @RequestParam(value = "g-recaptcha-response") String captchaResponse,
                           HttpServletRequest request) {
+        try {
+            float score = captchaResponse == null || captchaResponse.isBlank() ? 0 : captchaHandler.verify(captchaResponse);
+            if (score < 0.5) {
+                errorLogger.warn("Captcha blocked /content/contact from " + getReportInformation(request).toString());
+                return "failure";
+            }
+        } catch (InvalidReCaptchaTokenException e) {
+            errorLogger.error("Error checking captcha.");
+            return "failure";
+        }
+
         if (StringUtils.isNotBlank(contactName)) {
             contactName = contactName.trim();
             message = message.concat("\n\n--\n").concat(contactName.trim());
@@ -258,6 +284,11 @@ class SearchController {
     @Autowired
     public void setMailService(MailService mailService) {
         this.mailService = mailService;
+    }
+
+    @Autowired
+    public void setCaptchaHandler(ReCaptchaResponseV3Handler captchaHandler) {
+        this.captchaHandler = captchaHandler;
     }
 
     /**
