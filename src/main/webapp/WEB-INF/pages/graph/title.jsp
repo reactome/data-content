@@ -63,6 +63,18 @@
             </div>
         </c:if>
 
+        <c:if test="${databaseObject.schemaClass == 'Pathway'}">
+            <c:if test="${not empty databaseObject.doi}">
+                <div class="details-label favth-col-lg-2 favth-col-md-3 favth-col-sm-3 favth-col-xs-12">
+                    <span>DOI</span>
+                </div>
+                <div class="details-field favth-col-lg-10 favth-col-md-9 favth-col-sm-9 favth-col-xs-12">
+                <span>  <a href="https://search.crossref.org/?q=${databaseObject.doi}" target="_blank"
+                           title="Search in Crossref">${databaseObject.doi}</a></span>
+                </div>
+            </c:if>
+        </c:if>
+
         <c:if test="${not empty databaseObject.schemaClass}">
             <div class="details-label favth-col-lg-2 favth-col-md-3 favth-col-sm-3 favth-col-xs-12">
                 <span>Type</span>
