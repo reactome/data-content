@@ -59,7 +59,7 @@
         <javax.servlet.version>4.0.1</javax.servlet.version>
         <jackrabbit.version>2.10</jackrabbit.version>
         <pmd.version>3.6</pmd.version>
-        <jsoup.version>1.14.3</jsoup.version>
+        <jsoup.version>1.15.3</jsoup.version>
         <logback-classic.version>1.1.10</logback-classic.version>
 
         <maven.war.version>2.6</maven.war.version>
