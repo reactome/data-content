@@ -19,12 +19,14 @@
             </div>
         </c:if>
         <c:if test="${not empty databaseObject.regulatedEntity}">
-            <div class="fieldset-pair-container">
-                <div class="favth-col-lg-2 favth-col-md-2 favth-col-sm-3 favth-col-xs-12 details-label">Regulated entity</div>
-                <div class="favth-col-lg-10 favth-col-md-10 favth-col-sm-9 favth-col-xs-12 details-field">
-                    <m:link object="${databaseObject.regulatedEntity}" detailRequestPrefix="${detailRequestPrefix}" displaySpecies="false"/>
+            <c:forEach var="entity" items="${databaseObject.regulatedEntity}">
+                <div class="fieldset-pair-container">
+                    <div class="favth-col-lg-2 favth-col-md-2 favth-col-sm-3 favth-col-xs-12 details-label">Regulated entity</div>
+                    <div class="favth-col-lg-10 favth-col-md-10 favth-col-sm-9 favth-col-xs-12 details-field">
+                        <m:link object="${entity}" detailRequestPrefix="${detailRequestPrefix}" displaySpecies="false"/>
+                    </div>
                 </div>
-            </div>
+            </c:forEach>
         </c:if>
         <c:if test="${not empty databaseObject.regulator}">
             <div class="fieldset-pair-container">
