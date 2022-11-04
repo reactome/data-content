@@ -64,6 +64,7 @@ class IconLibraryController {
         urlMapping.put("PFAM",              "http://pfam.xfam.org/family/###ID###");
         urlMapping.put("MESH",              "https://www.ncbi.nlm.nih.gov/mesh/###ID###");
         urlMapping.put("PUBCHEM",           "https://pubchem.ncbi.nlm.nih.gov/compound/###ID###");
+        urlMapping.put("PUBCHEM-SUBSTANCE", "https://pubchem.ncbi.nlm.nih.gov/substance/###ID###");
         urlMapping.put("INTERPRO",          "https://www.ebi.ac.uk/interpro/entry/###ID###");
         urlMapping.put("KEGG",              "https://www.kegg.jp/entry/###ID###");
         urlMapping.put("ENA",               "https://www.ebi.ac.uk/ena/data/view/###ID###");
