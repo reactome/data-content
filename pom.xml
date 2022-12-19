@@ -2,18 +2,18 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.7.1</version>
-    </parent>
-
     <groupId>org.reactome.server</groupId>
     <artifactId>data-content</artifactId>
 
     <packaging>war</packaging>
-    <version>2.0.5</version>
+    <version>2.0.6</version>
     <name>data-content</name>
+
+    <parent>
+        <groupId>org.reactome.server</groupId>
+        <artifactId>reactome-parent</artifactId>
+        <version>1.0.0</version>
+    </parent>
 
     <description>
         The Reactome Data Content provides access to the search features plus the schema classes definition and instance
@@ -22,7 +22,7 @@
     <url>https://github.com/reactome-pwp/data-content</url>
     <organization>
         <name>The European Bioinformatics Institute</name>
-        <url>http://www.ebi.ac.uk/</url>
+        <url>https://www.ebi.ac.uk/</url>
     </organization>
 
     <developers>
@@ -30,43 +30,30 @@
             <id>gviteri</id>
             <name>Guilherme Viteri</name>
             <email>gviteri@ebi.ac.uk</email>
-            <organization>http://www.ebi.ac.uk/</organization>
+            <organization>https://www.ebi.ac.uk/</organization>
         </developer>
         <developer>
             <id>fabregat</id>
             <name>Antonio Fabregat</name>
             <email>fabregat@ebi.ac.uk</email>
-            <organization>http://www.ebi.ac.uk/</organization>
+            <organization>https://www.ebi.ac.uk/</organization>
         </developer>
         <developer>
             <id>fkorn</id>
             <name>Florian Korninger</name>
             <email>fkorn@ebi.ac.uk</email>
-            <organization>http://www.ebi.ac.uk/</organization>
+            <organization>https://www.ebi.ac.uk/</organization>
         </developer>
     </developers>
 
     <properties>
-        <jdk.version>11</jdk.version>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
         <main.class>org.reactome.server.DataContentApplication</main.class>
 
-        <graph.core>2.0.5</graph.core>
-        <reactome.search.core>1.4.7</reactome.search.core>
-        <reactome-utils.version>1.1.0</reactome-utils.version>
-
         <spring-mobile-device.version>1.1.5.RELEASE</spring-mobile-device.version>
-        <javax.servlet.version>4.0.1</javax.servlet.version>
         <jackrabbit.version>2.10</jackrabbit.version>
-        <pmd.version>3.6</pmd.version>
-        <jsoup.version>1.14.3</jsoup.version>
-        <logback-classic.version>1.1.10</logback-classic.version>
 
-        <maven.war.version>2.6</maven.war.version>
-        <maven.site.version>3.4</maven.site.version>
-        <maven.compiler.version>3.8.1</maven.compiler.version>
-        <maven.info.report.version>2.8.1</maven.info.report.version>
-        <maven.javadoc.version>2.10.3</maven.javadoc.version>
+
     </properties>
 
     <dependencies>
@@ -74,14 +61,12 @@
         <dependency>
             <groupId>org.reactome.server.graph</groupId>
             <artifactId>graph-core</artifactId>
-            <version>${graph.core}</version>
         </dependency>
 
         <!--Reactome search-->
         <dependency>
             <groupId>org.reactome.server.search</groupId>
             <artifactId>search-core</artifactId>
-            <version>${reactome.search.core}</version>
             <exclusions>
                 <exclusion>
                     <groupId>org.springframework</groupId>
@@ -89,6 +74,12 @@
                 </exclusion>
             </exclusions>
         </dependency>
+
+        <dependency>
+            <groupId>org.reactome.server.utils</groupId>
+            <artifactId>reactome-utils</artifactId>
+        </dependency>
+
         <!-- Spring Boot -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -127,7 +118,6 @@
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
-            <version>${javax.servlet.version}</version>
             <scope>provided</scope>
         </dependency>
         <!--Jsp Servlets -->
@@ -149,7 +139,6 @@
         <dependency>
             <groupId>org.jsoup</groupId>
             <artifactId>jsoup</artifactId>
-            <version>${jsoup.version}</version>
         </dependency>
 
         <dependency>
@@ -158,10 +147,10 @@
         </dependency>
 
         <dependency>
-            <groupId>org.reactome.server.utils</groupId>
-            <artifactId>reactome-utils</artifactId>
-            <version>${reactome-utils.version}</version>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-text</artifactId>
         </dependency>
+
     </dependencies>
 
     <repositories>
@@ -218,7 +207,7 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>${project.parent.version}</version>
+                <version>${spring-boot.version}</version>
                 <configuration>
                     <mainClass>${main.class}</mainClass>
                 </configuration>
@@ -228,8 +217,8 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>${maven.compiler.version}</version>
                 <configuration>
-                    <source>${jdk.version}</source>
-                    <target>${jdk.version}</target>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
                 </configuration>
             </plugin>
             <plugin>
@@ -273,12 +262,12 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-pmd-plugin</artifactId>
-                <version>${pmd.version}</version>
+                <version>${maven.pmd.version}</version>
                 <configuration>
                     <skipEmptyReport>false</skipEmptyReport>
                     <linkXRef>false</linkXRef>
                     <sourceEncoding>utf-8</sourceEncoding>
-                    <targetJdk>${jdk.version}</targetJdk>
+                    <targetJdk>${java.version}</targetJdk>
                 </configuration>
             </plugin>
         </plugins>

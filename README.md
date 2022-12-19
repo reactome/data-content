@@ -36,8 +36,7 @@ Please refer to Maven Profile [Guideline](http://maven.apache.org/guides/introdu
     <id>DataContent-Local</id>
     <properties>
         <!-- Neo4j Configuration -->
-        <neo4j.host>localhost</neo4j.host>
-        <neo4j.port>7474</neo4j.port>
+        <neo4j.uri>bolt://localhost:7687</neo4j.uri>
         <neo4j.user>neo4j</neo4j.user>
         <neo4j.password>neo4j</neo4j.password>
         
@@ -68,12 +67,12 @@ Please refer to Maven Profile [Guideline](http://maven.apache.org/guides/introdu
 
 ##### Running Data-Content activating ```DataContent-Local``` profile
 ```console
-mvn tomcat7:run -P DataContent-Local
+mvn spring-boot:run -P DataContent-Local
 ```
 
 in case you didn't set up the profile it is still possible to run Reactome Data Content. You may need to add all the properties into a command-line call.
 ```console
-mvn tomcat7:run \ 
+mvn spring-boot:run \ 
     -Dneo4j.user=neo4j -Dneo4j.password=neo4j -Dneo4j.host=localhost -Dneo4j.port=7474 \
     -Dsolr.host=http://localhost:8983/solr/reactome -Dsolr.user=solr -Dsolr.password=solr \
     -Dlogging.dir=/Users/reactome/Reactome/search \
