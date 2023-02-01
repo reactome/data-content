@@ -12,24 +12,24 @@ import org.springframework.web.client.RestTemplate;
 
 @Component
 @PropertySource("classpath:core.properties")
-public class ReCaptchaResponseV3Handler {
+public class HCaptchaResponseV3Handler {
     @Value("${captcha.secret.key}")
     private String secretKey;
-    private String serverAddress = "https://www.google.com/recaptcha/api/siteverify";
+    private String serverAddress = "https://api.hcaptcha.com/siteverify";
 
-    public float verify(String recaptchaFormResponse) throws InvalidReCaptchaTokenException {
+    public float verify(String hcaptchaFormResponse) throws InvalidHCaptchaTokenException {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 
         MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
         map.add("secret", secretKey);
-        map.add("response", recaptchaFormResponse);
+        map.add("response", hcaptchaFormResponse);
 
         HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(map, headers);
 
         RestTemplate restTemplate = new RestTemplate();
-        ReCaptchaResponse response = restTemplate.postForObject(serverAddress, request, ReCaptchaResponse.class);
-        if (response == null) throw new InvalidReCaptchaTokenException("Invalid ReCaptha. Please check site");
+        HCaptchaResponse response = restTemplate.postForObject(serverAddress, request, HCaptchaResponse.class);
+        if (response == null) throw new InvalidHCaptchaTokenException("Invalid ReCaptha. Please check site");
 
         if (response.getErrorCodes() != null) {
             System.out.println("Error codes: ");
@@ -39,7 +39,7 @@ public class ReCaptchaResponseV3Handler {
         }
 
         if (!response.isSuccess()) {
-            throw new InvalidReCaptchaTokenException("Invalid ReCaptha. Please check site");
+            throw new InvalidHCaptchaTokenException("Invalid ReCaptha. Please check site");
         }
         // return 0.4f;
         return response.getScore();

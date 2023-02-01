@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.Arrays;
 import java.util.Objects;
 
-public class ReCaptchaResponse {
+public class HCaptchaResponse {
     private boolean success;
     private String hostname;
     private String action;
@@ -14,14 +14,14 @@ public class ReCaptchaResponse {
     @JsonProperty("error-codes")
     private String[] errorCodes;
 
-    public ReCaptchaResponse() {
+    public HCaptchaResponse() {
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        ReCaptchaResponse that = (ReCaptchaResponse) o;
+        HCaptchaResponse that = (HCaptchaResponse) o;
         return isSuccess() == that.isSuccess() && Float.compare(that.getScore(), getScore()) == 0 && Objects.equals(getHostname(), that.getHostname()) && Objects.equals(getAction(), that.getAction()) && Objects.equals(getChallenge_ts(), that.getChallenge_ts()) && Arrays.equals(getErrorCodes(), that.getErrorCodes());
     }
 
@@ -34,7 +34,7 @@ public class ReCaptchaResponse {
 
     @Override
     public String toString() {
-        return "ReCaptchaResponse{" +
+        return "HCaptchaResponse{" +
                 "success=" + success +
                 ", hostname='" + hostname + '\'' +
                 ", action='" + action + '\'' +

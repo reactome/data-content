@@ -14,8 +14,7 @@
     </c:otherwise>
 </c:choose>
 
-<script src="https://www.google.com/recaptcha/api.js"></script>
-
+<%--<script src="https://www.google.com/recaptcha/api.js"></script>--%>
 
 <form class="favth-form-horizontal" id="contact-form" action="/content/contact">
     <p>&nbsp;</p>
@@ -92,23 +91,22 @@
             </div>
         </div>
     </div>
+
+<%--    <div class="favth-form-group">--%>
+<%--        <div class="favth-col-sm-offset-2 favth-col-sm-10">--%>
+<%--            <div class="h-captcha"--%>
+<%--                 data-sitekey="${captchaSiteKey}"--%>
+<%--                 data-theme="light"--%>
+<%--                 data-callback="onSuccess"--%>
+<%--            ></div>--%>
+<%--        </div>--%>
+<%--    </div>--%>
+
     <div class="favth-form-group">
         <div class="favth-col-sm-offset-2 favth-col-sm-10">
-            <c:choose>
-                <c:when test="${not empty captchaSiteKey}">
-                    <button id="send" class="g-recaptcha btn btn-default"
-                            data-sitekey="${captchaSiteKey}"
-                            data-callback='onSubmit'
-                            data-action='submit'>Send
-                    </button>
-                </c:when>
-                <c:otherwise>
-                    <button id="send" class="g-recaptcha btn btn-default"
-                            data-callback='onSubmit'
-                            data-action='submit'>Send
-                    </button>
-                </c:otherwise>
-            </c:choose>
+            <button id="send" class="btn btn-default"
+            >Send
+            </button>
         </div>
     </div>
 </form>
@@ -116,11 +114,23 @@
 <%-- Validation placeholder --%>
 <p id="msg"></p>
 
-
 <script type="text/javascript">
-    function onSubmit(e) {
-        // e.preventDefault();
 
+    function onSuccess() {
+        var hCaptchaValue = jQuery('[name=h-captcha-response]').val()
+        if (hCaptchaValue.length === 0) {
+            document.querySelector('#send').disabled = true;
+            return false;
+        }
+        if (hCaptchaValue.length !== 0) {
+            document.querySelector('#send').disabled = false;
+            return true;
+        }
+    }
+
+    //  jQuery(document).ready(function() {
+    jQuery('#send').click(function(e) {
+        // e.preventDefault();
         var email = jQuery('#mailAddress').val();
         var ok = true;
         if (email === "") {
@@ -140,6 +150,7 @@
             ok = false;
         }
 
+        console.log("ok " +  ok);
         if (ok) {
             jQuery(".message-required").removeClass("favth-has-error");
             jQuery(".mail-required").removeClass("favth-has-error");
@@ -148,22 +159,25 @@
             var msg = jQuery("#msg");
             var formData = jQuery("#contact-form");
 
+
             jQuery.ajax({
                 url: formData.attr("action"),
                 type: "POST",
                 data: formData.serialize(),
                 success: function (data, textStatus, jqXHR) {
+                    console.log("success")
                     formData.remove();
                     msg.replaceWith("<p id='msg' class='alert alert-info'><span style='color:#3a87ad;'><strong>Thank you</strong> for contacting us.&nbsp;We will get back to you shortly.</span></p>");
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
+                    console.log("error")
                     jQuery('#send').prop("disabled", false);
                     msg.replaceWith("<p id='msg' class='alert alert-danger'><span style='color:#b94a48;'>Could not send your email. Try again or please email us at <a href='mailto:help@reactome.org'>help@reactome.org</a></p>");
                 }
             });
         }
-    }
-
+    });
+    // });
 
     function isEmailValid(mail) {
         var status = true;
@@ -177,3 +191,6 @@
         return status;
     }
 </script>
+
+<script src="https://js.hcaptcha.com/1/api.js"
+        async defer></script>

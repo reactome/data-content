@@ -1,8 +1,8 @@
 package org.reactome.server.controller;
 
 import org.apache.commons.lang3.StringUtils;
-import org.reactome.server.captcha.InvalidReCaptchaTokenException;
-import org.reactome.server.captcha.ReCaptchaResponseV3Handler;
+import org.reactome.server.captcha.HCaptchaResponseV3Handler;
+import org.reactome.server.captcha.InvalidHCaptchaTokenException;
 import org.reactome.server.graph.service.GeneralService;
 import org.reactome.server.orcid.domain.OrcidToken;
 import org.reactome.server.orcid.util.OrcidHelper;
@@ -25,10 +25,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -82,7 +80,7 @@ class SearchController {
     private SearchService searchService;
     private MailService mailService;
 
-    private ReCaptchaResponseV3Handler captchaHandler;
+    private HCaptchaResponseV3Handler captchaHandler;
 
     @Value("${captcha.site.key}")
     private String captchaSiteKey;
@@ -224,15 +222,15 @@ class SearchController {
                           @RequestParam String url,
                           @RequestParam String subject,
                           @RequestParam String source,
-                          @RequestParam(value = "g-recaptcha-response") String captchaResponse,
+                          @RequestParam(value = "h-captcha-response") String captchaResponse,
                           HttpServletRequest request) {
         try {
             float score = captchaResponse == null || captchaResponse.isBlank() ? 0 : captchaHandler.verify(captchaResponse);
-            if (score < 0.5) {
+            if (score >= 0.5) {
                 errorLogger.warn("Captcha blocked /content/contact from " + getReportInformation(request).toString());
                 return "failure";
             }
-        } catch (InvalidReCaptchaTokenException e) {
+        } catch (InvalidHCaptchaTokenException e) {
             errorLogger.error("Error checking captcha.");
             return "failure";
         }
@@ -287,7 +285,7 @@ class SearchController {
     }
 
     @Autowired
-    public void setCaptchaHandler(ReCaptchaResponseV3Handler captchaHandler) {
+    public void setCaptchaHandler(HCaptchaResponseV3Handler captchaHandler) {
         this.captchaHandler = captchaHandler;
     }
 
