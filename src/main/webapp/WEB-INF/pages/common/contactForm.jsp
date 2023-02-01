@@ -103,7 +103,7 @@
 
     <div class="favth-form-group">
         <div class="favth-col-sm-offset-2 favth-col-sm-10">
-            <button id="send" class="btn btn-default"
+            <button id="send" class="btn btn-default" disabled="disabled"
             >Send
             </button>
         </div>
