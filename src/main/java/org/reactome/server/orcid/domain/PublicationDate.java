@@ -36,7 +36,7 @@ public class PublicationDate {
 
     public PublicationDate (String dateTime) {
         if (StringUtils.isNotEmpty(dateTime)) {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S");
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
             LocalDate localdateTime = LocalDate.parse(dateTime, formatter);
             this.day = new Day(localdateTime.getDayOfMonth());
             this.month = new Month(localdateTime.getMonthValue());
