@@ -54,10 +54,11 @@ class IconLibraryController {
     private static Map<String, String> urlMapping = new HashMap<>();
 
     static {
-        urlMapping.put("UNIPROT",           "http://www.uniprot.org/entry/###ID###");
-        urlMapping.put("UNIPROTKB",         "http://www.uniprot.org/entry/###ID###");
-        urlMapping.put("CHEBI",             "http://www.ebi.ac.uk/chebi/searchId.do?chebiId=CHEBI:###ID###");
-        urlMapping.put("ENSEMBL",           "http://www.ensembl.org/Homo_sapiens/geneview?gene=###ID###");
+        urlMapping.put("UNIPROT",           "https://www.uniprot.org/entry/###ID###");
+        urlMapping.put("UNIPROT-T",         "https://www.uniprot.org/taxonomy/###ID###");
+        urlMapping.put("UNIPROTKB",         "https://www.uniprot.org/entry/###ID###");
+        urlMapping.put("CHEBI",             "https://www.ebi.ac.uk/chebi/searchId.do?chebiId=CHEBI:###ID###");
+        urlMapping.put("ENSEMBL",           "https://www.ensembl.org/Homo_sapiens/geneview?gene=###ID###");
         urlMapping.put("GO",                "https://www.ebi.ac.uk/QuickGO/term/GO:###ID###");
         urlMapping.put("ECO",               "https://www.ebi.ac.uk/QuickGO/term/ECO:###ID###");
         urlMapping.put("RFAM",              "http://rfam.org/family/###ID###");
