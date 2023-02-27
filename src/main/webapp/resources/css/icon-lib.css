@@ -98,6 +98,7 @@
     .icon-preview.background {
         width: 80%;
         height: auto;
+        max-height: 50vh;
     }
 
     #icon-preview-container {
