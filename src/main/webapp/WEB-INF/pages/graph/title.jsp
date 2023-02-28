@@ -5,6 +5,8 @@
 
 <link rel="stylesheet" href="/content/resources/css/score.css" type="text/css">
 
+<c:set var = "url" value ="${pageContext.request.serverName}"/>
+
 <h3 class="details-title">
     <c:choose>
         <c:when test="${hasReferenceEntity && (databaseObject.schemaClass == 'EntityWithAccessionedSequence' || databaseObject.schemaClass == 'SimpleEntity')}">
