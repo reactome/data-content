@@ -1,6 +1,11 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="myTld" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
+<link rel="stylesheet" href="/content/resources/css/score.css" type="text/css">
+
+<c:set var = "url" value ="${pageContext.request.serverName}"/>
 
 <h3 class="details-title">
     <c:choose>
@@ -151,6 +156,43 @@
                     <a href="${detailRequestPrefix}${icon}" title="Open icon detail">
                         <img style="width: 100px; height: 50px;" src="/icon/${icon}.svg" alt="${databaseObject.displayName} icon" />
                     </a>
+                </div>
+            </c:if>
+        </c:if>
+
+        <c:if test="${clazz == 'Event'}">
+            <c:if test="${not empty databaseObject.reviewStatus}">
+                <div class="details-label favth-col-lg-2 favth-col-md-3 favth-col-sm-3 favth-col-xs-12"
+                     style="margin-top: 8px">
+                    <span>ReviewStatus</span>
+                </div>
+                <div class="details-field favth-col-lg-10 favth-col-md-9 favth-col-sm-9 favth-col-xs-12">
+                    <c:set var="star" value="${databaseObject.reviewStatus.displayName}"/>
+                    <c:choose>
+                        <c:when test="${star == 'five stars'}">
+                            <c:set var="score" value="100"/>
+                        </c:when>
+                        <c:when test="${star == 'four stars'}">
+                            <c:set var="score" value="80"/>
+                        </c:when>
+                        <c:when test="${star == 'three stars'}">
+                            <c:set var="score" value="60"/>
+                        </c:when>
+                        <c:when test="${star == 'two stars'}">
+                            <c:set var="score" value="40"/>
+                        </c:when>
+                        <c:otherwise>
+                            <c:set var="score" value="20"/>
+                        </c:otherwise>
+                    </c:choose>
+                    <div class="c100 p${score} small">
+                        <span><fmt:formatNumber type="number" maxFractionDigits="0"
+                                                value="${score/20}"/>/5</span>
+                        <div class="slice">
+                            <div class="bar"></div>
+                            <div class="fill"></div>
+                        </div>
+                    </div>
                 </div>
             </c:if>
         </c:if>
