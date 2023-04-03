@@ -186,8 +186,9 @@
                         </c:otherwise>
                     </c:choose>
                     <div class="c100 p${score} small">
-                        <span><fmt:formatNumber type="number" maxFractionDigits="0"
-                                                value="${score/20}"/>/5</span>
+                        <span><a href="https://${url}/userguide/review-status" target="_blank"
+                                 title="Read more details"><fmt:formatNumber type="number" maxFractionDigits="0"
+                                                                             value="${score/20}"/>/5</a></span>
                         <div class="slice">
                             <div class="bar"></div>
                             <div class="fill"></div>
