@@ -42,7 +42,7 @@
                class="favth-col-lg-2 favth-col-md-2 favth-col-sm-2 favth-col-xs-12 favth-control-label">From* </label>
         <div class="favth-col-lg-10 favth-col-md-10 favth-col-sm-10 favth-col-xs-12">
             <input type="email" class="favth-form-control" name="mailAddress" id="mailAddress"
-                   placeholder="your-mail@domain.com">
+                   placeholder="your-mail@domain.com" required>
         </div>
     </div>
     <div class="favth-form-group">
