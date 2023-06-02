@@ -1,4 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="m" uri="/WEB-INF/tld/modelTags.tld" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="myTld" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -133,6 +134,15 @@
                     <c:forEach var="synonym" items="${databaseObject.name}" varStatus="loop">
                         <c:if test="${!loop.first}">${synonym}</c:if><c:if test="${!loop.first && !loop.last}">, </c:if>
                     </c:forEach>
+                </div>
+            </c:if>
+
+            <c:if test="${(databaseObject.schemaClass == 'CellLineagePath' ||  databaseObject.schemaClass == 'CellDevelopmentStep') && databaseObject.tissue != null}">
+                <div class="details-label favth-col-lg-2 favth-col-md-3 favth-col-sm-3 favth-col-xs-12">
+                    <span>Tissue</span>
+                </div>
+                <div class="details-field favth-col-lg-10 favth-col-md-9 favth-col-sm-9 favth-col-xs-12">
+                    <m:ontology ontology="${databaseObject.tissue}"/>
                 </div>
             </c:if>
 

@@ -12,7 +12,7 @@
 
 <fieldset class="fieldset-details">
     <legend>Participants</legend>
-    <c:if test="${databaseObject.schemaClass == 'Pathway' || databaseObject.schemaClass == 'TopLevelPathway'}">
+    <c:if test="${databaseObject.schemaClass == 'Pathway' || databaseObject.schemaClass == 'CellLineagePath' || databaseObject.schemaClass == 'TopLevelPathway'}">
         <c:if test="${not empty databaseObject.hasEvent}">
 
             <div class="fieldset-pair-container">

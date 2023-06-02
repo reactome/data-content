@@ -35,6 +35,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static org.reactome.server.util.WebUtils.noDetailsFound;
 
@@ -149,6 +150,7 @@ class DetailsController {
                     model.addAttribute("orthologousEvents", getSortedOrthologousEvent(databaseObject));
                     model.addAttribute("inferredTo", getSortedInferredTo(databaseObject));
 
+
                     //RegulatedBy moved to RLE without distinction in the types (now it needs to be done here)
                     List<NegativeRegulation> negativeRegulations = new ArrayList<>();
                     List<PositiveRegulation> positiveRegulations = new ArrayList<>();
@@ -186,6 +188,15 @@ class DetailsController {
                         ReactionLikeEvent rle = (ReactionLikeEvent) databaseObject;
                         model.addAttribute("rleCategory", rle.getCategory());
                     }
+
+                    if (databaseObject instanceof Cell) {
+                        Cell cell = (Cell) databaseObject;
+                        model.addAttribute("markerMapping", mapMarkers(cell.getMarkerReference()));
+                    } else if (databaseObject instanceof EntityWithAccessionedSequence) {
+                        EntityWithAccessionedSequence ewas = (EntityWithAccessionedSequence) databaseObject;
+                        model.addAttribute("markerMapping", mapMarkers(ewas.getMarkingReferences()));
+                    }
+
 
                     // extras
                     ReferenceIdentifier referenceIdentifier = getReferenceEntityIdentifier(databaseObject);
@@ -243,6 +254,25 @@ class DetailsController {
             previewURL = previewURL.replace("_stId_", databaseObject.getStId()).replace("_ext_", "svg");
         }
         model.addAttribute("previewURL", previewURL);
+    }
+
+    // TODO simplify this when MarkerReference is simplified
+
+    /**
+     * Generate a mapping from Markers and Cells to publications that highlight their relationship with their counterpart
+     *
+     * @param references List of MarkerReference containing the data to be mapped
+     * @return The Mapping from Markers and Cells to Publications
+     */
+    private Map<PhysicalEntity, Set<Publication>> mapMarkers(Collection<MarkerReference> references) {
+        Stream<Map.Entry<PhysicalEntity, Set<Publication>>> markerStream, cellStream;
+        markerStream = references.stream().flatMap(ref -> ref.getMarker().stream().map(marker -> Map.entry(marker, new HashSet<>(ref.getLiteratureReference()))));
+        cellStream = references.stream().flatMap(ref -> ref.getCell().stream().map(marker -> Map.entry(marker, new HashSet<>(ref.getLiteratureReference()))));
+        return Stream.concat(markerStream, cellStream)
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (pub1, pub2) -> {
+                    pub1.addAll(pub2);
+                    return pub1;
+                }));
     }
 
     private Map<String, Set<DatabaseIdentifier>> groupCrossReferences(List<DatabaseIdentifier> databaseIdentifiers) {

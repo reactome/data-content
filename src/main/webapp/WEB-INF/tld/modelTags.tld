@@ -72,6 +72,30 @@
     </tag>
 
     <tag>
+        <name>ontology</name>
+        <tag-class>org.reactome.server.util.tags.ExternalOntologyLink</tag-class>
+        <body-content>empty</body-content>
+        <attribute>
+            <name>ontology</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>org.reactome.server.graph.domain.model.ExternalOntology</type>
+            <required>true</required>
+        </attribute>
+    </tag>
+
+    <tag>
+        <name>ref</name>
+        <tag-class>org.reactome.server.util.tags.PublicationLink</tag-class>
+        <body-content>empty</body-content>
+        <attribute>
+            <name>publication</name>
+            <rtexprvalue>true</rtexprvalue>
+            <type>org.reactome.server.graph.domain.model.Publication</type>
+            <required>true</required>
+        </attribute>
+    </tag>
+
+    <tag>
         <name>split-camel</name>
         <tag-class>org.reactome.server.util.tags.SplitCamelCaseTag</tag-class>
         <body-content>empty</body-content>

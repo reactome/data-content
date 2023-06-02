@@ -1046,3 +1046,75 @@ img[id^="claim-your-work"] {
 .tooltip {
     position: fixed;
 }
+
+.no-max {
+    max-height: none !important;
+}
+
+.citation {
+    display: flex;
+    flex-direction: column;
+    font-family: 'Georgia', serif;
+    flex-wrap: wrap;
+    padding-top: 2px;
+    line-height: 16px;
+    max-width: 100%;
+    white-space: nowrap;
+    padding-bottom: 1px;
+
+    overflow-x: hidden;
+    margin-bottom: 3px !important;
+}
+
+.citation:hover {
+    overflow-x: scroll;
+    margin-bottom: 0 !important;
+}
+
+.citation::-webkit-scrollbar,
+.citation::-webkit-scrollbar-thumb {
+    width: 3px;
+    height: 3px;
+    border-radius: 3px;
+}
+
+.citation::-webkit-scrollbar {
+    background-color: #FFF /* or add it to the track */
+}
+
+.citation::-webkit-scrollbar-thumb {
+    background-color: #ddd; /* or add it to the track */
+}
+
+.citation::-webkit-scrollbar-thumb:hover {
+    background-color: #bbb; /* or add it to the track */
+}
+
+.citation span {
+    padding-right: 0.3em;
+
+}
+
+.citation .title {
+
+}
+
+.citation .journal {
+    font-style: italic;
+}
+
+.citation .volume {
+    font-weight: bold;
+}
+
+.citation .page {
+
+}
+
+.citation .year {
+
+}
+
+.citation .authors {
+
+}

@@ -128,6 +128,96 @@
     </c:if>
 </c:if>
 
+<c:if test="${databaseObject.schemaClass == 'Cell'}">
+    <div class="favth-clearfix">
+        <fieldset class="fieldset-details">
+            <legend>Localisation</legend>
+
+            <div class="fieldset-pair-container">
+                <c:if test="${not empty databaseObject.organ}">
+                    <div class="favth-clearfix">
+                        <div class="favth-col-lg-2 favth-col-md-2 favth-col-sm-3 favth-col-xs-12 details-label">
+                            Organ
+                        </div>
+                        <div class="favth-col-lg-10 favth-col-md-10 favth-col-sm-9 favth-col-xs-12 details-field">
+                            <m:ontology ontology="${databaseObject.organ}"/>
+                        </div>
+                    </div>
+                </c:if>
+                <c:if test="${not empty databaseObject.tissue}">
+                    <div class="favth-clearfix">
+                        <div class="favth-col-lg-2 favth-col-md-2 favth-col-sm-3 favth-col-xs-12 details-label">
+                            Tissue
+                        </div>
+                        <div class="favth-col-lg-10 favth-col-md-10 favth-col-sm-9 favth-col-xs-12 details-field">
+                            <m:ontology ontology="${databaseObject.tissue}"/>
+                        </div>
+                    </div>
+                </c:if>
+                <c:if test="${not empty databaseObject.tissueLayer}">
+                    <div class="favth-clearfix">
+                        <div class="favth-col-lg-2 favth-col-md-2 favth-col-sm-3 favth-col-xs-12 details-label">
+                            Tissue Layer
+                        </div>
+                        <div class="favth-col-lg-10 favth-col-md-10 favth-col-sm-9 favth-col-xs-12 details-field">
+                            <m:ontology ontology="${databaseObject.tissueLayer}"/>
+                        </div>
+                    </div>
+                </c:if>
+                <c:if test="${not empty databaseObject.cellType}">
+                    <div class="favth-clearfix">
+                        <div class="favth-col-lg-2 favth-col-md-2 favth-col-sm-3 favth-col-xs-12 details-label">
+                            Cell Type
+                        </div>
+                        <div class="favth-col-lg-10 favth-col-md-10 favth-col-sm-9 favth-col-xs-12 details-field">
+                            <c:forEach items="${databaseObject.cellType}" var="ct">
+                                <m:ontology ontology="${ct}"/><br>
+                            </c:forEach>
+                        </div>
+                    </div>
+                </c:if>
+
+            </div>
+        </fieldset>
+    </div>
+
+    <div class="favth-clearfix">
+        <fieldset class="fieldset-details">
+            <legend>Markers</legend>
+
+            <div class="fieldset-pair-container">
+                <c:if test="${not empty databaseObject.proteinMarker}">
+                    <div class="favth-clearfix">
+                        <div class="favth-col-lg-2 favth-col-md-2 favth-col-sm-3 favth-col-xs-12 details-label">
+                            Protein
+                        </div>
+                        <div class="favth-col-lg-10 favth-col-md-10 favth-col-sm-9 favth-col-xs-12 details-field">
+                            <c:forEach items="${databaseObject.proteinMarker}" var="entity">
+                                <c:set var="entity" value="${entity}" scope="request"/>
+                                <c:import url="refNode.jsp"/>
+                            </c:forEach>
+                        </div>
+                    </div>
+                </c:if>
+                <c:if test="${not empty databaseObject.RNAMarker}">
+                    <div class="favth-clearfix">
+                        <div class="favth-col-lg-2 favth-col-md-2 favth-col-sm-3 favth-col-xs-12 details-label">
+                            RNA
+                        </div>
+                        <div class="favth-col-lg-10 favth-col-md-10 favth-col-sm-9 favth-col-xs-12 details-field">
+                            <c:forEach items="${databaseObject.RNAMarker}" var="entity">
+                                <c:set var="entity" value="${entity}" scope="request"/>
+                                <c:import url="refNode.jsp"/>
+                            </c:forEach>
+                        </div>
+                    </div>
+                </c:if>
+
+            </div>
+        </fieldset>
+    </div>
+</c:if>
+
 <c:if test="${ databaseObject.schemaClass == 'Complex' &&  not empty databaseObject.hasComponent || databaseObject.schemaClass == 'Polymer' && not empty databaseObject.repeatedUnit || isEntitySet && not empty databaseObject.hasMember || databaseObject.schemaClass == 'CandidateSet' && not empty databaseObject.hasCandidate }">
     <fieldset class="fieldset-details">
         <legend>Participants</legend>
@@ -246,10 +336,10 @@
                             <ul class="list">
                                 <c:forEach var="negativelyRegulates" items="${databaseObject.negativelyRegulates}">
                                     <c:forEach var="negRegulatedEntity" items="${negativelyRegulates.regulatedEntity}">
-                                    <li>
-                                        <m:link object="${negRegulatedEntity}"
-                                                detailRequestPrefix="${detailRequestPrefix}"/>
-                                    </li>
+                                        <li>
+                                            <m:link object="${negRegulatedEntity}"
+                                                    detailRequestPrefix="${detailRequestPrefix}"/>
+                                        </li>
                                     </c:forEach>
                                 </c:forEach>
                             </ul>
@@ -289,7 +379,8 @@
         <div class="wrap overflow favth-clearfix">
             <c:forEach var="derivedEwas" items="${otherFormsOfThisMolecule}" varStatus="loop">
                 <div class="favth-col-lg-6 favth-col-md-6 favth-col-sm-12 favth-col-xs-12 text-overflow">
-                    <m:link object="${derivedEwas}" detailRequestPrefix="${detailRequestPrefix}" displayIcon="false" displaySpecies="false"/>
+                    <m:link object="${derivedEwas}" detailRequestPrefix="${detailRequestPrefix}" displayIcon="false"
+                            displaySpecies="false"/>
                 </div>
             </c:forEach>
         </div>
@@ -316,7 +407,8 @@
             <c:forEach items="${inferredTo}" var="inferredToMap">
                 <c:forEach items="${inferredToMap.value}" var="inferredTo">
                     <div class="favth-col-lg-6 favth-col-md-6 favth-col-sm-12 favth-col-xs-12 text-overflow">
-                        <m:link object="${inferredTo}" detailRequestPrefix="${detailRequestPrefix}" displayIcon="false"/>
+                        <m:link object="${inferredTo}" detailRequestPrefix="${detailRequestPrefix}"
+                                displayIcon="false"/>
                     </div>
                 </c:forEach>
             </c:forEach>
@@ -435,4 +527,31 @@
             </div>
         </fieldset>
     </c:if>
+
+    <c:if test="${not empty databaseObject.markingReferences}">
+
+        <div class="favth-clearfix">
+            <fieldset class="fieldset-details">
+                <legend>Cytomics</legend>
+
+                <div class="fieldset-pair-container">
+                    <div class="favth-clearfix">
+                        <div class="favth-col-lg-2 favth-col-md-2 favth-col-sm-3 favth-col-xs-12 details-label">
+                            marking cell
+                        </div>
+                        <div class="favth-col-lg-10 favth-col-md-10 favth-col-sm-9 favth-col-xs-12 details-field">
+                            <c:forEach items="${databaseObject.markingReferences}" var="ref">
+                                <c:forEach items="${ref.cell}" var="entity">
+                                    <c:set var="entity" value="${entity}" scope="request"/>
+                                    <c:import url="refNode.jsp"/>
+                                </c:forEach>
+                            </c:forEach>
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+
+    </c:if>
 </c:if>
+

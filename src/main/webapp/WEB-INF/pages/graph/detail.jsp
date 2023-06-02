@@ -100,7 +100,7 @@
             </fieldset>
         </c:if>
 
-        <c:if test="${not empty databaseObject.literatureReference}">
+        <c:if test="${not empty databaseObject.literatureReference && databaseObject.schemaClass != 'Cell'}">
             <c:import url="literatureReferences.jsp"/>
         </c:if>
 

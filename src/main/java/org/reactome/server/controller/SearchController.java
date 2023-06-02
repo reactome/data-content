@@ -144,7 +144,7 @@ class SearchController {
                          HttpServletResponse response) throws SolrSearcherException {
 
         if (q != null && !q.isEmpty()) {
-
+            if (q.length() >= 50) return PAGE_NO_RESULTS_FOUND;
             if (cluster == null) cluster = false;
             if (page == null || page == 0) page = 1;
 
