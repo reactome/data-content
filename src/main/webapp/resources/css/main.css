@@ -164,6 +164,11 @@ ul.tree li a:visited {
     padding-right: 0.3em;
 }
 
+.tree-root i[class^="fa fa-"]::before,
+.tree-root i[class*=" fa fa-"]::before {
+    vertical-align: middle;
+}
+
 /* ADVANCED SEARCH */
 
 ul[id^="adv-list-"] {

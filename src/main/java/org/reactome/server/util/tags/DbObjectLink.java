@@ -51,7 +51,8 @@ public class DbObjectLink extends SimpleTagSupport {
         if (object == null) return; //throw new JspException("Entity must not be null");
         JspWriter out = getJspContext().getOut();
 
-        out.print(String.format("%s <a href=\"%s\" title=\"Show %s\">%s</a>",
+        //language=HTML
+        out.print(String.format("%s <a href='%s\' style='vertical-align: middle' title='Show %s'>%s</a>",
                 getIcon(),
                 getURL(),
                 object.getStId(),
