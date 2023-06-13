@@ -6,13 +6,13 @@
     <artifactId>data-content</artifactId>
 
     <packaging>war</packaging>
-    <version>2.0.8</version>
+    <version>2.0.9-SNAPSHOT</version>
     <name>data-content</name>
 
     <parent>
         <groupId>org.reactome.maven</groupId>
         <artifactId>reactome-parent</artifactId>
-        <version>1.0.2</version>
+        <version>1.0.3-SNAPSHOT</version>
     </parent>
 
     <description>

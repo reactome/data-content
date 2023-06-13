@@ -527,31 +527,5 @@
             </div>
         </fieldset>
     </c:if>
-
-    <c:if test="${not empty databaseObject.markingReferences}">
-
-        <div class="favth-clearfix">
-            <fieldset class="fieldset-details">
-                <legend>Cytomics</legend>
-
-                <div class="fieldset-pair-container">
-                    <div class="favth-clearfix">
-                        <div class="favth-col-lg-2 favth-col-md-2 favth-col-sm-3 favth-col-xs-12 details-label">
-                            marking cell
-                        </div>
-                        <div class="favth-col-lg-10 favth-col-md-10 favth-col-sm-9 favth-col-xs-12 details-field">
-                            <c:forEach items="${databaseObject.markingReferences}" var="ref">
-                                <c:forEach items="${ref.cell}" var="entity">
-                                    <c:set var="entity" value="${entity}" scope="request"/>
-                                    <c:import url="refNode.jsp"/>
-                                </c:forEach>
-                            </c:forEach>
-                        </div>
-                    </div>
-                </div>
-            </fieldset>
-        </div>
-
-    </c:if>
 </c:if>
 
