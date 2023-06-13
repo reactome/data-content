@@ -131,7 +131,7 @@
 <c:if test="${databaseObject.schemaClass == 'Cell'}">
     <div class="favth-clearfix">
         <fieldset class="fieldset-details">
-            <legend>Localisation</legend>
+            <legend>Cytology</legend>
 
             <div class="fieldset-pair-container">
                 <c:if test="${not empty databaseObject.organ}">
