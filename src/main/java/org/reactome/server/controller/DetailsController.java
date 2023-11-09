@@ -266,7 +266,7 @@ class DetailsController {
      */
     private Map<PhysicalEntity, Set<Publication>> mapMarkers(Collection<MarkerReference> references) {
         Stream<Map.Entry<PhysicalEntity, Set<Publication>>> markerStream, cellStream;
-        markerStream = references.stream().flatMap(ref -> ref.getMarker().stream().map(marker -> Map.entry(marker, new HashSet<>(ref.getLiteratureReference()))));
+        markerStream = references.stream().map(ref -> Map.entry(ref.getMarker(), new HashSet<>(ref.getLiteratureReference())));
         cellStream = references.stream().flatMap(ref -> ref.getCell().stream().map(marker -> Map.entry(marker, new HashSet<>(ref.getLiteratureReference()))));
         return Stream.concat(markerStream, cellStream)
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (pub1, pub2) -> {
