@@ -30,6 +30,7 @@
     </h3>
 
     <div class="extended-header favth-clearfix">
+        <c:if test="${not empty person.orcidId}">
         <div class="details-label favth-col-lg-2 favth-col-md-2 favth-col-sm-3 favth-col-xs-12"
              style="line-height:22px; <c:if test="${isAuthenticated}">line-height:30px;</c:if>">
                         <span><a href="/orcid" title="Click here to know more about Orcid Integration"><i
@@ -78,6 +79,7 @@
                 </c:otherwise>
             </c:choose>
         </div>
+        </c:if>
         <c:if test="${not empty person.project}">
             <div class="details-label favth-col-lg-2 favth-col-md-2 favth-col-sm-3 favth-col-xs-12">
                 <span>Project</span>
@@ -85,7 +87,7 @@
             <div class="details-field favth-col-lg-10 favth-col-md-10 favth-col-sm-9 favth-col-xs-12">
                 <span>${person.project}</span>
             </div>
-        </c:if>
+       </c:if>
         <c:if test="${not empty person.affiliation}">
             <div class="details-label favth-col-lg-2 favth-col-md-2 favth-col-sm-3 favth-col-xs-12">
                 <span>Affiliation</span>
