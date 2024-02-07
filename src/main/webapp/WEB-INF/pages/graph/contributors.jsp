@@ -13,10 +13,20 @@
     <c:set var="pageWithNumber" value="${personAuthorReviewersSize} / ${count}"/>
     <c:set var="number"  value="${page == 'all'? count : pageWithNumber}"/>
 
+    <div>
+        <h3 style="margin-left: 5px">Contributors (${number})</h3>
 
-<h3 style="margin-left: 5px">Contributors (${number})</h3>
-
-<div class="favth-col-xs-12">
+        <p>We value the contributions from authors, curators, and reviewers of Reactome content. Here is a list of Reactome
+            contributors who have authored or reviewed reactions or pathways, with links to their ORCID profiles.</p>
+        <p>If you want to add ORCID to your profile, you can quickly and easily claim your Reactome contributions in ORCID
+        using our ORCID claiming feature, described <a href="userguide/claim-your-work">here</a>. Please visit our <a
+            href="https://academic.oup.com/database/article/doi/10.1093/database/baz123/5645654"
+            target="_blank">paper</a>, to learn more about Reactome and ORCID credit attribution.</p>
+       <p> If you are interested in contributing to Reactome and receiving credit for your contributions, please visit the
+        following page for pathways that are ready for external review. If you'd like to contribute a pathway that is
+           not on this list, please <a href="about/contact-us">contact us</a>. We would be happy to work with you!</p>
+    </div>
+    <div class="favth-col-xs-12">
     <div id="pagination" class="pagination" style="margin: 1% auto">
         <ul class="pagination-list">
             <c:forEach var="val" items="${letters}">
