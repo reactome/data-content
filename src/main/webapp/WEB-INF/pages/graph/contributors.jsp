@@ -21,13 +21,21 @@
         <ul class="pagination-list">
             <c:forEach var="val" items="${letters}">
                 <c:choose>
-                    <c:when test="${val == page}">
-                        <li class="active"><a style="padding: 10px 15px">${val}</a></li>
+                    <c:when test="${val eq page}">
+                        <li class="active"><a style="padding: 10px 14px">${val}</a></li>
+                    </c:when>
+                    <c:when test="${val eq 'All'}">
+                        <c:choose>
+                            <c:when test="${page eq 'All'}">
+                                <li class="active"><a style="padding: 10px 14px" href="contributors">${val}</a></li>
+                            </c:when>
+                            <c:otherwise>
+                                <li><a style="padding: 10px 14px" href="?page=${val}">${val}</a></li>
+                            </c:otherwise>
+                        </c:choose>
                     </c:when>
                     <c:otherwise>
-                        <li>
-                            <a style="padding: 10px 15px" href="?page=${val}">${val}</a>
-                        </li>
+                        <li><a style="padding: 10px 14px" href="?page=${val}">${val}</a></li>
                     </c:otherwise>
                 </c:choose>
             </c:forEach>

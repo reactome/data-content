@@ -16,6 +16,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 @Controller
 public class ContributorsController {
@@ -39,16 +40,17 @@ public class ContributorsController {
 
     @RequestMapping(value = "/contributors", method = RequestMethod.GET)
     public String test(
-            @RequestParam(defaultValue = "all") String page,
+            @RequestParam(defaultValue = "All") String page,
             ModelMap model) {
 
-        if (page == null) page = "all";
+        if (page == null) page = "All";
         String finalPage = page;
-        List<String> letters = Arrays.asList(IntStream.rangeClosed('A', 'Z').mapToObj(c -> (char) c + ",").collect(Collectors.joining()).split(","));
+
+        List<String> letters = Stream.concat(Stream.of("All"), Arrays.stream(IntStream.rangeClosed('A', 'Z').mapToObj(c -> String.valueOf((char) c)).toArray(String[]::new)))
+                .collect(Collectors.toList());
         Collection<PersonAuthorReviewer> allPersonAuthorReviewer = contributorsCache.getPersonAuthorReviewerCache().stream().sorted(Comparator.comparing(person -> person.getPerson().getDisplayName())).collect(Collectors.toList());
-        ;
         Collection<PersonAuthorReviewer> personAuthorReviewerWithRange = allPersonAuthorReviewer.stream().filter(person -> person.getPerson().getSurname().toUpperCase().startsWith(finalPage)).collect(Collectors.toList());
-        Collection<PersonAuthorReviewer> personAuthorReviewers = page.equals("all") ? allPersonAuthorReviewer : personAuthorReviewerWithRange;
+        Collection<PersonAuthorReviewer> personAuthorReviewers = page.equals("All") ? allPersonAuthorReviewer : personAuthorReviewerWithRange;
 
         model.addAttribute(TITLE, "Contributors");
         model.addAttribute(PERSON_AUTHOR_REVIEWERS, personAuthorReviewers);
