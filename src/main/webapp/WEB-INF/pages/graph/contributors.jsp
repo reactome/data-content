@@ -19,12 +19,12 @@
         <p>We value the contributions from authors, curators, and reviewers of Reactome content. Here is a list of Reactome
             contributors who have authored or reviewed reactions or pathways, with links to their ORCID profiles.</p>
         <p>If you want to add ORCID to your profile, you can quickly and easily claim your Reactome contributions in ORCID
-        using our ORCID claiming feature, described <a href="userguide/claim-your-work">here</a>. Please visit our <a
+        using our ORCID claiming feature, described <a href="/userguide/claim-your-work">here</a>. Please visit our <a
             href="https://academic.oup.com/database/article/doi/10.1093/database/baz123/5645654"
             target="_blank">paper</a>, to learn more about Reactome and ORCID credit attribution.</p>
        <p> If you are interested in contributing to Reactome and receiving credit for your contributions, please visit the
-           following <a href="community/collaboration">page</a> for pathways that are ready for external review. If you'd like to contribute a pathway that is
-           not on this list, please <a href="about/contact-us">contact us</a>. We would be happy to work with you!</p>
+           following <a href="/community/collaboration">page</a> for pathways that are ready for external review. If you'd like to contribute a pathway that is
+           not on this list, please <a href="/about/contact-us">contact us</a>. We would be happy to work with you!</p>
     </div>
     <div class="favth-col-xs-12">
     <div id="pagination" class="pagination" style="margin: 1% auto">
@@ -63,8 +63,8 @@
                 <th scope="col">Name</th>
                 <th scope="col" style="text-align:center">ORCID</th>
                 <th scope="col" style="text-align:center">Authored Pathways</th>
-                <th scope="col" style="text-align:center">Authored Reactions</th>
                 <th scope="col" style="text-align:center">Reviewed Pathways</th>
+                <th scope="col" style="text-align:center">Authored Reactions</th>
                 <th scope="col" style="text-align:center">Reviewed Reactions</th>
             </tr>
             </thead>
