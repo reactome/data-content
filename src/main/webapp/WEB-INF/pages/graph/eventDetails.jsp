@@ -190,18 +190,6 @@
                                 <div class="favth-col-lg-10 favth-col-md-9 favth-col-sm-12 favth-col-xs-12 details-field mr-field">
                                     <m:link object="${negativelyRegulatedBy.regulator}" detailRequestPrefix="${detailRequestPrefix}"/>
                                 </div>
-                                <c:if test="${not empty negativelyRegulatedBy.summation}">
-                                    <div class="favth-col-lg-2 favth-col-md-3 favth-col-sm-12 favth-col-xs-12 details-label mr-label">
-                                        Summation
-                                    </div>
-                                    <div class="favth-col-lg-10 favth-col-md-9 favth-col-sm-12 favth-col-xs-12 details-field mr-field">
-                                        <div class="wrap">
-                                            <c:forEach var="summation" items="${negativelyRegulatedBy.summation}">
-                                                <p>${summation.text}</p>
-                                            </c:forEach>
-                                        </div>
-                                    </div>
-                                </c:if>
                                 <c:if test="${not empty negativelyRegulatedBy.activeUnit}">
                                     <div class="favth-col-lg-2 favth-col-md-3 favth-col-sm-12 favth-col-xs-12 details-label mr-label">
                                         Active Unit
@@ -239,18 +227,6 @@
                                     <m:link object="${positivelyRegulatedBy.regulator}" detailRequestPrefix="${detailRequestPrefix}"/>
 
                                 </div>
-                                <c:if test="${not empty positivelyRegulatedBy.summation}">
-                                    <div class="favth-col-lg-2 favth-col-md-3 favth-col-sm-12 favth-col-xs-12 details-label mr-label">
-                                        Summation
-                                    </div>
-                                    <div class="favth-col-lg-10 favth-col-md-9 favth-col-sm-12 favth-col-xs-12 details-field mr-field">
-                                        <div class="wrap">
-                                            <c:forEach var="summation" items="${positivelyRegulatedBy.summation}">
-                                                <p>${summation.text}</p>
-                                            </c:forEach>
-                                        </div>
-                                    </div>
-                                </c:if>
                                 <c:if test="${not empty positivelyRegulatedBy.activeUnit}">
                                     <div class="favth-col-lg-2 favth-col-md-3 favth-col-sm-12 favth-col-xs-12 details-label mr-label">
                                         Active Unit
