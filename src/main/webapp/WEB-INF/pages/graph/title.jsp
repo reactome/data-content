@@ -69,7 +69,7 @@
             </div>
         </c:if>
 
-        <c:if test="${databaseObject.schemaClass == 'Pathway'}">
+        <c:if test="${databaseObject.schemaClass == 'Pathway' || databaseObject.schemaClass =='CellLineagePath'}">
             <c:if test="${not empty databaseObject.doi}">
                 <div class="details-label favth-col-lg-2 favth-col-md-3 favth-col-sm-3 favth-col-xs-12">
                     <span>DOI</span>
