@@ -18,7 +18,7 @@ jQuery(document).ready(function () {
     jQuery('.summation').each(function () {
         var showCharNumber = 200;
         // summation text only. The highlighting is lost and it will be done again after.
-        var content = jQuery(this).text();
+        var content = jQuery(this).html();
 
         if (content.length > showCharNumber) {
             var showing = shorten(content, showCharNumber);
@@ -43,13 +43,18 @@ jQuery(document).ready(function () {
 
     jQuery('.details-summation').each(function () {
         var showCharNumber = 1000;
-        var content = jQuery.trim(jQuery(this).text());
+        var content = jQuery.trim(jQuery(this).html());
 
         if (content.length > showCharNumber) {
             var showing = shorten(content, showCharNumber);
             var hiding = content.substr(showing.length, content.length - showing.length);
 
-            var html = jQuery.trim(showing) + '<span class="moreellipses">' + ellipsestext + '</span><span class="morecontent"><span>' + hiding + '</span><a href="javascript:void(0);" class="morelink">' + moretext + '</a></span>';
+            var html = jQuery.trim(showing) +
+                '<span class="moreellipses">' + ellipsestext + '</span>' +
+                '<span class="morecontent">' +
+                '<span>' + hiding + '</span>' +
+                '<a href="javascript:void(0);" class="morelink">' + moretext + '</a>' +
+                '</span>';
             jQuery(this).html(html);
         }
     });
