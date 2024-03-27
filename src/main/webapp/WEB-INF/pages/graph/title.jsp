@@ -75,7 +75,7 @@
                     <span>DOI</span>
                 </div>
                 <div class="details-field favth-col-lg-10 favth-col-md-9 favth-col-sm-9 favth-col-xs-12">
-                <span>  <a href="https://search.crossref.org/?q=${databaseObject.doi}" target="_blank"
+                <span>  <a href="https://search.crossref.org/search/works?q=${databaseObject.doi}&from_ui=yes" target="_blank"
                            title="Search in Crossref">${databaseObject.doi}</a></span>
                 </div>
             </c:if>

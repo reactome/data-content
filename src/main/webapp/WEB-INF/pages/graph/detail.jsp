@@ -111,7 +111,7 @@
                     <c:if test="${not empty databaseObject.summation}">
                         <div class="details-summation">
                             <c:forEach var="summation" items="${databaseObject.summation}">
-                                <p>${summation.text}</p>
+                                <c:out value="${summation.text}" escapeXml="false"/>
                             </c:forEach>
                         </div>
                     </c:if>
