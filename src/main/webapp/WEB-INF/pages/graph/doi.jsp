@@ -38,7 +38,7 @@
                     </td>
 
                     <td data-label="DOI">
-                        <a href="https://search.crossref.org/?q=${pathway.doi}" target="_blank"
+                        <a href="https://search.crossref.org/search/works?q=${pathway.doi}&from_ui=yes" target="_blank"
                            title="Search in Crossref">${pathway.doi}</a>
                     </td>
 

@@ -39,7 +39,7 @@
                                 <br/>
                                 <span class="DOI">
                                     <c:if test="${not empty pathway.doi}">
-                                        <a href="https://search.crossref.org/?q=${pathway.doi}" target="_blank"
+                                        <a href="https://search.crossref.org/search/works?q=${pathway.doi}&from_ui=yes" target="_blank"
                                            title="Search in Crossref"
                                            style="font-style: italic">${"&nbsp;"}${"&nbsp;"}${pathway.doi}</a>
                                     </c:if>
@@ -53,7 +53,7 @@
                                         <br />
                                         <span class="DOI">
                                             <c:if test="${not empty childPathway.doi}">
-                                            <a href="https://search.crossref.org/?q=${childPathway.doi}" target="_blank"
+                                            <a href="https://search.crossref.org/search/works?q=${childPathway.doi}&from_ui=yes" target="_blank"
                                                title="Search in Crossref"
                                                style="font-style: italic">${"&nbsp;"}${"&nbsp;"}${childPathway.doi}</a>
                                             </c:if>
