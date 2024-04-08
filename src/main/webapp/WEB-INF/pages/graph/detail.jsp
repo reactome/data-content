@@ -10,7 +10,10 @@
             <c:import url="locationsInThePWB.jsp"/>
         </c:if>
 
-        <c:if test="${databaseObject.schemaClass != 'NegativeGeneExpressionRegulation' && databaseObject.schemaClass != 'PositiveGeneExpressionRegulation' && databaseObject.schemaClass != 'Requirement'}">
+        <c:if test="${
+        databaseObject.schemaClass != 'NegativeGeneExpressionRegulation' && databaseObject.schemaClass != 'PositiveGeneExpressionRegulation' &&
+        databaseObject.schemaClass != 'NegativeRegulation' && databaseObject.schemaClass != 'PositiveRegulation'&&
+        databaseObject.schemaClass != 'Requirement'}">
         <c:if test="${not empty previewURL || not empty databaseObject.summation}">
                 <fieldset class="fieldset-details">
                     <legend>General</legend>
