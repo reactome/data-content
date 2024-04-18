@@ -89,6 +89,7 @@ public class InteractionsController {
     public Collection<CustomInteraction> getCustomInteractions(String accession) {
         Collection<CustomInteraction> rtn;
 
+        // language=cypher
         String query = "" +
                 "MATCH (s:ReferenceEntity)<-[:interactor]-(it:Interaction), " +
                 "      (it)-[ir:interactor]->(in:ReferenceEntity)<-[re:referenceEntity]-(pe:PhysicalEntity), " +

@@ -30,7 +30,7 @@
                     <c:set var="interactor" value="${interaction.interactor[0]}" />
                     <tr>
                         <td data-label="Accession">
-                            <a href="${detailRequestPrefix}interactor/${interactor.identifier}" class="" title="Show Interactor Details"  ><i class="sprite sprite-Interactor"></i>&nbsp;${interactor.displayName}&nbsp;</a>
+                            <a href="${detailRequestPrefix}interactor/${interactor.schemaClass == 'ReferenceIsoform'  ? interactor.variantIdentifier :interactor.identifier}" class="" title="Show Interactor Details"  ><i class="sprite sprite-Interactor"></i>&nbsp;${interactor.displayName}&nbsp;</a>
                             <a href="${interactor.url}"
                                title="Go to ${interactor.displayName}"
                                target="_blank"><i class="fa fa-external-link" style="font-size: 13px;"></i></a>
