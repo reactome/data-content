@@ -112,7 +112,7 @@ class DetailsController {
                              HttpServletRequest request,
                              HttpServletResponse response) {
         try {
-            if (lowerCaseExp.matcher(id).find()) return "redirect:/detail/" + id.toUpperCase();
+            if (lowerCaseExp.matcher(id).find() && !id.startsWith("R-MoMLV-")) return "redirect:/detail/" + id.toUpperCase();
             if (id.startsWith("R-ICO-")) return iconsController.iconDetails(id, model, response);
 
             UAgentInfo u = new UAgentInfo(request.getHeader("User-Agent"), null);
