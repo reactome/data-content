@@ -73,6 +73,10 @@
                                             <c:set var="iconClass"
                                                    value="fa fa-puzzle-piece title-icon title-icon-result-list"/>
                                         </c:if>
+                                        <c:if test="${entry.deleted}">
+                                            <i class="sprite-resize sprite sprite-deleted"
+                                               title="Deleted entry"></i>
+                                        </c:if>
                                         <i class="${iconClass}" title="${entry.exactType}"></i>
                                         <c:if test="${entry.isDisease}">
                                             <i class="sprite-resize sprite sprite-isDisease"
@@ -80,6 +84,16 @@
                                         </c:if>
 
                                         <c:choose>
+                                            <c:when test="${entry.deleted}">
+                                                <span class="deleted">${entry.stId}</span>
+                                                <c:if test="${entry.replacementStIds != null}">
+                                                    ⇒
+                                                    <c:forEach var="stId" items="${entry.replacementStIds}">
+                                                        <a href="./detail/${stId}" class=""
+                                                           title="Show Details">${stId}</a>
+                                                    </c:forEach>
+                                                </c:if>
+                                            </c:when>
                                             <c:when test="${entry.exactType == 'Interactor'}">
                                                 <a href="./detail/interactor/${entry.id}" class=""
                                                    title="Show Interactor Details">${entry.name}</a>
@@ -109,7 +123,20 @@
                                 </div>
 
                                 <div class="result-detail">
-                                    <c:if test="${not empty entry.stId && entry.exactType != 'Icon'}">
+                                    <c:if test="${entry.deleted}">
+                                        <div class="favth-col-lg-6 favth-col-md-12 favth-col-sm-12 favth-col-xs-12">
+                                            <div>
+                                                <strong>Deleted on </strong>${entry.date.toLocaleString()}
+                                                <c:if test="${entry.reason != null}">
+                                                    <div><strong>Reason: </strong>${entry.reason}</div>
+                                                </c:if>
+                                                <c:if test="${entry.explanation != null}">
+                                                    <div>${entry.explanation}</div>
+                                                </c:if>
+                                            </div>
+                                        </div>
+                                    </c:if>
+                                    <c:if test="${not empty entry.stId && entry.exactType != 'Icon' && !entry.deleted}">
                                         <div class="favth-col-lg-6 favth-col-md-12 favth-col-sm-12 favth-col-xs-12">
                                             <div>
                                                 <strong>Identifier: </strong>${entry.stId}
