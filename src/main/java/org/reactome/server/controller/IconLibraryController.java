@@ -70,6 +70,7 @@ class IconLibraryController {
         urlMapping.put("KEGG",              "https://www.kegg.jp/entry/###ID###");
         urlMapping.put("ENA",               "https://www.ebi.ac.uk/ena/data/view/###ID###");
         urlMapping.put("COMPLEXPORTAL",     "https://www.ebi.ac.uk/complexportal/complex/###ID###");
+        urlMapping.put("EFO",               "https://www.ebi.ac.uk/ols/ontologies/efo/terms?obo_id=###ID###");
         urlMapping.put("SO",                "https://www.ebi.ac.uk/ols/ontologies/so/terms?obo_id=SO:###ID###");
         urlMapping.put("BTO",               "https://www.ebi.ac.uk/ols/ontologies/bto/terms?obo_id=BTO:###ID###");
         urlMapping.put("CL",                "https://www.ebi.ac.uk/ols/ontologies/cl/terms?obo_id=CL:###ID###");
