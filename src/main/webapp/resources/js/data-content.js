@@ -8,69 +8,80 @@ jQuery(document).ready(function () {
 });
 
 jQuery(document).ready(function () {
-    // Configure/customize these variables.
-    var ellipsestext = "... ";
-    var moretext = "Read more";
-    var lesstext = " Show less";
 
     jQuery('[data-toggle="tooltip"]').tooltip();
     // Show summation up to 200 chars.
-    jQuery('.summation').each(function () {
-        var showCharNumber = 200;
+    function truncate(maxChars = 200) {
         // summation text only. The highlighting is lost and it will be done again after.
-        var content = jQuery(this).html();
+        let $node = jQuery(this);
 
-        if (content.length > showCharNumber) {
-            var showing = shorten(content, showCharNumber);
+        const originalHtml = $node.html(); // Save the original content
+        const $clone = $node.clone(); // Clone the node for manipulation
+        let truncatedHtml = '';
+        let charCount = 0;
+        let readMoreAdded = false; // Track if "... Read more" has been added
 
-            if (showing.length !== content.length) {
-                var hiding = content.substr(showing.length, content.length - showing.length);
-                var html = jQuery.trim(showing) + '<span class="moreellipses">' + ellipsestext + '</span><span class="morecontent"><span>' + hiding + '</span><a href="javascript:void(0);" class="morelink">' + moretext + '</a></span>';
+        // Recursive function to build truncated HTML with intact structure
+        function recursiveTruncate($element) {
+            $element.contents().each(function () {
+                if (charCount >= maxChars) return false; // Stop if the limit is reached
 
-                // highlight term again
-                var hightlightTermArr = jQuery(this).find(".highlighting");
-                if (hightlightTermArr.length) {
-                    html = highlighter(hightlightTermArr[0].innerText, html);
-                } else {
-                    // highlight based on the search term, just in case
-                    html = highlighter(jQuery("#js_search-term").val(), html);
+                if (this.nodeType === Node.TEXT_NODE) { // For text nodes
+                    const text = this.nodeValue;
+                    const remainingChars = maxChars - charCount;
+
+                    if (text.length > remainingChars) {
+                        truncatedHtml += text.substring(0, remainingChars); // Append truncated text
+                        charCount = maxChars; // Update char count
+
+                        if (!readMoreAdded) {
+                            truncatedHtml += `<a href="#" class="read-more">… Read more</a>`;
+                            readMoreAdded = true;
+                        }
+                    } else {
+                        truncatedHtml += text; // Append full text
+                        charCount += text.length; // Update char count
+                    }
+                } else if (this.nodeType === Node.ELEMENT_NODE) { // For element nodes
+                    const $child = jQuery(this);
+                    const tagName = $child.prop('nodeName').toLowerCase(); // Get tag name
+
+                    if (charCount < maxChars) {
+                        truncatedHtml += `<${tagName}${getAttributesString($child)}>`; // Open tag
+                        recursiveTruncate($child); // Recursively process children
+                        truncatedHtml += `</${tagName}>`; // Close tag
+                    }
                 }
-
-                jQuery(this).html(html);
-            }
+            });
         }
+
+        recursiveTruncate($clone);
+
+        if (charCount < maxChars) return; // No need to truncate if within limit
+
+        $node.html(truncatedHtml); // Display the truncated content
+
+        // Toggle functionality
+        $node.on('click', '.read-more', function (e) {
+            e.preventDefault();
+            $node.html(originalHtml + ' <a href="#" class="show-less">Show less</a>');
+        });
+
+        $node.on('click', '.show-less', function (e) {
+            e.preventDefault();
+            $node.html(truncatedHtml);
+            $node.get(0).scrollIntoView({behavior: 'smooth', block: 'start', inline: 'start'})
+        });
+
+    };
+    jQuery('.summation').each(function () {
+        truncate.bind(this)(200)
     });
 
     jQuery('.details-summation').each(function () {
-        var showCharNumber = 1000;
-        var content = jQuery.trim(jQuery(this).html());
-
-        if (content.length > showCharNumber) {
-            var showing = shorten(content, showCharNumber);
-            var hiding = content.substr(showing.length, content.length - showing.length);
-
-            var html = jQuery.trim(showing) +
-                '<span class="moreellipses">' + ellipsestext + '</span>' +
-                '<span class="morecontent">' +
-                '<span>' + hiding + '</span>' +
-                '<a href="javascript:void(0);" class="morelink">' + moretext + '</a>' +
-                '</span>';
-            jQuery(this).html(html);
-        }
+        truncate.bind(this)(1000)
     });
 
-    jQuery(".morelink").click(function () {
-        if (jQuery(this).hasClass("less")) {
-            jQuery(this).removeClass("less");
-            jQuery(this).html(moretext);
-        } else {
-            jQuery(this).addClass("less");
-            jQuery(this).html(lesstext);
-        }
-        jQuery(this).parent().prev().toggle();
-        jQuery(this).prev().toggle();
-        return false;
-    });
 });
 
 jQuery(document).ready(function () {
@@ -186,19 +197,16 @@ jQuery(document).ready(function () {
 /* JAVASCRIPT FUNCTIONS */
 
 /*----------------------*/
-function shorten(sentence, chars) {
-    // Shortening a sentence without breaking a word.
-    return (sentence.match(new RegExp(".{" + chars + "}\\S*")) || [sentence])[0];
-}
 
-function highlighter(word, text) {
-    try {
-        var rgxp = new RegExp("(\\b" + word + "\\b)", "gim");
-        var repl = '<span class="highlighting" style="display: inline-block">' + word + '</span>';
-        return text.replace(rgxp, repl);
-    } catch (err) {
-        return text;
+// Helper function to get attributes as a string
+function getAttributesString($element) {
+    const attributes = $element[0].attributes;
+    const attrArray = [];
+    for (let i = 0; i < attributes.length; i++) {
+        const attr = attributes[i];
+        attrArray.push(`${attr.name}="${attr.value}"`);
     }
+    return attrArray.length > 0 ? ' ' + attrArray.join(' ') : '';
 }
 
 function togglePwbTree(action) {
