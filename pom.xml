@@ -18,7 +18,7 @@
         The Reactome Data Content provides access to the search features plus the schema classes definition and instance
         browsers among others
     </description>
-    <url>https://github.com/reactome-pwp/data-content</url>
+    <url>https://github.com/reactome/data-content</url>
     <organization>
         <name>Reactome</name>
         <url>https://reactome.org</url>
