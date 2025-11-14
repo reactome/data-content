@@ -50,7 +50,7 @@ class SchemaController {
     private static Pattern lowerCaseExp;
 
     public SchemaController() {
-        lowerCaseExp = Pattern.compile("[a-z]+");
+        lowerCaseExp = Pattern.compile("^r-");
     }
 
     @RequestMapping(value = "/schema/instance/browser/{id}", method = RequestMethod.GET)
@@ -73,10 +73,10 @@ class SchemaController {
             model.addAttribute("breadcrumbSchemaClass", databaseObject.getSchemaClass());
             model.addAttribute("map", DatabaseObjectUtils.getAllFields(databaseObject, showUndefinedAttributes));
             model.addAttribute("referrals", advancedLinkageService.getReferralsTo(id));
+            model.addAttribute("id", StringUtils.isNotEmpty(databaseObject.getStId()) ? databaseObject.getStId() : databaseObject.getDbId());
 
             if (databaseObject instanceof PhysicalEntity || databaseObject instanceof Event || databaseObject instanceof Regulation) {
                 model.addAttribute("linkToDetailsPage", true);
-                model.addAttribute("id", StringUtils.isNotEmpty(databaseObject.getStId()) ? databaseObject.getStId() : databaseObject.getDbId());
             }
 
             infoLogger.info("DatabaseObject for id: {} was found", id);

@@ -175,6 +175,7 @@ class SearchController {
                     .withKeywords(keywords)
                     .inCompartments(compartments)
                     .withReportInfo(getReportInformation(request))
+                    .withScope(Query.Scope.PHYSICAL_ENTITY)
                     .build();
 
             if (stIdMatch != null) {

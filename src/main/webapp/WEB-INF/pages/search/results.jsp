@@ -111,7 +111,7 @@
                                                 </c:choose>
                                             </c:when>
                                             <c:when test="${entry.exactType == 'Icon'}">
-                                                <a href="./detail/${entry.stId}" class=""
+                                                <a href="./detail/${entry.id}" class=""
                                                    title="Show Icon Details">${entry.name}</a>
                                             </c:when>
                                             <c:otherwise>
@@ -251,7 +251,7 @@
                                                 </c:if>
                                             </div>
                                             <div class="favth-col-lg-4 favth-col-md-4 favth-col-sm-4 favth-col-xs-4">
-                                                <img src="/icon/${entry.stId}.svg" alt="${entry.iconName} icon"
+                                                <img src="/icon/${entry.id}.svg" alt="${entry.iconName} icon"
                                                      style="width: 50px; height: 50px;"/>
                                             </div>
                                         </div>
