@@ -47,9 +47,9 @@
                     <div class="favth-col-lg-3 favth-col-md-3 favth-col-sm-3 favth-col-xs-4" title="Download ALL icons in SVG format">
                         <a href="/icon/icon-lib-svg.tgz"><i class="fa fa-download" aria-hidden="true"></i>SVG</a>
                     </div>
-                    <div class="favth-col-lg-3 favth-col-md-3 favth-col-sm-3 favth-col-xs-4" title="Download ALL icons in EMF format">
-                        <a href="/icon/icon-lib-emf.tgz"><i class="fa fa-download" aria-hidden="true"></i>EMF</a>
-                    </div>
+<%--                    <div class="favth-col-lg-3 favth-col-md-3 favth-col-sm-3 favth-col-xs-4" title="Download ALL icons in EMF format">--%>
+<%--                        <a href="/icon/icon-lib-emf.tgz"><i class="fa fa-download" aria-hidden="true"></i>EMF</a>--%>
+<%--                    </div>--%>
                     <div class="favth-col-lg-3 favth-col-md-3 favth-col-sm-3 favth-col-xs-4" title="Download ALL icons in PNG format">
                         <a href="/icon/icon-lib-png.tgz"><i class="fa fa-download" aria-hidden="true"></i>PNG</a>
                     </div>

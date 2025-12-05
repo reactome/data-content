@@ -92,10 +92,10 @@
                         <span><a href="/icon/${entry.stId}.png" download="${entry.stId}.png"
                                  title="Click to download the icon in PNG format"><i class="fa fa-download"></i> PNG</a></span>
                 </div>
-                <div class="favth-col-sm-12 favth-col-xs-4 padding0 bottom">
-                        <span><a href="/icon/${entry.stId}.emf" download="${entry.stId}.emf"
-                                 title="Click to download the icon in EMF format"><i class="fa fa-download"></i> EMF</a></span>
-                </div>
+<%--                <div class="favth-col-sm-12 favth-col-xs-4 padding0 bottom">--%>
+<%--                        <span><a href="/icon/${entry.stId}.emf" download="${entry.stId}.emf"--%>
+<%--                                 title="Click to download the icon in EMF format"><i class="fa fa-download"></i> EMF</a></span>--%>
+<%--                </div>--%>
             </div>
         </div>
     </fieldset>
